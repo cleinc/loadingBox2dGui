@@ -91,5 +91,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\loadingBox2dGui.presenters\loadingBox2dGui.presenters.csproj">
+      <Project>{a9695b1e-224e-4410-82c0-8c7e6acab051}</Project>
+      <Name>loadingBox2dGui.presenters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\loadingBox2dGui.views\loadingBox2dGui.views.csproj">
+      <Project>{d219ab6d-0b7d-4eea-8fc1-5221afaef60b}</Project>
+      <Name>loadingBox2dGui.views</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
