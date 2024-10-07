@@ -92,6 +92,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\loadingBox2dGui.models\loadingBox2dGui.models.csproj">
+      <Project>{13155dd2-5088-4331-b838-f330947bd506}</Project>
+      <Name>loadingBox2dGui.models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\loadingBox2dGui.presenters\loadingBox2dGui.presenters.csproj">
       <Project>{a9695b1e-224e-4410-82c0-8c7e6acab051}</Project>
       <Name>loadingBox2dGui.presenters</Name>

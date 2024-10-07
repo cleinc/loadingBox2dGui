@@ -8,5 +8,10 @@ namespace loadingBox2dGui.views
 {
     public interface IMainForm
     {
+        #region Properties
+        #endregion
+
+        #region Event Handlers
+        #endregion
     }
 }

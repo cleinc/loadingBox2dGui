@@ -32,54 +32,8 @@ namespace loadingBox2dGui
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
-            this.btnNgListClear_ = new MaterialSkin.Controls.MaterialButton();
-            this.lblErrorNotice = new MaterialSkin.Controls.MaterialLabel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panelNgListViewHeader = new System.Windows.Forms.Panel();
-            this.lblDashDate = new MaterialSkin.Controls.MaterialLabel();
-            this.lblDashType = new MaterialSkin.Controls.MaterialLabel();
-            this.lblDashCarSeqNum = new MaterialSkin.Controls.MaterialLabel();
-            this.lblDashCarType = new MaterialSkin.Controls.MaterialLabel();
-            this.ltvNG = new System.Windows.Forms.ListView();
-            this.rtbLog = new MaterialSkin.Controls.MaterialMultiLineTextBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.tbGlassMaxValueRz = new MaterialSkin.Controls.MaterialTextBox2();
-            this.label90 = new MaterialSkin.Controls.MaterialLabel();
-            this.tbGlassMaxValueTy = new MaterialSkin.Controls.MaterialTextBox2();
-            this.label94 = new MaterialSkin.Controls.MaterialLabel();
-            this.tbGlassMaxValueTx = new MaterialSkin.Controls.MaterialTextBox2();
-            this.label95 = new MaterialSkin.Controls.MaterialLabel();
-            this.glassWriteSignalStatus = new CoPick.Controls.PlcSignalStatusOnlyTable();
-            this.glassWriteSignal2Status = new CoPick.Controls.PlcSignalStatusValueTable();
-            this.label92 = new MaterialSkin.Controls.MaterialLabel();
-            this.textBox1 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.lblGlassCameraModel_ = new MaterialSkin.Controls.MaterialLabel();
-            this.lblGlassCameraSerials_ = new MaterialSkin.Controls.MaterialLabel();
-            this.tbGlassCamera = new MaterialSkin.Controls.MaterialTextBox2();
-            this.lblGlassCamera_ = new MaterialSkin.Controls.MaterialLabel();
-            this.tbGlassCameraModel = new MaterialSkin.Controls.MaterialTextBox2();
-            this.glassReadSignalStatus = new CoPick.Controls.PlcSignalStatusOnlyTable();
-            this.carTypeSignalStatus = new CoPick.Controls.PlcSignalStatusValueTable();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.gbMode = new MaterialSkin.Controls.MaterialCard();
-            this.rbManual_ = new MaterialSkin.Controls.MaterialRadioButton();
-            this.rbSet_ = new MaterialSkin.Controls.MaterialRadioButton();
-            this.rbAuto_ = new MaterialSkin.Controls.MaterialRadioButton();
-            this.gbPLC = new MaterialSkin.Controls.MaterialCard();
-            this.tbPlc = new MaterialSkin.Controls.MaterialTextBox2();
-            this.gbCarType = new MaterialSkin.Controls.MaterialCard();
-            this.tbCarType = new MaterialSkin.Controls.MaterialTextBox2();
-            this.cmbCarTypeName = new MaterialSkin.Controls.MaterialComboBox();
-            this.btnCameraConnect_ = new MaterialSkin.Controls.MaterialButton();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.gbCarSeqNumber_ = new MaterialSkin.Controls.MaterialCard();
-            this.tbCarSeqNumber = new MaterialSkin.Controls.MaterialTextBox2();
-            this.btnSettingManager_ = new MaterialSkin.Controls.MaterialButton();
-            this.label22 = new MaterialSkin.Controls.MaterialLabel();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pbRh = new System.Windows.Forms.PictureBox();
+            this.pbLh = new System.Windows.Forms.PictureBox();
             this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
             this.materialTextBox24 = new MaterialSkin.Controls.MaterialTextBox2();
             this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
@@ -153,32 +107,60 @@ namespace loadingBox2dGui
             this.tbGlassPointRx = new MaterialSkin.Controls.MaterialTextBox2();
             this.tbGlassPointRz = new MaterialSkin.Controls.MaterialTextBox2();
             this.tbGlassPointRy = new MaterialSkin.Controls.MaterialTextBox2();
-            this.pbLh = new System.Windows.Forms.PictureBox();
-            this.pbRh = new System.Windows.Forms.PictureBox();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
+            this.btnNgListClear_ = new MaterialSkin.Controls.MaterialButton();
+            this.lblErrorNotice = new MaterialSkin.Controls.MaterialLabel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panelNgListViewHeader = new System.Windows.Forms.Panel();
+            this.lblDashDate = new MaterialSkin.Controls.MaterialLabel();
+            this.lblDashType = new MaterialSkin.Controls.MaterialLabel();
+            this.lblDashCarSeqNum = new MaterialSkin.Controls.MaterialLabel();
+            this.lblDashCarType = new MaterialSkin.Controls.MaterialLabel();
+            this.ltvNG = new System.Windows.Forms.ListView();
+            this.rtbLog = new MaterialSkin.Controls.MaterialMultiLineTextBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.tbGlassMaxValueRz = new MaterialSkin.Controls.MaterialTextBox2();
+            this.label90 = new MaterialSkin.Controls.MaterialLabel();
+            this.tbGlassMaxValueTy = new MaterialSkin.Controls.MaterialTextBox2();
+            this.label94 = new MaterialSkin.Controls.MaterialLabel();
+            this.tbGlassMaxValueTx = new MaterialSkin.Controls.MaterialTextBox2();
+            this.label95 = new MaterialSkin.Controls.MaterialLabel();
+            this.glassWriteSignalStatus = new CoPick.Controls.PlcSignalStatusOnlyTable();
+            this.glassWriteSignal2Status = new CoPick.Controls.PlcSignalStatusValueTable();
+            this.label92 = new MaterialSkin.Controls.MaterialLabel();
+            this.textBox1 = new MaterialSkin.Controls.MaterialTextBox2();
+            this.lblGlassCameraModel_ = new MaterialSkin.Controls.MaterialLabel();
+            this.lblGlassCameraSerials_ = new MaterialSkin.Controls.MaterialLabel();
+            this.tbGlassCamera = new MaterialSkin.Controls.MaterialTextBox2();
+            this.lblGlassCamera_ = new MaterialSkin.Controls.MaterialLabel();
+            this.tbGlassCameraModel = new MaterialSkin.Controls.MaterialTextBox2();
+            this.glassReadSignalStatus = new CoPick.Controls.PlcSignalStatusOnlyTable();
+            this.carTypeSignalStatus = new CoPick.Controls.PlcSignalStatusValueTable();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.gbMode = new MaterialSkin.Controls.MaterialCard();
+            this.rbManual_ = new MaterialSkin.Controls.MaterialRadioButton();
+            this.rbSet_ = new MaterialSkin.Controls.MaterialRadioButton();
+            this.rbAuto_ = new MaterialSkin.Controls.MaterialRadioButton();
+            this.gbPLC = new MaterialSkin.Controls.MaterialCard();
+            this.tbPlc = new MaterialSkin.Controls.MaterialTextBox2();
+            this.gbCarType = new MaterialSkin.Controls.MaterialCard();
+            this.tbCarType = new MaterialSkin.Controls.MaterialTextBox2();
+            this.cmbCarTypeName = new MaterialSkin.Controls.MaterialComboBox();
+            this.btnCameraConnect_ = new MaterialSkin.Controls.MaterialButton();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.gbCarSeqNumber_ = new MaterialSkin.Controls.MaterialCard();
+            this.tbCarSeqNumber = new MaterialSkin.Controls.MaterialTextBox2();
+            this.btnSettingManager_ = new MaterialSkin.Controls.MaterialButton();
+            this.label22 = new MaterialSkin.Controls.MaterialLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
-            this.splitContainer3.Panel1.SuspendLayout();
-            this.splitContainer3.Panel2.SuspendLayout();
-            this.splitContainer3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
-            this.splitContainer5.Panel1.SuspendLayout();
-            this.splitContainer5.Panel2.SuspendLayout();
-            this.splitContainer5.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panelNgListViewHeader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.gbMode.SuspendLayout();
-            this.gbPLC.SuspendLayout();
-            this.gbCarType.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.gbCarSeqNumber_.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRh)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLh)).BeginInit();
             this.materialCard4.SuspendLayout();
             this.materialCard3.SuspendLayout();
             this.tlpGlassCamera.SuspendLayout();
@@ -189,8 +171,26 @@ namespace loadingBox2dGui
             this.gbGlassUserControl_.SuspendLayout();
             this.gbGlassShiftValue_.SuspendLayout();
             this.gbGlassPoint_.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLh)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbRh)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
+            this.splitContainer5.Panel1.SuspendLayout();
+            this.splitContainer5.Panel2.SuspendLayout();
+            this.splitContainer5.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.panelNgListViewHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.gbMode.SuspendLayout();
+            this.gbPLC.SuspendLayout();
+            this.gbCarType.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.gbCarSeqNumber_.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer2
@@ -234,847 +234,23 @@ namespace loadingBox2dGui
             this.splitContainer2.TabIndex = 107;
             this.splitContainer2.TabStop = false;
             // 
-            // splitContainer3
-            // 
-            this.splitContainer3.IsSplitterFixed = true;
-            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer3.Margin = new System.Windows.Forms.Padding(0);
-            this.splitContainer3.Name = "splitContainer3";
-            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer3.Panel1
-            // 
-            this.splitContainer3.Panel1.Controls.Add(this.splitContainer5);
-            this.splitContainer3.Panel1.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this.pictureBox4);
-            this.splitContainer3.Panel2.Controls.Add(this.pictureBox2);
-            this.splitContainer3.Size = new System.Drawing.Size(571, 925);
-            this.splitContainer3.SplitterDistance = 798;
-            this.splitContainer3.TabIndex = 98;
-            // 
-            // splitContainer5
-            // 
-            this.splitContainer5.IsSplitterFixed = true;
-            this.splitContainer5.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer5.Margin = new System.Windows.Forms.Padding(0);
-            this.splitContainer5.Name = "splitContainer5";
-            this.splitContainer5.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer5.Panel1
-            // 
-            this.splitContainer5.Panel1.Controls.Add(this.btnNgListClear_);
-            this.splitContainer5.Panel1.Controls.Add(this.lblErrorNotice);
-            this.splitContainer5.Panel1MinSize = 41;
-            // 
-            // splitContainer5.Panel2
-            // 
-            this.splitContainer5.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainer5.Size = new System.Drawing.Size(570, 809);
-            this.splitContainer5.SplitterDistance = 71;
-            this.splitContainer5.SplitterWidth = 1;
-            this.splitContainer5.TabIndex = 0;
-            // 
-            // btnNgListClear_
-            // 
-            this.btnNgListClear_.AutoSize = false;
-            this.btnNgListClear_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnNgListClear_.BackColor = System.Drawing.Color.DimGray;
-            this.btnNgListClear_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnNgListClear_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnNgListClear_.Depth = 0;
-            this.btnNgListClear_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnNgListClear_.FlatAppearance.BorderSize = 0;
-            this.btnNgListClear_.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Tomato;
-            this.btnNgListClear_.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Tomato;
-            this.btnNgListClear_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNgListClear_.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNgListClear_.ForeColor = System.Drawing.Color.White;
-            this.btnNgListClear_.HighEmphasis = true;
-            this.btnNgListClear_.Icon = null;
-            this.btnNgListClear_.Location = new System.Drawing.Point(439, 47);
-            this.btnNgListClear_.Margin = new System.Windows.Forms.Padding(0);
-            this.btnNgListClear_.MaximumSize = new System.Drawing.Size(128, 23);
-            this.btnNgListClear_.MinimumSize = new System.Drawing.Size(128, 23);
-            this.btnNgListClear_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnNgListClear_.Name = "btnNgListClear_";
-            this.btnNgListClear_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnNgListClear_.Size = new System.Drawing.Size(128, 23);
-            this.btnNgListClear_.TabIndex = 99;
-            this.btnNgListClear_.Text = "Ng Log Reset";
-            this.btnNgListClear_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnNgListClear_.UseAccentColor = false;
-            this.btnNgListClear_.UseVisualStyleBackColor = false;
-            // 
-            // lblErrorNotice
-            // 
-            this.lblErrorNotice.BackColor = System.Drawing.Color.Transparent;
-            this.lblErrorNotice.Depth = 0;
-            this.lblErrorNotice.Font = new System.Drawing.Font("NanumSquareRound Bold", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.lblErrorNotice.FontType = MaterialSkin.MaterialSkinManager.fontType.H3;
-            this.lblErrorNotice.ForeColor = System.Drawing.Color.White;
-            this.lblErrorNotice.Location = new System.Drawing.Point(0, 5);
-            this.lblErrorNotice.Margin = new System.Windows.Forms.Padding(0);
-            this.lblErrorNotice.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblErrorNotice.Name = "lblErrorNotice";
-            this.lblErrorNotice.Size = new System.Drawing.Size(400, 65);
-            this.lblErrorNotice.TabIndex = 100;
-            this.lblErrorNotice.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.panelNgListViewHeader, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.ltvNG, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.rtbLog, 0, 2);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 535F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(567, 726);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // panelNgListViewHeader
-            // 
-            this.panelNgListViewHeader.BackColor = System.Drawing.SystemColors.Control;
-            this.panelNgListViewHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelNgListViewHeader.Controls.Add(this.lblDashDate);
-            this.panelNgListViewHeader.Controls.Add(this.lblDashType);
-            this.panelNgListViewHeader.Controls.Add(this.lblDashCarSeqNum);
-            this.panelNgListViewHeader.Controls.Add(this.lblDashCarType);
-            this.panelNgListViewHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelNgListViewHeader.Margin = new System.Windows.Forms.Padding(0);
-            this.panelNgListViewHeader.Name = "panelNgListViewHeader";
-            this.panelNgListViewHeader.Size = new System.Drawing.Size(567, 30);
-            this.panelNgListViewHeader.TabIndex = 101;
-            // 
-            // lblDashDate
-            // 
-            this.lblDashDate.BackColor = System.Drawing.Color.Transparent;
-            this.lblDashDate.Depth = 0;
-            this.lblDashDate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblDashDate.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblDashDate.Location = new System.Drawing.Point(344, 0);
-            this.lblDashDate.Margin = new System.Windows.Forms.Padding(0);
-            this.lblDashDate.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblDashDate.Name = "lblDashDate";
-            this.lblDashDate.Size = new System.Drawing.Size(221, 28);
-            this.lblDashDate.TabIndex = 3;
-            this.lblDashDate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblDashType
-            // 
-            this.lblDashType.BackColor = System.Drawing.Color.Transparent;
-            this.lblDashType.Depth = 0;
-            this.lblDashType.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblDashType.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblDashType.Location = new System.Drawing.Point(226, 0);
-            this.lblDashType.Margin = new System.Windows.Forms.Padding(0);
-            this.lblDashType.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblDashType.Name = "lblDashType";
-            this.lblDashType.Size = new System.Drawing.Size(120, 28);
-            this.lblDashType.TabIndex = 2;
-            this.lblDashType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblDashCarSeqNum
-            // 
-            this.lblDashCarSeqNum.BackColor = System.Drawing.Color.Transparent;
-            this.lblDashCarSeqNum.Depth = 0;
-            this.lblDashCarSeqNum.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblDashCarSeqNum.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblDashCarSeqNum.Location = new System.Drawing.Point(113, 0);
-            this.lblDashCarSeqNum.Margin = new System.Windows.Forms.Padding(0);
-            this.lblDashCarSeqNum.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblDashCarSeqNum.Name = "lblDashCarSeqNum";
-            this.lblDashCarSeqNum.Size = new System.Drawing.Size(113, 28);
-            this.lblDashCarSeqNum.TabIndex = 1;
-            this.lblDashCarSeqNum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblDashCarType
-            // 
-            this.lblDashCarType.BackColor = System.Drawing.Color.Transparent;
-            this.lblDashCarType.Depth = 0;
-            this.lblDashCarType.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblDashCarType.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblDashCarType.Location = new System.Drawing.Point(0, 0);
-            this.lblDashCarType.Margin = new System.Windows.Forms.Padding(0);
-            this.lblDashCarType.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblDashCarType.Name = "lblDashCarType";
-            this.lblDashCarType.Size = new System.Drawing.Size(113, 28);
-            this.lblDashCarType.TabIndex = 0;
-            this.lblDashCarType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ltvNG
-            // 
-            this.ltvNG.FullRowSelect = true;
-            this.ltvNG.GridLines = true;
-            this.ltvNG.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.ltvNG.HideSelection = false;
-            this.ltvNG.Location = new System.Drawing.Point(0, 30);
-            this.ltvNG.Margin = new System.Windows.Forms.Padding(0);
-            this.ltvNG.MultiSelect = false;
-            this.ltvNG.Name = "ltvNG";
-            this.ltvNG.Size = new System.Drawing.Size(567, 191);
-            this.ltvNG.TabIndex = 52;
-            this.ltvNG.UseCompatibleStateImageBehavior = false;
-            this.ltvNG.View = System.Windows.Forms.View.Details;
-            // 
-            // rtbLog
-            // 
-            this.rtbLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.rtbLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbLog.Depth = 0;
-            this.rtbLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.rtbLog.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rtbLog.Location = new System.Drawing.Point(0, 221);
-            this.rtbLog.Margin = new System.Windows.Forms.Padding(0);
-            this.rtbLog.MouseState = MaterialSkin.MouseState.HOVER;
-            this.rtbLog.Name = "rtbLog";
-            this.rtbLog.Size = new System.Drawing.Size(567, 501);
-            this.rtbLog.TabIndex = 51;
-            this.rtbLog.Text = "";
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(571, 123);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 97;
-            this.pictureBox2.TabStop = false;
-            // 
-            // tbGlassMaxValueRz
-            // 
-            this.tbGlassMaxValueRz.AnimateReadOnly = false;
-            this.tbGlassMaxValueRz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassMaxValueRz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassMaxValueRz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassMaxValueRz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassMaxValueRz.Depth = 0;
-            this.tbGlassMaxValueRz.Font = new System.Drawing.Font("NanumSquareRound Bold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassMaxValueRz.HideSelection = true;
-            this.tbGlassMaxValueRz.LeadingIcon = null;
-            this.tbGlassMaxValueRz.Location = new System.Drawing.Point(0, 0);
-            this.tbGlassMaxValueRz.MaxLength = 32767;
-            this.tbGlassMaxValueRz.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassMaxValueRz.Name = "tbGlassMaxValueRz";
-            this.tbGlassMaxValueRz.PasswordChar = '\0';
-            this.tbGlassMaxValueRz.PrefixSuffixText = null;
-            this.tbGlassMaxValueRz.ReadOnly = false;
-            this.tbGlassMaxValueRz.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassMaxValueRz.SelectedText = "";
-            this.tbGlassMaxValueRz.SelectionLength = 0;
-            this.tbGlassMaxValueRz.SelectionStart = 0;
-            this.tbGlassMaxValueRz.ShortcutsEnabled = true;
-            this.tbGlassMaxValueRz.Size = new System.Drawing.Size(250, 48);
-            this.tbGlassMaxValueRz.TabIndex = 0;
-            this.tbGlassMaxValueRz.TabStop = false;
-            this.tbGlassMaxValueRz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassMaxValueRz.TrailingIcon = null;
-            this.tbGlassMaxValueRz.UseSystemPasswordChar = false;
-            // 
-            // label90
-            // 
-            this.label90.Depth = 0;
-            this.label90.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label90.Location = new System.Drawing.Point(0, 0);
-            this.label90.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label90.Name = "label90";
-            this.label90.Size = new System.Drawing.Size(100, 23);
-            this.label90.TabIndex = 0;
-            // 
-            // tbGlassMaxValueTy
-            // 
-            this.tbGlassMaxValueTy.AnimateReadOnly = false;
-            this.tbGlassMaxValueTy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassMaxValueTy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassMaxValueTy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassMaxValueTy.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassMaxValueTy.Depth = 0;
-            this.tbGlassMaxValueTy.Font = new System.Drawing.Font("NanumSquareRound Bold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassMaxValueTy.HideSelection = true;
-            this.tbGlassMaxValueTy.LeadingIcon = null;
-            this.tbGlassMaxValueTy.Location = new System.Drawing.Point(0, 0);
-            this.tbGlassMaxValueTy.MaxLength = 32767;
-            this.tbGlassMaxValueTy.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassMaxValueTy.Name = "tbGlassMaxValueTy";
-            this.tbGlassMaxValueTy.PasswordChar = '\0';
-            this.tbGlassMaxValueTy.PrefixSuffixText = null;
-            this.tbGlassMaxValueTy.ReadOnly = false;
-            this.tbGlassMaxValueTy.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassMaxValueTy.SelectedText = "";
-            this.tbGlassMaxValueTy.SelectionLength = 0;
-            this.tbGlassMaxValueTy.SelectionStart = 0;
-            this.tbGlassMaxValueTy.ShortcutsEnabled = true;
-            this.tbGlassMaxValueTy.Size = new System.Drawing.Size(250, 48);
-            this.tbGlassMaxValueTy.TabIndex = 0;
-            this.tbGlassMaxValueTy.TabStop = false;
-            this.tbGlassMaxValueTy.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassMaxValueTy.TrailingIcon = null;
-            this.tbGlassMaxValueTy.UseSystemPasswordChar = false;
-            // 
-            // label94
-            // 
-            this.label94.Depth = 0;
-            this.label94.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label94.Location = new System.Drawing.Point(0, 0);
-            this.label94.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label94.Name = "label94";
-            this.label94.Size = new System.Drawing.Size(100, 23);
-            this.label94.TabIndex = 0;
-            // 
-            // tbGlassMaxValueTx
-            // 
-            this.tbGlassMaxValueTx.AnimateReadOnly = false;
-            this.tbGlassMaxValueTx.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassMaxValueTx.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassMaxValueTx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassMaxValueTx.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassMaxValueTx.Depth = 0;
-            this.tbGlassMaxValueTx.Font = new System.Drawing.Font("NanumSquareRound Bold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassMaxValueTx.HideSelection = true;
-            this.tbGlassMaxValueTx.LeadingIcon = null;
-            this.tbGlassMaxValueTx.Location = new System.Drawing.Point(0, 0);
-            this.tbGlassMaxValueTx.MaxLength = 32767;
-            this.tbGlassMaxValueTx.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassMaxValueTx.Name = "tbGlassMaxValueTx";
-            this.tbGlassMaxValueTx.PasswordChar = '\0';
-            this.tbGlassMaxValueTx.PrefixSuffixText = null;
-            this.tbGlassMaxValueTx.ReadOnly = false;
-            this.tbGlassMaxValueTx.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassMaxValueTx.SelectedText = "";
-            this.tbGlassMaxValueTx.SelectionLength = 0;
-            this.tbGlassMaxValueTx.SelectionStart = 0;
-            this.tbGlassMaxValueTx.ShortcutsEnabled = true;
-            this.tbGlassMaxValueTx.Size = new System.Drawing.Size(250, 48);
-            this.tbGlassMaxValueTx.TabIndex = 0;
-            this.tbGlassMaxValueTx.TabStop = false;
-            this.tbGlassMaxValueTx.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassMaxValueTx.TrailingIcon = null;
-            this.tbGlassMaxValueTx.UseSystemPasswordChar = false;
-            // 
-            // label95
-            // 
-            this.label95.Depth = 0;
-            this.label95.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label95.Location = new System.Drawing.Point(0, 0);
-            this.label95.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label95.Name = "label95";
-            this.label95.Size = new System.Drawing.Size(100, 23);
-            this.label95.TabIndex = 0;
-            // 
-            // glassWriteSignalStatus
-            // 
-            this.glassWriteSignalStatus.Location = new System.Drawing.Point(0, 0);
-            this.glassWriteSignalStatus.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.glassWriteSignalStatus.Name = "glassWriteSignalStatus";
-            this.glassWriteSignalStatus.RowCount = 3;
-            this.glassWriteSignalStatus.RowHeight = 30;
-            this.glassWriteSignalStatus.Size = new System.Drawing.Size(153, 94);
-            this.glassWriteSignalStatus.TabIndex = 0;
-            // 
-            // glassWriteSignal2Status
-            // 
-            this.glassWriteSignal2Status.ColumnWidth1 = 100;
-            this.glassWriteSignal2Status.ColumnWidth2 = 50;
-            this.glassWriteSignal2Status.Location = new System.Drawing.Point(0, 0);
-            this.glassWriteSignal2Status.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.glassWriteSignal2Status.Name = "glassWriteSignal2Status";
-            this.glassWriteSignal2Status.RowCount = 3;
-            this.glassWriteSignal2Status.RowHeight = 30;
-            this.glassWriteSignal2Status.Size = new System.Drawing.Size(153, 94);
-            this.glassWriteSignal2Status.TabIndex = 0;
-            // 
-            // label92
-            // 
-            this.label92.Depth = 0;
-            this.label92.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label92.Location = new System.Drawing.Point(0, 0);
-            this.label92.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label92.Name = "label92";
-            this.label92.Size = new System.Drawing.Size(100, 23);
-            this.label92.TabIndex = 0;
-            // 
-            // textBox1
-            // 
-            this.textBox1.AnimateReadOnly = false;
-            this.textBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.textBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.textBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.textBox1.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.textBox1.Depth = 0;
-            this.textBox1.Font = new System.Drawing.Font("NanumSquareRound Bold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.textBox1.HideSelection = true;
-            this.textBox1.LeadingIcon = null;
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
-            this.textBox1.MaxLength = 32767;
-            this.textBox1.MouseState = MaterialSkin.MouseState.OUT;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.PasswordChar = '\0';
-            this.textBox1.PrefixSuffixText = null;
-            this.textBox1.ReadOnly = false;
-            this.textBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.textBox1.SelectedText = "";
-            this.textBox1.SelectionLength = 0;
-            this.textBox1.SelectionStart = 0;
-            this.textBox1.ShortcutsEnabled = true;
-            this.textBox1.Size = new System.Drawing.Size(250, 48);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.TabStop = false;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.textBox1.TrailingIcon = null;
-            this.textBox1.UseSystemPasswordChar = false;
-            // 
-            // lblGlassCameraModel_
-            // 
-            this.lblGlassCameraModel_.Depth = 0;
-            this.lblGlassCameraModel_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblGlassCameraModel_.Location = new System.Drawing.Point(0, 0);
-            this.lblGlassCameraModel_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblGlassCameraModel_.Name = "lblGlassCameraModel_";
-            this.lblGlassCameraModel_.Size = new System.Drawing.Size(100, 23);
-            this.lblGlassCameraModel_.TabIndex = 0;
-            // 
-            // lblGlassCameraSerials_
-            // 
-            this.lblGlassCameraSerials_.Depth = 0;
-            this.lblGlassCameraSerials_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblGlassCameraSerials_.Location = new System.Drawing.Point(0, 0);
-            this.lblGlassCameraSerials_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblGlassCameraSerials_.Name = "lblGlassCameraSerials_";
-            this.lblGlassCameraSerials_.Size = new System.Drawing.Size(100, 23);
-            this.lblGlassCameraSerials_.TabIndex = 0;
-            // 
-            // tbGlassCamera
-            // 
-            this.tbGlassCamera.AnimateReadOnly = false;
-            this.tbGlassCamera.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassCamera.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassCamera.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassCamera.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassCamera.Depth = 0;
-            this.tbGlassCamera.Font = new System.Drawing.Font("NanumSquareRound Bold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassCamera.HideSelection = true;
-            this.tbGlassCamera.LeadingIcon = null;
-            this.tbGlassCamera.Location = new System.Drawing.Point(0, 0);
-            this.tbGlassCamera.MaxLength = 32767;
-            this.tbGlassCamera.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassCamera.Name = "tbGlassCamera";
-            this.tbGlassCamera.PasswordChar = '\0';
-            this.tbGlassCamera.PrefixSuffixText = null;
-            this.tbGlassCamera.ReadOnly = false;
-            this.tbGlassCamera.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassCamera.SelectedText = "";
-            this.tbGlassCamera.SelectionLength = 0;
-            this.tbGlassCamera.SelectionStart = 0;
-            this.tbGlassCamera.ShortcutsEnabled = true;
-            this.tbGlassCamera.Size = new System.Drawing.Size(250, 48);
-            this.tbGlassCamera.TabIndex = 0;
-            this.tbGlassCamera.TabStop = false;
-            this.tbGlassCamera.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassCamera.TrailingIcon = null;
-            this.tbGlassCamera.UseSystemPasswordChar = false;
-            // 
-            // lblGlassCamera_
-            // 
-            this.lblGlassCamera_.Depth = 0;
-            this.lblGlassCamera_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblGlassCamera_.Location = new System.Drawing.Point(0, 0);
-            this.lblGlassCamera_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblGlassCamera_.Name = "lblGlassCamera_";
-            this.lblGlassCamera_.Size = new System.Drawing.Size(100, 23);
-            this.lblGlassCamera_.TabIndex = 0;
-            // 
-            // tbGlassCameraModel
-            // 
-            this.tbGlassCameraModel.AnimateReadOnly = false;
-            this.tbGlassCameraModel.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassCameraModel.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassCameraModel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassCameraModel.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassCameraModel.Depth = 0;
-            this.tbGlassCameraModel.Font = new System.Drawing.Font("NanumSquareRound Bold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassCameraModel.HideSelection = true;
-            this.tbGlassCameraModel.LeadingIcon = null;
-            this.tbGlassCameraModel.Location = new System.Drawing.Point(0, 0);
-            this.tbGlassCameraModel.MaxLength = 32767;
-            this.tbGlassCameraModel.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassCameraModel.Name = "tbGlassCameraModel";
-            this.tbGlassCameraModel.PasswordChar = '\0';
-            this.tbGlassCameraModel.PrefixSuffixText = null;
-            this.tbGlassCameraModel.ReadOnly = false;
-            this.tbGlassCameraModel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassCameraModel.SelectedText = "";
-            this.tbGlassCameraModel.SelectionLength = 0;
-            this.tbGlassCameraModel.SelectionStart = 0;
-            this.tbGlassCameraModel.ShortcutsEnabled = true;
-            this.tbGlassCameraModel.Size = new System.Drawing.Size(250, 48);
-            this.tbGlassCameraModel.TabIndex = 0;
-            this.tbGlassCameraModel.TabStop = false;
-            this.tbGlassCameraModel.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassCameraModel.TrailingIcon = null;
-            this.tbGlassCameraModel.UseSystemPasswordChar = false;
-            // 
-            // glassReadSignalStatus
-            // 
-            this.glassReadSignalStatus.Location = new System.Drawing.Point(0, 0);
-            this.glassReadSignalStatus.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.glassReadSignalStatus.Name = "glassReadSignalStatus";
-            this.glassReadSignalStatus.RowCount = 3;
-            this.glassReadSignalStatus.RowHeight = 30;
-            this.glassReadSignalStatus.Size = new System.Drawing.Size(153, 94);
-            this.glassReadSignalStatus.TabIndex = 0;
-            // 
-            // carTypeSignalStatus
-            // 
-            this.carTypeSignalStatus.ColumnWidth1 = 100;
-            this.carTypeSignalStatus.ColumnWidth2 = 50;
-            this.carTypeSignalStatus.Location = new System.Drawing.Point(0, 0);
-            this.carTypeSignalStatus.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.carTypeSignalStatus.Name = "carTypeSignalStatus";
-            this.carTypeSignalStatus.RowCount = 3;
-            this.carTypeSignalStatus.RowHeight = 30;
-            this.carTypeSignalStatus.Size = new System.Drawing.Size(153, 94);
-            this.carTypeSignalStatus.TabIndex = 0;
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.DefaultExt = "yml";
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "YAML(*.yml;*.yaml)|*.yml;*.yaml|All files|*.*";
-            this.openFileDialog1.ShowHelp = true;
-            // 
-            // gbMode
-            // 
-            this.gbMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.gbMode.Controls.Add(this.rbManual_);
-            this.gbMode.Controls.Add(this.rbSet_);
-            this.gbMode.Controls.Add(this.rbAuto_);
-            this.gbMode.Depth = 0;
-            this.gbMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gbMode.Location = new System.Drawing.Point(8, 7);
-            this.gbMode.Margin = new System.Windows.Forms.Padding(14);
-            this.gbMode.MouseState = MaterialSkin.MouseState.HOVER;
-            this.gbMode.Name = "gbMode";
-            this.gbMode.Padding = new System.Windows.Forms.Padding(14);
-            this.gbMode.Size = new System.Drawing.Size(297, 62);
-            this.gbMode.TabIndex = 0;
-            // 
-            // rbManual_
-            // 
-            this.rbManual_.AutoSize = true;
-            this.rbManual_.Depth = 0;
-            this.rbManual_.Location = new System.Drawing.Point(99, 12);
-            this.rbManual_.Margin = new System.Windows.Forms.Padding(0);
-            this.rbManual_.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.rbManual_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.rbManual_.Name = "rbManual_";
-            this.rbManual_.Ripple = true;
-            this.rbManual_.Size = new System.Drawing.Size(91, 37);
-            this.rbManual_.TabIndex = 2;
-            this.rbManual_.TabStop = true;
-            this.rbManual_.Text = "Manual";
-            this.rbManual_.UseVisualStyleBackColor = true;
-            // 
-            // rbSet_
-            // 
-            this.rbSet_.AutoSize = true;
-            this.rbSet_.Checked = true;
-            this.rbSet_.Depth = 0;
-            this.rbSet_.Font = new System.Drawing.Font("Consolas", 12F);
-            this.rbSet_.Location = new System.Drawing.Point(193, 12);
-            this.rbSet_.Margin = new System.Windows.Forms.Padding(0);
-            this.rbSet_.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.rbSet_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.rbSet_.Name = "rbSet_";
-            this.rbSet_.Ripple = true;
-            this.rbSet_.Size = new System.Drawing.Size(90, 37);
-            this.rbSet_.TabIndex = 1;
-            this.rbSet_.TabStop = true;
-            this.rbSet_.Text = "Setting";
-            this.rbSet_.UseVisualStyleBackColor = true;
-            // 
-            // rbAuto_
-            // 
-            this.rbAuto_.AutoSize = true;
-            this.rbAuto_.Depth = 0;
-            this.rbAuto_.Font = new System.Drawing.Font("Consolas", 12F);
-            this.rbAuto_.Location = new System.Drawing.Point(9, 12);
-            this.rbAuto_.Margin = new System.Windows.Forms.Padding(0);
-            this.rbAuto_.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.rbAuto_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.rbAuto_.Name = "rbAuto_";
-            this.rbAuto_.Ripple = true;
-            this.rbAuto_.Size = new System.Drawing.Size(72, 37);
-            this.rbAuto_.TabIndex = 0;
-            this.rbAuto_.Text = "Auto";
-            this.rbAuto_.UseVisualStyleBackColor = true;
-            // 
-            // gbPLC
-            // 
-            this.gbPLC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.gbPLC.Controls.Add(this.tbPlc);
-            this.gbPLC.Depth = 0;
-            this.gbPLC.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gbPLC.Location = new System.Drawing.Point(310, 7);
-            this.gbPLC.Margin = new System.Windows.Forms.Padding(14);
-            this.gbPLC.MouseState = MaterialSkin.MouseState.HOVER;
-            this.gbPLC.Name = "gbPLC";
-            this.gbPLC.Padding = new System.Windows.Forms.Padding(14);
-            this.gbPLC.Size = new System.Drawing.Size(299, 62);
-            this.gbPLC.TabIndex = 27;
-            // 
-            // tbPlc
-            // 
-            this.tbPlc.AnimateReadOnly = false;
-            this.tbPlc.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbPlc.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbPlc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbPlc.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbPlc.Depth = 0;
-            this.tbPlc.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbPlc.HideSelection = true;
-            this.tbPlc.LeadingIcon = null;
-            this.tbPlc.Location = new System.Drawing.Point(127, 9);
-            this.tbPlc.MaxLength = 32767;
-            this.tbPlc.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbPlc.Name = "tbPlc";
-            this.tbPlc.PasswordChar = '\0';
-            this.tbPlc.PrefixSuffixText = null;
-            this.tbPlc.ReadOnly = true;
-            this.tbPlc.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbPlc.SelectedText = "";
-            this.tbPlc.SelectionLength = 0;
-            this.tbPlc.SelectionStart = 0;
-            this.tbPlc.ShortcutsEnabled = true;
-            this.tbPlc.Size = new System.Drawing.Size(166, 48);
-            this.tbPlc.TabIndex = 140;
-            this.tbPlc.TabStop = false;
-            this.tbPlc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.tbPlc.TrailingIcon = null;
-            this.tbPlc.UseSystemPasswordChar = false;
-            // 
-            // gbCarType
-            // 
-            this.gbCarType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.gbCarType.Controls.Add(this.tbCarType);
-            this.gbCarType.Controls.Add(this.cmbCarTypeName);
-            this.gbCarType.Depth = 0;
-            this.gbCarType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gbCarType.Location = new System.Drawing.Point(615, 7);
-            this.gbCarType.Margin = new System.Windows.Forms.Padding(14);
-            this.gbCarType.MouseState = MaterialSkin.MouseState.HOVER;
-            this.gbCarType.Name = "gbCarType";
-            this.gbCarType.Padding = new System.Windows.Forms.Padding(14);
-            this.gbCarType.Size = new System.Drawing.Size(315, 62);
-            this.gbCarType.TabIndex = 1;
-            // 
-            // tbCarType
-            // 
-            this.tbCarType.AnimateReadOnly = false;
-            this.tbCarType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbCarType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbCarType.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbCarType.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbCarType.Depth = 0;
-            this.tbCarType.Font = new System.Drawing.Font("굴림", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.tbCarType.HideSelection = true;
-            this.tbCarType.LeadingIcon = null;
-            this.tbCarType.Location = new System.Drawing.Point(228, 8);
-            this.tbCarType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tbCarType.MaxLength = 32767;
-            this.tbCarType.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbCarType.Name = "tbCarType";
-            this.tbCarType.PasswordChar = '\0';
-            this.tbCarType.PrefixSuffixText = null;
-            this.tbCarType.ReadOnly = true;
-            this.tbCarType.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbCarType.SelectedText = "";
-            this.tbCarType.SelectionLength = 0;
-            this.tbCarType.SelectionStart = 0;
-            this.tbCarType.ShortcutsEnabled = true;
-            this.tbCarType.Size = new System.Drawing.Size(73, 48);
-            this.tbCarType.TabIndex = 1;
-            this.tbCarType.TabStop = false;
-            this.tbCarType.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbCarType.TrailingIcon = null;
-            this.tbCarType.UseSystemPasswordChar = false;
-            // 
-            // cmbCarTypeName
-            // 
-            this.cmbCarTypeName.AutoResize = false;
-            this.cmbCarTypeName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cmbCarTypeName.Depth = 0;
-            this.cmbCarTypeName.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.cmbCarTypeName.DropDownHeight = 174;
-            this.cmbCarTypeName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCarTypeName.DropDownWidth = 121;
-            this.cmbCarTypeName.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbCarTypeName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cmbCarTypeName.FormattingEnabled = true;
-            this.cmbCarTypeName.IntegralHeight = false;
-            this.cmbCarTypeName.ItemHeight = 43;
-            this.cmbCarTypeName.Location = new System.Drawing.Point(12, 8);
-            this.cmbCarTypeName.MaxDropDownItems = 4;
-            this.cmbCarTypeName.MouseState = MaterialSkin.MouseState.OUT;
-            this.cmbCarTypeName.Name = "cmbCarTypeName";
-            this.cmbCarTypeName.Size = new System.Drawing.Size(204, 49);
-            this.cmbCarTypeName.StartIndex = 0;
-            this.cmbCarTypeName.TabIndex = 0;
-            // 
-            // btnCameraConnect_
-            // 
-            this.btnCameraConnect_.AutoSize = false;
-            this.btnCameraConnect_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnCameraConnect_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(208)))), ((int)(((byte)(65)))));
-            this.btnCameraConnect_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnCameraConnect_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnCameraConnect_.Depth = 0;
-            this.btnCameraConnect_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCameraConnect_.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.btnCameraConnect_.HighEmphasis = true;
-            this.btnCameraConnect_.Icon = null;
-            this.btnCameraConnect_.Location = new System.Drawing.Point(1534, 18);
-            this.btnCameraConnect_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnCameraConnect_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnCameraConnect_.Name = "btnCameraConnect_";
-            this.btnCameraConnect_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnCameraConnect_.Size = new System.Drawing.Size(177, 33);
-            this.btnCameraConnect_.TabIndex = 106;
-            this.btnCameraConnect_.Text = "Camera Connect";
-            this.btnCameraConnect_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnCameraConnect_.UseAccentColor = false;
-            this.btnCameraConnect_.UseVisualStyleBackColor = false;
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.BackColor = System.Drawing.Color.White;
-            this.splitContainer1.Panel1.Controls.Add(this.gbCarSeqNumber_);
-            this.splitContainer1.Panel1.Controls.Add(this.gbPLC);
-            this.splitContainer1.Panel1.Controls.Add(this.btnCameraConnect_);
-            this.splitContainer1.Panel1.Controls.Add(this.btnSettingManager_);
-            this.splitContainer1.Panel1.Controls.Add(this.gbMode);
-            this.splitContainer1.Panel1.Controls.Add(this.gbCarType);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1920, 1061);
-            this.splitContainer1.SplitterDistance = 68;
-            this.splitContainer1.SplitterWidth = 1;
-            this.splitContainer1.TabIndex = 106;
-            this.splitContainer1.TabStop = false;
-            // 
-            // gbCarSeqNumber_
-            // 
-            this.gbCarSeqNumber_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.gbCarSeqNumber_.Controls.Add(this.tbCarSeqNumber);
-            this.gbCarSeqNumber_.Depth = 0;
-            this.gbCarSeqNumber_.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gbCarSeqNumber_.Location = new System.Drawing.Point(936, 7);
-            this.gbCarSeqNumber_.Margin = new System.Windows.Forms.Padding(14);
-            this.gbCarSeqNumber_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.gbCarSeqNumber_.Name = "gbCarSeqNumber_";
-            this.gbCarSeqNumber_.Padding = new System.Windows.Forms.Padding(14);
-            this.gbCarSeqNumber_.Size = new System.Drawing.Size(150, 62);
-            this.gbCarSeqNumber_.TabIndex = 107;
-            this.gbCarSeqNumber_.Visible = false;
-            // 
-            // tbCarSeqNumber
-            // 
-            this.tbCarSeqNumber.AnimateReadOnly = false;
-            this.tbCarSeqNumber.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbCarSeqNumber.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbCarSeqNumber.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbCarSeqNumber.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbCarSeqNumber.Depth = 0;
-            this.tbCarSeqNumber.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbCarSeqNumber.HideSelection = true;
-            this.tbCarSeqNumber.LeadingIcon = null;
-            this.tbCarSeqNumber.Location = new System.Drawing.Point(15, 8);
-            this.tbCarSeqNumber.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tbCarSeqNumber.MaxLength = 32767;
-            this.tbCarSeqNumber.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbCarSeqNumber.Name = "tbCarSeqNumber";
-            this.tbCarSeqNumber.PasswordChar = '\0';
-            this.tbCarSeqNumber.PrefixSuffixText = null;
-            this.tbCarSeqNumber.ReadOnly = true;
-            this.tbCarSeqNumber.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbCarSeqNumber.SelectedText = "";
-            this.tbCarSeqNumber.SelectionLength = 0;
-            this.tbCarSeqNumber.SelectionStart = 0;
-            this.tbCarSeqNumber.ShortcutsEnabled = true;
-            this.tbCarSeqNumber.Size = new System.Drawing.Size(122, 48);
-            this.tbCarSeqNumber.TabIndex = 0;
-            this.tbCarSeqNumber.TabStop = false;
-            this.tbCarSeqNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.tbCarSeqNumber.TrailingIcon = null;
-            this.tbCarSeqNumber.UseSystemPasswordChar = false;
-            // 
-            // btnSettingManager_
-            // 
-            this.btnSettingManager_.AutoSize = false;
-            this.btnSettingManager_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSettingManager_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(208)))), ((int)(((byte)(65)))));
-            this.btnSettingManager_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnSettingManager_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnSettingManager_.Depth = 0;
-            this.btnSettingManager_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnSettingManager_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSettingManager_.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.btnSettingManager_.ForeColor = System.Drawing.Color.Black;
-            this.btnSettingManager_.HighEmphasis = true;
-            this.btnSettingManager_.Icon = null;
-            this.btnSettingManager_.Location = new System.Drawing.Point(1717, 18);
-            this.btnSettingManager_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnSettingManager_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnSettingManager_.Name = "btnSettingManager_";
-            this.btnSettingManager_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnSettingManager_.Size = new System.Drawing.Size(181, 33);
-            this.btnSettingManager_.TabIndex = 3;
-            this.btnSettingManager_.Text = "Setting Manager";
-            this.btnSettingManager_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnSettingManager_.UseAccentColor = false;
-            this.btnSettingManager_.UseVisualStyleBackColor = false;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Depth = 0;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label22.Location = new System.Drawing.Point(9, 114);
-            this.label22.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(44, 12);
-            this.label22.TabIndex = 71;
-            this.label22.Text = "label22";
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(571, 123);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox4.TabIndex = 98;
-            this.pictureBox4.TabStop = false;
+            // pbRh
+            // 
+            this.pbRh.BackColor = System.Drawing.Color.LightGray;
+            this.pbRh.Location = new System.Drawing.Point(561, 5);
+            this.pbRh.Name = "pbRh";
+            this.pbRh.Size = new System.Drawing.Size(542, 532);
+            this.pbRh.TabIndex = 193;
+            this.pbRh.TabStop = false;
+            // 
+            // pbLh
+            // 
+            this.pbLh.BackColor = System.Drawing.Color.LightGray;
+            this.pbLh.Location = new System.Drawing.Point(8, 5);
+            this.pbLh.Name = "pbLh";
+            this.pbLh.Size = new System.Drawing.Size(542, 532);
+            this.pbLh.TabIndex = 193;
+            this.pbLh.TabStop = false;
             // 
             // materialCard4
             // 
@@ -1692,6 +868,7 @@ namespace loadingBox2dGui
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.Color.LightGray;
             this.pictureBox1.Location = new System.Drawing.Point(1110, 128);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(223, 124);
@@ -1738,6 +915,7 @@ namespace loadingBox2dGui
             // 
             // pictureBox3
             // 
+            this.pictureBox3.BackColor = System.Drawing.Color.LightGray;
             this.pictureBox3.Location = new System.Drawing.Point(1110, 2);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(223, 124);
@@ -2627,21 +1805,847 @@ namespace loadingBox2dGui
             this.tbGlassPointRy.UseSystemPasswordChar = false;
             this.tbGlassPointRy.UseTallSize = false;
             // 
-            // pbLh
+            // splitContainer3
             // 
-            this.pbLh.Location = new System.Drawing.Point(8, 5);
-            this.pbLh.Name = "pbLh";
-            this.pbLh.Size = new System.Drawing.Size(542, 532);
-            this.pbLh.TabIndex = 193;
-            this.pbLh.TabStop = false;
+            this.splitContainer3.IsSplitterFixed = true;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Margin = new System.Windows.Forms.Padding(0);
+            this.splitContainer3.Name = "splitContainer3";
+            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // pbRh
+            // splitContainer3.Panel1
             // 
-            this.pbRh.Location = new System.Drawing.Point(561, 5);
-            this.pbRh.Name = "pbRh";
-            this.pbRh.Size = new System.Drawing.Size(542, 532);
-            this.pbRh.TabIndex = 193;
-            this.pbRh.TabStop = false;
+            this.splitContainer3.Panel1.Controls.Add(this.splitContainer5);
+            this.splitContainer3.Panel1.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.pictureBox4);
+            this.splitContainer3.Panel2.Controls.Add(this.pictureBox2);
+            this.splitContainer3.Size = new System.Drawing.Size(571, 925);
+            this.splitContainer3.SplitterDistance = 798;
+            this.splitContainer3.TabIndex = 98;
+            // 
+            // splitContainer5
+            // 
+            this.splitContainer5.IsSplitterFixed = true;
+            this.splitContainer5.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer5.Margin = new System.Windows.Forms.Padding(0);
+            this.splitContainer5.Name = "splitContainer5";
+            this.splitContainer5.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer5.Panel1
+            // 
+            this.splitContainer5.Panel1.Controls.Add(this.btnNgListClear_);
+            this.splitContainer5.Panel1.Controls.Add(this.lblErrorNotice);
+            this.splitContainer5.Panel1MinSize = 41;
+            // 
+            // splitContainer5.Panel2
+            // 
+            this.splitContainer5.Panel2.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainer5.Size = new System.Drawing.Size(570, 809);
+            this.splitContainer5.SplitterDistance = 71;
+            this.splitContainer5.SplitterWidth = 1;
+            this.splitContainer5.TabIndex = 0;
+            // 
+            // btnNgListClear_
+            // 
+            this.btnNgListClear_.AutoSize = false;
+            this.btnNgListClear_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnNgListClear_.BackColor = System.Drawing.Color.DimGray;
+            this.btnNgListClear_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnNgListClear_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnNgListClear_.Depth = 0;
+            this.btnNgListClear_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnNgListClear_.FlatAppearance.BorderSize = 0;
+            this.btnNgListClear_.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Tomato;
+            this.btnNgListClear_.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Tomato;
+            this.btnNgListClear_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNgListClear_.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNgListClear_.ForeColor = System.Drawing.Color.White;
+            this.btnNgListClear_.HighEmphasis = true;
+            this.btnNgListClear_.Icon = null;
+            this.btnNgListClear_.Location = new System.Drawing.Point(439, 47);
+            this.btnNgListClear_.Margin = new System.Windows.Forms.Padding(0);
+            this.btnNgListClear_.MaximumSize = new System.Drawing.Size(128, 23);
+            this.btnNgListClear_.MinimumSize = new System.Drawing.Size(128, 23);
+            this.btnNgListClear_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnNgListClear_.Name = "btnNgListClear_";
+            this.btnNgListClear_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnNgListClear_.Size = new System.Drawing.Size(128, 23);
+            this.btnNgListClear_.TabIndex = 99;
+            this.btnNgListClear_.Text = "Ng Log Reset";
+            this.btnNgListClear_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnNgListClear_.UseAccentColor = false;
+            this.btnNgListClear_.UseVisualStyleBackColor = false;
+            // 
+            // lblErrorNotice
+            // 
+            this.lblErrorNotice.BackColor = System.Drawing.Color.Transparent;
+            this.lblErrorNotice.Depth = 0;
+            this.lblErrorNotice.Font = new System.Drawing.Font("NanumSquareRound Bold", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblErrorNotice.FontType = MaterialSkin.MaterialSkinManager.fontType.H3;
+            this.lblErrorNotice.ForeColor = System.Drawing.Color.White;
+            this.lblErrorNotice.Location = new System.Drawing.Point(0, 5);
+            this.lblErrorNotice.Margin = new System.Windows.Forms.Padding(0);
+            this.lblErrorNotice.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblErrorNotice.Name = "lblErrorNotice";
+            this.lblErrorNotice.Size = new System.Drawing.Size(400, 65);
+            this.lblErrorNotice.TabIndex = 100;
+            this.lblErrorNotice.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.panelNgListViewHeader, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.ltvNG, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.rtbLog, 0, 2);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 535F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(567, 726);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // panelNgListViewHeader
+            // 
+            this.panelNgListViewHeader.BackColor = System.Drawing.SystemColors.Control;
+            this.panelNgListViewHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelNgListViewHeader.Controls.Add(this.lblDashDate);
+            this.panelNgListViewHeader.Controls.Add(this.lblDashType);
+            this.panelNgListViewHeader.Controls.Add(this.lblDashCarSeqNum);
+            this.panelNgListViewHeader.Controls.Add(this.lblDashCarType);
+            this.panelNgListViewHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelNgListViewHeader.Margin = new System.Windows.Forms.Padding(0);
+            this.panelNgListViewHeader.Name = "panelNgListViewHeader";
+            this.panelNgListViewHeader.Size = new System.Drawing.Size(567, 30);
+            this.panelNgListViewHeader.TabIndex = 101;
+            // 
+            // lblDashDate
+            // 
+            this.lblDashDate.BackColor = System.Drawing.Color.Transparent;
+            this.lblDashDate.Depth = 0;
+            this.lblDashDate.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblDashDate.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblDashDate.Location = new System.Drawing.Point(344, 0);
+            this.lblDashDate.Margin = new System.Windows.Forms.Padding(0);
+            this.lblDashDate.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblDashDate.Name = "lblDashDate";
+            this.lblDashDate.Size = new System.Drawing.Size(221, 28);
+            this.lblDashDate.TabIndex = 3;
+            this.lblDashDate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblDashType
+            // 
+            this.lblDashType.BackColor = System.Drawing.Color.Transparent;
+            this.lblDashType.Depth = 0;
+            this.lblDashType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblDashType.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblDashType.Location = new System.Drawing.Point(226, 0);
+            this.lblDashType.Margin = new System.Windows.Forms.Padding(0);
+            this.lblDashType.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblDashType.Name = "lblDashType";
+            this.lblDashType.Size = new System.Drawing.Size(120, 28);
+            this.lblDashType.TabIndex = 2;
+            this.lblDashType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblDashCarSeqNum
+            // 
+            this.lblDashCarSeqNum.BackColor = System.Drawing.Color.Transparent;
+            this.lblDashCarSeqNum.Depth = 0;
+            this.lblDashCarSeqNum.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblDashCarSeqNum.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblDashCarSeqNum.Location = new System.Drawing.Point(113, 0);
+            this.lblDashCarSeqNum.Margin = new System.Windows.Forms.Padding(0);
+            this.lblDashCarSeqNum.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblDashCarSeqNum.Name = "lblDashCarSeqNum";
+            this.lblDashCarSeqNum.Size = new System.Drawing.Size(113, 28);
+            this.lblDashCarSeqNum.TabIndex = 1;
+            this.lblDashCarSeqNum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblDashCarType
+            // 
+            this.lblDashCarType.BackColor = System.Drawing.Color.Transparent;
+            this.lblDashCarType.Depth = 0;
+            this.lblDashCarType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblDashCarType.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblDashCarType.Location = new System.Drawing.Point(0, 0);
+            this.lblDashCarType.Margin = new System.Windows.Forms.Padding(0);
+            this.lblDashCarType.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblDashCarType.Name = "lblDashCarType";
+            this.lblDashCarType.Size = new System.Drawing.Size(113, 28);
+            this.lblDashCarType.TabIndex = 0;
+            this.lblDashCarType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ltvNG
+            // 
+            this.ltvNG.FullRowSelect = true;
+            this.ltvNG.GridLines = true;
+            this.ltvNG.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.ltvNG.HideSelection = false;
+            this.ltvNG.Location = new System.Drawing.Point(0, 30);
+            this.ltvNG.Margin = new System.Windows.Forms.Padding(0);
+            this.ltvNG.MultiSelect = false;
+            this.ltvNG.Name = "ltvNG";
+            this.ltvNG.Size = new System.Drawing.Size(567, 191);
+            this.ltvNG.TabIndex = 52;
+            this.ltvNG.UseCompatibleStateImageBehavior = false;
+            this.ltvNG.View = System.Windows.Forms.View.Details;
+            // 
+            // rtbLog
+            // 
+            this.rtbLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.rtbLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbLog.Depth = 0;
+            this.rtbLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.rtbLog.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.rtbLog.Location = new System.Drawing.Point(0, 221);
+            this.rtbLog.Margin = new System.Windows.Forms.Padding(0);
+            this.rtbLog.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rtbLog.Name = "rtbLog";
+            this.rtbLog.Size = new System.Drawing.Size(567, 501);
+            this.rtbLog.TabIndex = 51;
+            this.rtbLog.Text = "";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(571, 123);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 98;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(571, 123);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 97;
+            this.pictureBox2.TabStop = false;
+            // 
+            // tbGlassMaxValueRz
+            // 
+            this.tbGlassMaxValueRz.AnimateReadOnly = false;
+            this.tbGlassMaxValueRz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbGlassMaxValueRz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbGlassMaxValueRz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbGlassMaxValueRz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbGlassMaxValueRz.Depth = 0;
+            this.tbGlassMaxValueRz.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbGlassMaxValueRz.HideSelection = true;
+            this.tbGlassMaxValueRz.LeadingIcon = null;
+            this.tbGlassMaxValueRz.Location = new System.Drawing.Point(0, 0);
+            this.tbGlassMaxValueRz.MaxLength = 32767;
+            this.tbGlassMaxValueRz.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbGlassMaxValueRz.Name = "tbGlassMaxValueRz";
+            this.tbGlassMaxValueRz.PasswordChar = '\0';
+            this.tbGlassMaxValueRz.PrefixSuffixText = null;
+            this.tbGlassMaxValueRz.ReadOnly = false;
+            this.tbGlassMaxValueRz.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbGlassMaxValueRz.SelectedText = "";
+            this.tbGlassMaxValueRz.SelectionLength = 0;
+            this.tbGlassMaxValueRz.SelectionStart = 0;
+            this.tbGlassMaxValueRz.ShortcutsEnabled = true;
+            this.tbGlassMaxValueRz.Size = new System.Drawing.Size(250, 48);
+            this.tbGlassMaxValueRz.TabIndex = 0;
+            this.tbGlassMaxValueRz.TabStop = false;
+            this.tbGlassMaxValueRz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbGlassMaxValueRz.TrailingIcon = null;
+            this.tbGlassMaxValueRz.UseSystemPasswordChar = false;
+            // 
+            // label90
+            // 
+            this.label90.Depth = 0;
+            this.label90.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label90.Location = new System.Drawing.Point(0, 0);
+            this.label90.MouseState = MaterialSkin.MouseState.HOVER;
+            this.label90.Name = "label90";
+            this.label90.Size = new System.Drawing.Size(100, 23);
+            this.label90.TabIndex = 0;
+            // 
+            // tbGlassMaxValueTy
+            // 
+            this.tbGlassMaxValueTy.AnimateReadOnly = false;
+            this.tbGlassMaxValueTy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbGlassMaxValueTy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbGlassMaxValueTy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbGlassMaxValueTy.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbGlassMaxValueTy.Depth = 0;
+            this.tbGlassMaxValueTy.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbGlassMaxValueTy.HideSelection = true;
+            this.tbGlassMaxValueTy.LeadingIcon = null;
+            this.tbGlassMaxValueTy.Location = new System.Drawing.Point(0, 0);
+            this.tbGlassMaxValueTy.MaxLength = 32767;
+            this.tbGlassMaxValueTy.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbGlassMaxValueTy.Name = "tbGlassMaxValueTy";
+            this.tbGlassMaxValueTy.PasswordChar = '\0';
+            this.tbGlassMaxValueTy.PrefixSuffixText = null;
+            this.tbGlassMaxValueTy.ReadOnly = false;
+            this.tbGlassMaxValueTy.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbGlassMaxValueTy.SelectedText = "";
+            this.tbGlassMaxValueTy.SelectionLength = 0;
+            this.tbGlassMaxValueTy.SelectionStart = 0;
+            this.tbGlassMaxValueTy.ShortcutsEnabled = true;
+            this.tbGlassMaxValueTy.Size = new System.Drawing.Size(250, 48);
+            this.tbGlassMaxValueTy.TabIndex = 0;
+            this.tbGlassMaxValueTy.TabStop = false;
+            this.tbGlassMaxValueTy.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbGlassMaxValueTy.TrailingIcon = null;
+            this.tbGlassMaxValueTy.UseSystemPasswordChar = false;
+            // 
+            // label94
+            // 
+            this.label94.Depth = 0;
+            this.label94.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label94.Location = new System.Drawing.Point(0, 0);
+            this.label94.MouseState = MaterialSkin.MouseState.HOVER;
+            this.label94.Name = "label94";
+            this.label94.Size = new System.Drawing.Size(100, 23);
+            this.label94.TabIndex = 0;
+            // 
+            // tbGlassMaxValueTx
+            // 
+            this.tbGlassMaxValueTx.AnimateReadOnly = false;
+            this.tbGlassMaxValueTx.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbGlassMaxValueTx.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbGlassMaxValueTx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbGlassMaxValueTx.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbGlassMaxValueTx.Depth = 0;
+            this.tbGlassMaxValueTx.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbGlassMaxValueTx.HideSelection = true;
+            this.tbGlassMaxValueTx.LeadingIcon = null;
+            this.tbGlassMaxValueTx.Location = new System.Drawing.Point(0, 0);
+            this.tbGlassMaxValueTx.MaxLength = 32767;
+            this.tbGlassMaxValueTx.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbGlassMaxValueTx.Name = "tbGlassMaxValueTx";
+            this.tbGlassMaxValueTx.PasswordChar = '\0';
+            this.tbGlassMaxValueTx.PrefixSuffixText = null;
+            this.tbGlassMaxValueTx.ReadOnly = false;
+            this.tbGlassMaxValueTx.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbGlassMaxValueTx.SelectedText = "";
+            this.tbGlassMaxValueTx.SelectionLength = 0;
+            this.tbGlassMaxValueTx.SelectionStart = 0;
+            this.tbGlassMaxValueTx.ShortcutsEnabled = true;
+            this.tbGlassMaxValueTx.Size = new System.Drawing.Size(250, 48);
+            this.tbGlassMaxValueTx.TabIndex = 0;
+            this.tbGlassMaxValueTx.TabStop = false;
+            this.tbGlassMaxValueTx.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbGlassMaxValueTx.TrailingIcon = null;
+            this.tbGlassMaxValueTx.UseSystemPasswordChar = false;
+            // 
+            // label95
+            // 
+            this.label95.Depth = 0;
+            this.label95.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label95.Location = new System.Drawing.Point(0, 0);
+            this.label95.MouseState = MaterialSkin.MouseState.HOVER;
+            this.label95.Name = "label95";
+            this.label95.Size = new System.Drawing.Size(100, 23);
+            this.label95.TabIndex = 0;
+            // 
+            // glassWriteSignalStatus
+            // 
+            this.glassWriteSignalStatus.Location = new System.Drawing.Point(0, 0);
+            this.glassWriteSignalStatus.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.glassWriteSignalStatus.Name = "glassWriteSignalStatus";
+            this.glassWriteSignalStatus.RowCount = 3;
+            this.glassWriteSignalStatus.RowHeight = 30;
+            this.glassWriteSignalStatus.Size = new System.Drawing.Size(153, 94);
+            this.glassWriteSignalStatus.TabIndex = 0;
+            // 
+            // glassWriteSignal2Status
+            // 
+            this.glassWriteSignal2Status.ColumnWidth1 = 100;
+            this.glassWriteSignal2Status.ColumnWidth2 = 50;
+            this.glassWriteSignal2Status.Location = new System.Drawing.Point(0, 0);
+            this.glassWriteSignal2Status.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.glassWriteSignal2Status.Name = "glassWriteSignal2Status";
+            this.glassWriteSignal2Status.RowCount = 3;
+            this.glassWriteSignal2Status.RowHeight = 30;
+            this.glassWriteSignal2Status.Size = new System.Drawing.Size(153, 94);
+            this.glassWriteSignal2Status.TabIndex = 0;
+            // 
+            // label92
+            // 
+            this.label92.Depth = 0;
+            this.label92.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label92.Location = new System.Drawing.Point(0, 0);
+            this.label92.MouseState = MaterialSkin.MouseState.HOVER;
+            this.label92.Name = "label92";
+            this.label92.Size = new System.Drawing.Size(100, 23);
+            this.label92.TabIndex = 0;
+            // 
+            // textBox1
+            // 
+            this.textBox1.AnimateReadOnly = false;
+            this.textBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.textBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.textBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.textBox1.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.textBox1.Depth = 0;
+            this.textBox1.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.textBox1.HideSelection = true;
+            this.textBox1.LeadingIcon = null;
+            this.textBox1.Location = new System.Drawing.Point(0, 0);
+            this.textBox1.MaxLength = 32767;
+            this.textBox1.MouseState = MaterialSkin.MouseState.OUT;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.PasswordChar = '\0';
+            this.textBox1.PrefixSuffixText = null;
+            this.textBox1.ReadOnly = false;
+            this.textBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.textBox1.SelectedText = "";
+            this.textBox1.SelectionLength = 0;
+            this.textBox1.SelectionStart = 0;
+            this.textBox1.ShortcutsEnabled = true;
+            this.textBox1.Size = new System.Drawing.Size(250, 48);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.TabStop = false;
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.textBox1.TrailingIcon = null;
+            this.textBox1.UseSystemPasswordChar = false;
+            // 
+            // lblGlassCameraModel_
+            // 
+            this.lblGlassCameraModel_.Depth = 0;
+            this.lblGlassCameraModel_.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblGlassCameraModel_.Location = new System.Drawing.Point(0, 0);
+            this.lblGlassCameraModel_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblGlassCameraModel_.Name = "lblGlassCameraModel_";
+            this.lblGlassCameraModel_.Size = new System.Drawing.Size(100, 23);
+            this.lblGlassCameraModel_.TabIndex = 0;
+            // 
+            // lblGlassCameraSerials_
+            // 
+            this.lblGlassCameraSerials_.Depth = 0;
+            this.lblGlassCameraSerials_.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblGlassCameraSerials_.Location = new System.Drawing.Point(0, 0);
+            this.lblGlassCameraSerials_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblGlassCameraSerials_.Name = "lblGlassCameraSerials_";
+            this.lblGlassCameraSerials_.Size = new System.Drawing.Size(100, 23);
+            this.lblGlassCameraSerials_.TabIndex = 0;
+            // 
+            // tbGlassCamera
+            // 
+            this.tbGlassCamera.AnimateReadOnly = false;
+            this.tbGlassCamera.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbGlassCamera.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbGlassCamera.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbGlassCamera.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbGlassCamera.Depth = 0;
+            this.tbGlassCamera.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbGlassCamera.HideSelection = true;
+            this.tbGlassCamera.LeadingIcon = null;
+            this.tbGlassCamera.Location = new System.Drawing.Point(0, 0);
+            this.tbGlassCamera.MaxLength = 32767;
+            this.tbGlassCamera.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbGlassCamera.Name = "tbGlassCamera";
+            this.tbGlassCamera.PasswordChar = '\0';
+            this.tbGlassCamera.PrefixSuffixText = null;
+            this.tbGlassCamera.ReadOnly = false;
+            this.tbGlassCamera.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbGlassCamera.SelectedText = "";
+            this.tbGlassCamera.SelectionLength = 0;
+            this.tbGlassCamera.SelectionStart = 0;
+            this.tbGlassCamera.ShortcutsEnabled = true;
+            this.tbGlassCamera.Size = new System.Drawing.Size(250, 48);
+            this.tbGlassCamera.TabIndex = 0;
+            this.tbGlassCamera.TabStop = false;
+            this.tbGlassCamera.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbGlassCamera.TrailingIcon = null;
+            this.tbGlassCamera.UseSystemPasswordChar = false;
+            // 
+            // lblGlassCamera_
+            // 
+            this.lblGlassCamera_.Depth = 0;
+            this.lblGlassCamera_.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblGlassCamera_.Location = new System.Drawing.Point(0, 0);
+            this.lblGlassCamera_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblGlassCamera_.Name = "lblGlassCamera_";
+            this.lblGlassCamera_.Size = new System.Drawing.Size(100, 23);
+            this.lblGlassCamera_.TabIndex = 0;
+            // 
+            // tbGlassCameraModel
+            // 
+            this.tbGlassCameraModel.AnimateReadOnly = false;
+            this.tbGlassCameraModel.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbGlassCameraModel.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbGlassCameraModel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbGlassCameraModel.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbGlassCameraModel.Depth = 0;
+            this.tbGlassCameraModel.Font = new System.Drawing.Font("나눔스퀘어라운드 Bold", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbGlassCameraModel.HideSelection = true;
+            this.tbGlassCameraModel.LeadingIcon = null;
+            this.tbGlassCameraModel.Location = new System.Drawing.Point(0, 0);
+            this.tbGlassCameraModel.MaxLength = 32767;
+            this.tbGlassCameraModel.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbGlassCameraModel.Name = "tbGlassCameraModel";
+            this.tbGlassCameraModel.PasswordChar = '\0';
+            this.tbGlassCameraModel.PrefixSuffixText = null;
+            this.tbGlassCameraModel.ReadOnly = false;
+            this.tbGlassCameraModel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbGlassCameraModel.SelectedText = "";
+            this.tbGlassCameraModel.SelectionLength = 0;
+            this.tbGlassCameraModel.SelectionStart = 0;
+            this.tbGlassCameraModel.ShortcutsEnabled = true;
+            this.tbGlassCameraModel.Size = new System.Drawing.Size(250, 48);
+            this.tbGlassCameraModel.TabIndex = 0;
+            this.tbGlassCameraModel.TabStop = false;
+            this.tbGlassCameraModel.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbGlassCameraModel.TrailingIcon = null;
+            this.tbGlassCameraModel.UseSystemPasswordChar = false;
+            // 
+            // glassReadSignalStatus
+            // 
+            this.glassReadSignalStatus.Location = new System.Drawing.Point(0, 0);
+            this.glassReadSignalStatus.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.glassReadSignalStatus.Name = "glassReadSignalStatus";
+            this.glassReadSignalStatus.RowCount = 3;
+            this.glassReadSignalStatus.RowHeight = 30;
+            this.glassReadSignalStatus.Size = new System.Drawing.Size(153, 94);
+            this.glassReadSignalStatus.TabIndex = 0;
+            // 
+            // carTypeSignalStatus
+            // 
+            this.carTypeSignalStatus.ColumnWidth1 = 100;
+            this.carTypeSignalStatus.ColumnWidth2 = 50;
+            this.carTypeSignalStatus.Location = new System.Drawing.Point(0, 0);
+            this.carTypeSignalStatus.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.carTypeSignalStatus.Name = "carTypeSignalStatus";
+            this.carTypeSignalStatus.RowCount = 3;
+            this.carTypeSignalStatus.RowHeight = 30;
+            this.carTypeSignalStatus.Size = new System.Drawing.Size(153, 94);
+            this.carTypeSignalStatus.TabIndex = 0;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.DefaultExt = "yml";
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "YAML(*.yml;*.yaml)|*.yml;*.yaml|All files|*.*";
+            this.openFileDialog1.ShowHelp = true;
+            // 
+            // gbMode
+            // 
+            this.gbMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.gbMode.Controls.Add(this.rbManual_);
+            this.gbMode.Controls.Add(this.rbSet_);
+            this.gbMode.Controls.Add(this.rbAuto_);
+            this.gbMode.Depth = 0;
+            this.gbMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.gbMode.Location = new System.Drawing.Point(8, 7);
+            this.gbMode.Margin = new System.Windows.Forms.Padding(14);
+            this.gbMode.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gbMode.Name = "gbMode";
+            this.gbMode.Padding = new System.Windows.Forms.Padding(14);
+            this.gbMode.Size = new System.Drawing.Size(297, 62);
+            this.gbMode.TabIndex = 0;
+            // 
+            // rbManual_
+            // 
+            this.rbManual_.AutoSize = true;
+            this.rbManual_.Depth = 0;
+            this.rbManual_.Location = new System.Drawing.Point(99, 12);
+            this.rbManual_.Margin = new System.Windows.Forms.Padding(0);
+            this.rbManual_.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbManual_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbManual_.Name = "rbManual_";
+            this.rbManual_.Ripple = true;
+            this.rbManual_.Size = new System.Drawing.Size(91, 37);
+            this.rbManual_.TabIndex = 2;
+            this.rbManual_.TabStop = true;
+            this.rbManual_.Text = "Manual";
+            this.rbManual_.UseVisualStyleBackColor = true;
+            // 
+            // rbSet_
+            // 
+            this.rbSet_.AutoSize = true;
+            this.rbSet_.Checked = true;
+            this.rbSet_.Depth = 0;
+            this.rbSet_.Font = new System.Drawing.Font("Consolas", 12F);
+            this.rbSet_.Location = new System.Drawing.Point(193, 12);
+            this.rbSet_.Margin = new System.Windows.Forms.Padding(0);
+            this.rbSet_.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbSet_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbSet_.Name = "rbSet_";
+            this.rbSet_.Ripple = true;
+            this.rbSet_.Size = new System.Drawing.Size(90, 37);
+            this.rbSet_.TabIndex = 1;
+            this.rbSet_.TabStop = true;
+            this.rbSet_.Text = "Setting";
+            this.rbSet_.UseVisualStyleBackColor = true;
+            // 
+            // rbAuto_
+            // 
+            this.rbAuto_.AutoSize = true;
+            this.rbAuto_.Depth = 0;
+            this.rbAuto_.Font = new System.Drawing.Font("Consolas", 12F);
+            this.rbAuto_.Location = new System.Drawing.Point(9, 12);
+            this.rbAuto_.Margin = new System.Windows.Forms.Padding(0);
+            this.rbAuto_.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.rbAuto_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.rbAuto_.Name = "rbAuto_";
+            this.rbAuto_.Ripple = true;
+            this.rbAuto_.Size = new System.Drawing.Size(72, 37);
+            this.rbAuto_.TabIndex = 0;
+            this.rbAuto_.Text = "Auto";
+            this.rbAuto_.UseVisualStyleBackColor = true;
+            // 
+            // gbPLC
+            // 
+            this.gbPLC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.gbPLC.Controls.Add(this.tbPlc);
+            this.gbPLC.Depth = 0;
+            this.gbPLC.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.gbPLC.Location = new System.Drawing.Point(310, 7);
+            this.gbPLC.Margin = new System.Windows.Forms.Padding(14);
+            this.gbPLC.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gbPLC.Name = "gbPLC";
+            this.gbPLC.Padding = new System.Windows.Forms.Padding(14);
+            this.gbPLC.Size = new System.Drawing.Size(299, 62);
+            this.gbPLC.TabIndex = 27;
+            // 
+            // tbPlc
+            // 
+            this.tbPlc.AnimateReadOnly = false;
+            this.tbPlc.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbPlc.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbPlc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbPlc.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbPlc.Depth = 0;
+            this.tbPlc.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbPlc.HideSelection = true;
+            this.tbPlc.LeadingIcon = null;
+            this.tbPlc.Location = new System.Drawing.Point(127, 9);
+            this.tbPlc.MaxLength = 32767;
+            this.tbPlc.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbPlc.Name = "tbPlc";
+            this.tbPlc.PasswordChar = '\0';
+            this.tbPlc.PrefixSuffixText = null;
+            this.tbPlc.ReadOnly = true;
+            this.tbPlc.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbPlc.SelectedText = "";
+            this.tbPlc.SelectionLength = 0;
+            this.tbPlc.SelectionStart = 0;
+            this.tbPlc.ShortcutsEnabled = true;
+            this.tbPlc.Size = new System.Drawing.Size(166, 48);
+            this.tbPlc.TabIndex = 140;
+            this.tbPlc.TabStop = false;
+            this.tbPlc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbPlc.TrailingIcon = null;
+            this.tbPlc.UseSystemPasswordChar = false;
+            // 
+            // gbCarType
+            // 
+            this.gbCarType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.gbCarType.Controls.Add(this.tbCarType);
+            this.gbCarType.Controls.Add(this.cmbCarTypeName);
+            this.gbCarType.Depth = 0;
+            this.gbCarType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.gbCarType.Location = new System.Drawing.Point(615, 7);
+            this.gbCarType.Margin = new System.Windows.Forms.Padding(14);
+            this.gbCarType.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gbCarType.Name = "gbCarType";
+            this.gbCarType.Padding = new System.Windows.Forms.Padding(14);
+            this.gbCarType.Size = new System.Drawing.Size(315, 62);
+            this.gbCarType.TabIndex = 1;
+            // 
+            // tbCarType
+            // 
+            this.tbCarType.AnimateReadOnly = false;
+            this.tbCarType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbCarType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbCarType.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbCarType.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbCarType.Depth = 0;
+            this.tbCarType.Font = new System.Drawing.Font("굴림", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.tbCarType.HideSelection = true;
+            this.tbCarType.LeadingIcon = null;
+            this.tbCarType.Location = new System.Drawing.Point(228, 8);
+            this.tbCarType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbCarType.MaxLength = 32767;
+            this.tbCarType.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbCarType.Name = "tbCarType";
+            this.tbCarType.PasswordChar = '\0';
+            this.tbCarType.PrefixSuffixText = null;
+            this.tbCarType.ReadOnly = true;
+            this.tbCarType.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbCarType.SelectedText = "";
+            this.tbCarType.SelectionLength = 0;
+            this.tbCarType.SelectionStart = 0;
+            this.tbCarType.ShortcutsEnabled = true;
+            this.tbCarType.Size = new System.Drawing.Size(73, 48);
+            this.tbCarType.TabIndex = 1;
+            this.tbCarType.TabStop = false;
+            this.tbCarType.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbCarType.TrailingIcon = null;
+            this.tbCarType.UseSystemPasswordChar = false;
+            // 
+            // cmbCarTypeName
+            // 
+            this.cmbCarTypeName.AutoResize = false;
+            this.cmbCarTypeName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmbCarTypeName.Depth = 0;
+            this.cmbCarTypeName.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.cmbCarTypeName.DropDownHeight = 174;
+            this.cmbCarTypeName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCarTypeName.DropDownWidth = 121;
+            this.cmbCarTypeName.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbCarTypeName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.cmbCarTypeName.FormattingEnabled = true;
+            this.cmbCarTypeName.IntegralHeight = false;
+            this.cmbCarTypeName.ItemHeight = 43;
+            this.cmbCarTypeName.Location = new System.Drawing.Point(12, 8);
+            this.cmbCarTypeName.MaxDropDownItems = 4;
+            this.cmbCarTypeName.MouseState = MaterialSkin.MouseState.OUT;
+            this.cmbCarTypeName.Name = "cmbCarTypeName";
+            this.cmbCarTypeName.Size = new System.Drawing.Size(204, 49);
+            this.cmbCarTypeName.StartIndex = 0;
+            this.cmbCarTypeName.TabIndex = 0;
+            // 
+            // btnCameraConnect_
+            // 
+            this.btnCameraConnect_.AutoSize = false;
+            this.btnCameraConnect_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnCameraConnect_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(208)))), ((int)(((byte)(65)))));
+            this.btnCameraConnect_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnCameraConnect_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnCameraConnect_.Depth = 0;
+            this.btnCameraConnect_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCameraConnect_.Font = new System.Drawing.Font("Consolas", 11.25F);
+            this.btnCameraConnect_.HighEmphasis = true;
+            this.btnCameraConnect_.Icon = null;
+            this.btnCameraConnect_.Location = new System.Drawing.Point(1534, 18);
+            this.btnCameraConnect_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnCameraConnect_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnCameraConnect_.Name = "btnCameraConnect_";
+            this.btnCameraConnect_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnCameraConnect_.Size = new System.Drawing.Size(177, 33);
+            this.btnCameraConnect_.TabIndex = 106;
+            this.btnCameraConnect_.Text = "Camera Connect";
+            this.btnCameraConnect_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnCameraConnect_.UseAccentColor = false;
+            this.btnCameraConnect_.UseVisualStyleBackColor = false;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.IsSplitterFixed = true;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.BackColor = System.Drawing.Color.White;
+            this.splitContainer1.Panel1.Controls.Add(this.gbCarSeqNumber_);
+            this.splitContainer1.Panel1.Controls.Add(this.gbPLC);
+            this.splitContainer1.Panel1.Controls.Add(this.btnCameraConnect_);
+            this.splitContainer1.Panel1.Controls.Add(this.btnSettingManager_);
+            this.splitContainer1.Panel1.Controls.Add(this.gbMode);
+            this.splitContainer1.Panel1.Controls.Add(this.gbCarType);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
+            this.splitContainer1.Size = new System.Drawing.Size(1920, 1061);
+            this.splitContainer1.SplitterDistance = 68;
+            this.splitContainer1.SplitterWidth = 1;
+            this.splitContainer1.TabIndex = 106;
+            this.splitContainer1.TabStop = false;
+            // 
+            // gbCarSeqNumber_
+            // 
+            this.gbCarSeqNumber_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.gbCarSeqNumber_.Controls.Add(this.tbCarSeqNumber);
+            this.gbCarSeqNumber_.Depth = 0;
+            this.gbCarSeqNumber_.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.gbCarSeqNumber_.Location = new System.Drawing.Point(936, 7);
+            this.gbCarSeqNumber_.Margin = new System.Windows.Forms.Padding(14);
+            this.gbCarSeqNumber_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gbCarSeqNumber_.Name = "gbCarSeqNumber_";
+            this.gbCarSeqNumber_.Padding = new System.Windows.Forms.Padding(14);
+            this.gbCarSeqNumber_.Size = new System.Drawing.Size(150, 62);
+            this.gbCarSeqNumber_.TabIndex = 107;
+            this.gbCarSeqNumber_.Visible = false;
+            // 
+            // tbCarSeqNumber
+            // 
+            this.tbCarSeqNumber.AnimateReadOnly = false;
+            this.tbCarSeqNumber.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbCarSeqNumber.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbCarSeqNumber.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbCarSeqNumber.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbCarSeqNumber.Depth = 0;
+            this.tbCarSeqNumber.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbCarSeqNumber.HideSelection = true;
+            this.tbCarSeqNumber.LeadingIcon = null;
+            this.tbCarSeqNumber.Location = new System.Drawing.Point(15, 8);
+            this.tbCarSeqNumber.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbCarSeqNumber.MaxLength = 32767;
+            this.tbCarSeqNumber.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbCarSeqNumber.Name = "tbCarSeqNumber";
+            this.tbCarSeqNumber.PasswordChar = '\0';
+            this.tbCarSeqNumber.PrefixSuffixText = null;
+            this.tbCarSeqNumber.ReadOnly = true;
+            this.tbCarSeqNumber.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbCarSeqNumber.SelectedText = "";
+            this.tbCarSeqNumber.SelectionLength = 0;
+            this.tbCarSeqNumber.SelectionStart = 0;
+            this.tbCarSeqNumber.ShortcutsEnabled = true;
+            this.tbCarSeqNumber.Size = new System.Drawing.Size(122, 48);
+            this.tbCarSeqNumber.TabIndex = 0;
+            this.tbCarSeqNumber.TabStop = false;
+            this.tbCarSeqNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbCarSeqNumber.TrailingIcon = null;
+            this.tbCarSeqNumber.UseSystemPasswordChar = false;
+            // 
+            // btnSettingManager_
+            // 
+            this.btnSettingManager_.AutoSize = false;
+            this.btnSettingManager_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSettingManager_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(208)))), ((int)(((byte)(65)))));
+            this.btnSettingManager_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnSettingManager_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnSettingManager_.Depth = 0;
+            this.btnSettingManager_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnSettingManager_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSettingManager_.Font = new System.Drawing.Font("Consolas", 11.25F);
+            this.btnSettingManager_.ForeColor = System.Drawing.Color.Black;
+            this.btnSettingManager_.HighEmphasis = true;
+            this.btnSettingManager_.Icon = null;
+            this.btnSettingManager_.Location = new System.Drawing.Point(1717, 18);
+            this.btnSettingManager_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnSettingManager_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnSettingManager_.Name = "btnSettingManager_";
+            this.btnSettingManager_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnSettingManager_.Size = new System.Drawing.Size(181, 33);
+            this.btnSettingManager_.TabIndex = 3;
+            this.btnSettingManager_.Text = "Setting Manager";
+            this.btnSettingManager_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnSettingManager_.UseAccentColor = false;
+            this.btnSettingManager_.UseVisualStyleBackColor = false;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Depth = 0;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label22.Location = new System.Drawing.Point(9, 114);
+            this.label22.MouseState = MaterialSkin.MouseState.HOVER;
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(44, 12);
+            this.label22.TabIndex = 71;
+            this.label22.Text = "label22";
             // 
             // MainForm
             // 
@@ -2660,27 +2664,8 @@ namespace loadingBox2dGui
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.splitContainer3.Panel1.ResumeLayout(false);
-            this.splitContainer3.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
-            this.splitContainer3.ResumeLayout(false);
-            this.splitContainer5.Panel1.ResumeLayout(false);
-            this.splitContainer5.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
-            this.splitContainer5.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.panelNgListViewHeader.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.gbMode.ResumeLayout(false);
-            this.gbMode.PerformLayout();
-            this.gbPLC.ResumeLayout(false);
-            this.gbCarType.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.gbCarSeqNumber_.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRh)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLh)).EndInit();
             this.materialCard4.ResumeLayout(false);
             this.materialCard4.PerformLayout();
             this.materialCard3.ResumeLayout(false);
@@ -2696,8 +2681,27 @@ namespace loadingBox2dGui
             this.gbGlassShiftValue_.PerformLayout();
             this.gbGlassPoint_.ResumeLayout(false);
             this.gbGlassPoint_.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLh)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbRh)).EndInit();
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
+            this.splitContainer5.Panel1.ResumeLayout(false);
+            this.splitContainer5.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
+            this.splitContainer5.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.panelNgListViewHeader.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.gbMode.ResumeLayout(false);
+            this.gbMode.PerformLayout();
+            this.gbPLC.ResumeLayout(false);
+            this.gbCarType.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.gbCarSeqNumber_.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
