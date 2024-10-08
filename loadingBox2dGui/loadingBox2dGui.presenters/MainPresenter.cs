@@ -6,6 +6,7 @@ using loadingBox2dGui.models;
 using CoPick.Logging;
 using CoPick.Plc;
 using System.Threading.Tasks;
+using loadingBox2dGui.models;
 using CoPick.Setting;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -18,6 +19,7 @@ namespace loadingBox2dGui.presenters
         
         private readonly IMainForm _view;
         private PlcCommunicatorForLoadingBox _plcComm;
+        private LightCommunicatorForLoadingBox _lightComm;
         private bool _isPlcEventHandlersRegistered = false;
         public MainPresenter(IMainForm view)
         {
