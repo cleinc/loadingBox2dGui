@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CoPick.Setting;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,5 +56,17 @@ namespace loadingBox2dGui.models
         GAP_3 = 0x0009_0000,
         GAP_4 = 0x000A_0000,
         VISION_ERROR = 0x4000_4001,
+    }
+
+    public enum LightAttribute
+    {
+        [ReadOnly(true)]
+        [LocalizedCategory("CategoryPlc")]
+        [LocalizedDescription("DescPlcModel")]
+        Model,
+        [LocalizedCategory("CategoryPlc")]
+        [LocalizedDescription("DescPlcIp")]
+        [ValidatorType(ValidatorType.Ip, new object[] { })]
+        IP,
     }
 }

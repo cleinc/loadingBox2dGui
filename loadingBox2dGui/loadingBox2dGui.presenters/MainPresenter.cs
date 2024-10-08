@@ -25,6 +25,7 @@ namespace loadingBox2dGui.presenters
         {
             _view = view;
             _view.ProgramCloseRequested += View_ProgramCloseRequested;
+            CreateLightCommInstance("ModbusLightCommunicator");
             CreatePlcCommInstance("Tk1MelsecCommunicator");
             Console.WriteLine($"plc comm is empty {_plcComm == null}");
             InitializePlc();
@@ -35,6 +36,14 @@ namespace loadingBox2dGui.presenters
             //{
             //    Logger.Warning("Unable to Connect To PLC");
             //}
+            _view.LightOnRequested += View_LightOnRequested;
+        }
+
+        private void View_LightOnRequested(object sender, EventArgs e)
+        {
+            _lightComm.LightState = !_lightComm.LightState;
+            _lightComm.WriteLightState(_lightComm.LightState);
+
         }
 
         private void View_ProgramCloseRequested(object sender, FormClosingEventArgs e)
@@ -208,6 +217,26 @@ namespace loadingBox2dGui.presenters
 
             Console.WriteLine("Step 3");
             _isPlcEventHandlersRegistered = false;
+            return true;
+        }
+
+        private bool CreateLightCommInstance(string selectedLight)
+        {
+            if (selectedLight == null)
+            {
+                Logger.Error($"Lang.Msgs.NotSupportedLightCommunicator {selectedLight}");
+                return false;
+            }
+            Console.WriteLine("Step 1");
+            Console.WriteLine(selectedLight);
+
+            _lightComm?.Dispose();
+            _lightComm = LightCommunicationManager.CreateLightCommunicator(selectedLight, new Dictionary<models.LightAttribute, string>() { [models.LightAttribute.Model] = "Modbus" }) as LightCommunicatorForLoadingBox;
+            if (_lightComm == null)
+            {
+                Logger.Error("Lang.Msgs.NotFindLightCommunicator");
+                return false;
+            }
             return true;
         }
 

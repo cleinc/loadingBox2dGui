@@ -41,6 +41,9 @@
     <Reference Include="CoPick.Plc">
       <HintPath>..\..\libs\CoPick.Plc.dll</HintPath>
     </Reference>
+    <Reference Include="NModbus4, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NModbus4.2.1.0\lib\net40\NModbus4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -54,10 +57,14 @@
     <Compile Include="Config.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ILightCommunicator.cs" />
+    <Compile Include="LightCommunicationManager.cs" />
     <Compile Include="LightCommunicatorForLoadingBox.cs" />
     <Compile Include="PlcCommunicatorForLoadingBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PylonCommunicator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

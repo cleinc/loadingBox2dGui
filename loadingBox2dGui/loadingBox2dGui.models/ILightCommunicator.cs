@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace loadingBox2dGui.models
 {
-    internal interface ILightCommunicator : IDisposable
+    public interface ILightCommunicator : IDisposable
     {
         event EventHandler LightSent;
         event EventHandler LightReceived;

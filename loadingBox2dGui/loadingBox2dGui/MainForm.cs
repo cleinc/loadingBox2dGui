@@ -206,6 +206,7 @@ namespace loadingBox2dGui
         public event EventHandler GetHandEyeCalibrationFilePathRequested;
         public event EventHandler ScanPointRequsted;
         public event EventHandler<FormClosingEventArgs> ProgramCloseRequested;
+        public event EventHandler LightOnRequested;
 
         private void btnCameraConnect__Click(object sender, System.EventArgs e)
         {
@@ -214,7 +215,7 @@ namespace loadingBox2dGui
 
         private void btnSettingManager__Click(object sender, System.EventArgs e)
         {
-
+            LightOnRequested?.Invoke(sender, EventArgs.Empty);
         }
 
         private void btnNgListClear__Click(object sender, System.EventArgs e)
