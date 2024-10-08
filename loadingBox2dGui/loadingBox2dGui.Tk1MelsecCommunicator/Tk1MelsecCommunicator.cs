@@ -182,9 +182,9 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             try
             {
                 int res = 0;
-                for (var i = 0; i < nMaxTrials && PlcMonitorInfos[4].SignalDict[status].IsOn != val; i++)
+                for (var i = 0; i < nMaxTrials && PlcMonitorInfos[3].SignalDict[status].IsOn != val; i++)
                 {
-                    res = SetBit("D", PlcDataType.WORD, PlcMonitorInfos[4].SignalDict[status], val);
+                    res = SetBit("D", PlcDataType.WORD, PlcMonitorInfos[3].SignalDict[status], val);
                     await Task.Delay(delay);
                 }
                 return res;
