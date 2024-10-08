@@ -25,6 +25,7 @@ namespace loadingBox2dGui.presenters
         {
             _view = view;
             _view.ProgramCloseRequested += View_ProgramCloseRequested;
+            _lightComm = new LightCommunicatorForLoadingBox();
             CreatePlcCommInstance("Tk1MelsecCommunicator");
             Console.WriteLine($"plc comm is empty {_plcComm == null}");
             InitializePlc();
@@ -35,6 +36,12 @@ namespace loadingBox2dGui.presenters
             //{
             //    Logger.Warning("Unable to Connect To PLC");
             //}
+            _view.LightOnRequested += View_LightOnRequested;
+        }
+
+        private void View_LightOnRequested(object sender, EventArgs e)
+        {
+            _lightComm.Connect();
         }
 
         private void View_ProgramCloseRequested(object sender, FormClosingEventArgs e)

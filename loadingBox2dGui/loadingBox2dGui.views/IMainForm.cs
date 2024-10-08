@@ -35,6 +35,7 @@ namespace loadingBox2dGui.views
         event EventHandler GetHandEyeCalibrationFilePathRequested;
         event EventHandler ScanPointRequsted;
         event EventHandler<FormClosingEventArgs> ProgramCloseRequested;
+        event EventHandler LightOnRequested;
         #endregion
 
         #region Methods
