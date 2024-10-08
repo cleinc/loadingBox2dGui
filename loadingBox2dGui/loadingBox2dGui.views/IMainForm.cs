@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using System.Threading.Tasks;
 
 namespace loadingBox2dGui.views
@@ -21,6 +22,7 @@ namespace loadingBox2dGui.views
         string CarSeq { set; }
         Image LhImage { set; }
         Image RhImage { set; }
+        bool IsPlcConnected { get; set; }
         #endregion
 
         #region Event Handlers
@@ -32,6 +34,7 @@ namespace loadingBox2dGui.views
         event EventHandler GetReferenceDataPathRequested;
         event EventHandler GetHandEyeCalibrationFilePathRequested;
         event EventHandler ScanPointRequsted;
+        event EventHandler<FormClosingEventArgs> ProgramCloseRequested;
         #endregion
 
         #region Methods

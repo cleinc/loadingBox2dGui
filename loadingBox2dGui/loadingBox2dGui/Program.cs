@@ -25,7 +25,7 @@ namespace loadingBox2dGui
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.Grey800, Primary.Red700, Primary.BlueGrey500, Accent.Red200, TextShade.WHITE);
             var mainForm = new MainForm();
-            var mainPresenter = new MainPresenter();
+            var mainPresenter = new MainPresenter(mainForm);
             Application.Run(mainForm);
         }
     }

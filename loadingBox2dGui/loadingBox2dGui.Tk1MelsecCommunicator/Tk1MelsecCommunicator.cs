@@ -63,34 +63,33 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
         public override event EventHandler PlcDisconnected;
         public override event EventHandler PlcError;
 
-        public Tk1MelsecCommunicator(Dictionary<PlcAttribute, string> config): base(1)
+        //public Tk1MelsecCommunicator(Dictionary<PlcAttribute, string> config) : base(1)
+        //{
+        //    try
+        //    {
+        //        _logicalStationNumber = int.Parse(config[PlcAttribute.LOGICAL_STATION]);
+        //        _heartbeatDeviceName = config[PlcAttribute.HeartbeatDeviceName];
+        //        _heartbeatDeviceType = config[PlcAttribute.HeartbeatDeviceType].ToEnum<PlcDataType>();
+        //        _heartbeatDbInfo = new PlcDbInfo(int.Parse(config[PlcAttribute.HeartbeatPos]),
+        //                                         int.Parse(config[PlcAttribute.HeartbeatBit]));
+
+        //        _melsecPlc.PlcError += (s, e) => Disconnect();
+        //        LoadPlcSignalDictForSealer();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Logger.Error($"Models.Lang.MSGPlc.ConstructingPlcCommunicatorFailedDueToError : {ex.Message}");
+        //    }
+        //}
+
+        public Tk1MelsecCommunicator(Dictionary<PlcAttribute, string> config): base(250)
         {
             try
             {
-                _logicalStationNumber = int.Parse(config[PlcAttribute.LOGICAL_STATION]);
-                _heartbeatDeviceName = config[PlcAttribute.HeartbeatDeviceName];
-                _heartbeatDeviceType = config[PlcAttribute.HeartbeatDeviceType].ToEnum<PlcDataType>();
-                _heartbeatDbInfo = new PlcDbInfo(int.Parse(config[PlcAttribute.HeartbeatPos]),
-                                                 int.Parse(config[PlcAttribute.HeartbeatBit]));
-
-                _melsecPlc.PlcError += (s, e) => Disconnect();
-                LoadPlcSignalDictForSealer();
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Models.Lang.MSGPlc.ConstructingPlcCommunicatorFailedDueToError : {ex.Message}");
-            }
-        }
-
-        public Tk1MelsecCommunicator(int logicalStationNumber, string heartBeatDeviceName, 
-            PlcDataType heartBeatDeviceType, int heartBeatPos, int heartBeatBit): base(1)
-        {
-            try
-            {
-                _logicalStationNumber = logicalStationNumber;
-                _heartbeatDeviceName = heartBeatDeviceName;
-                _heartbeatDeviceType = heartBeatDeviceType;
-                _heartbeatDbInfo = new PlcDbInfo(heartBeatPos, heartBeatBit);
+                _logicalStationNumber = 0;
+                _heartbeatDeviceName = "D";
+                _heartbeatDeviceType = PlcDataType.WORD;
+                _heartbeatDbInfo = new PlcDbInfo(5500, 0);
 
                 _melsecPlc.PlcError += (s, e) => Disconnect();
                 LoadPlcSignalDictForSealer();
@@ -106,42 +105,73 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             PlcMonitorInfos = new List<PlcMonitorInfo<PlcSignalForLoadingBox>>
             {
                 // [0]
-                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5300", 1, PlcDataType.WORD, PlcDataType.BIT)
+                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5000", 1, PlcDataType.WORD, PlcDataType.BIT)
                 {
                     SignalDict = new ConcurrentDictionary<PlcSignalForLoadingBox, PlcDbInfo>()
                     {
-                        [PlcSignalForLoadingBox.VISION_UPDATE] = new PlcDbInfo(5300,0),
-                        [PlcSignalForLoadingBox.VISION_START] = new PlcDbInfo(5300,1),
-                        [PlcSignalForLoadingBox.VISION_END] = new PlcDbInfo (5300,2),
-                        [PlcSignalForLoadingBox.VISION_RESET] = new PlcDbInfo(5300,3),
-                        [PlcSignalForLoadingBox.VISION_PASS] = new PlcDbInfo(5300,4)
+                        [PlcSignalForLoadingBox.VISION_UPDATE] = new PlcDbInfo(5300,3),
+                        [PlcSignalForLoadingBox.VISION_START] = new PlcDbInfo(5300,0),
+                        [PlcSignalForLoadingBox.VISION_END] = new PlcDbInfo (5300,1),
+                        [PlcSignalForLoadingBox.VISION_RESET] = new PlcDbInfo(5300,2),
+                        [PlcSignalForLoadingBox.VISION_PASS] = new PlcDbInfo(5300,15)
                     }
                 },
                 // [1]
-                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5101", 1, PlcDataType.WORD, PlcDataType.WORD)
+                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5001", 1, PlcDataType.WORD, PlcDataType.WORD)
                 {
                     SignalDict = new ConcurrentDictionary<PlcSignalForLoadingBox, PlcDbInfo>()
                     {
-                        [PlcSignalForLoadingBox.CAR_TYPE | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5101, -1),
+                        [PlcSignalForLoadingBox.CAR_TYPE | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5001, -1),
                     }
                 },
                 // [2]
-                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5102", 2, PlcDataType.WORD, PlcDataType.ASCII)
+                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5002", 2, PlcDataType.WORD, PlcDataType.ASCII)
                 {
                     SignalDict = new ConcurrentDictionary<PlcSignalForLoadingBox, PlcDbInfo>()
                     {
-                        [PlcSignalForLoadingBox.CAR_SEQ1 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5102, -1),
-                        [PlcSignalForLoadingBox.CAR_SEQ2 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5103, -1),
+                        [PlcSignalForLoadingBox.CAR_SEQ1 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5002, -1),
+                        [PlcSignalForLoadingBox.CAR_SEQ2 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5003, -1),
                     }
                 },
                 // [3]
+                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5100", 1, PlcDataType.WORD, PlcDataType.BIT)
+                {
+                    SignalDict = new ConcurrentDictionary<PlcSignalForLoadingBox, PlcDbInfo>()
+                    {
+                        [PlcSignalForLoadingBox.VISION_OK] = new PlcDbInfo(5100, 0),
+                        [PlcSignalForLoadingBox.VISION_NG] = new PlcDbInfo(5100, 1),
+                        [PlcSignalForLoadingBox.P1_COMPLETED] = new PlcDbInfo(5100, 10),
+                    }
+                },
+                // [4]
                 new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5500", 1, PlcDataType.WORD, PlcDataType.BIT)
                 {
                     SignalDict = new ConcurrentDictionary<PlcSignalForLoadingBox, PlcDbInfo>()
                     {
-                        [PlcSignalForLoadingBox.VISION_OK] = new PlcDbInfo(5500, 0),
-                        [PlcSignalForLoadingBox.VISION_NG] = new PlcDbInfo(5500, 1),
-                        [PlcSignalForLoadingBox.VISION_ERROR] = new PlcDbInfo(5500, 2),
+                        [PlcSignalForLoadingBox.VISION_LIVE_BIT] = new PlcDbInfo(5500, 0),
+                    }
+                },
+
+                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5004", 4, PlcDataType.WORD, PlcDataType.ASCII)
+                {
+                    SignalDict = new ConcurrentDictionary<PlcSignalForLoadingBox, PlcDbInfo>()
+                    {
+                        [PlcSignalForLoadingBox.BODY_NO1 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5004, -1),
+                        [PlcSignalForLoadingBox.BODY_NO2 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5005, -1),
+                        [PlcSignalForLoadingBox.BODY_NO3 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5006, -1),
+                        [PlcSignalForLoadingBox.BODY_NO4 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5007, -1),
+                    }
+                },
+                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5101", 4, PlcDataType.DWORD, PlcDataType.DWORD)
+                {
+                    SignalDict = new ConcurrentDictionary<PlcSignalForLoadingBox, PlcDbInfo>()
+                    {
+                        [PlcSignalForLoadingBox.SHIFT_X | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5101, -1),
+                        [PlcSignalForLoadingBox.SHIFT_Y | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5103, -1),
+                        [PlcSignalForLoadingBox.SHIFT_Z | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5105, -1),
+                        [PlcSignalForLoadingBox.SHIFT_RX | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5107, -1),
+                        [PlcSignalForLoadingBox.SHIFT_RY | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5109, -1),
+                        [PlcSignalForLoadingBox.SHIFT_RZ | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5111, -1),
                     }
                 },
             };
@@ -182,6 +212,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
         {
             if (!_melsecPlc.Init())
             {
+                Console.WriteLine("Models.Lang.MSGPlc.MelsecPlcErrorOccured");
                 Logger.Error("Models.Lang.MSGPlc.MelsecPlcErrorOccured");
                 IsConnected = false;
                 return;
@@ -389,7 +420,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
 
             int oldCarType = CarType;
             string oldCarSeq = CarSeq;
-            //string oldBodyNumber = BodyNumber;
+            string oldBodyNumber = BodyNumber;
 
             CarType = PlcMonitorInfos[1].SignalDict[PlcSignalForLoadingBox.CAR_TYPE | PlcSignalForLoadingBox.VALUE].Int32Value;
 
@@ -398,18 +429,18 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             //string carSeq = PlcMonitorInfos[1].SignalDict[PlcSignalForLoadingBox.CAR_SEQ | PlcSignalForLoadingBox.VALUE].GetText(PlcMonitorInfos[1].DataParseType);
             CarSeq = carSeq;
 
-            //string bodyNumber = PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NUM_1 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII)
-            //    + PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NUM_2 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII)
-            //    + PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NUM_3 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII)
-            //    + PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NUM_4 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII);
-            ////+ PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NUM_5 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII);
-            //BodyNumber = bodyNumber;
+            string bodyNumber = PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NO1 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII)
+                + PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NO2 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII)
+                + PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NO3 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII)
+                + PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NO4 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII);
+            //+ PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NUM_5 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII);
+            BodyNumber = bodyNumber;
 
-            //CarTypeUpdate?.Invoke(this, new VisionUpdateEventArgs(CarType, CarSeq, BodyNumber));
-            //return oldCarSeq != CarSeq || oldCarType != CarType || oldBodyNumber != BodyNumber;
+            CarTypeUpdate?.Invoke(this, new VisionUpdateEventArgs(CarType, CarSeq, BodyNumber));
+            return oldCarSeq != CarSeq || oldCarType != CarType || oldBodyNumber != BodyNumber;
 
-            CarTypeUpdate?.Invoke(this, new VisionUpdateEventArgs(CarType, CarSeq));
-            return oldCarSeq != CarSeq || oldCarType != CarType;
+            //CarTypeUpdate?.Invoke(this, new VisionUpdateEventArgs(CarType, CarSeq));
+            //return oldCarSeq != CarSeq || oldCarType != CarType;
         }
 
         protected override void Dispose(bool disposing)

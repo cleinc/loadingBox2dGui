@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CoPick">
       <HintPath>..\..\libs\CoPick.dll</HintPath>
@@ -113,6 +116,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\NanumSquareRoundB.ttf" />
     <None Include="Resources\visionOKOn.png" />
   </ItemGroup>
   <ItemGroup>

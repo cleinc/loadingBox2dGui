@@ -10,7 +10,7 @@ namespace loadingBox2dGui.models
     {
         GLASS = 0x1000_0000,
         BODY = 0x0100_0000,
-        GAP = 0x0010_0000,
+        VISION_LIVE_BIT = 0x0010_0000,
 
         VALUE = 0x4000_0000,
 

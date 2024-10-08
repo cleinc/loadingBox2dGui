@@ -148,7 +148,7 @@ namespace loadingBox2dGui.models
         {
             throw new NotImplementedException();
         }
-        protected async void MonitorPlcLoop(int timeout)
+        protected void MonitorPlcLoop(int timeout)
         {
             while (true)
             {
