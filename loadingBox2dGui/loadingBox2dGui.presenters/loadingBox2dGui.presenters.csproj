@@ -37,6 +37,9 @@
     <Reference Include="CoPick.Plc">
       <HintPath>..\..\libs\CoPick.Plc.dll</HintPath>
     </Reference>
+    <Reference Include="NModbus4, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NModbus4.2.1.0\lib\net40\NModbus4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -60,6 +63,9 @@
       <Project>{d219ab6d-0b7d-4eea-8fc1-5221afaef60b}</Project>
       <Name>loadingBox2dGui.views</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
