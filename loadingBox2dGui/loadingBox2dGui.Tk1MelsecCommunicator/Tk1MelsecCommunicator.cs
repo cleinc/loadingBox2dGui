@@ -109,11 +109,11 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                 {
                     SignalDict = new ConcurrentDictionary<PlcSignalForLoadingBox, PlcDbInfo>()
                     {
-                        [PlcSignalForLoadingBox.VISION_UPDATE] = new PlcDbInfo(5300,3),
-                        [PlcSignalForLoadingBox.VISION_START] = new PlcDbInfo(5300,0),
-                        [PlcSignalForLoadingBox.VISION_END] = new PlcDbInfo (5300,1),
-                        [PlcSignalForLoadingBox.VISION_RESET] = new PlcDbInfo(5300,2),
-                        [PlcSignalForLoadingBox.VISION_PASS] = new PlcDbInfo(5300,15)
+                        [PlcSignalForLoadingBox.VISION_UPDATE] = new PlcDbInfo(5000,3),
+                        [PlcSignalForLoadingBox.VISION_START] = new PlcDbInfo(5000,0),
+                        [PlcSignalForLoadingBox.VISION_END] = new PlcDbInfo (5000,1),
+                        [PlcSignalForLoadingBox.VISION_RESET] = new PlcDbInfo(5000,2),
+                        [PlcSignalForLoadingBox.VISION_PASS] = new PlcDbInfo(5000,15)
                     }
                 },
                 // [1]
