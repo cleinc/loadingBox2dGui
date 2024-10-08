@@ -940,19 +940,19 @@ namespace loadingBox2dGui
             // 
             // plcSignalStatusOnlyTable2
             // 
-            this.plcSignalStatusOnlyTable2.Location = new System.Drawing.Point(10, 10);
+            this.plcSignalStatusOnlyTable2.Location = new System.Drawing.Point(10, 5);
             this.plcSignalStatusOnlyTable2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.plcSignalStatusOnlyTable2.Name = "plcSignalStatusOnlyTable2";
-            this.plcSignalStatusOnlyTable2.RowCount = 6;
+            this.plcSignalStatusOnlyTable2.RowCount = 7;
             this.plcSignalStatusOnlyTable2.RowHeight = 23;
-            this.plcSignalStatusOnlyTable2.Size = new System.Drawing.Size(203, 145);
+            this.plcSignalStatusOnlyTable2.Size = new System.Drawing.Size(203, 169);
             this.plcSignalStatusOnlyTable2.TabIndex = 108;
             // 
             // plcSignalStatusValueTable2
             // 
             this.plcSignalStatusValueTable2.ColumnWidth1 = 135;
             this.plcSignalStatusValueTable2.ColumnWidth2 = 65;
-            this.plcSignalStatusValueTable2.Location = new System.Drawing.Point(10, 166);
+            this.plcSignalStatusValueTable2.Location = new System.Drawing.Point(10, 179);
             this.plcSignalStatusValueTable2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.plcSignalStatusValueTable2.Name = "plcSignalStatusValueTable2";
             this.plcSignalStatusValueTable2.RowCount = 7;
