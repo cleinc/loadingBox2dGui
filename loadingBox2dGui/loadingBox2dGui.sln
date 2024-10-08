@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loadingBox2dGui.views", "lo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loadingBox2dGui.ModbusLightCommunicator", "loadingBox2dGui.ModbusLightCommunicator\loadingBox2dGui.ModbusLightCommunicator.csproj", "{EA615B82-4512-41B2-8639-A50B65F467F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loadingBox2dGui.Tk1MelsecCommunicator", "loadingBox2dGui.Tk1MelsecCommunicator\loadingBox2dGui.Tk1MelsecCommunicator.csproj", "{A2771AB3-B7DF-4675-8954-9EADE0BF6EF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{EA615B82-4512-41B2-8639-A50B65F467F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA615B82-4512-41B2-8639-A50B65F467F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA615B82-4512-41B2-8639-A50B65F467F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2771AB3-B7DF-4675-8954-9EADE0BF6EF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2771AB3-B7DF-4675-8954-9EADE0BF6EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2771AB3-B7DF-4675-8954-9EADE0BF6EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2771AB3-B7DF-4675-8954-9EADE0BF6EF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

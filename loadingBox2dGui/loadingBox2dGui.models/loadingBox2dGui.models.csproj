@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CoPick">
+      <HintPath>..\..\libs\CoPick.dll</HintPath>
+    </Reference>
     <Reference Include="CoPick.Plc">
       <HintPath>..\..\libs\CoPick.Plc.dll</HintPath>
     </Reference>
@@ -48,6 +51,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="ILightCommunicator.cs" />
     <Compile Include="LightCommunicatorForLoadingBox.cs" />
+    <Compile Include="PlcCommunicatorForLoadingBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

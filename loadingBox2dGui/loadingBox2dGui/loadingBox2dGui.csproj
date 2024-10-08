@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CoPick">
       <HintPath>..\..\libs\CoPick.dll</HintPath>
@@ -83,6 +86,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -110,6 +114,19 @@
       <Project>{d219ab6d-0b7d-4eea-8fc1-5221afaef60b}</Project>
       <Name>loadingBox2dGui.views</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NanumSquareRoundB.ttf" />
+    <None Include="Resources\visionOKOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\visionNGOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\visionNGOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\visionOKOff.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
