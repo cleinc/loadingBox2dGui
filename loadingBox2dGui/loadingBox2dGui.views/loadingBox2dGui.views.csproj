@@ -48,5 +48,11 @@
     <Compile Include="IMainForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\loadingBox2dGui.models\loadingBox2dGui.models.csproj">
+      <Project>{13155dd2-5088-4331-b838-f330947bd506}</Project>
+      <Name>loadingBox2dGui.models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

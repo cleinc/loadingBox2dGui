@@ -42,8 +42,14 @@
     <Reference Include="CoPick.Controls">
       <HintPath>..\..\libs\CoPick.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="CoPick.Plc">
+      <HintPath>..\..\libs\CoPick.Plc.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialSkin">
       <HintPath>..\..\libs\MaterialSkin.dll</HintPath>
+    </Reference>
+    <Reference Include="MelsecPLCMedium">
+      <HintPath>..\..\libs\MelsecPLCMedium.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
