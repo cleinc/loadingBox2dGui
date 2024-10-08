@@ -228,8 +228,8 @@ namespace loadingBox2dGui
             this.splitContainer2.Panel2.BackColor = System.Drawing.Color.White;
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer3);
             this.splitContainer2.Panel2.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.splitContainer2.Size = new System.Drawing.Size(1920, 992);
-            this.splitContainer2.SplitterDistance = 1336;
+            this.splitContainer2.Size = new System.Drawing.Size(1914, 925);
+            this.splitContainer2.SplitterDistance = 1331;
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 107;
             this.splitContainer2.TabStop = false;
@@ -1006,6 +1006,7 @@ namespace loadingBox2dGui
             this.btnGlassBackUp_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnGlassBackUp_.UseAccentColor = false;
             this.btnGlassBackUp_.UseVisualStyleBackColor = true;
+            this.btnGlassBackUp_.Click += new System.EventHandler(this.btnGlassBackUp__Click);
             // 
             // lblGlassRHCamera_
             // 
@@ -1075,6 +1076,7 @@ namespace loadingBox2dGui
             this.btnGlassRHCameraUnuse_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnGlassRHCameraUnuse_.UseAccentColor = false;
             this.btnGlassRHCameraUnuse_.UseVisualStyleBackColor = false;
+            this.btnGlassRHCameraUnuse_.Click += new System.EventHandler(this.btnGlassRHCameraUnuse__Click);
             // 
             // btnGlassRHCameraUse_
             // 
@@ -1102,6 +1104,7 @@ namespace loadingBox2dGui
             this.btnGlassRHCameraUse_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnGlassRHCameraUse_.UseAccentColor = false;
             this.btnGlassRHCameraUse_.UseVisualStyleBackColor = false;
+            this.btnGlassRHCameraUse_.Click += new System.EventHandler(this.btnGlassRHCameraUse__Click);
             // 
             // btnGlassLHCameraUnuse_
             // 
@@ -1129,6 +1132,7 @@ namespace loadingBox2dGui
             this.btnGlassLHCameraUnuse_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnGlassLHCameraUnuse_.UseAccentColor = false;
             this.btnGlassLHCameraUnuse_.UseVisualStyleBackColor = false;
+            this.btnGlassLHCameraUnuse_.Click += new System.EventHandler(this.btnGlassLHCameraUnuse__Click);
             // 
             // btnGlassLHCameraUse_
             // 
@@ -1156,6 +1160,7 @@ namespace loadingBox2dGui
             this.btnGlassLHCameraUse_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnGlassLHCameraUse_.UseAccentColor = false;
             this.btnGlassLHCameraUse_.UseVisualStyleBackColor = false;
+            this.btnGlassLHCameraUse_.Click += new System.EventHandler(this.btnGlassLHCameraUse__Click);
             // 
             // label85_
             // 
@@ -1222,6 +1227,7 @@ namespace loadingBox2dGui
             this.btnGlassRefDataPath.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnGlassRefDataPath.UseAccentColor = false;
             this.btnGlassRefDataPath.UseVisualStyleBackColor = true;
+            this.btnGlassRefDataPath.Click += new System.EventHandler(this.btnGlassRefDataPath_Click);
             // 
             // label86_
             // 
@@ -1288,6 +1294,7 @@ namespace loadingBox2dGui
             this.btnGlassHandEyeCalibFilePath.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnGlassHandEyeCalibFilePath.UseAccentColor = false;
             this.btnGlassHandEyeCalibFilePath.UseVisualStyleBackColor = true;
+            this.btnGlassHandEyeCalibFilePath.Click += new System.EventHandler(this.btnGlassHandEyeCalibFilePath_Click);
             // 
             // btnGlassUpdate_
             // 
@@ -1313,6 +1320,7 @@ namespace loadingBox2dGui
             this.btnGlassUpdate_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnGlassUpdate_.UseAccentColor = false;
             this.btnGlassUpdate_.UseVisualStyleBackColor = false;
+            this.btnGlassUpdate_.Click += new System.EventHandler(this.btnGlassUpdate__Click);
             // 
             // btnGlassCalculate_
             // 
@@ -1338,6 +1346,7 @@ namespace loadingBox2dGui
             this.btnGlassCalculate_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnGlassCalculate_.UseAccentColor = false;
             this.btnGlassCalculate_.UseVisualStyleBackColor = false;
+            this.btnGlassCalculate_.Click += new System.EventHandler(this.btnGlassCalculate__Click);
             // 
             // gbGlassShiftValue_
             // 
@@ -1540,6 +1549,7 @@ namespace loadingBox2dGui
             this.btnGlassPoint_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnGlassPoint_.UseAccentColor = false;
             this.btnGlassPoint_.UseVisualStyleBackColor = false;
+            this.btnGlassPoint_.Click += new System.EventHandler(this.btnGlassPoint__Click);
             // 
             // tbGlassPointTx
             // 
@@ -1878,6 +1888,7 @@ namespace loadingBox2dGui
             this.btnNgListClear_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnNgListClear_.UseAccentColor = false;
             this.btnNgListClear_.UseVisualStyleBackColor = false;
+            this.btnNgListClear_.Click += new System.EventHandler(this.btnNgListClear__Click);
             // 
             // lblErrorNotice
             // 
@@ -2341,7 +2352,7 @@ namespace loadingBox2dGui
             this.gbMode.Controls.Add(this.rbAuto_);
             this.gbMode.Depth = 0;
             this.gbMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gbMode.Location = new System.Drawing.Point(8, 7);
+            this.gbMode.Location = new System.Drawing.Point(6, 3);
             this.gbMode.Margin = new System.Windows.Forms.Padding(14);
             this.gbMode.MouseState = MaterialSkin.MouseState.HOVER;
             this.gbMode.Name = "gbMode";
@@ -2353,7 +2364,7 @@ namespace loadingBox2dGui
             // 
             this.rbManual_.AutoSize = true;
             this.rbManual_.Depth = 0;
-            this.rbManual_.Location = new System.Drawing.Point(99, 12);
+            this.rbManual_.Location = new System.Drawing.Point(99, 14);
             this.rbManual_.Margin = new System.Windows.Forms.Padding(0);
             this.rbManual_.MouseLocation = new System.Drawing.Point(-1, -1);
             this.rbManual_.MouseState = MaterialSkin.MouseState.HOVER;
@@ -2371,7 +2382,7 @@ namespace loadingBox2dGui
             this.rbSet_.Checked = true;
             this.rbSet_.Depth = 0;
             this.rbSet_.Font = new System.Drawing.Font("Consolas", 12F);
-            this.rbSet_.Location = new System.Drawing.Point(193, 12);
+            this.rbSet_.Location = new System.Drawing.Point(193, 14);
             this.rbSet_.Margin = new System.Windows.Forms.Padding(0);
             this.rbSet_.MouseLocation = new System.Drawing.Point(-1, -1);
             this.rbSet_.MouseState = MaterialSkin.MouseState.HOVER;
@@ -2388,7 +2399,7 @@ namespace loadingBox2dGui
             this.rbAuto_.AutoSize = true;
             this.rbAuto_.Depth = 0;
             this.rbAuto_.Font = new System.Drawing.Font("Consolas", 12F);
-            this.rbAuto_.Location = new System.Drawing.Point(9, 12);
+            this.rbAuto_.Location = new System.Drawing.Point(9, 14);
             this.rbAuto_.Margin = new System.Windows.Forms.Padding(0);
             this.rbAuto_.MouseLocation = new System.Drawing.Point(-1, -1);
             this.rbAuto_.MouseState = MaterialSkin.MouseState.HOVER;
@@ -2405,7 +2416,7 @@ namespace loadingBox2dGui
             this.gbPLC.Controls.Add(this.tbPlc);
             this.gbPLC.Depth = 0;
             this.gbPLC.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gbPLC.Location = new System.Drawing.Point(310, 7);
+            this.gbPLC.Location = new System.Drawing.Point(308, 3);
             this.gbPLC.Margin = new System.Windows.Forms.Padding(14);
             this.gbPLC.MouseState = MaterialSkin.MouseState.HOVER;
             this.gbPLC.Name = "gbPLC";
@@ -2450,7 +2461,7 @@ namespace loadingBox2dGui
             this.gbCarType.Controls.Add(this.cmbCarTypeName);
             this.gbCarType.Depth = 0;
             this.gbCarType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gbCarType.Location = new System.Drawing.Point(615, 7);
+            this.gbCarType.Location = new System.Drawing.Point(613, 3);
             this.gbCarType.Margin = new System.Windows.Forms.Padding(14);
             this.gbCarType.MouseState = MaterialSkin.MouseState.HOVER;
             this.gbCarType.Name = "gbCarType";
@@ -2534,13 +2545,14 @@ namespace loadingBox2dGui
             this.btnCameraConnect_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnCameraConnect_.UseAccentColor = false;
             this.btnCameraConnect_.UseVisualStyleBackColor = false;
+            this.btnCameraConnect_.Click += new System.EventHandler(this.btnCameraConnect__Click);
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Location = new System.Drawing.Point(3, 64);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -2557,7 +2569,7 @@ namespace loadingBox2dGui
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1920, 1061);
+            this.splitContainer1.Size = new System.Drawing.Size(1914, 994);
             this.splitContainer1.SplitterDistance = 68;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 106;
@@ -2569,7 +2581,7 @@ namespace loadingBox2dGui
             this.gbCarSeqNumber_.Controls.Add(this.tbCarSeqNumber);
             this.gbCarSeqNumber_.Depth = 0;
             this.gbCarSeqNumber_.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gbCarSeqNumber_.Location = new System.Drawing.Point(936, 7);
+            this.gbCarSeqNumber_.Location = new System.Drawing.Point(934, 3);
             this.gbCarSeqNumber_.Margin = new System.Windows.Forms.Padding(14);
             this.gbCarSeqNumber_.MouseState = MaterialSkin.MouseState.HOVER;
             this.gbCarSeqNumber_.Name = "gbCarSeqNumber_";
@@ -2634,6 +2646,7 @@ namespace loadingBox2dGui
             this.btnSettingManager_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnSettingManager_.UseAccentColor = false;
             this.btnSettingManager_.UseVisualStyleBackColor = false;
+            this.btnSettingManager_.Click += new System.EventHandler(this.btnSettingManager__Click);
             // 
             // label22
             // 
