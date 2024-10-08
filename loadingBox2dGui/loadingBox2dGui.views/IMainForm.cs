@@ -1,6 +1,9 @@
 ﻿using CoPick.Setting;
+using CoPick.Plc;
+using loadingBox2dGui.models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,6 +17,8 @@ namespace loadingBox2dGui.views
         OperationMode ProgramMode { get; }
         string PlcInfo { set; }
         int CarType { get; set; }
+        string BodyNum { set; }
+        string CarSeq { set; }
         Image LhImage { set; }
         Image RhImage { set; }
         #endregion
@@ -27,6 +32,15 @@ namespace loadingBox2dGui.views
         event EventHandler GetReferenceDataPathRequested;
         event EventHandler GetHandEyeCalibrationFilePathRequested;
         event EventHandler ScanPointRequsted;
+        #endregion
+
+        #region Methods
+        void DisplayVisionResult(VisionStatus visionStatus);
+        void RefreshPlcStatus();
+        void BlinkReadStatus(int time);
+        void BlinkWriteStatus(int time);
+        void UpdatePlcSignalLabel(PlcSignalForLoadingBox signal, string value);
+        void TogglePlcSignalLabel(PlcSignalForLoadingBox signal, bool isOn);
         #endregion
     }
 }
