@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using loadingBox2dGui.models;
 
 namespace loadingBox2dGui.presenters
 {
     public class MainPresenter
     {
+        protected LightCommunicatorForLoadingBox _lightComm;
         public MainPresenter()
         {
 

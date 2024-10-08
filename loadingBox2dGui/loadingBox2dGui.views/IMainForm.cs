@@ -43,4 +43,12 @@ public class ChangeModeEventArgs
     }
 }
 
+public class ChangeLightStateEventArgs
+{
+    public bool State { get; set; }
+    public ChangeLightStateEventArgs(bool state)
+    {
+        State = state;
+    }
+}
 #endregion
