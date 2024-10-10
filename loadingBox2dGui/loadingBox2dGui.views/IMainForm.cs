@@ -18,8 +18,8 @@ namespace loadingBox2dGui.views
         OperationMode ProgramMode { get; }
         string PlcInfo { set; }
         int CarType { get; set; }
-        string BodyNum { set; }
-        string CarSeq { set; }
+        string BodyNum { get; set; }
+        string CarSeq { get; set; }
         Image LhImage { set; }
         Image RhImage { set; }
         bool IsPlcConnected { get; set; }

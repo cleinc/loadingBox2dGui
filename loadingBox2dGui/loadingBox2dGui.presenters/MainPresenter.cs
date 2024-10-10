@@ -249,6 +249,13 @@ namespace loadingBox2dGui.presenters
             return true;
         }
 
+        private void UpdatePlcInspectionInfo(int carType, string seqNum, string bodyNum)
+        {
+            _view.CarType = carType;
+            _view.CarSeq = seqNum;
+            _view.BodyNum = bodyNum;
+        }
+
         private bool CreatePlcCommInstance(string selectedPlc)
         {
             if (selectedPlc == null)
