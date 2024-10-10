@@ -197,7 +197,7 @@ namespace loadingBox2dGui
         #endregion
 
         #region EventHandlers
-        public event EventHandler<ChangeModeEventArgs> ChangeModeRequeted;
+        public event EventHandler<ChangeModeEventArgs> ChangeModeRequested;
         public event EventHandler ConnectCameraRequested;
         public event EventHandler ShowSettingManagerRequested;
         public event EventHandler CalculateRequested;
@@ -205,12 +205,13 @@ namespace loadingBox2dGui
         public event EventHandler GetReferenceDataPathRequested;
         public event EventHandler GetHandEyeCalibrationFilePathRequested;
         public event EventHandler ScanPointRequsted;
+        public event EventHandler DisconnectLhCameraRequested;
         public event EventHandler<FormClosingEventArgs> ProgramCloseRequested;
         public event EventHandler<ChangeLightStateEventArgs> LightStateChangeRequested;
 
         private void btnCameraConnect__Click(object sender, System.EventArgs e)
         {
-
+            ConnectCameraRequested?.Invoke(sender, EventArgs.Empty);
         }
 
         private void btnSettingManager__Click(object sender, System.EventArgs e)
@@ -281,13 +282,22 @@ namespace loadingBox2dGui
 
         private void btnGlassPoint__Click(object sender, System.EventArgs e)
         {
-
+            ScanPointRequsted?.Invoke(sender, EventArgs.Empty);
         }
         #endregion
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             ProgramCloseRequested?.Invoke(this, e);
+        }
+
+        private void rbAuto__CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb.Checked && rb.Name == "rbAuto_")
+            {
+                ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Auto, true));
+            }
         }
     }
 }

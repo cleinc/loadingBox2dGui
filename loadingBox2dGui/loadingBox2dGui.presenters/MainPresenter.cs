@@ -10,6 +10,8 @@ using loadingBox2dGui.models;
 using CoPick.Setting;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Threading;
 
 namespace loadingBox2dGui.presenters
 {
@@ -20,15 +22,16 @@ namespace loadingBox2dGui.presenters
         private readonly IMainForm _view;
         private PlcCommunicatorForLoadingBox _plcComm;
         private LightCommunicatorForLoadingBox _lightComm;
+        private PylonCommunicator _pylonComm;
         private bool _isPlcEventHandlersRegistered = false;
+        private (Bitmap, Bitmap) bmps;
         public MainPresenter(IMainForm view)
         {
             _view = view;
-            _view.ProgramCloseRequested += View_ProgramCloseRequested;
+            _pylonComm = new PylonCommunicator();
             CreateLightCommInstance("ModbusLightCommunicator");
             CreatePlcCommInstance("Tk1MelsecCommunicator");
             Console.WriteLine($"plc comm is empty {_plcComm == null}");
-            InitializePlc();
 
             //bool result = InitializePlc();
 
@@ -36,7 +39,42 @@ namespace loadingBox2dGui.presenters
             //{
             //    Logger.Warning("Unable to Connect To PLC");
             //}
+            _view.ConnectCameraRequested += View_ConnectCameraRequested;
+            _view.ScanPointRequsted += View_ScanPointRequsted;
+            _view.DisconnectLhCameraRequested += View_DisconnectLhCameraRequested;
+            _view.ChangeModeRequested += View_ChangeModeRequested;
+            _view.ProgramCloseRequested += View_ProgramCloseRequested;
             _view.LightStateChangeRequested += View_LightStateChangedRequested;
+        }
+
+        private async void View_ChangeModeRequested(object sender, ChangeModeEventArgs e)
+        {
+            InitializePlc();
+        }
+
+        private void View_DisconnectLhCameraRequested(object sender, EventArgs e)
+        {
+            _pylonComm.StopCamera();
+            _pylonComm.DisConnectCamera();
+        }
+
+        private async void View_ScanPointRequsted(object sender, EventArgs e)
+        {
+            Logger.Debug("Call [Camera Start]");
+
+            bmps = await _pylonComm.StartCamera();
+            _view.LhImage = bmps.Item1;
+            _view.RhImage = bmps.Item2;
+            Logger.Debug("Complete [Camera Start]");
+            //_pylonComm.StopCamera();
+            //_pylonComm.DisConnectCamera();
+        }
+
+        private void View_ConnectCameraRequested(object sender, EventArgs e)
+        {
+            Logger.Debug("Call [Camera Connect]");
+            _pylonComm.ConnectCamera();
+            Logger.Debug("Complete [Camera Connect]");
         }
 
         private void View_LightStateChangedRequested(object sender, ChangeLightStateEventArgs e)
@@ -83,6 +121,11 @@ namespace loadingBox2dGui.presenters
             Logger.Info("Plc Disconnected Received");
         }
 
+        private void PlcComm_CarTypeUpdate(object sender, VisionUpdateEventArgs e)
+        {
+            Logger.Info("Plc Update Received");
+        }
+
         private void PlcComm_LocalizerVisionStartReceived(object sender, EventArgs e)
         {
             Logger.Info("Plc Start Received");
@@ -99,10 +142,6 @@ namespace loadingBox2dGui.presenters
             _view.DisplayVisionResult(VisionStatus.OK);
         }
 
-        private void PlcComm_CarTypeUpdate(object sender, VisionUpdateEventArgs e)
-        {
-            Logger.Info("Plc Update Received");
-        }
         #endregion
 
         #region Manual Events
@@ -126,6 +165,7 @@ namespace loadingBox2dGui.presenters
             if (_plcComm != null)
             {
 
+                Console.WriteLine("Intialize PLC Thread Id : " + Thread.CurrentThread.ManagedThreadId);
                 await _plcComm.ConnectAsync();
                 if (_plcComm.IsConnected)
                 {
@@ -135,6 +175,7 @@ namespace loadingBox2dGui.presenters
                 Console.WriteLine($"Is Connected {_plcComm.IsConnected}");
                 _view.IsPlcConnected = _plcComm.IsConnected;
                 _view.RefreshPlcStatus();
+                LoadPlcSignalLabelTitle();
                 return true;
             }
             else

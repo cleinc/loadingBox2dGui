@@ -39,24 +39,28 @@ namespace loadingBox2dGui.models
         {
             return true;
         }
-        public bool StartCamera()
+        public Task<(Bitmap, Bitmap)> StartCamera()
         {
-            _camera1.StreamGrabber.Start();
-            IGrabResult grabResult1 = _camera1.StreamGrabber.RetrieveResult(5000, TimeoutHandling.ThrowException);
-            if (grabResult1.GrabSucceeded)
+            Bitmap bmp1 = null;
+            Bitmap bmp2 = null;
+            return Task.Run(() =>
             {
-                Bitmap bmp = ConvertGrabResultToBitmap(grabResult1);
-                SaveImage(bmp);
-            }
-
-            _camera2.StreamGrabber.Start();
-            IGrabResult grabResult2 = _camera1.StreamGrabber.RetrieveResult(5000, TimeoutHandling.ThrowException);
-            if (grabResult2.GrabSucceeded)
-            {
-                Bitmap bmp = ConvertGrabResultToBitmap(grabResult2);
-                SaveImage(bmp);
-            }
-            return true;
+                _camera1.StreamGrabber.Start();
+                IGrabResult grabResult1 = _camera1.StreamGrabber.RetrieveResult(1000, TimeoutHandling.ThrowException);
+                if (grabResult1.GrabSucceeded)
+                {
+                    bmp1 = ConvertGrabResultToBitmap(grabResult1);
+                    SaveImage(bmp1);
+                }
+                _camera2.StreamGrabber.Start();
+                IGrabResult grabResult2 = _camera2.StreamGrabber.RetrieveResult(1000, TimeoutHandling.ThrowException);
+                if (grabResult2.GrabSucceeded)
+                {
+                    bmp2 = ConvertGrabResultToBitmap(grabResult2);
+                    SaveImage(bmp2);
+                }
+                return (bmp1, bmp2);
+            });
         }
         private Bitmap ConvertGrabResultToBitmap(IGrabResult grabResult)
         {

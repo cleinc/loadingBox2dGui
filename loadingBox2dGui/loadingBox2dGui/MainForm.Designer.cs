@@ -62,6 +62,7 @@ namespace loadingBox2dGui
             this.tbGlassCameraSerial4 = new MaterialSkin.Controls.MaterialTextBox2();
             this.ckbGlassCameraUse3 = new MaterialSkin.Controls.MaterialCheckbox();
             this.materialTextBox23 = new MaterialSkin.Controls.MaterialTextBox2();
+            this.btnConnectPlc_ = new MaterialSkin.Controls.MaterialButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
             this.plcSignalStatusOnlyTable1 = new CoPick.Controls.PlcSignalStatusOnlyTable();
@@ -151,12 +152,12 @@ namespace loadingBox2dGui
             this.cmbCarTypeName = new MaterialSkin.Controls.MaterialComboBox();
             this.btnCameraConnect_ = new MaterialSkin.Controls.MaterialButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.materialCard5 = new MaterialSkin.Controls.MaterialCard();
+            this.tbCarBodyNumber = new MaterialSkin.Controls.MaterialTextBox2();
             this.gbCarSeqNumber_ = new MaterialSkin.Controls.MaterialCard();
             this.tbCarSeqNumber = new MaterialSkin.Controls.MaterialTextBox2();
             this.btnSettingManager_ = new MaterialSkin.Controls.MaterialButton();
             this.label22 = new MaterialSkin.Controls.MaterialLabel();
-            this.tbCarBodyNumber = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialCard5 = new MaterialSkin.Controls.MaterialCard();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -192,6 +193,7 @@ namespace loadingBox2dGui
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.materialCard5.SuspendLayout();
             this.gbCarSeqNumber_.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -209,6 +211,7 @@ namespace loadingBox2dGui
             this.splitContainer2.Panel1.Controls.Add(this.pbLh);
             this.splitContainer2.Panel1.Controls.Add(this.materialCard4);
             this.splitContainer2.Panel1.Controls.Add(this.materialCard3);
+            this.splitContainer2.Panel1.Controls.Add(this.btnConnectPlc_);
             this.splitContainer2.Panel1.Controls.Add(this.pictureBox1);
             this.splitContainer2.Panel1.Controls.Add(this.materialCard1);
             this.splitContainer2.Panel1.Controls.Add(this.pictureBox3);
@@ -242,6 +245,7 @@ namespace loadingBox2dGui
             this.pbRh.Location = new System.Drawing.Point(561, 5);
             this.pbRh.Name = "pbRh";
             this.pbRh.Size = new System.Drawing.Size(542, 532);
+            this.pbRh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbRh.TabIndex = 193;
             this.pbRh.TabStop = false;
             // 
@@ -251,6 +255,7 @@ namespace loadingBox2dGui
             this.pbLh.Location = new System.Drawing.Point(8, 5);
             this.pbLh.Name = "pbLh";
             this.pbLh.Size = new System.Drawing.Size(542, 532);
+            this.pbLh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbLh.TabIndex = 193;
             this.pbLh.TabStop = false;
             // 
@@ -867,6 +872,34 @@ namespace loadingBox2dGui
             this.materialTextBox23.TrailingIcon = null;
             this.materialTextBox23.UseSystemPasswordChar = false;
             this.materialTextBox23.UseTallSize = false;
+            // 
+            // btnConnectPlc_
+            // 
+            this.btnConnectPlc_.AutoSize = false;
+            this.btnConnectPlc_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnConnectPlc_.BackColor = System.Drawing.Color.DarkGray;
+            this.btnConnectPlc_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnConnectPlc_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnConnectPlc_.Depth = 0;
+            this.btnConnectPlc_.FlatAppearance.BorderSize = 0;
+            this.btnConnectPlc_.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
+            this.btnConnectPlc_.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
+            this.btnConnectPlc_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConnectPlc_.Font = new System.Drawing.Font("Consolas", 16F);
+            this.btnConnectPlc_.HighEmphasis = true;
+            this.btnConnectPlc_.Icon = null;
+            this.btnConnectPlc_.Location = new System.Drawing.Point(23, 699);
+            this.btnConnectPlc_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnConnectPlc_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnConnectPlc_.Name = "btnConnectPlc_";
+            this.btnConnectPlc_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnConnectPlc_.Size = new System.Drawing.Size(100, 36);
+            this.btnConnectPlc_.TabIndex = 159;
+            this.btnConnectPlc_.Text = "Connect PLC";
+            this.btnConnectPlc_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnConnectPlc_.UseAccentColor = false;
+            this.btnConnectPlc_.UseVisualStyleBackColor = false;
+            this.btnConnectPlc_.Click += new System.EventHandler(this.btnGlassRHCameraUse__Click);
             // 
             // pictureBox1
             // 
@@ -2411,13 +2444,14 @@ namespace loadingBox2dGui
             this.rbAuto_.TabIndex = 0;
             this.rbAuto_.Text = "Auto";
             this.rbAuto_.UseVisualStyleBackColor = true;
+            this.rbAuto_.CheckedChanged += new System.EventHandler(this.rbAuto__CheckedChanged);
             // 
             // gbPLC
             // 
             this.gbPLC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.gbPLC.Controls.Add(this.tbPlc);
             this.gbPLC.Depth = 0;
-            this.gbPLC.Font = new System.Drawing.Font("Gulim", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbPLC.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbPLC.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.gbPLC.Location = new System.Drawing.Point(308, 3);
             this.gbPLC.Margin = new System.Windows.Forms.Padding(14);
@@ -2579,6 +2613,51 @@ namespace loadingBox2dGui
             this.splitContainer1.TabIndex = 106;
             this.splitContainer1.TabStop = false;
             // 
+            // materialCard5
+            // 
+            this.materialCard5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard5.Controls.Add(this.tbCarBodyNumber);
+            this.materialCard5.Depth = 0;
+            this.materialCard5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard5.Location = new System.Drawing.Point(1088, 3);
+            this.materialCard5.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard5.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard5.Name = "materialCard5";
+            this.materialCard5.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard5.Size = new System.Drawing.Size(298, 65);
+            this.materialCard5.TabIndex = 159;
+            // 
+            // tbCarBodyNumber
+            // 
+            this.tbCarBodyNumber.AnimateReadOnly = false;
+            this.tbCarBodyNumber.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbCarBodyNumber.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbCarBodyNumber.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbCarBodyNumber.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbCarBodyNumber.Depth = 0;
+            this.tbCarBodyNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbCarBodyNumber.HideSelection = true;
+            this.tbCarBodyNumber.LeadingIcon = null;
+            this.tbCarBodyNumber.Location = new System.Drawing.Point(7, 12);
+            this.tbCarBodyNumber.MaxLength = 32767;
+            this.tbCarBodyNumber.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbCarBodyNumber.Name = "tbCarBodyNumber";
+            this.tbCarBodyNumber.PasswordChar = '\0';
+            this.tbCarBodyNumber.PrefixSuffixText = null;
+            this.tbCarBodyNumber.ReadOnly = true;
+            this.tbCarBodyNumber.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbCarBodyNumber.SelectedText = "";
+            this.tbCarBodyNumber.SelectionLength = 0;
+            this.tbCarBodyNumber.SelectionStart = 0;
+            this.tbCarBodyNumber.ShortcutsEnabled = true;
+            this.tbCarBodyNumber.Size = new System.Drawing.Size(285, 48);
+            this.tbCarBodyNumber.TabIndex = 0;
+            this.tbCarBodyNumber.TabStop = false;
+            this.tbCarBodyNumber.Text = "0";
+            this.tbCarBodyNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbCarBodyNumber.TrailingIcon = null;
+            this.tbCarBodyNumber.UseSystemPasswordChar = false;
+            // 
             // gbCarSeqNumber_
             // 
             this.gbCarSeqNumber_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -2663,50 +2742,6 @@ namespace loadingBox2dGui
             this.label22.TabIndex = 71;
             this.label22.Text = "label22";
             // 
-            // tbCarBodyNumber
-            // 
-            this.tbCarBodyNumber.AnimateReadOnly = false;
-            this.tbCarBodyNumber.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbCarBodyNumber.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbCarBodyNumber.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbCarBodyNumber.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbCarBodyNumber.Depth = 0;
-            this.tbCarBodyNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbCarBodyNumber.HideSelection = true;
-            this.tbCarBodyNumber.LeadingIcon = null;
-            this.tbCarBodyNumber.Location = new System.Drawing.Point(7, 12);
-            this.tbCarBodyNumber.MaxLength = 32767;
-            this.tbCarBodyNumber.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbCarBodyNumber.Name = "tbCarBodyNumber";
-            this.tbCarBodyNumber.PasswordChar = '\0';
-            this.tbCarBodyNumber.PrefixSuffixText = null;
-            this.tbCarBodyNumber.ReadOnly = true;
-            this.tbCarBodyNumber.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbCarBodyNumber.SelectedText = "";
-            this.tbCarBodyNumber.SelectionLength = 0;
-            this.tbCarBodyNumber.SelectionStart = 0;
-            this.tbCarBodyNumber.ShortcutsEnabled = true;
-            this.tbCarBodyNumber.Size = new System.Drawing.Size(285, 48);
-            this.tbCarBodyNumber.TabIndex = 0;
-            this.tbCarBodyNumber.TabStop = false;
-            this.tbCarBodyNumber.Text = "0";
-            this.tbCarBodyNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.tbCarBodyNumber.TrailingIcon = null;
-            this.tbCarBodyNumber.UseSystemPasswordChar = false;
-            // 
-            // materialCard5
-            // 
-            this.materialCard5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard5.Controls.Add(this.tbCarBodyNumber);
-            this.materialCard5.Depth = 0;
-            this.materialCard5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard5.Location = new System.Drawing.Point(1088, 3);
-            this.materialCard5.Margin = new System.Windows.Forms.Padding(14);
-            this.materialCard5.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCard5.Name = "materialCard5";
-            this.materialCard5.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard5.Size = new System.Drawing.Size(298, 65);
-            this.materialCard5.TabIndex = 159;
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2762,6 +2797,7 @@ namespace loadingBox2dGui
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.materialCard5.ResumeLayout(false);
             this.gbCarSeqNumber_.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -2895,6 +2931,7 @@ namespace loadingBox2dGui
         private PictureBox pbLh;
         private MaterialSkin.Controls.MaterialTextBox2 tbCarBodyNumber;
         private MaterialSkin.Controls.MaterialCard materialCard5;
+        private MaterialSkin.Controls.MaterialButton btnConnectPlc_;
     }
 }
 

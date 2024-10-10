@@ -26,7 +26,7 @@ namespace loadingBox2dGui.views
         #endregion
 
         #region Event Handlers
-        event EventHandler<ChangeModeEventArgs> ChangeModeRequeted;
+        event EventHandler<ChangeModeEventArgs> ChangeModeRequested;
         event EventHandler ConnectCameraRequested;
         event EventHandler ShowSettingManagerRequested;
         event EventHandler CalculateRequested;
@@ -36,6 +36,7 @@ namespace loadingBox2dGui.views
         event EventHandler ScanPointRequsted;
         event EventHandler<FormClosingEventArgs> ProgramCloseRequested;
         event EventHandler<ChangeLightStateEventArgs> LightStateChangeRequested;
+        event EventHandler DisconnectLhCameraRequested;
         #endregion
 
         #region Methods
