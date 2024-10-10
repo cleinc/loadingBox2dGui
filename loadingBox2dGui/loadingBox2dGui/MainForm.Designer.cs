@@ -2645,7 +2645,7 @@ namespace loadingBox2dGui
             this.btnSettingManager_.NoAccentTextColor = System.Drawing.Color.Empty;
             this.btnSettingManager_.Size = new System.Drawing.Size(181, 33);
             this.btnSettingManager_.TabIndex = 3;
-            this.btnSettingManager_.Text = "Setting Manager";
+            this.btnSettingManager_.Text = "Light Off";
             this.btnSettingManager_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnSettingManager_.UseAccentColor = false;
             this.btnSettingManager_.UseVisualStyleBackColor = false;
