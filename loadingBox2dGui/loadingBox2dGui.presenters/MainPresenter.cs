@@ -55,7 +55,7 @@ namespace loadingBox2dGui.presenters
         private void View_DisconnectLhCameraRequested(object sender, EventArgs e)
         {
             _pylonComm.StopCamera();
-            _pylonComm.DisConnectCamera();
+            //_pylonComm.DisConnectCamera();
         }
 
         private async void View_ScanPointRequsted(object sender, EventArgs e)
@@ -66,8 +66,6 @@ namespace loadingBox2dGui.presenters
             _view.LhImage = bmps.Item1;
             _view.RhImage = bmps.Item2;
             Logger.Debug("Complete [Camera Start]");
-            //_pylonComm.StopCamera();
-            //_pylonComm.DisConnectCamera();
         }
 
         private void View_ConnectCameraRequested(object sender, EventArgs e)
@@ -124,11 +122,20 @@ namespace loadingBox2dGui.presenters
         private void PlcComm_CarTypeUpdate(object sender, VisionUpdateEventArgs e)
         {
             Logger.Info("Plc Update Received");
+            Logger.Debug("Call [Camera Connect]");
+            _lightComm.WriteLightState(true);
+            _pylonComm.ConnectCamera();
+            Logger.Debug("Complete [Camera Connect]");
         }
 
-        private void PlcComm_LocalizerVisionStartReceived(object sender, EventArgs e)
+        private async void PlcComm_LocalizerVisionStartReceived(object sender, EventArgs e)
         {
-            Logger.Info("Plc Start Received");
+            Logger.Debug("Call [Camera Start]");
+
+            bmps = await _pylonComm.StartCamera();
+            _view.LhImage = bmps.Item1;
+            _view.RhImage = bmps.Item2;
+            Logger.Debug("Complete [Camera Start]");
         }
 
         private void PlcComm_VisionReset(object sender, EventArgs e)
@@ -136,10 +143,24 @@ namespace loadingBox2dGui.presenters
             Logger.Info("Plc Reset Received");
         }
 
-        private void PlcComm_VisionEnd(object sender, EventArgs e)
+        private async void PlcComm_VisionEnd(object sender, EventArgs e)
         {
             Logger.Info("Plc End Received");
-            _view.DisplayVisionResult(VisionStatus.OK);
+            _lightComm.WriteLightState(false);
+            if (_plcComm.VisionPass)
+            {
+                int ret = await _plcComm.SendLocalizerStatusAsync(PlcSignalForLoadingBox.VISION_PASS, true, 100, 10);
+                if (ret != 0)
+                {
+                    Logger.Info("SEND PASS FAIL");
+                }
+                else
+                {
+                    Logger.Info("SEND PASS SUCCEED");
+                }
+
+                _view.DisplayVisionResult(VisionStatus.OK);
+            }
         }
 
         #endregion

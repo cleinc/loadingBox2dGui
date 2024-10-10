@@ -45,14 +45,16 @@ namespace loadingBox2dGui.models
             Bitmap bmp2 = null;
             return Task.Run(() =>
             {
-                _camera1.StreamGrabber.Start();
-                IGrabResult grabResult1 = _camera1.StreamGrabber.RetrieveResult(1000, TimeoutHandling.ThrowException);
+                _camera1.StreamGrabber.Start(1);
+                IGrabResult grabResult1 = _camera1.StreamGrabber.RetrieveResult(5000, TimeoutHandling.ThrowException);
                 if (grabResult1.GrabSucceeded)
                 {
                     bmp1 = ConvertGrabResultToBitmap(grabResult1);
                     SaveImage(bmp1);
                 }
-                _camera2.StreamGrabber.Start();
+                _camera1.StreamGrabber.Stop();
+
+                _camera2.StreamGrabber.Start(1);
                 IGrabResult grabResult2 = _camera2.StreamGrabber.RetrieveResult(1000, TimeoutHandling.ThrowException);
                 if (grabResult2.GrabSucceeded)
                 {
@@ -74,7 +76,7 @@ namespace loadingBox2dGui.models
         }
         public bool SaveImage(Bitmap bmp)
         {
-            string filePath = $"{DateTime.Now.ToString("yyMMdd_hhmmssfff")}_img.png";
+            string filePath = $"{DateTime.Now.ToString("yyMMdd_hhmmssfff")}.png";
             bmp.Save(filePath, ImageFormat.Png);
             return true;
         }
