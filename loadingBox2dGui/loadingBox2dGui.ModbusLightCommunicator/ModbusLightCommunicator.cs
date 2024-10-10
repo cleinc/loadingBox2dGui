@@ -1,4 +1,5 @@
 ﻿using System;
+using CoPick.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -11,6 +12,8 @@ namespace loadingBox2dGui.ModbusLightCommunicator
 {
     public class ModbusLightCommunicator : LightCommunicatorForLoadingBox, IDisposable
     {
+        protected static readonly LogHelper Logger = LogHelper.Logger;
+
         private bool _isConnected;
         private bool _lightState;
         private TcpClient _tcpClient { get; set; } = new TcpClient();
@@ -73,7 +76,7 @@ namespace loadingBox2dGui.ModbusLightCommunicator
             }
             catch (SocketException ex)
             {
-                //Logger.Error(ex.Message);
+                Logger.Error(ex.Message);
                 return false;
             }
         }
@@ -100,7 +103,7 @@ namespace loadingBox2dGui.ModbusLightCommunicator
                 }
                 catch (Exception ex)
                 {
-                    //Logger.Warning($"UR Robot Connection Failed. {ex.Message}, {IpAddr}");
+                    Logger.Warning($"Modbus Light Connection Failed. {ex.Message}, {IpAddr}");
                     IsConnected = false;
                     return false;
                 }
@@ -164,13 +167,13 @@ namespace loadingBox2dGui.ModbusLightCommunicator
                 }
                 else
                 {
-                    //Logger.Warning("Disconnected. Failed to Write light state: " + state);
+                    Logger.Warning("Disconnected. Failed to Write light state: " + state);
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                //Logger.Error("ERROR OCCURRED WHILE WRITING SIGNAL : " + ex.Message);
+                Logger.Error("ERROR OCCURRED WHILE WRITING SIGNAL : " + ex.Message);
                 return false;
             }
         }
@@ -203,26 +206,27 @@ namespace loadingBox2dGui.ModbusLightCommunicator
                     }
                     else
                     {
-                        //Logger.Error("Reading Light state Failed : " + _stateRegister);
+                        Logger.Error("Reading Light state Failed : " + _stateRegister);
                         return false;
                     }
 
                 }
                 else
                 {
-                    //Logger.Warning("Disconnected. Failed to Read light state : " + _stateRegister);
+                    Logger.Warning("Disconnected. Failed to Read light state : " + _stateRegister);
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                //Logger.Error("ERROR OCCURRED WHILE READING SIGNAL : " + ex.Message);
+                Logger.Error("ERROR OCCURRED WHILE READING SIGNAL : " + ex.Message);
                 return false;
             }
         }
 
         public ModbusLightCommunicator()
         {
+            WriteLightState(false);
         }
     }
 }

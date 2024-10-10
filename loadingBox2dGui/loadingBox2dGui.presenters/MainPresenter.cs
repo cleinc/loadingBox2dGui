@@ -36,14 +36,12 @@ namespace loadingBox2dGui.presenters
             //{
             //    Logger.Warning("Unable to Connect To PLC");
             //}
-            _view.LightOnRequested += View_LightOnRequested;
+            _view.LightStateChangeRequested += View_LightStateChangedRequested;
         }
 
-        private void View_LightOnRequested(object sender, EventArgs e)
+        private void View_LightStateChangedRequested(object sender, ChangeLightStateEventArgs e)
         {
-            _lightComm.LightState = !_lightComm.LightState;
-            _lightComm.WriteLightState(_lightComm.LightState);
-
+            _lightComm.WriteLightState(e.State);
         }
 
         private void View_ProgramCloseRequested(object sender, FormClosingEventArgs e)
