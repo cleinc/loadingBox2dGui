@@ -18,7 +18,6 @@ namespace loadingBox2dGui.models
         private PixelDataConverter _converter;
         private string _camera1Ip = "192.168.10.201";
         private string _camera2Ip = "192.168.10.202";
-        private int n = 0;
 
         public PylonCommunicator()
         {
@@ -29,35 +28,36 @@ namespace loadingBox2dGui.models
             _camera2 = new Camera(cameraInfo2);
 
             _converter = new PixelDataConverter();
-            ConnectCamera(_camera1);
-            ConnectCamera(_camera2);
-            n++;
-            StartCamera(_camera1);
-            n++;
-            StartCamera(_camera2);
         }
-
-        public bool ConnectCamera(Camera camera)
+        public bool ConnectCamera()
         {
-            camera.Open();
+            _camera1.Open();
+            _camera2.Open();
             return true;
         }
         public bool SetCameraSettings(Camera camera)
         {
             return true;
         }
-        public bool StartCamera(Camera camera)
+        public bool StartCamera()
         {
-            camera.StreamGrabber.Start();
-            IGrabResult grabResult = camera.StreamGrabber.RetrieveResult(5000, TimeoutHandling.ThrowException);
-            if (grabResult.GrabSucceeded)
+            _camera1.StreamGrabber.Start();
+            IGrabResult grabResult1 = _camera1.StreamGrabber.RetrieveResult(5000, TimeoutHandling.ThrowException);
+            if (grabResult1.GrabSucceeded)
             {
-                Bitmap bmp = ConvertGrabResultToBitmap(grabResult);
+                Bitmap bmp = ConvertGrabResultToBitmap(grabResult1);
+                SaveImage(bmp);
+            }
+
+            _camera2.StreamGrabber.Start();
+            IGrabResult grabResult2 = _camera1.StreamGrabber.RetrieveResult(5000, TimeoutHandling.ThrowException);
+            if (grabResult2.GrabSucceeded)
+            {
+                Bitmap bmp = ConvertGrabResultToBitmap(grabResult2);
                 SaveImage(bmp);
             }
             return true;
         }
-
         private Bitmap ConvertGrabResultToBitmap(IGrabResult grabResult)
         {
             Bitmap bmp = new Bitmap(grabResult.Width, grabResult.Height, PixelFormat.Format32bppArgb);
@@ -68,11 +68,22 @@ namespace loadingBox2dGui.models
             bmp.UnlockBits(bmpData);
             return bmp;
         }
-
         public bool SaveImage(Bitmap bmp)
         {
-            string filePath = $"{n}_img.png";
+            string filePath = $"{DateTime.Now.ToString("yyMMdd_hhmmssfff")}_img.png";
             bmp.Save(filePath, ImageFormat.Png);
+            return true;
+        }
+        public bool StopCamera()
+        {
+            _camera1.StreamGrabber.Stop();
+            _camera2.StreamGrabber.Stop();
+            return true;
+        }
+        public bool DisConnectCamera()
+        {
+            _camera1.Close();
+            _camera2.Close();
             return true;
         }
     }
