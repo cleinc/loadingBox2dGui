@@ -226,6 +226,7 @@ namespace loadingBox2dGui.ModbusLightCommunicator
 
         public ModbusLightCommunicator()
         {
+            WriteLightState(false);
         }
     }
 }
