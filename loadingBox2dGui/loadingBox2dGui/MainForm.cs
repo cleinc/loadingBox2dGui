@@ -55,7 +55,7 @@ namespace loadingBox2dGui
         public int CarType
         {
             get => cmbCarTypeName.InvokeIfNeeded(() => (int)cmbCarTypeName.SelectedValue);
-            set { }
+            set => cmbCarTypeName.InvokeIfNeeded(() => cmbCarTypeName.SelectedValue = value);
         }
 
         public Image LhImage
@@ -68,11 +68,19 @@ namespace loadingBox2dGui
         }
         public string BodyNum
         {
-            set { }
+            get => tbCarBodyNumber.InvokeIfNeeded(() => tbCarBodyNumber.Text);
+            set => tbCarBodyNumber.InvokeIfNeeded(() => 
+            {
+                if (value != null)
+                {
+                    tbCarBodyNumber.Text = value;
+                }
+            });
         }
         public string CarSeq 
         { 
-            set => tbCarSeqNumber.InvokeIfNeeded(() => tbCarSeqNumber.Text = value); 
+            get => tbCarSeqNumber.InvokeIfNeeded(() => tbCarSeqNumber.Text);
+            set => tbCarSeqNumber.InvokeIfNeeded(() => tbCarSeqNumber.Text = value);
         }
 
         public bool IsPlcConnected { get; set; }
