@@ -177,7 +177,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             };
         }
 
-        public override async Task<int> SendLocalizerStatusAsync(PlcSignalForLoadingBox status, bool val, int nMaxTrials, int delay)
+        public override async Task<int> SendPlcStatusAsync(PlcSignalForLoadingBox status, bool val, int nMaxTrials, int delay)
         {
             try
             {

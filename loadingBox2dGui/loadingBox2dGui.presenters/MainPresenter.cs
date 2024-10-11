@@ -119,37 +119,59 @@ namespace loadingBox2dGui.presenters
             Logger.Info("Plc Disconnected Received");
         }
 
-        private void PlcComm_CarTypeUpdate(object sender, VisionUpdateEventArgs e)
+        private void PlcComm_VisionUpdate(object sender, VisionUpdateEventArgs e)
         {
             Logger.Info("Plc Update Received");
-            Logger.Debug("Call [Camera Connect]");
-            _lightComm.WriteLightState(true);
-            _pylonComm.ConnectCamera();
-            Logger.Debug("Complete [Camera Connect]");
+            try
+            {
+                Logger.Info($"cartype : {e.CarType} // seqnum : {e.CarSeq} // bodynum : {e.BodyNumber}");
+                UpdatePlcInspectionInfo(e.CarType, e.CarSeq, e.BodyNumber);
+                Logger.Debug("Call [Camera Connect]");
+                _lightComm.WriteLightState(true);
+                _pylonComm.ConnectCamera();
+                Logger.Debug("Complete [Camera Connect]");
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.ToString());
+            }
         }
 
-        private async void PlcComm_LocalizerVisionStartReceived(object sender, EventArgs e)
+        private async void PlcComm_VisionStart(object sender, EventArgs e)
         {
+            Logger.Info("Plc Start Received");
             Logger.Debug("Call [Camera Start]");
+            try
+            {
+                bmps = await _pylonComm.StartCamera();
 
-            bmps = await _pylonComm.StartCamera();
-            _view.LhImage = bmps.Item1;
-            _view.RhImage = bmps.Item2;
+                int ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, true, 100, 10);
+                if (ret != 0)
+                {
+                    Logger.Info("SEND P1 COMPLETE FAIL");
+                }
+                else
+                {
+                    Logger.Info("SEND P1 COMPLETE SUCCEED");
+                }
+
+                _view.LhImage = bmps.Item1;
+                _view.RhImage = bmps.Item2;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.ToString());
+            }
             Logger.Debug("Complete [Camera Start]");
-        }
-
-        private void PlcComm_VisionReset(object sender, EventArgs e)
-        {
-            Logger.Info("Plc Reset Received");
         }
 
         private async void PlcComm_VisionEnd(object sender, EventArgs e)
         {
             Logger.Info("Plc End Received");
-            _lightComm.WriteLightState(false);
+            _lightComm?.WriteLightState(false);
             if (_plcComm.VisionPass)
             {
-                int ret = await _plcComm.SendLocalizerStatusAsync(PlcSignalForLoadingBox.VISION_PASS, true, 100, 10);
+                int ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_PASS, true, 100, 10);
                 if (ret != 0)
                 {
                     Logger.Info("SEND PASS FAIL");
@@ -158,9 +180,17 @@ namespace loadingBox2dGui.presenters
                 {
                     Logger.Info("SEND PASS SUCCEED");
                 }
-
                 _view.DisplayVisionResult(VisionStatus.OK);
             }
+            else
+            {
+                Logger.Info($"not vision pass");
+            }
+        }
+
+        private void PlcComm_VisionReset(object sender, EventArgs e)
+        {
+            Logger.Info("Plc Reset Received");
         }
 
         #endregion
@@ -325,10 +355,10 @@ namespace loadingBox2dGui.presenters
                 UpdatePlcSignalStatus();
             };
 
-            _plcComm.CarTypeUpdate += PlcComm_CarTypeUpdate;
+            _plcComm.CarTypeUpdate += PlcComm_VisionUpdate;
+            _plcComm.VisionStart += PlcComm_VisionStart;
             _plcComm.VisionEnd += PlcComm_VisionEnd;
             _plcComm.VisionReset += PlcComm_VisionReset;
-            _plcComm.VisionStart += PlcComm_LocalizerVisionStartReceived;
             _plcComm.PlcDisconnected += PlcComm_PlcDisconnected;
             _plcComm.PlcConnected += PlcComm_PlcConnected;
             _plcComm.PlcError += PlcComm_PlcError;

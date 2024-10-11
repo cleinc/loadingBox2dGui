@@ -22,7 +22,7 @@ namespace loadingBox2dGui
             Application.SetCompatibleTextRenderingDefault(false);
 
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.Grey800, Primary.Red700, Primary.BlueGrey500, Accent.Red200, TextShade.WHITE);
             var mainForm = new MainForm();
             var mainPresenter = new MainPresenter(mainForm);

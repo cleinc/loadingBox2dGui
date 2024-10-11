@@ -63,7 +63,7 @@ namespace loadingBox2dGui.models
         public abstract Task SendHeartbeatAsync();
         public abstract void MonitorPlc();
         public abstract void RaiseEventIfItNeeds();
-        public abstract Task<int> SendLocalizerStatusAsync(PlcSignalForLoadingBox status, bool val, int nMaxTrials, int delay);
+        public abstract Task<int> SendPlcStatusAsync(PlcSignalForLoadingBox status, bool val, int nMaxTrials, int delay);
 
         public Task<bool> ConnectAsync()
         {
