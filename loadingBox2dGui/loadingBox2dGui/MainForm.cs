@@ -305,6 +305,15 @@ namespace loadingBox2dGui
             if (rb.Checked && rb.Name == "rbAuto_")
             {
                 ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Auto, true));
+                btnGlassPoint_.Enabled = false;
+                btnCameraConnect_.Enabled = false;
+                btnSettingManager_.Enabled = false;
+            }
+            else
+            {
+                btnGlassPoint_.Enabled = true;
+                btnCameraConnect_.Enabled = true;
+                btnSettingManager_.Enabled = true;
             }
         }
     }
