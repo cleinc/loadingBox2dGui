@@ -117,6 +117,10 @@ namespace loadingBox2dGui.ModbusLightCommunicator
             {
                 try
                 {
+                    if (LightState == true)
+                    {
+                        WriteLightState(false);
+                    }
                     // TcpClient의 내부 Socket 객체 닫기
                     if (_tcpClient.Client != null)
                     {
@@ -158,7 +162,7 @@ namespace loadingBox2dGui.ModbusLightCommunicator
                     {
                         _master.WriteSingleRegister(_stateRegister, 0x0000);
                     }
-
+                    _lightState = state;
                     Task.Run(() =>
                     {
                         LightSent?.Invoke(this, null);
