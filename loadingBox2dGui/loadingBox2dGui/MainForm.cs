@@ -173,21 +173,26 @@ namespace loadingBox2dGui
             _plcSignalLabelDict[PlcSignalForLoadingBox.CAR_SEQ2] = plcSignalStatusValueTable2.LblSignals[2];
             _plcSignalLabelDict[PlcSignalForLoadingBox.CAR_SEQ1 | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable2.LblValues[1];
             _plcSignalLabelDict[PlcSignalForLoadingBox.CAR_SEQ2 | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable2.LblValues[2];
+            
+            _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO1] = plcSignalStatusValueTable2.LblSignals[3];
+            _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO2] = plcSignalStatusValueTable2.LblSignals[4];
+            _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO3] = plcSignalStatusValueTable2.LblSignals[5];
+            _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO4] = plcSignalStatusValueTable2.LblSignals[6];
+            _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO1 | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable2.LblValues[3];
+            _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO2 | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable2.LblValues[4];
+            _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO3 | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable2.LblValues[5];
+            _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO4 | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable2.LblValues[6];
 
             _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_UPDATE] = plcSignalStatusOnlyTable2.LblSignals[0];
             _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_START] = plcSignalStatusOnlyTable2.LblSignals[1];
-            _plcSignalLabelDict[PlcSignalForLoadingBox.P1] = plcSignalStatusOnlyTable2.LblSignals[2];
-            _plcSignalLabelDict[PlcSignalForLoadingBox.P2] = plcSignalStatusOnlyTable2.LblSignals[3];
-            _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_END] = plcSignalStatusOnlyTable2.LblSignals[4];
-            _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_RESET] = plcSignalStatusOnlyTable2.LblSignals[5];
-            _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_PASS] = plcSignalStatusOnlyTable2.LblSignals[6];
+            _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_END] = plcSignalStatusOnlyTable2.LblSignals[2];
+            _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_RESET] = plcSignalStatusOnlyTable2.LblSignals[3];
+            _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_PASS] = plcSignalStatusOnlyTable2.LblSignals[4];
 
             _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_OK] = plcSignalStatusOnlyTable1.LblSignals[0];
             _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_NG] = plcSignalStatusOnlyTable1.LblSignals[1];
             _plcSignalLabelDict[PlcSignalForLoadingBox.P1_COMPLETED] = plcSignalStatusOnlyTable1.LblSignals[2];
-            _plcSignalLabelDict[PlcSignalForLoadingBox.P2_COMPLETED] = plcSignalStatusOnlyTable1.LblSignals[3];
-            _plcSignalLabelDict[PlcSignalForLoadingBox.PLC_PASS] = plcSignalStatusOnlyTable1.LblSignals[4];
-            _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_LIVE_BIT] = plcSignalStatusOnlyTable1.LblSignals[5];
+            _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_LIVE_BIT] = plcSignalStatusOnlyTable1.LblSignals[3];
 
             _plcSignalLabelDict[PlcSignalForLoadingBox.SHIFT_X] = plcSignalStatusValueTable1.LblSignals[0];
             _plcSignalLabelDict[PlcSignalForLoadingBox.SHIFT_Y] = plcSignalStatusValueTable1.LblSignals[1];
