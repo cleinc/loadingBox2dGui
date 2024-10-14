@@ -31,17 +31,11 @@ namespace loadingBox2dGui.presenters
             _view = view;
             _config = config;
 
-            CreateLightCommInstance("ModbusLightCommunicator");
-            CreateCameraCommInstance("PylonCameraCommunicator");
-            CreatePlcCommInstance("Tk1MelsecCommunicator");
+            CreateLightCommInstance(_config.Light);
+            CreateCameraCommInstance(_config.Camera);
+            CreatePlcCommInstance(_config.Plc);
             Console.WriteLine($"plc comm is empty {_plcComm == null}");
 
-            //bool result = InitializePlc();
-
-            //if (!result)
-            //{
-            //    Logger.Warning("Unable to Connect To PLC");
-            //}
             _view.ConnectCameraRequested += View_ConnectCameraRequested;
             _view.ScanPointRequsted += View_ScanPointRequsted;
             _view.DisconnectLhCameraRequested += View_DisconnectLhCameraRequested;
@@ -292,14 +286,14 @@ namespace loadingBox2dGui.presenters
 
         private bool CreatePlcCommInstance(string selectedPlc)
         {
-            if (selectedPlc == null)
+            if (selectedPlc == null || !_config.PlcConfig.TryGetValue(selectedPlc, out var plcConf))
             {
                 Logger.Error($"Lang.Msgs.NotSupportedPlcCommunicator {selectedPlc}");
                 return false;
             }
 
             _plcComm?.Dispose();
-            _plcComm = PlcCommunicationManager.CreatePlcCommunicator(selectedPlc, new Dictionary<PlcAttribute, string>() { [PlcAttribute.Model] = "MELSEC"}) as PlcCommunicatorForLoadingBox;
+            _plcComm = PlcCommunicationManager.CreatePlcCommunicator(selectedPlc, plcConf) as PlcCommunicatorForLoadingBox;
             if (_plcComm == null)
             {
                 Logger.Error("Lang.Msgs.NotFindPlcCommunicator");
@@ -319,14 +313,14 @@ namespace loadingBox2dGui.presenters
 
         private bool CreateLightCommInstance(string selectedLight)
         {
-            if (selectedLight == null)
+            if (selectedLight == null || !_config.LightConfig.TryGetValue(selectedLight, out var lightConf))
             {
                 Logger.Error($"Lang.Msgs.NotSupportedLightCommunicator {selectedLight}");
                 return false;
             }
 
             _lightComm?.Dispose();
-            _lightComm = LightCommunicationManager.CreateLightCommunicator(selectedLight, new Dictionary<ModbusAttribute, string>() { [ModbusAttribute.Model] = "Modbus" }) as LightCommunicatorForLoadingBox;
+            _lightComm = LightCommunicationManager.CreateLightCommunicator(selectedLight, lightConf) as LightCommunicatorForLoadingBox;
             if (_lightComm == null)
             {
                 Logger.Error("Lang.Msgs.NotFindLightCommunicator");
@@ -337,14 +331,14 @@ namespace loadingBox2dGui.presenters
 
         private bool CreateCameraCommInstance(string selectedCamera)
         {
-            if (selectedCamera == null)
+            if (selectedCamera == null || !_config.CameraConfig.TryGetValue(selectedCamera, out var cameraConf))
             {
                 Logger.Error($"Lang.Msgs.NotSupportedCameraCommunicator {selectedCamera}");
                 return false;
             }
 
             _camComm?.Dispose();
-            _camComm = CameraCommunicationManager.CreateCameraCommunicator(selectedCamera, new Dictionary<Camera2DAttribute, string>() { [Camera2DAttribute.IPAdr] = "Pylon" }) as CameraCommunicatorForLoadingBox;
+            _camComm = CameraCommunicationManager.CreateCameraCommunicator(selectedCamera, cameraConf) as CameraCommunicatorForLoadingBox;
             if (_camComm == null)
             {
                 Logger.Error("Lang.Msgs.NotFindCameraCommunicator");

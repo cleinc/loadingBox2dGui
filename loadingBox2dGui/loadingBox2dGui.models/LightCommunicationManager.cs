@@ -79,7 +79,7 @@ namespace loadingBox2dGui.models
         {
             try
             {
-                return (ILightCommunicator)Activator.CreateInstance(typeOfLightCommunicator);
+                return (ILightCommunicator)Activator.CreateInstance(typeOfLightCommunicator, LightConfig);
             }
             catch (Exception)
             {

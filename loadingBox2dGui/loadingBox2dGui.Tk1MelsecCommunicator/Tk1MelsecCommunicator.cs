@@ -63,30 +63,11 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
         public override event EventHandler PlcDisconnected;
         public override event EventHandler PlcError;
 
-        //public Tk1MelsecCommunicator(Dictionary<PlcAttribute, string> config) : base(1)
-        //{
-        //    try
-        //    {
-        //        _logicalStationNumber = int.Parse(config[PlcAttribute.LOGICAL_STATION]);
-        //        _heartbeatDeviceName = config[PlcAttribute.HeartbeatDeviceName];
-        //        _heartbeatDeviceType = config[PlcAttribute.HeartbeatDeviceType].ToEnum<PlcDataType>();
-        //        _heartbeatDbInfo = new PlcDbInfo(int.Parse(config[PlcAttribute.HeartbeatPos]),
-        //                                         int.Parse(config[PlcAttribute.HeartbeatBit]));
-
-        //        _melsecPlc.PlcError += (s, e) => Disconnect();
-        //        LoadPlcSignalDictForSealer();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error($"Models.Lang.MSGPlc.ConstructingPlcCommunicatorFailedDueToError : {ex.Message}");
-        //    }
-        //}
-
-        public Tk1MelsecCommunicator(Dictionary<PlcAttribute, string> config): base(250)
+        public Tk1MelsecCommunicator(Dictionary<PlcAttribute, string> config) : base(250)
         {
             try
             {
-                _logicalStationNumber = 1;
+                _logicalStationNumber = int.Parse(config[PlcAttribute.LOGICAL_STATION]);
                 _heartbeatDeviceName = "D";
                 _heartbeatDeviceType = PlcDataType.WORD;
                 _heartbeatDbInfo = new PlcDbInfo(5500, 0);

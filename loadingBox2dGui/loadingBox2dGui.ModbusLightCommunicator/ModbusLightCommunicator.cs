@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using loadingBox2dGui.models;
 using Modbus.Device;
+using CoPick.Setting;
 
 namespace loadingBox2dGui.ModbusLightCommunicator
 {
@@ -18,8 +19,8 @@ namespace loadingBox2dGui.ModbusLightCommunicator
         private bool _lightState;
         private TcpClient _tcpClient { get; set; } = new TcpClient();
         private ModbusIpMaster _master { get; set; }
-        public string IpAddr { get; set; } = "192.168.2.3";
-        public int Port { get; set; } = 502;
+        public string _ip { get; set; } = "192.168.2.3";
+        public int _port { get; set; } = 502;
         private ushort _stateRegister = 2000;
         private object _lock = new object();
 
@@ -92,7 +93,8 @@ namespace loadingBox2dGui.ModbusLightCommunicator
                         return true;
                     }
                     _tcpClient = new TcpClient();
-                    _tcpClient.Connect(IpAddr, Port);
+                    Console.WriteLine($"{_ip} \\ {_port}");
+                    _tcpClient.Connect(_ip, _port);
                     _master = ModbusIpMaster.CreateIp(_tcpClient);
                     IsConnected = true;
 
@@ -103,7 +105,7 @@ namespace loadingBox2dGui.ModbusLightCommunicator
                 }
                 catch (Exception ex)
                 {
-                    Logger.Warning($"Modbus Light Connection Failed. {ex.Message}, {IpAddr}");
+                    Logger.Warning($"Modbus Light Connection Failed. {ex.Message}, {_ip}");
                     IsConnected = false;
                     return false;
                 }
@@ -228,8 +230,10 @@ namespace loadingBox2dGui.ModbusLightCommunicator
             }
         }
 
-        public ModbusLightCommunicator()
+        public ModbusLightCommunicator(Dictionary<ModbusAttribute, string> config)
         {
+            _ip = config[ModbusAttribute.IpAddr];
+            _port = int.Parse(config[ModbusAttribute.Port]);
             WriteLightState(false);
         }
     }

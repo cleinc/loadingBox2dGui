@@ -1,4 +1,5 @@
 ﻿using Basler.Pylon;
+using CoPick.Setting;
 using loadingBox2dGui.models;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,8 @@ namespace loadingBox2dGui.PylonCameraCommunicator
         private string _cameraIp1;
         private string _cameraIp2;
 
-        public PylonCameraCommunicator()
+        public PylonCameraCommunicator(Dictionary<Camera2DAttribute, string> config)
         {
-            //_camera2 = new Camera();
             _converter = new PixelDataConverter();
         }
         public override bool Connect()

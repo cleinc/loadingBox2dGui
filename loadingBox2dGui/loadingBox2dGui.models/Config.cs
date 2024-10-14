@@ -24,21 +24,21 @@ namespace loadingBox2dGui.models
 
         public Config()
         {
-            Plc = "Melsec";
-            Camera = "Basler";
-            Light = "Noatech";
+            Plc = "Tk1MelsecCommunicator";
+            Camera = "PylonCameraCommunicator";
+            Light = "ModbusLightCommunicator";
 
             PlcConfig = new Dictionary<string, Dictionary<PlcAttribute, string>>()
             {
-                ["Melsec"] = DefaultSettingLoader.Plcs[PlcModel.MELSEC]()
+                ["Tk1MelsecCommunicator"] = DefaultSettingLoader.Plcs[PlcModel.MELSEC]()
             };
             CameraConfig = new Dictionary<string, Dictionary<Camera2DAttribute, string>>()
             {
-                ["Basler"] = DefaultSettingLoader.Cameras[Camera2DMaker.BASLER]()
+                ["PylonCameraCommunicator"] = DefaultSettingLoader.Cameras[Camera2DMaker.BASLER]()
             };
             LightConfig = new Dictionary<string, Dictionary<ModbusAttribute, string>>()
             {
-                ["Noatech"] = DefaultSettingLoader.Lights[LightMaker.NOATHCH]()
+                ["ModbusLightCommunicator"] = DefaultSettingLoader.Lights[LightMaker.NOATHCH]()
             };
         }
     }
