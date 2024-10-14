@@ -22,14 +22,15 @@ namespace loadingBox2dGui.presenters
         private readonly IMainForm _view;
         private PlcCommunicatorForLoadingBox _plcComm;
         private LightCommunicatorForLoadingBox _lightComm;
-        private PylonCommunicator _pylonComm;
+        private CameraCommunicatorForLoadingBox _camComm;
         private bool _isPlcEventHandlersRegistered = false;
         private (Bitmap, Bitmap) bmps;
         public MainPresenter(IMainForm view)
         {
             _view = view;
-            _pylonComm = new PylonCommunicator();
+
             CreateLightCommInstance("ModbusLightCommunicator");
+            CreateCameraCommInstance("PylonCameraCommunicator");
             CreatePlcCommInstance("Tk1MelsecCommunicator");
             Console.WriteLine($"plc comm is empty {_plcComm == null}");
 
@@ -49,12 +50,12 @@ namespace loadingBox2dGui.presenters
 
         private async void View_ChangeModeRequested(object sender, ChangeModeEventArgs e)
         {
-            InitializePlc();
+            await InitializePlc();
         }
 
         private void View_DisconnectLhCameraRequested(object sender, EventArgs e)
         {
-            _pylonComm.StopCamera();
+            _camComm.StopCamera();
             //_pylonComm.DisConnectCamera();
         }
 
@@ -62,16 +63,16 @@ namespace loadingBox2dGui.presenters
         {
             Logger.Debug("Call [Camera Start]");
 
-            bmps = await _pylonComm.StartCamera();
+            bmps = await _camComm.StartCamera();
             _view.LhImage = bmps.Item1;
-            _view.RhImage = bmps.Item2;
+            //_view.RhImage = bmps.Item2;
             Logger.Debug("Complete [Camera Start]");
         }
 
         private void View_ConnectCameraRequested(object sender, EventArgs e)
         {
             Logger.Debug("Call [Camera Connect]");
-            _pylonComm.ConnectCamera();
+            _camComm.Connect();
             Logger.Debug("Complete [Camera Connect]");
         }
 
@@ -128,7 +129,8 @@ namespace loadingBox2dGui.presenters
                 UpdatePlcInspectionInfo(e.CarType, e.CarSeq, e.BodyNumber);
                 Logger.Debug("Call [Camera Connect]");
                 _lightComm.WriteLightState(true);
-                _pylonComm.ConnectCamera();
+                
+                _camComm.Connect();
                 Logger.Debug("Complete [Camera Connect]");
             }
             catch (Exception ex)
@@ -143,7 +145,7 @@ namespace loadingBox2dGui.presenters
             Logger.Debug("Call [Camera Start]");
             try
             {
-                bmps = await _pylonComm.StartCamera();
+                bmps = await _camComm.StartCamera();
 
                 int ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, true, 100, 10);
                 if (ret != 0)
@@ -293,8 +295,6 @@ namespace loadingBox2dGui.presenters
                 Logger.Error($"Lang.Msgs.NotSupportedPlcCommunicator {selectedPlc}");
                 return false;
             }
-            Console.WriteLine("Step 1");
-            Console.WriteLine(selectedPlc);
 
             _plcComm?.Dispose();
             _plcComm = PlcCommunicationManager.CreatePlcCommunicator(selectedPlc, new Dictionary<PlcAttribute, string>() { [PlcAttribute.Model] = "MELSEC"}) as PlcCommunicatorForLoadingBox;
@@ -304,7 +304,6 @@ namespace loadingBox2dGui.presenters
                 return false;
             }
 
-            Console.WriteLine("Step 2");
             var modelAttr = _plcComm.GetType().GetCustomAttribute<PlcModelAttribute>();
             if (modelAttr == null)
             {
@@ -312,7 +311,6 @@ namespace loadingBox2dGui.presenters
                 return false;
             }
 
-            Console.WriteLine("Step 3");
             _isPlcEventHandlersRegistered = false;
             return true;
         }
@@ -324,14 +322,30 @@ namespace loadingBox2dGui.presenters
                 Logger.Error($"Lang.Msgs.NotSupportedLightCommunicator {selectedLight}");
                 return false;
             }
-            Console.WriteLine("Step 1");
-            Console.WriteLine(selectedLight);
 
             _lightComm?.Dispose();
             _lightComm = LightCommunicationManager.CreateLightCommunicator(selectedLight, new Dictionary<models.LightAttribute, string>() { [models.LightAttribute.Model] = "Modbus" }) as LightCommunicatorForLoadingBox;
             if (_lightComm == null)
             {
                 Logger.Error("Lang.Msgs.NotFindLightCommunicator");
+                return false;
+            }
+            return true;
+        }
+
+        private bool CreateCameraCommInstance(string selectedCamera)
+        {
+            if (selectedCamera == null)
+            {
+                Logger.Error($"Lang.Msgs.NotSupportedCameraCommunicator {selectedCamera}");
+                return false;
+            }
+
+            _camComm?.Dispose();
+            _camComm = CameraCommunicationManager.CreateCameraCommunicator(selectedCamera, new Dictionary<models.CameraAttribute, string>() { [models.CameraAttribute.Model] = "Pylon" }) as CameraCommunicatorForLoadingBox;
+            if (_camComm == null)
+            {
+                Logger.Error("Lang.Msgs.NotFindCameraCommunicator");
                 return false;
             }
             return true;

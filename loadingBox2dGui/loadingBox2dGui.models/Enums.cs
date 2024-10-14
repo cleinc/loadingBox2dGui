@@ -69,4 +69,9 @@ namespace loadingBox2dGui.models
         [ValidatorType(ValidatorType.Ip, new object[] { })]
         IP,
     }
+
+    public enum CameraAttribute
+    {
+        Model,
+    }
 }
