@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace loadingBox2dGui.models
 {
-    public interface ICameraCommunicator
+    public interface ICameraCommunicator : IDisposable
     {
         bool Connect();
         bool DisConnect();

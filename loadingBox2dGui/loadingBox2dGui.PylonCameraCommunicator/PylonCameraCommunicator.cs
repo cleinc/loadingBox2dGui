@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace loadingBox2dGui.PylonCameraCommunicator
 {
-    public class PylonCameraCommunicator : CameraCommunicatorForLoadingBox
+    public class PylonCameraCommunicator : CameraCommunicatorForLoadingBox, IDisposable
     {
         private Camera _camera1;
         private Camera _camera2;

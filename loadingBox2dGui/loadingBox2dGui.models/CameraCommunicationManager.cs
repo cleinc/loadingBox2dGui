@@ -16,7 +16,7 @@ namespace loadingBox2dGui.models
 
         private static List<Type> GetSupportedCameraCommunicators()
         {
-            Type typeFromHandle = typeof(ILightCommunicator);
+            Type typeFromHandle = typeof(ICameraCommunicator);
             List<Type> list = new List<Type>();
             try
             {
@@ -43,7 +43,7 @@ namespace loadingBox2dGui.models
                         {
                             Console.WriteLine($"{type.Name} :{typeFromHandle.IsAssignableFrom(type)} || {!type.IsInterface} || {!type.IsAbstract}");
                         }
-                        if (!type.IsInterface && !type.IsAbstract)
+                        if (typeFromHandle.IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract)
                         {
                             list.Add(type);
                         }
