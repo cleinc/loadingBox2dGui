@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoPick.Setting;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics.Eventing.Reader;
@@ -66,7 +67,7 @@ namespace loadingBox2dGui.models
             return list;
         }
 
-        public static ICameraCommunicator CreateCameraCommunicator(Type typeOfCameraCommunicator, Dictionary<CameraAttribute, string> CameraConfig)
+        public static ICameraCommunicator CreateCameraCommunicator(Type typeOfCameraCommunicator, Dictionary<Camera2DAttribute, string> CameraConfig)
         {
             try
             {
@@ -79,7 +80,7 @@ namespace loadingBox2dGui.models
             }
         }
 
-        public static ICameraCommunicator CreateCameraCommunicator(string typeNameOfCameraCommunicator, Dictionary<CameraAttribute, string> CameraConfig)
+        public static ICameraCommunicator CreateCameraCommunicator(string typeNameOfCameraCommunicator, Dictionary<Camera2DAttribute, string> CameraConfig)
         {
             Type type = SupportedCameraCommunicators.Find((Type x) => x.Name == typeNameOfCameraCommunicator);
             if (type != null)

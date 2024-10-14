@@ -75,7 +75,7 @@ namespace loadingBox2dGui.models
             return list;
         }
 
-        public static ILightCommunicator CreateLightCommunicator(Type typeOfLightCommunicator, Dictionary<LightAttribute, string> LightConfig)
+        public static ILightCommunicator CreateLightCommunicator(Type typeOfLightCommunicator, Dictionary<ModbusAttribute, string> LightConfig)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace loadingBox2dGui.models
             }
         }
 
-        public static ILightCommunicator CreateLightCommunicator(string typeNameOfLightCommunicator, Dictionary<LightAttribute, string> LightConfig)
+        public static ILightCommunicator CreateLightCommunicator(string typeNameOfLightCommunicator, Dictionary<ModbusAttribute, string> LightConfig)
         {
             Type type = SupportedLightCommunicators.Find((Type x) => x.Name == typeNameOfLightCommunicator);
             if (type != null)

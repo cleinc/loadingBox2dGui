@@ -20,14 +20,16 @@ namespace loadingBox2dGui.presenters
         private static readonly LogHelper Logger = LogHelper.Logger;
         
         private readonly IMainForm _view;
+        private Config _config;
         private PlcCommunicatorForLoadingBox _plcComm;
         private LightCommunicatorForLoadingBox _lightComm;
         private CameraCommunicatorForLoadingBox _camComm;
         private bool _isPlcEventHandlersRegistered = false;
         private (Bitmap, Bitmap) bmps;
-        public MainPresenter(IMainForm view)
+        public MainPresenter(IMainForm view, Config config)
         {
             _view = view;
+            _config = config;
 
             CreateLightCommInstance("ModbusLightCommunicator");
             CreateCameraCommInstance("PylonCameraCommunicator");
@@ -324,7 +326,7 @@ namespace loadingBox2dGui.presenters
             }
 
             _lightComm?.Dispose();
-            _lightComm = LightCommunicationManager.CreateLightCommunicator(selectedLight, new Dictionary<models.LightAttribute, string>() { [models.LightAttribute.Model] = "Modbus" }) as LightCommunicatorForLoadingBox;
+            _lightComm = LightCommunicationManager.CreateLightCommunicator(selectedLight, new Dictionary<ModbusAttribute, string>() { [ModbusAttribute.Model] = "Modbus" }) as LightCommunicatorForLoadingBox;
             if (_lightComm == null)
             {
                 Logger.Error("Lang.Msgs.NotFindLightCommunicator");
@@ -342,7 +344,7 @@ namespace loadingBox2dGui.presenters
             }
 
             _camComm?.Dispose();
-            _camComm = CameraCommunicationManager.CreateCameraCommunicator(selectedCamera, new Dictionary<models.CameraAttribute, string>() { [models.CameraAttribute.Model] = "Pylon" }) as CameraCommunicatorForLoadingBox;
+            _camComm = CameraCommunicationManager.CreateCameraCommunicator(selectedCamera, new Dictionary<Camera2DAttribute, string>() { [Camera2DAttribute.IPAdr] = "Pylon" }) as CameraCommunicatorForLoadingBox;
             if (_camComm == null)
             {
                 Logger.Error("Lang.Msgs.NotFindCameraCommunicator");

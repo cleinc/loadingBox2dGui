@@ -20,16 +20,23 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
         public PylonCameraCommunicator()
         {
-            _camera1 = new Camera();
             //_camera2 = new Camera();
-
             _converter = new PixelDataConverter();
         }
         public override bool Connect()
         {
+            try
+            {
+
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             //ICameraInfo cameraInfo1 = CameraFinder.Enumerate().Find(info => info[CameraInfoKey.DeviceIpAddress] == _cameraIp1);
             //ICameraInfo cameraInfo2 = CameraFinder.Enumerate().Find(info => info[CameraInfoKey.DeviceIpAddress] == _cameraIp2);
 
+            _camera1 = new Camera();
             _camera1.Open();
             //_camera2.Open();
             return true;

@@ -57,21 +57,4 @@ namespace loadingBox2dGui.models
         GAP_4 = 0x000A_0000,
         VISION_ERROR = 0x4000_4001,
     }
-
-    public enum LightAttribute
-    {
-        [ReadOnly(true)]
-        [LocalizedCategory("CategoryPlc")]
-        [LocalizedDescription("DescPlcModel")]
-        Model,
-        [LocalizedCategory("CategoryPlc")]
-        [LocalizedDescription("DescPlcIp")]
-        [ValidatorType(ValidatorType.Ip, new object[] { })]
-        IP,
-    }
-
-    public enum CameraAttribute
-    {
-        Model,
-    }
 }
