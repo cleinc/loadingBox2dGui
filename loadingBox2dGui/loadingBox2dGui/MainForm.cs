@@ -178,10 +178,12 @@ namespace loadingBox2dGui
             _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO2] = plcSignalStatusValueTable2.LblSignals[4];
             _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO3] = plcSignalStatusValueTable2.LblSignals[5];
             _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO4] = plcSignalStatusValueTable2.LblSignals[6];
+            _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO5] = plcSignalStatusValueTable2.LblSignals[7];
             _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO1 | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable2.LblValues[3];
             _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO2 | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable2.LblValues[4];
             _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO3 | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable2.LblValues[5];
             _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO4 | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable2.LblValues[6];
+            _plcSignalLabelDict[PlcSignalForLoadingBox.BODY_NO5 | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable2.LblValues[7];
 
             _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_UPDATE] = plcSignalStatusOnlyTable2.LblSignals[0];
             _plcSignalLabelDict[PlcSignalForLoadingBox.VISION_START] = plcSignalStatusOnlyTable2.LblSignals[1];

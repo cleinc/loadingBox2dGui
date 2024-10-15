@@ -25,6 +25,7 @@ namespace loadingBox2dGui.models
         BODY_NO2 = 0xA000,
         BODY_NO3 = 0xB000,
         BODY_NO4 = 0xC000,
+        BODY_NO5 = 0xD000,
 
         VISION_START = 0x100,
         VISION_RESET = 0x200,
