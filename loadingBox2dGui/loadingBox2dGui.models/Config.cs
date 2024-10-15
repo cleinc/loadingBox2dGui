@@ -1,7 +1,9 @@
-﻿using CoPick.Plc;
+﻿using CoPick.Logging;
+using CoPick.Plc;
 using CoPick.Setting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -21,6 +23,23 @@ namespace loadingBox2dGui.models
         public string Camera { get; set; }
         public int RecentlyUsedCar { get; set; } = 0;
         public string Language { get; set; } = "ko-KR";
+
+        public LogLevel MinimumFileLogLevel { get; set; } = LogLevel.Debug;
+        public LogLevel MinimumUiLogLevel { get; set; } = LogLevel.Info;
+        private string _logPath = Path.GetFullPath("D:/log");
+        public string LogPath
+        {
+            get => _logPath;
+            set
+            {
+                try
+                {
+                    Path.GetFullPath(value);
+                    _logPath = value;
+                }
+                catch (Exception) { }
+            }
+        }
 
         public Config()
         {

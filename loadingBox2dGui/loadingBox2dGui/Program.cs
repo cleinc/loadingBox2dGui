@@ -27,6 +27,7 @@ namespace loadingBox2dGui
 
             Config config;
             config = ConfigFileManager.LoadFromFile<Config>(ConfigFileManager.GetConfigFilePath());
+            Logger.Configure(config.LogPath, config.MinimumUiLogLevel, config.MinimumFileLogLevel);
             var mainForm = new MainForm();
             var mainPresenter = new MainPresenter(mainForm, config);
             Application.Run(mainForm);
