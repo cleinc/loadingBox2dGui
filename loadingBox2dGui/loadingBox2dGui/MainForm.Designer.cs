@@ -67,11 +67,11 @@ namespace loadingBox2dGui
             this.ckbGlassCameraUse3 = new MaterialSkin.Controls.MaterialCheckbox();
             this.materialTextBox23 = new MaterialSkin.Controls.MaterialTextBox2();
             this.btnConnectPlc_ = new MaterialSkin.Controls.MaterialButton();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pbOk = new System.Windows.Forms.PictureBox();
             this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
             this.plcSignalStatusOnlyTable1 = new CoPick.Controls.PlcSignalStatusOnlyTable();
             this.plcSignalStatusValueTable1 = new CoPick.Controls.PlcSignalStatusValueTable();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pbNg = new System.Windows.Forms.PictureBox();
             this.materialCard2 = new MaterialSkin.Controls.MaterialCard();
             this.plcSignalStatusOnlyTable2 = new CoPick.Controls.PlcSignalStatusOnlyTable();
             this.plcSignalStatusValueTable2 = new CoPick.Controls.PlcSignalStatusValueTable();
@@ -161,6 +161,10 @@ namespace loadingBox2dGui
             this.tbCarSeqNumber = new MaterialSkin.Controls.MaterialTextBox2();
             this.btnSettingManage_ = new MaterialSkin.Controls.MaterialButton();
             this.label22 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard15 = new MaterialSkin.Controls.MaterialCard();
+            this.lblRH_ = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard14 = new MaterialSkin.Controls.MaterialCard();
+            this.lblLH_ = new MaterialSkin.Controls.MaterialLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -171,9 +175,9 @@ namespace loadingBox2dGui
             this.materialCard4.SuspendLayout();
             this.materialCard3.SuspendLayout();
             this.tlpGlassCamera.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbOk)).BeginInit();
             this.materialCard1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNg)).BeginInit();
             this.materialCard2.SuspendLayout();
             this.gbGlassUserControl_.SuspendLayout();
             this.gbGlassShiftValue_.SuspendLayout();
@@ -199,6 +203,8 @@ namespace loadingBox2dGui
             this.splitContainer1.SuspendLayout();
             this.materialCard5.SuspendLayout();
             this.gbCarSeqNumber_.SuspendLayout();
+            this.materialCard15.SuspendLayout();
+            this.materialCard14.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer2
@@ -211,15 +217,17 @@ namespace loadingBox2dGui
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.materialCard15);
+            this.splitContainer2.Panel1.Controls.Add(this.materialCard14);
             this.splitContainer2.Panel1.Controls.Add(this.materialCard6);
             this.splitContainer2.Panel1.Controls.Add(this.pbRh);
             this.splitContainer2.Panel1.Controls.Add(this.pbLh);
             this.splitContainer2.Panel1.Controls.Add(this.materialCard4);
             this.splitContainer2.Panel1.Controls.Add(this.materialCard3);
             this.splitContainer2.Panel1.Controls.Add(this.btnConnectPlc_);
-            this.splitContainer2.Panel1.Controls.Add(this.pictureBox1);
+            this.splitContainer2.Panel1.Controls.Add(this.pbOk);
             this.splitContainer2.Panel1.Controls.Add(this.materialCard1);
-            this.splitContainer2.Panel1.Controls.Add(this.pictureBox3);
+            this.splitContainer2.Panel1.Controls.Add(this.pbNg);
             this.splitContainer2.Panel1.Controls.Add(this.materialCard2);
             this.splitContainer2.Panel1.Controls.Add(this.gbGlassUserControl_);
             this.splitContainer2.Panel1.Controls.Add(this.label85_);
@@ -252,12 +260,12 @@ namespace loadingBox2dGui
             this.materialCard6.Controls.Add(this.btnLightOff_);
             this.materialCard6.Depth = 0;
             this.materialCard6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard6.Location = new System.Drawing.Point(8, 544);
+            this.materialCard6.Location = new System.Drawing.Point(6, 544);
             this.materialCard6.Margin = new System.Windows.Forms.Padding(14);
             this.materialCard6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard6.Name = "materialCard6";
             this.materialCard6.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard6.Size = new System.Drawing.Size(1095, 365);
+            this.materialCard6.Size = new System.Drawing.Size(1097, 395);
             this.materialCard6.TabIndex = 194;
             // 
             // btnStartCamera_
@@ -273,7 +281,7 @@ namespace loadingBox2dGui
             this.btnStartCamera_.ForeColor = System.Drawing.SystemColors.WindowText;
             this.btnStartCamera_.HighEmphasis = true;
             this.btnStartCamera_.Icon = null;
-            this.btnStartCamera_.Location = new System.Drawing.Point(18, 20);
+            this.btnStartCamera_.Location = new System.Drawing.Point(744, 31);
             this.btnStartCamera_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnStartCamera_.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnStartCamera_.Name = "btnStartCamera_";
@@ -298,7 +306,7 @@ namespace loadingBox2dGui
             this.btnCameraConnect_.Font = new System.Drawing.Font("Consolas", 11.25F);
             this.btnCameraConnect_.HighEmphasis = true;
             this.btnCameraConnect_.Icon = null;
-            this.btnCameraConnect_.Location = new System.Drawing.Point(394, 19);
+            this.btnCameraConnect_.Location = new System.Drawing.Point(383, 32);
             this.btnCameraConnect_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnCameraConnect_.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnCameraConnect_.Name = "btnCameraConnect_";
@@ -325,7 +333,7 @@ namespace loadingBox2dGui
             this.btnLightOff_.ForeColor = System.Drawing.Color.Black;
             this.btnLightOff_.HighEmphasis = true;
             this.btnLightOff_.Icon = null;
-            this.btnLightOff_.Location = new System.Drawing.Point(752, 19);
+            this.btnLightOff_.Location = new System.Drawing.Point(23, 33);
             this.btnLightOff_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnLightOff_.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnLightOff_.Name = "btnLightOff_";
@@ -342,7 +350,7 @@ namespace loadingBox2dGui
             // 
             this.pbRh.BackColor = System.Drawing.Color.LightGray;
             this.pbRh.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbRh.Location = new System.Drawing.Point(561, 5);
+            this.pbRh.Location = new System.Drawing.Point(553, 5);
             this.pbRh.Name = "pbRh";
             this.pbRh.Size = new System.Drawing.Size(542, 532);
             this.pbRh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -353,7 +361,7 @@ namespace loadingBox2dGui
             // 
             this.pbLh.BackColor = System.Drawing.Color.LightGray;
             this.pbLh.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbLh.Location = new System.Drawing.Point(8, 5);
+            this.pbLh.Location = new System.Drawing.Point(6, 5);
             this.pbLh.Name = "pbLh";
             this.pbLh.Size = new System.Drawing.Size(542, 532);
             this.pbLh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1005,16 +1013,17 @@ namespace loadingBox2dGui
             this.btnConnectPlc_.Visible = false;
             this.btnConnectPlc_.Click += new System.EventHandler(this.btnGlassRHCameraUse__Click);
             // 
-            // pictureBox1
+            // pbOk
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.LightGray;
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(1110, 128);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(223, 124);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 190;
-            this.pictureBox1.TabStop = false;
+            this.pbOk.BackColor = System.Drawing.Color.LightGray;
+            this.pbOk.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbOk.Image = global::loadingBox2dGui.Properties.Resources.visionOKOff;
+            this.pbOk.Location = new System.Drawing.Point(1102, 5);
+            this.pbOk.Name = "pbOk";
+            this.pbOk.Size = new System.Drawing.Size(223, 124);
+            this.pbOk.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbOk.TabIndex = 190;
+            this.pbOk.TabStop = false;
             // 
             // materialCard1
             // 
@@ -1023,17 +1032,17 @@ namespace loadingBox2dGui
             this.materialCard1.Controls.Add(this.plcSignalStatusValueTable1);
             this.materialCard1.Depth = 0;
             this.materialCard1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard1.Location = new System.Drawing.Point(1111, 612);
+            this.materialCard1.Location = new System.Drawing.Point(1102, 594);
             this.materialCard1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.materialCard1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard1.Name = "materialCard1";
             this.materialCard1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.materialCard1.Size = new System.Drawing.Size(223, 326);
+            this.materialCard1.Size = new System.Drawing.Size(223, 294);
             this.materialCard1.TabIndex = 187;
             // 
             // plcSignalStatusOnlyTable1
             // 
-            this.plcSignalStatusOnlyTable1.Location = new System.Drawing.Point(9, 21);
+            this.plcSignalStatusOnlyTable1.Location = new System.Drawing.Point(10, 13);
             this.plcSignalStatusOnlyTable1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.plcSignalStatusOnlyTable1.Name = "plcSignalStatusOnlyTable1";
             this.plcSignalStatusOnlyTable1.RowCount = 4;
@@ -1045,7 +1054,7 @@ namespace loadingBox2dGui
             // 
             this.plcSignalStatusValueTable1.ColumnWidth1 = 135;
             this.plcSignalStatusValueTable1.ColumnWidth2 = 65;
-            this.plcSignalStatusValueTable1.Location = new System.Drawing.Point(9, 148);
+            this.plcSignalStatusValueTable1.Location = new System.Drawing.Point(9, 131);
             this.plcSignalStatusValueTable1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.plcSignalStatusValueTable1.Name = "plcSignalStatusValueTable1";
             this.plcSignalStatusValueTable1.RowCount = 6;
@@ -1053,16 +1062,17 @@ namespace loadingBox2dGui
             this.plcSignalStatusValueTable1.Size = new System.Drawing.Size(203, 145);
             this.plcSignalStatusValueTable1.TabIndex = 0;
             // 
-            // pictureBox3
+            // pbNg
             // 
-            this.pictureBox3.BackColor = System.Drawing.Color.LightGray;
-            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox3.Location = new System.Drawing.Point(1110, 2);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(223, 124);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 189;
-            this.pictureBox3.TabStop = false;
+            this.pbNg.BackColor = System.Drawing.Color.LightGray;
+            this.pbNg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbNg.Image = global::loadingBox2dGui.Properties.Resources.visionNGOff;
+            this.pbNg.Location = new System.Drawing.Point(1101, 132);
+            this.pbNg.Name = "pbNg";
+            this.pbNg.Size = new System.Drawing.Size(223, 124);
+            this.pbNg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbNg.TabIndex = 189;
+            this.pbNg.TabStop = false;
             // 
             // materialCard2
             // 
@@ -1071,17 +1081,17 @@ namespace loadingBox2dGui
             this.materialCard2.Controls.Add(this.plcSignalStatusValueTable2);
             this.materialCard2.Depth = 0;
             this.materialCard2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard2.Location = new System.Drawing.Point(1110, 256);
+            this.materialCard2.Location = new System.Drawing.Point(1102, 260);
             this.materialCard2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.materialCard2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard2.Name = "materialCard2";
             this.materialCard2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.materialCard2.Size = new System.Drawing.Size(223, 352);
+            this.materialCard2.Size = new System.Drawing.Size(223, 330);
             this.materialCard2.TabIndex = 188;
             // 
             // plcSignalStatusOnlyTable2
             // 
-            this.plcSignalStatusOnlyTable2.Location = new System.Drawing.Point(11, 19);
+            this.plcSignalStatusOnlyTable2.Location = new System.Drawing.Point(11, 13);
             this.plcSignalStatusOnlyTable2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.plcSignalStatusOnlyTable2.Name = "plcSignalStatusOnlyTable2";
             this.plcSignalStatusOnlyTable2.RowCount = 5;
@@ -1093,7 +1103,7 @@ namespace loadingBox2dGui
             // 
             this.plcSignalStatusValueTable2.ColumnWidth1 = 135;
             this.plcSignalStatusValueTable2.ColumnWidth2 = 65;
-            this.plcSignalStatusValueTable2.Location = new System.Drawing.Point(11, 160);
+            this.plcSignalStatusValueTable2.Location = new System.Drawing.Point(11, 149);
             this.plcSignalStatusValueTable2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.plcSignalStatusValueTable2.Name = "plcSignalStatusValueTable2";
             this.plcSignalStatusValueTable2.RowCount = 7;
@@ -2821,6 +2831,64 @@ namespace loadingBox2dGui
             this.label22.TabIndex = 71;
             this.label22.Text = "label22";
             // 
+            // materialCard15
+            // 
+            this.materialCard15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard15.Controls.Add(this.lblRH_);
+            this.materialCard15.Depth = 0;
+            this.materialCard15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard15.Location = new System.Drawing.Point(560, 11);
+            this.materialCard15.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard15.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard15.Name = "materialCard15";
+            this.materialCard15.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard15.Size = new System.Drawing.Size(58, 37);
+            this.materialCard15.TabIndex = 195;
+            // 
+            // lblRH_
+            // 
+            this.lblRH_.AutoSize = true;
+            this.lblRH_.BackColor = System.Drawing.Color.Transparent;
+            this.lblRH_.Depth = 0;
+            this.lblRH_.Font = new System.Drawing.Font("NanumSquareRound Bold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblRH_.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.lblRH_.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblRH_.Location = new System.Drawing.Point(12, 6);
+            this.lblRH_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblRH_.Name = "lblRH_";
+            this.lblRH_.Size = new System.Drawing.Size(34, 26);
+            this.lblRH_.TabIndex = 0;
+            this.lblRH_.Text = "RH";
+            // 
+            // materialCard14
+            // 
+            this.materialCard14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard14.Controls.Add(this.lblLH_);
+            this.materialCard14.Depth = 0;
+            this.materialCard14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard14.Location = new System.Drawing.Point(12, 11);
+            this.materialCard14.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard14.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard14.Name = "materialCard14";
+            this.materialCard14.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard14.Size = new System.Drawing.Size(58, 37);
+            this.materialCard14.TabIndex = 196;
+            // 
+            // lblLH_
+            // 
+            this.lblLH_.AutoSize = true;
+            this.lblLH_.BackColor = System.Drawing.Color.Transparent;
+            this.lblLH_.Depth = 0;
+            this.lblLH_.Font = new System.Drawing.Font("NanumSquareRound Bold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblLH_.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.lblLH_.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblLH_.Location = new System.Drawing.Point(14, 7);
+            this.lblLH_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblLH_.Name = "lblLH_";
+            this.lblLH_.Size = new System.Drawing.Size(31, 26);
+            this.lblLH_.TabIndex = 0;
+            this.lblLH_.Text = "LH";
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2832,7 +2900,7 @@ namespace loadingBox2dGui
             this.MinimizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "2D Loding Box Calibration System";
+            this.Text = "적재함 2D 보정 프로그램";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
@@ -2848,9 +2916,9 @@ namespace loadingBox2dGui
             this.materialCard3.PerformLayout();
             this.tlpGlassCamera.ResumeLayout(false);
             this.tlpGlassCamera.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbOk)).EndInit();
             this.materialCard1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNg)).EndInit();
             this.materialCard2.ResumeLayout(false);
             this.gbGlassUserControl_.ResumeLayout(false);
             this.gbGlassShiftValue_.ResumeLayout(false);
@@ -2880,6 +2948,10 @@ namespace loadingBox2dGui
             this.splitContainer1.ResumeLayout(false);
             this.materialCard5.ResumeLayout(false);
             this.gbCarSeqNumber_.ResumeLayout(false);
+            this.materialCard15.ResumeLayout(false);
+            this.materialCard15.PerformLayout();
+            this.materialCard14.ResumeLayout(false);
+            this.materialCard14.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2963,11 +3035,11 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialTextBox2 tbGlassCameraSerial4;
         private MaterialSkin.Controls.MaterialCheckbox ckbGlassCameraUse3;
         private MaterialSkin.Controls.MaterialTextBox2 materialTextBox23;
-        private PictureBox pictureBox1;
+        private PictureBox pbOk;
         private MaterialSkin.Controls.MaterialCard materialCard1;
         private CoPick.Controls.PlcSignalStatusOnlyTable plcSignalStatusOnlyTable1;
         private CoPick.Controls.PlcSignalStatusValueTable plcSignalStatusValueTable1;
-        private PictureBox pictureBox3;
+        private PictureBox pbNg;
         private MaterialSkin.Controls.MaterialCard materialCard2;
         private CoPick.Controls.PlcSignalStatusOnlyTable plcSignalStatusOnlyTable2;
         private CoPick.Controls.PlcSignalStatusValueTable plcSignalStatusValueTable2;
@@ -3016,6 +3088,10 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialCard materialCard6;
         private MaterialSkin.Controls.MaterialLabel lblPlc;
         private MaterialSkin.Controls.MaterialButton btnSettingManage_;
+        private MaterialSkin.Controls.MaterialCard materialCard15;
+        private MaterialSkin.Controls.MaterialLabel lblRH_;
+        private MaterialSkin.Controls.MaterialCard materialCard14;
+        private MaterialSkin.Controls.MaterialLabel lblLH_;
     }
 }
 

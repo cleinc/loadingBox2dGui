@@ -95,17 +95,17 @@ namespace loadingBox2dGui
                 switch (visionStatus)
                 {
                     case VisionStatus.OK:
-                        pictureBox1.Image = Properties.Resources.visionOKOn;
+                        pbOk.Image = Properties.Resources.visionOKOn;
                         pictureBox2.Image = Properties.Resources.visionNGOff;
                         break;
 
                     case VisionStatus.NG:
-                        pictureBox1.Image = Properties.Resources.visionOKOff;
+                        pbOk.Image = Properties.Resources.visionOKOff;
                         pictureBox2.Image = Properties.Resources.visionNGOn;
                         break;
 
                     case VisionStatus.NONE:
-                        pictureBox1.Image = Properties.Resources.visionOKOff;
+                        pbOk.Image = Properties.Resources.visionOKOff;
                         pictureBox2.Image = Properties.Resources.visionNGOff;
                         break;
                 }
