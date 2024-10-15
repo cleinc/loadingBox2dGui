@@ -2511,6 +2511,7 @@ namespace loadingBox2dGui
             this.rbManual_.TabStop = true;
             this.rbManual_.Text = "Manual";
             this.rbManual_.UseVisualStyleBackColor = true;
+            this.rbManual_.CheckedChanged += new System.EventHandler(this.rbManual__CheckedChanged);
             // 
             // rbSet_
             // 
@@ -2528,6 +2529,7 @@ namespace loadingBox2dGui
             this.rbSet_.TabStop = true;
             this.rbSet_.Text = "Setting";
             this.rbSet_.UseVisualStyleBackColor = true;
+            this.rbSet_.CheckedChanged += new System.EventHandler(this.rbSet__CheckedChanged);
             // 
             // rbAuto_
             // 
@@ -2903,6 +2905,7 @@ namespace loadingBox2dGui
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "적재함 2D 보정 프로그램";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);

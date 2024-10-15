@@ -37,6 +37,7 @@ namespace loadingBox2dGui.views
         event EventHandler<FormClosingEventArgs> ProgramCloseRequested;
         event EventHandler<ChangeLightStateEventArgs> LightStateChangeRequested;
         event EventHandler DisconnectLhCameraRequested;
+        event EventHandler MainFormLoadRequested;
         #endregion
 
         #region Methods

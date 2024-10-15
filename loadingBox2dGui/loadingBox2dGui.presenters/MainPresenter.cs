@@ -22,6 +22,7 @@ namespace loadingBox2dGui.presenters
         
         private readonly IMainForm _view;
         private Config _config;
+        private OperationMode _mode;
         private PlcCommunicatorForLoadingBox _plcComm;
         private LightCommunicatorForLoadingBox _lightComm;
         private CameraCommunicatorForLoadingBox _camComm;
@@ -30,6 +31,7 @@ namespace loadingBox2dGui.presenters
         {
             _view = view;
             _config = config;
+            _mode = OperationMode.Auto;
 
             CreateLightCommInstance(_config.Light);
             CreateCameraCommInstance(_config.Camera);
@@ -42,13 +44,39 @@ namespace loadingBox2dGui.presenters
             _view.ChangeModeRequested += View_ChangeModeRequested;
             _view.ProgramCloseRequested += View_ProgramCloseRequested;
             _view.LightStateChangeRequested += View_LightStateChangedRequested;
+            _view.MainFormLoadRequested += View_MainFormLoadRequested;
+        }
+
+        private async void View_MainFormLoadRequested(object sender, EventArgs e)
+        {
+            if (_mode == OperationMode.Auto)
+            {
+                await InitializePlc();
+            }
         }
 
         private async void View_ChangeModeRequested(object sender, ChangeModeEventArgs e)
         {
-            if (!_plcComm.IsConnected)
-            await InitializePlc();
-            if (e.Mode == OperationMode.Set) _plcComm.Disconnect();
+            Logger.Debug($"Mode Change Request : {_mode} -> {e.Mode}");
+            _mode = e.Mode;
+            try
+            {
+                if (e.Mode == OperationMode.Auto)
+                {
+                    if (!_plcComm.IsConnected)
+                    {
+                        await InitializePlc();
+                    }
+                }
+                else
+                {
+                    await _plcComm.DisconnectAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.ToString());
+            }
         }
 
         private void View_DisconnectLhCameraRequested(object sender, EventArgs e)

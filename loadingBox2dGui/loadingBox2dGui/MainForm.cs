@@ -211,6 +211,7 @@ namespace loadingBox2dGui
 
         #region EventHandlers
         public event EventHandler<ChangeModeEventArgs> ChangeModeRequested;
+        public event EventHandler MainFormLoadRequested;
         public event EventHandler ConnectCameraRequested;
         public event EventHandler ShowSettingManagerRequested;
         public event EventHandler CalculateRequested;
@@ -318,13 +319,31 @@ namespace loadingBox2dGui
             RadioButton rb = sender as RadioButton;
             if (rb.Checked && rb.Name == "rbAuto_")
             {
-                ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Auto, true));
+                ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Auto, ModifierKeys == Keys.Shift));
                 btnStartCamera_.Enabled = false;
                 btnCameraConnect_.Enabled = false;
                 btnLightOff_.Enabled = false;
             }
-            else
+        }
+
+        private void rbManual__CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb.Checked && rb.Name == "rbManual_")
             {
+                ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Manual, ModifierKeys == Keys.Shift));
+                btnStartCamera_.Enabled = true;
+                btnCameraConnect_.Enabled = true;
+                btnLightOff_.Enabled = true;
+            }
+        }
+
+        private void rbSet__CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            if (rb.Checked && rb.Name == "rbSet_")
+            {
+                ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Set, ModifierKeys == Keys.Shift));
                 btnStartCamera_.Enabled = true;
                 btnCameraConnect_.Enabled = true;
                 btnLightOff_.Enabled = true;
@@ -345,6 +364,11 @@ namespace loadingBox2dGui
                 btnLightOff_.Text = "Light Off";
             }
             LightStateChangeRequested?.Invoke(sender, args);
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            MainFormLoadRequested?.Invoke(sender, EventArgs.Empty);
         }
     }
 }

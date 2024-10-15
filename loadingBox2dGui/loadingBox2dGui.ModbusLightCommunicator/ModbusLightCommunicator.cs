@@ -234,7 +234,6 @@ namespace loadingBox2dGui.ModbusLightCommunicator
         {
             _ip = config[ModbusAttribute.IpAddr];
             _port = int.Parse(config[ModbusAttribute.Port]);
-            WriteLightState(false);
         }
     }
 }
