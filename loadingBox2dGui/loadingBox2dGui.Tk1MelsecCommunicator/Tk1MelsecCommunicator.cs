@@ -106,7 +106,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                     }
                 },
                 // [2]
-                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5002", 2, PlcDataType.WORD, PlcDataType.ASCII)
+                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5002", 2, PlcDataType.WORD, PlcDataType.TWISTED_ASCII)
                 {
                     SignalDict = new ConcurrentDictionary<PlcSignalForLoadingBox, PlcDbInfo>()
                     {
@@ -133,7 +133,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                     }
                 },
 
-                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5004", 4, PlcDataType.WORD, PlcDataType.ASCII)
+                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5004", 4, PlcDataType.WORD, PlcDataType.TWISTED_ASCII)
                 {
                     SignalDict = new ConcurrentDictionary<PlcSignalForLoadingBox, PlcDbInfo>()
                     {
@@ -141,6 +141,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                         [PlcSignalForLoadingBox.BODY_NO2 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5005, -1),
                         [PlcSignalForLoadingBox.BODY_NO3 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5006, -1),
                         [PlcSignalForLoadingBox.BODY_NO4 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5007, -1),
+                        [PlcSignalForLoadingBox.BODY_NO5 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5008, -1),
                     }
                 },
                 new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5101", 4, PlcDataType.DWORD, PlcDataType.DWORD)

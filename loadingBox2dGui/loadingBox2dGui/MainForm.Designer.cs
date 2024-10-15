@@ -1091,7 +1091,7 @@ namespace loadingBox2dGui
             // 
             // plcSignalStatusOnlyTable2
             // 
-            this.plcSignalStatusOnlyTable2.Location = new System.Drawing.Point(11, 13);
+            this.plcSignalStatusOnlyTable2.Location = new System.Drawing.Point(11, 6);
             this.plcSignalStatusOnlyTable2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.plcSignalStatusOnlyTable2.Name = "plcSignalStatusOnlyTable2";
             this.plcSignalStatusOnlyTable2.RowCount = 5;
@@ -1103,12 +1103,12 @@ namespace loadingBox2dGui
             // 
             this.plcSignalStatusValueTable2.ColumnWidth1 = 135;
             this.plcSignalStatusValueTable2.ColumnWidth2 = 65;
-            this.plcSignalStatusValueTable2.Location = new System.Drawing.Point(11, 149);
+            this.plcSignalStatusValueTable2.Location = new System.Drawing.Point(11, 132);
             this.plcSignalStatusValueTable2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.plcSignalStatusValueTable2.Name = "plcSignalStatusValueTable2";
-            this.plcSignalStatusValueTable2.RowCount = 7;
+            this.plcSignalStatusValueTable2.RowCount = 8;
             this.plcSignalStatusValueTable2.RowHeight = 23;
-            this.plcSignalStatusValueTable2.Size = new System.Drawing.Size(203, 169);
+            this.plcSignalStatusValueTable2.Size = new System.Drawing.Size(203, 193);
             this.plcSignalStatusValueTable2.TabIndex = 107;
             // 
             // gbGlassUserControl_
