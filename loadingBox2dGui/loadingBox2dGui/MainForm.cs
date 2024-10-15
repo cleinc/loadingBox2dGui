@@ -229,18 +229,7 @@ namespace loadingBox2dGui
 
         private void btnSettingManager__Click(object sender, System.EventArgs e)
         {
-            ChangeLightStateEventArgs args;
-            if (btnSettingManager_.Text == "Light Off")
-            {
-                args = new ChangeLightStateEventArgs(true);
-                btnSettingManager_.Text = "Light On";
-            }
-            else
-            {
-                args = new ChangeLightStateEventArgs(false);
-                btnSettingManager_.Text = "Light Off";
-            }
-            LightStateChangeRequested?.Invoke(sender, args);
+           
         }
 
         private void btnNgListClear__Click(object sender, System.EventArgs e)
@@ -292,6 +281,26 @@ namespace loadingBox2dGui
         {
 
         }
+/*
+        public Tk1MelsecCommunicator(Dictionary<PlcAttribute, string> config) : base(1)
+        {
+            try
+            {
+                _logicalStationNumber = int.Parse(config[PlcAttribute.LOGICAL_STATION]);
+                _heartbeatDeviceName = config[PlcAttribute.HeartbeatDeviceName];
+                _heartbeatDeviceType = config[PlcAttribute.HeartbeatDeviceType].ToEnum<PlcDataType>();
+                _heartbeatDbInfo = new PlcDbInfo(int.Parse(config[PlcAttribute.HeartbeatPos]),
+                                                 int.Parse(config[PlcAttribute.HeartbeatBit]));
+
+                _melsecPlc.PlcError += (s, e) => Disconnect();
+                LoadPlcSignalDictForSealer();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Models.Lang.MSGPlc.ConstructingPlcCommunicatorFailedDueToError : {ex.Message}");
+            }
+        }
+*/
 
         private void btnGlassPoint__Click(object sender, System.EventArgs e)
         {
@@ -310,16 +319,32 @@ namespace loadingBox2dGui
             if (rb.Checked && rb.Name == "rbAuto_")
             {
                 ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Auto, true));
-                btnGlassPoint_.Enabled = false;
+                btnStartCamera_.Enabled = false;
                 btnCameraConnect_.Enabled = false;
-                btnSettingManager_.Enabled = false;
+                btnLightOff_.Enabled = false;
             }
             else
             {
-                btnGlassPoint_.Enabled = true;
+                btnStartCamera_.Enabled = true;
                 btnCameraConnect_.Enabled = true;
-                btnSettingManager_.Enabled = true;
+                btnLightOff_.Enabled = true;
             }
+        }
+
+        private void btnLightOff__Click(object sender, EventArgs e)
+        {
+            ChangeLightStateEventArgs args;
+            if (btnLightOff_.Text == "Light Off")
+            {
+                args = new ChangeLightStateEventArgs(true);
+                btnLightOff_.Text = "Light On";
+            }
+            else
+            {
+                args = new ChangeLightStateEventArgs(false);
+                btnLightOff_.Text = "Light Off";
+            }
+            LightStateChangeRequested?.Invoke(sender, args);
         }
     }
 }

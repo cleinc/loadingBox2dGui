@@ -10,11 +10,13 @@ namespace loadingBox2dGui.models
     public abstract class CameraCommunicatorForLoadingBox : ICameraCommunicator, IDisposable
     {
         private bool disposedValue;
+        public bool IsConnected { get; }
         public abstract bool Connect();
         public abstract bool DisConnect();
-        public abstract Task<(Bitmap, Bitmap)> StartCamera();
+        public abstract Task StartCamera();
         public abstract bool StopCamera();
         public abstract bool SaveImage(Bitmap bmp);
+        public abstract Bitmap GetImage(string cameraName);
 
         protected virtual void Dispose(bool disposing)
         {

@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Threading;
+using System.Linq;
 
 namespace loadingBox2dGui.presenters
 {
@@ -25,7 +26,6 @@ namespace loadingBox2dGui.presenters
         private LightCommunicatorForLoadingBox _lightComm;
         private CameraCommunicatorForLoadingBox _camComm;
         private bool _isPlcEventHandlersRegistered = false;
-        private (Bitmap, Bitmap) bmps;
         public MainPresenter(IMainForm view, Config config)
         {
             _view = view;
@@ -46,7 +46,9 @@ namespace loadingBox2dGui.presenters
 
         private async void View_ChangeModeRequested(object sender, ChangeModeEventArgs e)
         {
+            if (!_plcComm.IsConnected)
             await InitializePlc();
+            if (e.Mode == OperationMode.Set) _plcComm.Disconnect();
         }
 
         private void View_DisconnectLhCameraRequested(object sender, EventArgs e)
@@ -59,17 +61,20 @@ namespace loadingBox2dGui.presenters
         {
             Logger.Debug("Call [Camera Start]");
 
-            bmps = await _camComm.StartCamera();
-            _view.LhImage = bmps.Item1;
-            //_view.RhImage = bmps.Item2;
+           await _camComm.StartCamera();
+            _view.LhImage = _camComm.GetImage(_config.CameraConfigs.Keys.ToList()[0]);
+            _view.RhImage = _camComm.GetImage(_config.CameraConfigs.Keys.ToList()[1]);
             Logger.Debug("Complete [Camera Start]");
         }
 
         private void View_ConnectCameraRequested(object sender, EventArgs e)
         {
-            Logger.Debug("Call [Camera Connect]");
-            _camComm.Connect();
-            Logger.Debug("Complete [Camera Connect]");
+            if (!_camComm.IsConnected)
+            {
+                Logger.Debug("Call [Camera Connect]");
+                _camComm.Connect();
+                Logger.Debug("Complete [Camera Connect]");
+            }
         }
 
         private void View_LightStateChangedRequested(object sender, ChangeLightStateEventArgs e)
@@ -79,6 +84,7 @@ namespace loadingBox2dGui.presenters
 
         private void View_ProgramCloseRequested(object sender, FormClosingEventArgs e)
         {
+            _plcComm.Disconnect();
             _view.RefreshPlcStatus();
             if (MessageBox.Show("Are you sure to Exit Program?", "Warning", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -125,8 +131,11 @@ namespace loadingBox2dGui.presenters
                 UpdatePlcInspectionInfo(e.CarType, e.CarSeq, e.BodyNumber);
                 Logger.Debug("Call [Camera Connect]");
                 _lightComm.WriteLightState(true);
-                
-                _camComm.Connect();
+
+                if (!_camComm.IsConnected)
+                {
+                    _camComm.Connect();
+                }
                 Logger.Debug("Complete [Camera Connect]");
             }
             catch (Exception ex)
@@ -141,7 +150,7 @@ namespace loadingBox2dGui.presenters
             Logger.Debug("Call [Camera Start]");
             try
             {
-                bmps = await _camComm.StartCamera();
+                await _camComm.StartCamera();
 
                 int ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, true, 100, 10);
                 if (ret != 0)
@@ -153,8 +162,18 @@ namespace loadingBox2dGui.presenters
                     Logger.Info("SEND P1 COMPLETE SUCCEED");
                 }
 
-                _view.LhImage = bmps.Item1;
-                _view.RhImage = bmps.Item2;
+                _view.LhImage = _camComm.GetImage(_config.CameraConfigs.Keys.ToList()[0]);
+                _view.RhImage = _camComm.GetImage(_config.CameraConfigs.Keys.ToList()[1]);
+                
+                ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, true, 100, 10);
+                if (ret != 0)
+                {
+                    Logger.Info("SEND OK FAIL");
+                }
+                else
+                {
+                    Logger.Info("SEND OK SUCCEED");
+                }
             }
             catch (Exception ex)
             {
@@ -167,28 +186,41 @@ namespace loadingBox2dGui.presenters
         {
             Logger.Info("Plc End Received");
             _lightComm?.WriteLightState(false);
-            if (_plcComm.VisionPass)
+            _view.DisplayVisionResult(VisionStatus.OK);
+        }
+
+        private async void PlcComm_VisionReset(object sender, EventArgs e)
+        {
+            Logger.Info("Plc Reset Received");
+            int ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, false, 100, 10);
+            if (ret != 0)
             {
-                int ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_PASS, true, 100, 10);
-                if (ret != 0)
-                {
-                    Logger.Info("SEND PASS FAIL");
-                }
-                else
-                {
-                    Logger.Info("SEND PASS SUCCEED");
-                }
-                _view.DisplayVisionResult(VisionStatus.OK);
+                Logger.Error($"PLC VISION OK OFF FAIL {ret}");
             }
             else
             {
-                Logger.Info($"not vision pass");
+                Logger.Info("PLC VISION OK OFF SUCCEED");
             }
-        }
 
-        private void PlcComm_VisionReset(object sender, EventArgs e)
-        {
-            Logger.Info("Plc Reset Received");
+            ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_NG, false, 100, 10);
+            if (ret != 0)
+            {
+                Logger.Error($"PLC VISION NG OFF FAIL {ret}");
+            }
+            else
+            {
+                Logger.Info("PLC VISION NG OFF SUCCEED");
+            }
+
+            ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, false, 100, 10);
+            if (ret != 0)
+            {
+                Logger.Error($"PLC VISION P1_COMPLETED OFF FAIL {ret}");
+            }
+            else
+            {
+                Logger.Info("PLC VISION P1_COMPLETED OFF SUCCEED");
+            }
         }
 
         #endregion
@@ -331,14 +363,14 @@ namespace loadingBox2dGui.presenters
 
         private bool CreateCameraCommInstance(string selectedCamera)
         {
-            if (selectedCamera == null || !_config.CameraConfig.TryGetValue(selectedCamera, out var cameraConf))
+            if (selectedCamera == null || _config.CameraConfigs == null)
             {
                 Logger.Error($"Lang.Msgs.NotSupportedCameraCommunicator {selectedCamera}");
                 return false;
             }
 
             _camComm?.Dispose();
-            _camComm = CameraCommunicationManager.CreateCameraCommunicator(selectedCamera, cameraConf) as CameraCommunicatorForLoadingBox;
+            _camComm = CameraCommunicationManager.CreateCameraCommunicator(selectedCamera, _config.CameraConfigs) as CameraCommunicatorForLoadingBox;
             if (_camComm == null)
             {
                 Logger.Error("Lang.Msgs.NotFindCameraCommunicator");

@@ -14,7 +14,7 @@ namespace loadingBox2dGui.models
     {
         public Dictionary<string, Dictionary<PlcAttribute, string>> PlcConfig { get; set; }
         public Dictionary<string, Dictionary<ModbusAttribute, string>> LightConfig { get; set;}
-        public Dictionary<string, Dictionary<Camera2DAttribute, string>> CameraConfig { get; set; }
+        public Dictionary<string, Dictionary<Camera2DAttribute, string>> CameraConfigs { get; set; }
 
         public string Plc { get; set; }
         public string Light { get; set; }
@@ -32,9 +32,10 @@ namespace loadingBox2dGui.models
             {
                 ["Tk1MelsecCommunicator"] = DefaultSettingLoader.Plcs[PlcModel.MELSEC]()
             };
-            CameraConfig = new Dictionary<string, Dictionary<Camera2DAttribute, string>>()
+            CameraConfigs = new Dictionary<string, Dictionary<Camera2DAttribute, string>> ()
             {
-                ["PylonCameraCommunicator"] = DefaultSettingLoader.Cameras[Camera2DMaker.BASLER]()
+                ["Camera1"] = DefaultSettingLoader.Cameras[Camera2DMaker.BASLER](),
+                ["Camera2"] = DefaultSettingLoader.Cameras[Camera2DMaker.BASLER]()
             };
             LightConfig = new Dictionary<string, Dictionary<ModbusAttribute, string>>()
             {

@@ -9,10 +9,13 @@ namespace loadingBox2dGui.models
 {
     public interface ICameraCommunicator : IDisposable
     {
+        bool IsConnected { get; }
+
         bool Connect();
         bool DisConnect();
-        Task<(Bitmap, Bitmap)> StartCamera();
+        Task StartCamera();
         bool StopCamera();
         bool SaveImage(Bitmap bmp);
+        Bitmap GetImage(string cameraName);
     }
 }

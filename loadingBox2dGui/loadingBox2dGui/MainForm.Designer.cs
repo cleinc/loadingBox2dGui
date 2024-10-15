@@ -33,9 +33,9 @@ namespace loadingBox2dGui
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.materialCard6 = new MaterialSkin.Controls.MaterialCard();
-            this.btnGlassPoint_ = new MaterialSkin.Controls.MaterialButton();
+            this.btnStartCamera_ = new MaterialSkin.Controls.MaterialButton();
             this.btnCameraConnect_ = new MaterialSkin.Controls.MaterialButton();
-            this.btnSettingManager_ = new MaterialSkin.Controls.MaterialButton();
+            this.btnLightOff_ = new MaterialSkin.Controls.MaterialButton();
             this.pbRh = new System.Windows.Forms.PictureBox();
             this.pbLh = new System.Windows.Forms.PictureBox();
             this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
@@ -149,6 +149,7 @@ namespace loadingBox2dGui
             this.rbSet_ = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbAuto_ = new MaterialSkin.Controls.MaterialRadioButton();
             this.gbPLC = new MaterialSkin.Controls.MaterialCard();
+            this.lblPlc = new MaterialSkin.Controls.MaterialLabel();
             this.tbPlc = new MaterialSkin.Controls.MaterialTextBox2();
             this.gbCarType = new MaterialSkin.Controls.MaterialCard();
             this.tbCarType = new MaterialSkin.Controls.MaterialTextBox2();
@@ -158,8 +159,8 @@ namespace loadingBox2dGui
             this.tbCarBodyNumber = new MaterialSkin.Controls.MaterialTextBox2();
             this.gbCarSeqNumber_ = new MaterialSkin.Controls.MaterialCard();
             this.tbCarSeqNumber = new MaterialSkin.Controls.MaterialTextBox2();
+            this.btnSettingManage_ = new MaterialSkin.Controls.MaterialButton();
             this.label22 = new MaterialSkin.Controls.MaterialLabel();
-            this.lblPlc = new MaterialSkin.Controls.MaterialLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -246,9 +247,9 @@ namespace loadingBox2dGui
             // materialCard6
             // 
             this.materialCard6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard6.Controls.Add(this.btnGlassPoint_);
+            this.materialCard6.Controls.Add(this.btnStartCamera_);
             this.materialCard6.Controls.Add(this.btnCameraConnect_);
-            this.materialCard6.Controls.Add(this.btnSettingManager_);
+            this.materialCard6.Controls.Add(this.btnLightOff_);
             this.materialCard6.Depth = 0;
             this.materialCard6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialCard6.Location = new System.Drawing.Point(8, 544);
@@ -259,31 +260,31 @@ namespace loadingBox2dGui
             this.materialCard6.Size = new System.Drawing.Size(1095, 365);
             this.materialCard6.TabIndex = 194;
             // 
-            // btnGlassPoint_
+            // btnStartCamera_
             // 
-            this.btnGlassPoint_.AutoSize = false;
-            this.btnGlassPoint_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnGlassPoint_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
-            this.btnGlassPoint_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnGlassPoint_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnGlassPoint_.Depth = 0;
-            this.btnGlassPoint_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnGlassPoint_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGlassPoint_.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btnGlassPoint_.HighEmphasis = true;
-            this.btnGlassPoint_.Icon = null;
-            this.btnGlassPoint_.Location = new System.Drawing.Point(18, 20);
-            this.btnGlassPoint_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnGlassPoint_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnGlassPoint_.Name = "btnGlassPoint_";
-            this.btnGlassPoint_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnGlassPoint_.Size = new System.Drawing.Size(325, 325);
-            this.btnGlassPoint_.TabIndex = 22;
-            this.btnGlassPoint_.Text = "Point Scan";
-            this.btnGlassPoint_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnGlassPoint_.UseAccentColor = false;
-            this.btnGlassPoint_.UseVisualStyleBackColor = false;
-            this.btnGlassPoint_.Click += new System.EventHandler(this.btnGlassPoint__Click);
+            this.btnStartCamera_.AutoSize = false;
+            this.btnStartCamera_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnStartCamera_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
+            this.btnStartCamera_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnStartCamera_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnStartCamera_.Depth = 0;
+            this.btnStartCamera_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnStartCamera_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStartCamera_.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.btnStartCamera_.HighEmphasis = true;
+            this.btnStartCamera_.Icon = null;
+            this.btnStartCamera_.Location = new System.Drawing.Point(18, 20);
+            this.btnStartCamera_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnStartCamera_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnStartCamera_.Name = "btnStartCamera_";
+            this.btnStartCamera_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnStartCamera_.Size = new System.Drawing.Size(325, 325);
+            this.btnStartCamera_.TabIndex = 22;
+            this.btnStartCamera_.Text = "Start Camera";
+            this.btnStartCamera_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnStartCamera_.UseAccentColor = false;
+            this.btnStartCamera_.UseVisualStyleBackColor = false;
+            this.btnStartCamera_.Click += new System.EventHandler(this.btnGlassPoint__Click);
             // 
             // btnCameraConnect_
             // 
@@ -310,36 +311,37 @@ namespace loadingBox2dGui
             this.btnCameraConnect_.UseVisualStyleBackColor = false;
             this.btnCameraConnect_.Click += new System.EventHandler(this.btnCameraConnect__Click);
             // 
-            // btnSettingManager_
+            // btnLightOff_
             // 
-            this.btnSettingManager_.AutoSize = false;
-            this.btnSettingManager_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSettingManager_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(208)))), ((int)(((byte)(65)))));
-            this.btnSettingManager_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnSettingManager_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnSettingManager_.Depth = 0;
-            this.btnSettingManager_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnSettingManager_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSettingManager_.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.btnSettingManager_.ForeColor = System.Drawing.Color.Black;
-            this.btnSettingManager_.HighEmphasis = true;
-            this.btnSettingManager_.Icon = null;
-            this.btnSettingManager_.Location = new System.Drawing.Point(752, 19);
-            this.btnSettingManager_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnSettingManager_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnSettingManager_.Name = "btnSettingManager_";
-            this.btnSettingManager_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnSettingManager_.Size = new System.Drawing.Size(325, 325);
-            this.btnSettingManager_.TabIndex = 3;
-            this.btnSettingManager_.Text = "Light Off";
-            this.btnSettingManager_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnSettingManager_.UseAccentColor = false;
-            this.btnSettingManager_.UseVisualStyleBackColor = false;
-            this.btnSettingManager_.Click += new System.EventHandler(this.btnSettingManager__Click);
+            this.btnLightOff_.AutoSize = false;
+            this.btnLightOff_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnLightOff_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(208)))), ((int)(((byte)(65)))));
+            this.btnLightOff_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnLightOff_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnLightOff_.Depth = 0;
+            this.btnLightOff_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnLightOff_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLightOff_.Font = new System.Drawing.Font("Consolas", 11.25F);
+            this.btnLightOff_.ForeColor = System.Drawing.Color.Black;
+            this.btnLightOff_.HighEmphasis = true;
+            this.btnLightOff_.Icon = null;
+            this.btnLightOff_.Location = new System.Drawing.Point(752, 19);
+            this.btnLightOff_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnLightOff_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnLightOff_.Name = "btnLightOff_";
+            this.btnLightOff_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnLightOff_.Size = new System.Drawing.Size(325, 325);
+            this.btnLightOff_.TabIndex = 3;
+            this.btnLightOff_.Text = "Light Off";
+            this.btnLightOff_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnLightOff_.UseAccentColor = false;
+            this.btnLightOff_.UseVisualStyleBackColor = false;
+            this.btnLightOff_.Click += new System.EventHandler(this.btnLightOff__Click);
             // 
             // pbRh
             // 
             this.pbRh.BackColor = System.Drawing.Color.LightGray;
+            this.pbRh.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbRh.Location = new System.Drawing.Point(561, 5);
             this.pbRh.Name = "pbRh";
             this.pbRh.Size = new System.Drawing.Size(542, 532);
@@ -350,6 +352,7 @@ namespace loadingBox2dGui
             // pbLh
             // 
             this.pbLh.BackColor = System.Drawing.Color.LightGray;
+            this.pbLh.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbLh.Location = new System.Drawing.Point(8, 5);
             this.pbLh.Name = "pbLh";
             this.pbLh.Size = new System.Drawing.Size(542, 532);
@@ -1005,6 +1008,7 @@ namespace loadingBox2dGui
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.LightGray;
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox1.Location = new System.Drawing.Point(1110, 128);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(223, 124);
@@ -1052,6 +1056,7 @@ namespace loadingBox2dGui
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.LightGray;
+            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox3.Location = new System.Drawing.Point(1110, 2);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(223, 124);
@@ -2538,7 +2543,7 @@ namespace loadingBox2dGui
             this.gbPLC.Controls.Add(this.lblPlc);
             this.gbPLC.Controls.Add(this.tbPlc);
             this.gbPLC.Depth = 0;
-            this.gbPLC.Font = new System.Drawing.Font("Gulim", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbPLC.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbPLC.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.gbPLC.Location = new System.Drawing.Point(308, 3);
             this.gbPLC.Margin = new System.Windows.Forms.Padding(14);
@@ -2547,6 +2552,19 @@ namespace loadingBox2dGui
             this.gbPLC.Padding = new System.Windows.Forms.Padding(14);
             this.gbPLC.Size = new System.Drawing.Size(299, 62);
             this.gbPLC.TabIndex = 27;
+            // 
+            // lblPlc
+            // 
+            this.lblPlc.AutoSize = true;
+            this.lblPlc.BackColor = System.Drawing.Color.Transparent;
+            this.lblPlc.Depth = 0;
+            this.lblPlc.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblPlc.Location = new System.Drawing.Point(-2, 0);
+            this.lblPlc.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblPlc.Name = "lblPlc";
+            this.lblPlc.Size = new System.Drawing.Size(5, 18);
+            this.lblPlc.TabIndex = 158;
+            this.lblPlc.Text = " ";
             // 
             // tbPlc
             // 
@@ -2601,7 +2619,7 @@ namespace loadingBox2dGui
             this.tbCarType.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.tbCarType.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.tbCarType.Depth = 0;
-            this.tbCarType.Font = new System.Drawing.Font("Gulim", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.tbCarType.Font = new System.Drawing.Font("굴림", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.tbCarType.HideSelection = true;
             this.tbCarType.LeadingIcon = null;
             this.tbCarType.Location = new System.Drawing.Point(228, 8);
@@ -2660,6 +2678,7 @@ namespace loadingBox2dGui
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.White;
             this.splitContainer1.Panel1.Controls.Add(this.materialCard5);
             this.splitContainer1.Panel1.Controls.Add(this.gbCarSeqNumber_);
+            this.splitContainer1.Panel1.Controls.Add(this.btnSettingManage_);
             this.splitContainer1.Panel1.Controls.Add(this.gbPLC);
             this.splitContainer1.Panel1.Controls.Add(this.gbMode);
             this.splitContainer1.Panel1.Controls.Add(this.gbCarType);
@@ -2763,6 +2782,33 @@ namespace loadingBox2dGui
             this.tbCarSeqNumber.TrailingIcon = null;
             this.tbCarSeqNumber.UseSystemPasswordChar = false;
             // 
+            // btnSettingManage_
+            // 
+            this.btnSettingManage_.AutoSize = false;
+            this.btnSettingManage_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSettingManage_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(208)))), ((int)(((byte)(65)))));
+            this.btnSettingManage_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnSettingManage_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnSettingManage_.Depth = 0;
+            this.btnSettingManage_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnSettingManage_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSettingManage_.Font = new System.Drawing.Font("Consolas", 11.25F);
+            this.btnSettingManage_.ForeColor = System.Drawing.Color.Black;
+            this.btnSettingManage_.HighEmphasis = true;
+            this.btnSettingManage_.Icon = null;
+            this.btnSettingManage_.Location = new System.Drawing.Point(1708, 13);
+            this.btnSettingManage_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnSettingManage_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnSettingManage_.Name = "btnSettingManage_";
+            this.btnSettingManage_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnSettingManage_.Size = new System.Drawing.Size(195, 42);
+            this.btnSettingManage_.TabIndex = 3;
+            this.btnSettingManage_.Text = "Setting Manager";
+            this.btnSettingManage_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnSettingManage_.UseAccentColor = false;
+            this.btnSettingManage_.UseVisualStyleBackColor = false;
+            this.btnSettingManage_.Click += new System.EventHandler(this.btnSettingManager__Click);
+            // 
             // label22
             // 
             this.label22.AutoSize = true;
@@ -2774,19 +2820,6 @@ namespace loadingBox2dGui
             this.label22.Size = new System.Drawing.Size(44, 12);
             this.label22.TabIndex = 71;
             this.label22.Text = "label22";
-            // 
-            // lblPlc
-            // 
-            this.lblPlc.AutoSize = true;
-            this.lblPlc.BackColor = System.Drawing.Color.Transparent;
-            this.lblPlc.Depth = 0;
-            this.lblPlc.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblPlc.Location = new System.Drawing.Point(-2, 0);
-            this.lblPlc.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblPlc.Name = "lblPlc";
-            this.lblPlc.Size = new System.Drawing.Size(5, 18);
-            this.lblPlc.TabIndex = 158;
-            this.lblPlc.Text = " ";
             // 
             // MainForm
             // 
@@ -2867,7 +2900,7 @@ namespace loadingBox2dGui
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private MaterialSkin.Controls.MaterialButton btnCameraConnect_;
-        private MaterialSkin.Controls.MaterialButton btnSettingManager_;
+        private MaterialSkin.Controls.MaterialButton btnLightOff_;
         private MaterialSkin.Controls.MaterialLabel label22;
         private MaterialSkin.Controls.MaterialTextBox2 tbPlc;
         private MaterialSkin.Controls.MaterialLabel lblGlassCameraModel_;
@@ -2962,7 +2995,7 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialLabel label80;
         private MaterialSkin.Controls.MaterialTextBox2 tbGlassShiftValueTy;
         private MaterialSkin.Controls.MaterialCard gbGlassPoint_;
-        private MaterialSkin.Controls.MaterialButton btnGlassPoint_;
+        private MaterialSkin.Controls.MaterialButton btnStartCamera_;
         private MaterialSkin.Controls.MaterialTextBox2 tbGlassPointTx;
         private MaterialSkin.Controls.MaterialLabel label73;
         private MaterialSkin.Controls.MaterialLabel label74;
@@ -2982,6 +3015,7 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialButton btnConnectPlc_;
         private MaterialSkin.Controls.MaterialCard materialCard6;
         private MaterialSkin.Controls.MaterialLabel lblPlc;
+        private MaterialSkin.Controls.MaterialButton btnSettingManage_;
     }
 }
 

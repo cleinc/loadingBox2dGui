@@ -67,11 +67,11 @@ namespace loadingBox2dGui.models
             return list;
         }
 
-        public static ICameraCommunicator CreateCameraCommunicator(Type typeOfCameraCommunicator, Dictionary<Camera2DAttribute, string> CameraConfig)
+        public static ICameraCommunicator CreateCameraCommunicator(Type typeOfCameraCommunicator, Dictionary<string, Dictionary<Camera2DAttribute, string>> cameraConfigs)
         {
             try
             {
-                return (ICameraCommunicator)Activator.CreateInstance(typeOfCameraCommunicator, CameraConfig);
+                return (ICameraCommunicator)Activator.CreateInstance(typeOfCameraCommunicator, cameraConfigs);
             }
             catch (Exception ex)
             {
@@ -80,12 +80,12 @@ namespace loadingBox2dGui.models
             }
         }
 
-        public static ICameraCommunicator CreateCameraCommunicator(string typeNameOfCameraCommunicator, Dictionary<Camera2DAttribute, string> CameraConfig)
+        public static ICameraCommunicator CreateCameraCommunicator(string typeNameOfCameraCommunicator, Dictionary<string, Dictionary<Camera2DAttribute, string>> cameraConfigs)
         {
             Type type = SupportedCameraCommunicators.Find((Type x) => x.Name == typeNameOfCameraCommunicator);
             if (type != null)
             {
-                return CreateCameraCommunicator(type, CameraConfig);
+                return CreateCameraCommunicator(type, cameraConfigs);
             }
 
             return null;
