@@ -2515,7 +2515,6 @@ namespace loadingBox2dGui
             // rbSet_
             // 
             this.rbSet_.AutoSize = true;
-            this.rbSet_.Checked = true;
             this.rbSet_.Depth = 0;
             this.rbSet_.Font = new System.Drawing.Font("Consolas", 12F);
             this.rbSet_.Location = new System.Drawing.Point(193, 14);
@@ -2533,6 +2532,7 @@ namespace loadingBox2dGui
             // rbAuto_
             // 
             this.rbAuto_.AutoSize = true;
+            this.rbAuto_.Checked = true;
             this.rbAuto_.Depth = 0;
             this.rbAuto_.Font = new System.Drawing.Font("Consolas", 12F);
             this.rbAuto_.Location = new System.Drawing.Point(9, 14);
@@ -2543,6 +2543,7 @@ namespace loadingBox2dGui
             this.rbAuto_.Ripple = true;
             this.rbAuto_.Size = new System.Drawing.Size(72, 37);
             this.rbAuto_.TabIndex = 0;
+            this.rbAuto_.TabStop = true;
             this.rbAuto_.Text = "Auto";
             this.rbAuto_.UseVisualStyleBackColor = true;
             this.rbAuto_.CheckedChanged += new System.EventHandler(this.rbAuto__CheckedChanged);
