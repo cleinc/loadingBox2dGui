@@ -406,16 +406,16 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
 
             CarType = PlcMonitorInfos[1].SignalDict[PlcSignalForLoadingBox.CAR_TYPE | PlcSignalForLoadingBox.VALUE].Int32Value;
 
-            string carSeq = PlcMonitorInfos[2].SignalDict[PlcSignalForLoadingBox.CAR_SEQ1 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII)
-                + PlcMonitorInfos[2].SignalDict[PlcSignalForLoadingBox.CAR_SEQ2 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII);
+            string carSeq = PlcMonitorInfos[2].SignalDict[PlcSignalForLoadingBox.CAR_SEQ1 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.TWISTED_ASCII)
+                + PlcMonitorInfos[2].SignalDict[PlcSignalForLoadingBox.CAR_SEQ2 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.TWISTED_ASCII);
             //string carSeq = PlcMonitorInfos[1].SignalDict[PlcSignalForLoadingBox.CAR_SEQ | PlcSignalForLoadingBox.VALUE].GetText(PlcMonitorInfos[1].DataParseType);
             CarSeq = carSeq;
 
-            string bodyNumber = PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NO1 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII)
-                + PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NO2 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII)
-                + PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NO3 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII)
-                + PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NO4 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII);
-            //+ PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NUM_5 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.ASCII);
+            string bodyNumber = PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NO1 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.TWISTED_ASCII)
+                + PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NO2 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.TWISTED_ASCII)
+                + PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NO3 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.TWISTED_ASCII)
+                + PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NO4 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.TWISTED_ASCII)
+                + PlcMonitorInfos[5].SignalDict[PlcSignalForLoadingBox.BODY_NO5 | PlcSignalForLoadingBox.VALUE].GetText(PlcDataType.TWISTED_ASCII);
             BodyNumber = bodyNumber;
 
             CarTypeUpdate?.Invoke(this, new VisionUpdateEventArgs(CarType, CarSeq, BodyNumber));
