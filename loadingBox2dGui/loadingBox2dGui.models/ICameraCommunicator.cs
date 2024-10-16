@@ -16,6 +16,7 @@ namespace loadingBox2dGui.models
         Task StartCamera();
         bool StopCamera();
         bool SaveImage(Bitmap bmp);
+        bool SetCameraSettings();
         Bitmap GetImage(string cameraName);
     }
 }

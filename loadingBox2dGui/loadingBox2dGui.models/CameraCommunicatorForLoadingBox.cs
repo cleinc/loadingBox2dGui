@@ -16,6 +16,7 @@ namespace loadingBox2dGui.models
         public abstract Task StartCamera();
         public abstract bool StopCamera();
         public abstract bool SaveImage(Bitmap bmp);
+        public abstract bool SetCameraSettings();
         public abstract Bitmap GetImage(string cameraName);
 
         protected virtual void Dispose(bool disposing)

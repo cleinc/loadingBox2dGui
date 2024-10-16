@@ -1,4 +1,5 @@
 ﻿using Basler.Pylon;
+using CoPick.Logging;
 using CoPick.Setting;
 using loadingBox2dGui.models;
 using System;
@@ -14,10 +15,12 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 {
     public class PylonCameraCommunicator : CameraCommunicatorForLoadingBox, IDisposable
     {
+        private static readonly LogHelper Logger = LogHelper.Logger;
+
         private PixelDataConverter _converter;
         Dictionary<string, Dictionary<Camera2DAttribute, string>> _camConfigs;
         Dictionary<string, Camera> _cameras;
-        Dictionary<string, Bitmap> _bitmaps;
+        Dictionary<string, Bitmap> _results;
         private bool _isConnected = false;
         public bool IsConnected
         {
@@ -28,35 +31,46 @@ namespace loadingBox2dGui.PylonCameraCommunicator
         {
             _camConfigs = configs;
             _cameras = new Dictionary<string, Camera>();
-            _bitmaps = new Dictionary<string, Bitmap>();
+            _results = new Dictionary<string, Bitmap>();
             _converter = new PixelDataConverter();
+        }
+
+        public override bool SetCameraSettings()
+        {
+            return true;
         }
 
         public override bool Connect()
         {
+            _cameras.Clear();
+
             try
             {
-                _camConfigs.Keys.ToList().ForEach(key => 
+                if (_camConfigs != null && _camConfigs.Count != 0)
                 {
-                    ICameraInfo cameraInfo = CameraFinder.Enumerate().Find(info => info[CameraInfoKey.DeviceIpAddress] == _camConfigs[key][Camera2DAttribute.IPAdr]);
-                    _bitmaps.Add(key, null);
-                    _cameras[key] = new Camera(cameraInfo);
-                    _cameras[key].Open();
-                });
-                _isConnected = true;
-                return true;
+                    _camConfigs.Keys.ToList().ForEach(key =>
+                    {
+                        ICameraInfo cameraInfo = CameraFinder.Enumerate().Find(info => info[CameraInfoKey.DeviceIpAddress] == _camConfigs[key][Camera2DAttribute.IPAdr]);
+                        _cameras[key] = new Camera(cameraInfo);
+                        _cameras[key].Open();
+                    });
+                    Logger.Info("Succeed Setting Camera Information.");
+                }
+                else
+                {
+                    Logger.Info("Fail Setting Camera Information..");
+                }
+
+                _isConnected = _cameras.Keys.ToList().All(key => _cameras[key].IsConnected);
+                return _isConnected;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Logger.Error(ex.ToString());
                 return false;
             }
         }
 
-        public bool SetCameraSettings(Camera camera)
-        {
-            return true;
-        }
 
         public override Task StartCamera()
         {
@@ -69,7 +83,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                     if (grabResult1.GrabSucceeded)
                     {
                         Bitmap bmp = ConvertGrabResultToBitmap(grabResult1);
-                        _bitmaps[camera] = bmp;
+                        _results[camera] = bmp;
                         SaveImage(bmp);
                     }
                     _cameras[camera].StreamGrabber.Stop();
@@ -79,7 +93,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
         public override Bitmap GetImage(string cameraName)
         {
-            return _bitmaps[cameraName];
+            return _results[cameraName];
         }
 
         private Bitmap ConvertGrabResultToBitmap(IGrabResult grabResult)
