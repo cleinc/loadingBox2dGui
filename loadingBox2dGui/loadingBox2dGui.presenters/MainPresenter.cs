@@ -120,6 +120,7 @@ namespace loadingBox2dGui.presenters
                 //ConfigFileManager.SaveToFile(_config, ConfigFileManager.GetConfigFilePath());
 
                 _plcComm?.Dispose();
+                _plcLight?.Dispose();
 
                 //Process[] procs = Process.GetProcessesByName("ProductionRecordManager");
                 //if (procs.Length > 0)
