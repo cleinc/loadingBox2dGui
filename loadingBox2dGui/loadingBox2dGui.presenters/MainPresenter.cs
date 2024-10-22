@@ -105,9 +105,9 @@ namespace loadingBox2dGui.presenters
             }
         }
 
-        private void View_LightStateChangedRequested(object sender, ChangeLightStateEventArgs e)
+        private async void View_LightStateChangedRequested(object sender, ChangeLightStateEventArgs e)
         {
-            _lightComm.WriteLightState(e.State);
+            await Task.Run(() => _lightComm.WriteLightState(e.State));
         }
 
         private void View_ProgramCloseRequested(object sender, FormClosingEventArgs e)
