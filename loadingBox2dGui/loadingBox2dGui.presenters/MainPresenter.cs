@@ -89,25 +89,25 @@ namespace loadingBox2dGui.presenters
         {
             Logger.Debug("Call [Camera Start]");
 
-           await _camComm.StartCamera();
+            await _camComm.StartCamera();
             _view.LhImage = _camComm.GetImage(_config.CameraConfigs.Keys.ToList()[0]);
             _view.RhImage = _camComm.GetImage(_config.CameraConfigs.Keys.ToList()[1]);
             Logger.Debug("Complete [Camera Start]");
         }
 
-        private void View_ConnectCameraRequested(object sender, EventArgs e)
+        private async void View_ConnectCameraRequested(object sender, EventArgs e)
         {
             if (!_camComm.IsConnected)
             {
                 Logger.Debug("Call [Camera Connect]");
-                _camComm.Connect();
+                await Task.Run(() => _camComm.Connect());
                 Logger.Debug("Complete [Camera Connect]");
             }
         }
 
-        private void View_LightStateChangedRequested(object sender, ChangeLightStateEventArgs e)
+        private async void View_LightStateChangedRequested(object sender, ChangeLightStateEventArgs e)
         {
-            _lightComm.WriteLightState(e.State);
+            await Task.Run(() => _lightComm.WriteLightState(e.State));
         }
 
         private void View_ProgramCloseRequested(object sender, FormClosingEventArgs e)
