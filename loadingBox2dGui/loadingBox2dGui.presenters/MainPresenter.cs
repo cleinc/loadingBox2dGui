@@ -146,9 +146,19 @@ namespace loadingBox2dGui.presenters
             Logger.Info("Plc Connected Received");
         }
 
-        private void PlcComm_PlcDisconnected(object sender, EventArgs e)
+        private async void PlcComm_PlcDisconnected(object sender, EventArgs e)
         {
             Logger.Info("Plc Disconnected Received");
+            if (_mode == OperationMode.Auto && _plcComm != null)
+            {
+                await _plcComm.ConnectAsync();
+                if (_plcComm.IsConnected)
+                {
+                    RegisterPlcEventHandler();
+                }
+                _view.IsPlcConnected = _plcComm.IsConnected;
+                _view.RefreshPlcStatus();
+            }
         }
 
         private void PlcComm_VisionUpdate(object sender, VisionUpdateEventArgs e)
