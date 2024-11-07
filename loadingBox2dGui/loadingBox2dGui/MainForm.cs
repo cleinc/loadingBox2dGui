@@ -22,14 +22,14 @@ namespace loadingBox2dGui
     public partial class MainForm : MaterialForm, IMainForm
     {
         private static readonly LogHelper Logger = LogHelper.Logger;
-
+        private MaterialSkinManager _materialSkinManager = MaterialSkinManager.Instance;
         private OperationMode _programMode;
         private PlcStatusPainter _plcStatusPainter;
         private Dictionary<PlcSignalForLoadingBox, Label> _plcSignalLabelDict;
         public MainForm()
         {
             InitializeComponent();
-            MaterialSkinManager.Instance.AddFormToManage(this);
+            _materialSkinManager.AddFormToManage(this);
 
             Logger.RtbLog = rtbLog;
             Logger.MaxLine = 1000;
@@ -39,8 +39,7 @@ namespace loadingBox2dGui
             LoadPlcSignalLabelDict();
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
             Console.WriteLine($"Current Culture {Thread.CurrentThread.CurrentUICulture}");
-            //FontManager.SetCustomFont("./Resources/NanumSquareRoundB.ttf");
-            //this.ApplyFont();
+            
         }
 
         #region Properties

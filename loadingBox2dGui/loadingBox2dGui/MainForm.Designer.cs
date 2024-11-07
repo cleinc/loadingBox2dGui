@@ -32,6 +32,10 @@ namespace loadingBox2dGui
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.materialCard15 = new MaterialSkin.Controls.MaterialCard();
+            this.lblRH_ = new MaterialSkin.Controls.MaterialLabel();
+            this.materialCard14 = new MaterialSkin.Controls.MaterialCard();
+            this.lblLH_ = new MaterialSkin.Controls.MaterialLabel();
             this.materialCard6 = new MaterialSkin.Controls.MaterialCard();
             this.btnStartCamera_ = new MaterialSkin.Controls.MaterialButton();
             this.btnCameraConnect_ = new MaterialSkin.Controls.MaterialButton();
@@ -161,14 +165,12 @@ namespace loadingBox2dGui
             this.tbCarSeqNumber = new MaterialSkin.Controls.MaterialTextBox2();
             this.btnSettingManage_ = new MaterialSkin.Controls.MaterialButton();
             this.label22 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialCard15 = new MaterialSkin.Controls.MaterialCard();
-            this.lblRH_ = new MaterialSkin.Controls.MaterialLabel();
-            this.materialCard14 = new MaterialSkin.Controls.MaterialCard();
-            this.lblLH_ = new MaterialSkin.Controls.MaterialLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.materialCard15.SuspendLayout();
+            this.materialCard14.SuspendLayout();
             this.materialCard6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbRh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLh)).BeginInit();
@@ -203,8 +205,6 @@ namespace loadingBox2dGui
             this.splitContainer1.SuspendLayout();
             this.materialCard5.SuspendLayout();
             this.gbCarSeqNumber_.SuspendLayout();
-            this.materialCard15.SuspendLayout();
-            this.materialCard14.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer2
@@ -251,6 +251,64 @@ namespace loadingBox2dGui
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 107;
             this.splitContainer2.TabStop = false;
+            // 
+            // materialCard15
+            // 
+            this.materialCard15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard15.Controls.Add(this.lblRH_);
+            this.materialCard15.Depth = 0;
+            this.materialCard15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard15.Location = new System.Drawing.Point(560, 11);
+            this.materialCard15.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard15.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard15.Name = "materialCard15";
+            this.materialCard15.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard15.Size = new System.Drawing.Size(58, 37);
+            this.materialCard15.TabIndex = 195;
+            // 
+            // lblRH_
+            // 
+            this.lblRH_.AutoSize = true;
+            this.lblRH_.BackColor = System.Drawing.Color.Transparent;
+            this.lblRH_.Depth = 0;
+            this.lblRH_.Font = new System.Drawing.Font("NanumSquareRound Bold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblRH_.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.lblRH_.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblRH_.Location = new System.Drawing.Point(12, 6);
+            this.lblRH_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblRH_.Name = "lblRH_";
+            this.lblRH_.Size = new System.Drawing.Size(34, 26);
+            this.lblRH_.TabIndex = 0;
+            this.lblRH_.Text = "RH";
+            // 
+            // materialCard14
+            // 
+            this.materialCard14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard14.Controls.Add(this.lblLH_);
+            this.materialCard14.Depth = 0;
+            this.materialCard14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard14.Location = new System.Drawing.Point(12, 11);
+            this.materialCard14.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard14.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard14.Name = "materialCard14";
+            this.materialCard14.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard14.Size = new System.Drawing.Size(58, 37);
+            this.materialCard14.TabIndex = 196;
+            // 
+            // lblLH_
+            // 
+            this.lblLH_.AutoSize = true;
+            this.lblLH_.BackColor = System.Drawing.Color.Transparent;
+            this.lblLH_.Depth = 0;
+            this.lblLH_.Font = new System.Drawing.Font("NanumSquareRound Bold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.lblLH_.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
+            this.lblLH_.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lblLH_.Location = new System.Drawing.Point(14, 7);
+            this.lblLH_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblLH_.Name = "lblLH_";
+            this.lblLH_.Size = new System.Drawing.Size(31, 26);
+            this.lblLH_.TabIndex = 0;
+            this.lblLH_.Text = "LH";
             // 
             // materialCard6
             // 
@@ -2556,7 +2614,7 @@ namespace loadingBox2dGui
             this.gbPLC.Controls.Add(this.lblPlc);
             this.gbPLC.Controls.Add(this.tbPlc);
             this.gbPLC.Depth = 0;
-            this.gbPLC.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbPLC.Font = new System.Drawing.Font("Gulim", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbPLC.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.gbPLC.Location = new System.Drawing.Point(308, 3);
             this.gbPLC.Margin = new System.Windows.Forms.Padding(14);
@@ -2632,7 +2690,7 @@ namespace loadingBox2dGui
             this.tbCarType.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.tbCarType.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
             this.tbCarType.Depth = 0;
-            this.tbCarType.Font = new System.Drawing.Font("굴림", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.tbCarType.Font = new System.Drawing.Font("Gulim", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.tbCarType.HideSelection = true;
             this.tbCarType.LeadingIcon = null;
             this.tbCarType.Location = new System.Drawing.Point(228, 8);
@@ -2834,64 +2892,6 @@ namespace loadingBox2dGui
             this.label22.TabIndex = 71;
             this.label22.Text = "label22";
             // 
-            // materialCard15
-            // 
-            this.materialCard15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard15.Controls.Add(this.lblRH_);
-            this.materialCard15.Depth = 0;
-            this.materialCard15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard15.Location = new System.Drawing.Point(560, 11);
-            this.materialCard15.Margin = new System.Windows.Forms.Padding(14);
-            this.materialCard15.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCard15.Name = "materialCard15";
-            this.materialCard15.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard15.Size = new System.Drawing.Size(58, 37);
-            this.materialCard15.TabIndex = 195;
-            // 
-            // lblRH_
-            // 
-            this.lblRH_.AutoSize = true;
-            this.lblRH_.BackColor = System.Drawing.Color.Transparent;
-            this.lblRH_.Depth = 0;
-            this.lblRH_.Font = new System.Drawing.Font("NanumSquareRound Bold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.lblRH_.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.lblRH_.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblRH_.Location = new System.Drawing.Point(12, 6);
-            this.lblRH_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblRH_.Name = "lblRH_";
-            this.lblRH_.Size = new System.Drawing.Size(34, 26);
-            this.lblRH_.TabIndex = 0;
-            this.lblRH_.Text = "RH";
-            // 
-            // materialCard14
-            // 
-            this.materialCard14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard14.Controls.Add(this.lblLH_);
-            this.materialCard14.Depth = 0;
-            this.materialCard14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard14.Location = new System.Drawing.Point(12, 11);
-            this.materialCard14.Margin = new System.Windows.Forms.Padding(14);
-            this.materialCard14.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCard14.Name = "materialCard14";
-            this.materialCard14.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard14.Size = new System.Drawing.Size(58, 37);
-            this.materialCard14.TabIndex = 196;
-            // 
-            // lblLH_
-            // 
-            this.lblLH_.AutoSize = true;
-            this.lblLH_.BackColor = System.Drawing.Color.Transparent;
-            this.lblLH_.Depth = 0;
-            this.lblLH_.Font = new System.Drawing.Font("NanumSquareRound Bold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.lblLH_.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.lblLH_.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblLH_.Location = new System.Drawing.Point(14, 7);
-            this.lblLH_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblLH_.Name = "lblLH_";
-            this.lblLH_.Size = new System.Drawing.Size(31, 26);
-            this.lblLH_.TabIndex = 0;
-            this.lblLH_.Text = "LH";
-            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2911,6 +2911,10 @@ namespace loadingBox2dGui
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.materialCard15.ResumeLayout(false);
+            this.materialCard15.PerformLayout();
+            this.materialCard14.ResumeLayout(false);
+            this.materialCard14.PerformLayout();
             this.materialCard6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbRh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLh)).EndInit();
@@ -2952,10 +2956,6 @@ namespace loadingBox2dGui
             this.splitContainer1.ResumeLayout(false);
             this.materialCard5.ResumeLayout(false);
             this.gbCarSeqNumber_.ResumeLayout(false);
-            this.materialCard15.ResumeLayout(false);
-            this.materialCard15.PerformLayout();
-            this.materialCard14.ResumeLayout(false);
-            this.materialCard14.PerformLayout();
             this.ResumeLayout(false);
 
         }

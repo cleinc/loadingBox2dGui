@@ -3,21 +3,20 @@ using CoPick.Plc;
 using CoPick.Setting;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace loadingBox2dGui.models
 {
     [Serializable]
     public class Config
     {
-        public Dictionary<string, Dictionary<PlcAttribute, string>> PlcConfig { get; set; }
-        public Dictionary<string, Dictionary<ModbusAttribute, string>> LightConfig { get; set;}
+        public Dictionary<string, Dictionary<PlcAttribute, string>> PlcConfigs { get; set; }
+        public Dictionary<string, Dictionary<LightAttribute, string>> LightConfigs { get; set;}
         public Dictionary<string, Dictionary<Camera2DAttribute, string>> CameraConfigs { get; set; }
-
+        public Dictionary<int, CargoBox2DConfig> ConfigDict { get; set; } = new Dictionary<int, CargoBox2DConfig>();
         public string Plc { get; set; }
         public string Light { get; set; }
         public string Camera { get; set; }
@@ -47,7 +46,7 @@ namespace loadingBox2dGui.models
             Camera = "PylonCameraCommunicator";
             Light = "ModbusLightCommunicator";
 
-            PlcConfig = new Dictionary<string, Dictionary<PlcAttribute, string>>()
+            PlcConfigs = new Dictionary<string, Dictionary<PlcAttribute, string>>()
             {
                 ["Tk1MelsecCommunicator"] = DefaultSettingLoader.Plcs[PlcModel.MELSEC]()
             };
@@ -56,11 +55,179 @@ namespace loadingBox2dGui.models
                 ["Camera1"] = DefaultSettingLoader.Cameras[Camera2DMaker.BASLER](),
                 ["Camera2"] = DefaultSettingLoader.Cameras[Camera2DMaker.BASLER]()
             };
-            LightConfig = new Dictionary<string, Dictionary<ModbusAttribute, string>>()
+            LightConfigs = new Dictionary<string, Dictionary<LightAttribute, string>>()
             {
-                ["ModbusLightCommunicator"] = DefaultSettingLoader.Lights[LightMaker.NOATHCH]()
+                ["ModbusLightCommunicator"] = DefaultSettingLoader.Lights[LightMaker.MODBUS]()
             };
         }
+
+        public CargoBox2DConfig this[int key]
+        {
+            get
+            {
+                if (key == -1)
+                {
+                    key = RecentlyUsedCar;
+                }
+
+                if (!ConfigDict.TryGetValue(key, out CargoBox2DConfig config))
+                {
+                    config = default;
+                }
+                return config;
+            }
+
+            set
+            {
+                if (key == -1)
+                {
+                    key = RecentlyUsedCar;
+                }
+
+                ConfigDict[key] = value;
+            }
+        }
+
+        public void LockCarType()
+        {
+            try
+            {
+                string carString = Encoding.UTF8.GetString(Convert.FromBase64String(File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "msg_format.dat"))));
+                var carList = carString.Replace("C", "").Replace("L", "").Split('E').Select(c => Convert.ToInt32(c)).ToArray();
+                var invalidList = ConfigDict.Keys.Where(k => !carList.Contains(k)).ToArray();
+                foreach (var carType in invalidList)
+                {
+                    ConfigDict.Remove(carType);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+    }
+
+    [Serializable]
+    public class CargoBox2DConfig : ICustomTypeDescriptor
+    {
+        [NonSerialized]
+        private PropertyDescriptorCollection _pdColl;
+        [NonSerialized]
+        private Dictionary<string, int> _registeredCameraDevices = new Dictionary<string, int>();
+        [LocalizedCategory("CategoryGeneral", 1, 3)]
+        [LocalizedDescription("DescCarName")]
+        public string CarName { get; set; } = "unknown";
+
+        #region LH Inspection Settings
+        [LocalizedCategory("CategoryInspectLH", 2, 3)]
+        [LocalizedDescription("DescSelectedDevice")]
+        public string LHCamera { get; set; }
+        [LocalizedCategory("CategoryInspectLH", 2, 3)]
+        [LocalizedDescription("DescModelPath")]
+        public string LHModelPath { get; set; }
+        [LocalizedCategory("CategoryInspectLH", 2, 3)]
+        [LocalizedDescription("DescExposureTime")]
+        public int LHExposureTime { get; set; }
+        [LocalizedCategory("CategoryInspectLH", 2, 3)]
+        [LocalizedDescription("DescGain")]
+        public int LHGain { get; set; }
+        [LocalizedCategory("CategoryInspectLH", 2, 3)]
+        [LocalizedDescription("DescMaxFPS")]
+        public int LHMaxFPS { get; set; }
+        [LocalizedCategory("CategoryInspectLH", 2, 3)]
+        [LocalizedDescription("DescCameraMaker")]
+        public Camera2DMaker LHCameraMaker { get; set; } = Camera2DMaker.BASLER;
+        [LocalizedCategory("CategoryInspectLH", 2, 3)]
+        public int LHCameraRoiX { get; set; }
+        [LocalizedCategory("CategoryInspectLH", 2, 3)]
+        public int LHCameraRoiY { get; set; }
+        [LocalizedCategory("CategoryInspectLH", 2, 3)]
+        public int LHCameraRoiWidth { get; set; }
+        [LocalizedCategory("CategoryInspectLH", 2, 3)]
+        public int LHCameraRoiHeight { get; set; }
+        #endregion
+
+        #region RH Inspection Settings
+        [LocalizedCategory("CategoryInspectRH", 3, 3)]
+        public string RHCamera { get; set; }
+        [LocalizedCategory("CategoryInspectRH", 3, 3)]
+        public string RHModelPath { get; set; }
+        [LocalizedCategory("CategoryInspectRH", 3, 3)]
+        public int RHExposureTime { get; set; }
+        [LocalizedCategory("CategoryInspectRH", 3, 3)]
+        public int RHGain { get; set; }
+        [LocalizedCategory("CategoryInspectRH", 3, 3)]
+        public int RHMaxFPS { get; set; }
+        [LocalizedCategory("CategoryInspectRH", 3, 3)]
+        public Camera2DMaker RHCameraMaker { get; set; } = Camera2DMaker.BASLER;
+        [LocalizedCategory("CategoryInspectRH", 3, 3)]
+        public int RHCameraRoiX { get; set; } = 0;
+        [LocalizedCategory("CategoryInspectRH", 3, 3)]
+        public int RHCameraRoiY { get; set; } = 0;
+        [LocalizedCategory("CategoryInspectRH", 3, 3)]
+        public int RHCameraRoiWidth { get; set; } = 2560;
+        [LocalizedCategory("CategoryInspectRH", 3, 3)]
+        public int RHCameraRoiHeight { get; set; } = 1920;
+        #endregion
+
+
+        public CargoBox2DConfig()
+        {
+            UpdatePropertyDescriptors();
+        }
+
+        public void UpdatePropertyDescriptors()
+        {
+            PropertyDescriptorCollection pdc = TypeDescriptor.GetProperties(this);
+            PropertyDescriptor[] propertyDescriptorArray = typeof(CargoBox2DConfig).GetProperties()
+                .Select(m => new CargoBox2DConfigPropertyDescriptor(pdc[m.Name], m.GetCustomAttributes(false).Cast<Attribute>().ToArray()))
+                .ToArray();
+            _pdColl = new PropertyDescriptorCollection(propertyDescriptorArray);
+        }
+
+        public AttributeCollection GetAttributes() => TypeDescriptor.GetAttributes(this, true);
+        public string GetClassName() => TypeDescriptor.GetClassName(this, true);
+        public string GetComponentName() => TypeDescriptor.GetComponentName(this, true);
+        public TypeConverter GetConverter() => TypeDescriptor.GetConverter(this, true);
+        public EventDescriptor GetDefaultEvent() => TypeDescriptor.GetDefaultEvent(this, true);
+        public PropertyDescriptor GetDefaultProperty() => TypeDescriptor.GetDefaultProperty(this, true);
+        public object GetEditor(Type editorBaseType) => TypeDescriptor.GetEditor(this, editorBaseType, true);
+        public EventDescriptorCollection GetEvents() => TypeDescriptor.GetEvents(this, true);
+        public EventDescriptorCollection GetEvents(Attribute[] attributes) => TypeDescriptor.GetEvents(this, attributes, true);
+        public PropertyDescriptorCollection GetProperties() => _pdColl;
+        public PropertyDescriptorCollection GetProperties(Attribute[] attributes) => _pdColl;
+        public object GetPropertyOwner(PropertyDescriptor pd) => this;
+    }
+
+    public class CargoBox2DConfigPropertyDescriptor : PropertyDescriptor
+    {
+        private PropertyDescriptor _originalPd;
+
+        public CargoBox2DConfigPropertyDescriptor(PropertyDescriptor pd, Attribute[] attrs)
+            : base(pd, attrs)
+        {
+            _originalPd = pd;
+        }
+
+        public override Type ComponentType
+        {
+            get => _originalPd.ComponentType;
+        }
+        public override bool IsReadOnly
+        {
+            get => _originalPd.IsReadOnly;
+        }
+
+        public override Type PropertyType
+        {
+            get => _originalPd.PropertyType;
+        }
+
+        public override bool CanResetValue(object component) => _originalPd.CanResetValue(component);
+        public override object GetValue(object component) => _originalPd.GetValue(component);
+        public override void ResetValue(object component) => _originalPd.ResetValue(component);
+        public override void SetValue(object component, object value) => _originalPd.SetValue(component, value);
+        public override bool ShouldSerializeValue(object component) => _originalPd.ShouldSerializeValue(component);
     }
 
     public static class DefaultSettingLoader
@@ -78,18 +245,18 @@ namespace loadingBox2dGui.models
             };
         }
 
-        public static Dictionary<LightMaker, Func<Dictionary<ModbusAttribute, string>>> Lights = new Dictionary<LightMaker, Func<Dictionary<ModbusAttribute, string>>>()
+        public static Dictionary<LightMaker, Func<Dictionary<LightAttribute, string>>> Lights = new Dictionary<LightMaker, Func<Dictionary<LightAttribute, string>>>()
         {
-            [LightMaker.NOATHCH] = GetNoatechSettings,
+            [LightMaker.MODBUS] = GetModbusLightSettings,
         };
 
-        public static Dictionary<ModbusAttribute, string> GetNoatechSettings()
+        public static Dictionary<LightAttribute, string> GetModbusLightSettings()
         {
-            return new Dictionary<ModbusAttribute, string>()
+            return new Dictionary<LightAttribute, string>()
             {
-                [ModbusAttribute.IpAddr] = "192.168.2.3",
-                [ModbusAttribute.Port] = "502",
-                [ModbusAttribute.Model] = "Modbus",
+                [LightAttribute.IPAdr] = "192.168.2.3",
+                [LightAttribute.PortNo] = "502",
+                [LightAttribute.StateRegister] = "0",
             };
         }
 
@@ -109,7 +276,6 @@ namespace loadingBox2dGui.models
                 [Camera2DAttribute.CameraResolutionRoiHeight] = "492",
                 [Camera2DAttribute.Exposure] = "3000",
                 [Camera2DAttribute.MaxFPS] = "30",
-                [Camera2DAttribute.ImageFolderPath] = "",
                 [Camera2DAttribute.FPS] = "30"
             };
         }

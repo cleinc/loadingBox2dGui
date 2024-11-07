@@ -73,6 +73,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SettingManagerForm\CargoBox2DSettingManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingManagerForm\CargoBox2DSettingManagerForm.Designer.cs">
+      <DependentUpon>CargoBox2DSettingManagerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingManagerForm\LightSettingManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingManagerForm\LightSettingManagerForm.Designer.cs">
+      <DependentUpon>LightSettingManagerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +93,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="SettingManagerForm\CargoBox2DSettingManagerForm.resx">
+      <DependentUpon>CargoBox2DSettingManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

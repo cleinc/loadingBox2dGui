@@ -357,7 +357,7 @@ namespace loadingBox2dGui.presenters
 
         private bool CreatePlcCommInstance(string selectedPlc)
         {
-            if (selectedPlc == null || !_config.PlcConfig.TryGetValue(selectedPlc, out var plcConf))
+            if (selectedPlc == null || !_config.PlcConfigs.TryGetValue(selectedPlc, out var plcConf))
             {
                 Logger.Error($"Lang.Msgs.NotSupportedPlcCommunicator {selectedPlc}");
                 return false;
@@ -384,7 +384,7 @@ namespace loadingBox2dGui.presenters
 
         private bool CreateLightCommInstance(string selectedLight)
         {
-            if (selectedLight == null || !_config.LightConfig.TryGetValue(selectedLight, out var lightConf))
+            if (selectedLight == null || !_config.LightConfigs.TryGetValue(selectedLight, out var lightConf))
             {
                 Logger.Error($"Lang.Msgs.NotSupportedLightCommunicator {selectedLight}");
                 return false;
