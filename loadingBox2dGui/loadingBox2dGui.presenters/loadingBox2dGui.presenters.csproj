@@ -41,6 +41,7 @@
       <HintPath>..\packages\NModbus4.2.1.0\lib\net40\NModbus4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -55,9 +56,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CargoBox2DSettingManagerPresenter.cs" />
+    <Compile Include="SettingManagerPresenters\AddCamera2DBundleConfigPresenter.cs" />
+    <Compile Include="SettingManagerPresenters\Camera2DBundleSettingManagerPresenter.cs" />
+    <Compile Include="SettingManagerPresenters\CargoBox2DSettingManagerPresenter.cs" />
     <Compile Include="MainPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingManagerPresenters\CopyCamera2DBundleConfigPresenter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\loadingBox2dGui.models\loadingBox2dGui.models.csproj">

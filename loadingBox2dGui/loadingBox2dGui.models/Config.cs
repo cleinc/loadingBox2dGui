@@ -15,7 +15,7 @@ namespace loadingBox2dGui.models
     {
         public Dictionary<string, Dictionary<PlcAttribute, string>> PlcConfigs { get; set; }
         public Dictionary<string, Dictionary<LightAttribute, string>> LightConfigs { get; set;}
-        public Dictionary<string, Dictionary<Camera2DAttribute, string>> CameraConfigs { get; set; }
+        public Dictionary<string, Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>>> CameraConfigs { get; set; }
         public Dictionary<int, CargoBox2DConfig> ConfigDict { get; set; } = new Dictionary<int, CargoBox2DConfig>();
         public string Plc { get; set; }
         public string Light { get; set; }
@@ -50,15 +50,38 @@ namespace loadingBox2dGui.models
             {
                 ["Tk1MelsecCommunicator"] = DefaultSettingLoader.Plcs[PlcModel.MELSEC]()
             };
-            CameraConfigs = new Dictionary<string, Dictionary<Camera2DAttribute, string>> ()
+            CameraConfigs = new Dictionary<string, Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>>> ()
             {
-                ["Camera1"] = DefaultSettingLoader.Cameras[Camera2DMaker.BASLER](),
-                ["Camera2"] = DefaultSettingLoader.Cameras[Camera2DMaker.BASLER]()
+                ["Unknown"] = DefaultSettingLoader.CameraBundle[Camera2DMaker.BASLER]()
             };
             LightConfigs = new Dictionary<string, Dictionary<LightAttribute, string>>()
             {
                 ["ModbusLightCommunicator"] = DefaultSettingLoader.Lights[LightMaker.MODBUS]()
             };
+        }
+        public bool Delete(int k)
+        {
+            return ConfigDict.Remove(k);
+        }
+
+        public List<int> GetCarTypeList()
+        {
+            return ConfigDict.Keys.ToList();
+        }
+
+        public List<string> GetCarTypeStringList()
+        {
+            return ConfigDict.Keys.Select(k => k.ToString()).ToList();
+        }
+
+        public BindingList<CarTypeAndName> GetCarTypeAndNameList()
+        {
+            return new BindingList<CarTypeAndName>(ConfigDict.Select(x => new CarTypeAndName(x.Key, x.Value.CarName)).ToList());
+        }
+
+        public List<string> GetCamSetList()
+        {
+            return CameraConfigs.Keys.ToList();
         }
 
         public CargoBox2DConfig this[int key]
@@ -107,128 +130,7 @@ namespace loadingBox2dGui.models
         }
     }
 
-    [Serializable]
-    public class CargoBox2DConfig : ICustomTypeDescriptor
-    {
-        [NonSerialized]
-        private PropertyDescriptorCollection _pdColl;
-        [NonSerialized]
-        private Dictionary<string, int> _registeredCameraDevices = new Dictionary<string, int>();
-        [LocalizedCategory("CategoryGeneral", 1, 3)]
-        [LocalizedDescription("DescCarName")]
-        public string CarName { get; set; } = "unknown";
-
-        #region LH Inspection Settings
-        [LocalizedCategory("CategoryInspectLH", 2, 3)]
-        [LocalizedDescription("DescSelectedDevice")]
-        public string LHCamera { get; set; }
-        [LocalizedCategory("CategoryInspectLH", 2, 3)]
-        [LocalizedDescription("DescModelPath")]
-        public string LHModelPath { get; set; }
-        [LocalizedCategory("CategoryInspectLH", 2, 3)]
-        [LocalizedDescription("DescExposureTime")]
-        public int LHExposureTime { get; set; }
-        [LocalizedCategory("CategoryInspectLH", 2, 3)]
-        [LocalizedDescription("DescGain")]
-        public int LHGain { get; set; }
-        [LocalizedCategory("CategoryInspectLH", 2, 3)]
-        [LocalizedDescription("DescMaxFPS")]
-        public int LHMaxFPS { get; set; }
-        [LocalizedCategory("CategoryInspectLH", 2, 3)]
-        [LocalizedDescription("DescCameraMaker")]
-        public Camera2DMaker LHCameraMaker { get; set; } = Camera2DMaker.BASLER;
-        [LocalizedCategory("CategoryInspectLH", 2, 3)]
-        public int LHCameraRoiX { get; set; }
-        [LocalizedCategory("CategoryInspectLH", 2, 3)]
-        public int LHCameraRoiY { get; set; }
-        [LocalizedCategory("CategoryInspectLH", 2, 3)]
-        public int LHCameraRoiWidth { get; set; }
-        [LocalizedCategory("CategoryInspectLH", 2, 3)]
-        public int LHCameraRoiHeight { get; set; }
-        #endregion
-
-        #region RH Inspection Settings
-        [LocalizedCategory("CategoryInspectRH", 3, 3)]
-        public string RHCamera { get; set; }
-        [LocalizedCategory("CategoryInspectRH", 3, 3)]
-        public string RHModelPath { get; set; }
-        [LocalizedCategory("CategoryInspectRH", 3, 3)]
-        public int RHExposureTime { get; set; }
-        [LocalizedCategory("CategoryInspectRH", 3, 3)]
-        public int RHGain { get; set; }
-        [LocalizedCategory("CategoryInspectRH", 3, 3)]
-        public int RHMaxFPS { get; set; }
-        [LocalizedCategory("CategoryInspectRH", 3, 3)]
-        public Camera2DMaker RHCameraMaker { get; set; } = Camera2DMaker.BASLER;
-        [LocalizedCategory("CategoryInspectRH", 3, 3)]
-        public int RHCameraRoiX { get; set; } = 0;
-        [LocalizedCategory("CategoryInspectRH", 3, 3)]
-        public int RHCameraRoiY { get; set; } = 0;
-        [LocalizedCategory("CategoryInspectRH", 3, 3)]
-        public int RHCameraRoiWidth { get; set; } = 2560;
-        [LocalizedCategory("CategoryInspectRH", 3, 3)]
-        public int RHCameraRoiHeight { get; set; } = 1920;
-        #endregion
-
-
-        public CargoBox2DConfig()
-        {
-            UpdatePropertyDescriptors();
-        }
-
-        public void UpdatePropertyDescriptors()
-        {
-            PropertyDescriptorCollection pdc = TypeDescriptor.GetProperties(this);
-            PropertyDescriptor[] propertyDescriptorArray = typeof(CargoBox2DConfig).GetProperties()
-                .Select(m => new CargoBox2DConfigPropertyDescriptor(pdc[m.Name], m.GetCustomAttributes(false).Cast<Attribute>().ToArray()))
-                .ToArray();
-            _pdColl = new PropertyDescriptorCollection(propertyDescriptorArray);
-        }
-
-        public AttributeCollection GetAttributes() => TypeDescriptor.GetAttributes(this, true);
-        public string GetClassName() => TypeDescriptor.GetClassName(this, true);
-        public string GetComponentName() => TypeDescriptor.GetComponentName(this, true);
-        public TypeConverter GetConverter() => TypeDescriptor.GetConverter(this, true);
-        public EventDescriptor GetDefaultEvent() => TypeDescriptor.GetDefaultEvent(this, true);
-        public PropertyDescriptor GetDefaultProperty() => TypeDescriptor.GetDefaultProperty(this, true);
-        public object GetEditor(Type editorBaseType) => TypeDescriptor.GetEditor(this, editorBaseType, true);
-        public EventDescriptorCollection GetEvents() => TypeDescriptor.GetEvents(this, true);
-        public EventDescriptorCollection GetEvents(Attribute[] attributes) => TypeDescriptor.GetEvents(this, attributes, true);
-        public PropertyDescriptorCollection GetProperties() => _pdColl;
-        public PropertyDescriptorCollection GetProperties(Attribute[] attributes) => _pdColl;
-        public object GetPropertyOwner(PropertyDescriptor pd) => this;
-    }
-
-    public class CargoBox2DConfigPropertyDescriptor : PropertyDescriptor
-    {
-        private PropertyDescriptor _originalPd;
-
-        public CargoBox2DConfigPropertyDescriptor(PropertyDescriptor pd, Attribute[] attrs)
-            : base(pd, attrs)
-        {
-            _originalPd = pd;
-        }
-
-        public override Type ComponentType
-        {
-            get => _originalPd.ComponentType;
-        }
-        public override bool IsReadOnly
-        {
-            get => _originalPd.IsReadOnly;
-        }
-
-        public override Type PropertyType
-        {
-            get => _originalPd.PropertyType;
-        }
-
-        public override bool CanResetValue(object component) => _originalPd.CanResetValue(component);
-        public override object GetValue(object component) => _originalPd.GetValue(component);
-        public override void ResetValue(object component) => _originalPd.ResetValue(component);
-        public override void SetValue(object component, object value) => _originalPd.SetValue(component, value);
-        public override bool ShouldSerializeValue(object component) => _originalPd.ShouldSerializeValue(component);
-    }
+    
 
     public static class DefaultSettingLoader
     {
@@ -265,6 +167,30 @@ namespace loadingBox2dGui.models
             [Camera2DMaker.BASLER] = GetBaslerSettings,
         };
 
+        public static Dictionary<Camera2DMaker, Func<Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>>>> CameraBundle = new Dictionary<Camera2DMaker, Func<Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>>>>()
+        {
+            [Camera2DMaker.BASLER] = GetBaslerCamSettings,
+            [Camera2DMaker.IDS] = GetIDSCamSettings
+        };
+
+        private static Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>> GetBaslerCamSettings()
+        {
+            return new Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>>()
+            {
+                [InspectionLocation.LH] = GetBaslerSettings(),
+                [InspectionLocation.RH] = GetBaslerSettings(),
+            };
+        }
+
+        private static Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>> GetIDSCamSettings()
+        {
+            return new Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>>()
+            {
+                [InspectionLocation.LH] = GetIDSSettings(),
+                [InspectionLocation.RH] = GetIDSSettings(),
+            };
+        }
+
         private static Dictionary<Camera2DAttribute, string> GetBaslerSettings()
         {
             return new Dictionary<Camera2DAttribute, string>()
@@ -278,6 +204,32 @@ namespace loadingBox2dGui.models
                 [Camera2DAttribute.MaxFPS] = "30",
                 [Camera2DAttribute.FPS] = "30"
             };
+        }
+
+        private static Dictionary<Camera2DAttribute, string> GetIDSSettings()
+        {
+            return new Dictionary<Camera2DAttribute, string>()
+            { 
+                [Camera2DAttribute.IPAdr] = "192.168.100.3",
+                [Camera2DAttribute.CameraResolutionRoiTopLeftX] = "0",
+                [Camera2DAttribute.CameraResolutionRoiTopLeftY] = "0",
+                [Camera2DAttribute.CameraResolutionRoiWidth] = "2560",
+                [Camera2DAttribute.CameraResolutionRoiHeight] = "1920",
+                [Camera2DAttribute.Exposure] = "5000",
+                [Camera2DAttribute.Gain] = "1",
+                [Camera2DAttribute.MaxFPS] = "15",
+            };
+        }
+    }
+    public class CarTypeAndName
+    {
+        public int CarType { get; private set; }
+        public string CarName { get; private set; }
+
+        public CarTypeAndName(int carType, string carName)
+        {
+            CarType = carType;
+            CarName = carName;
         }
     }
 }

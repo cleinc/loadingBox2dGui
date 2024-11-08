@@ -58,4 +58,10 @@ namespace loadingBox2dGui.models
         GAP_4 = 0x000A_0000,
         VISION_ERROR = 0x4000_4001,
     }
+
+    public enum InspectionLocation
+    {
+        LH,
+        RH
+    }
 }

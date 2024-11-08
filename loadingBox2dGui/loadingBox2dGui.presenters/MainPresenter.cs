@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using loadingBox2dGui.views;
-using loadingBox2dGui.models;
-using CoPick.Logging;
+﻿using CoPick.Logging;
 using CoPick.Plc;
-using System.Threading.Tasks;
-using loadingBox2dGui.models;
 using CoPick.Setting;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.Drawing;
-using System.Threading;
+using loadingBox2dGui.models;
+using loadingBox2dGui.views;
+using System;
 using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace loadingBox2dGui.presenters
 {

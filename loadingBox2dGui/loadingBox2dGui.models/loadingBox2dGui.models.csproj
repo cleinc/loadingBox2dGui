@@ -45,6 +45,7 @@
       <HintPath>..\packages\NModbus4.2.1.0\lib\net40\NModbus4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
@@ -57,7 +58,9 @@
   <ItemGroup>
     <Compile Include="CameraCommunicatorForLoadingBox.cs" />
     <Compile Include="CameraCommunicationManager.cs" />
+    <Compile Include="CargoBox2DConfig.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="CustomAttributes.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ICameraCommunicator.cs" />
     <Compile Include="ILightCommunicator.cs" />

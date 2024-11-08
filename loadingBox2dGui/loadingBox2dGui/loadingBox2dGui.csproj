@@ -73,6 +73,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SettingManagerForm\AddCamera2DForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingManagerForm\AddCamera2DForm.Designer.cs">
+      <DependentUpon>AddCamera2DForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingManagerForm\AddCarTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingManagerForm\AddCarTypeForm.Designer.cs">
+      <DependentUpon>AddCarTypeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SettingManagerForm\CargoBox2DSettingManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +105,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingManagerForm\PlcSettingManagerView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingManagerForm\PlcSettingManagerView.Designer.cs">
+      <DependentUpon>PlcSettingManagerView.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="SettingManagerForm\CargoBox2DSettingManagerForm.resx">
       <DependentUpon>CargoBox2DSettingManagerForm.cs</DependentUpon>
     </EmbeddedResource>
