@@ -13,7 +13,7 @@ namespace loadingBox2dGui.models
     {
         bool IsConnected { get; }
 
-        bool Connect(Dictionary<InspectionLocation, string> locationToConfigDict);
+        bool Connect(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
         bool Disconnect();
         Task StartCamera(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
         bool StopCamera();

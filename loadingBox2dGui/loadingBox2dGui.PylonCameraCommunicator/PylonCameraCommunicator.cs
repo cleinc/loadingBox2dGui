@@ -38,7 +38,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             _converter = new PixelDataConverter();
         }
 
-        public override bool Connect(Dictionary<InspectionLocation, string> locationToConfigDict)
+        public override bool Connect(ConcurrentDictionary<InspectionLocation, CameraParameter> locationToConfigDict)
         {
             if (locationToConfigDict == null || locationToConfigDict.Count == 0)
             {
@@ -56,7 +56,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
             locationToConfigDict.Keys.ToList().ForEach( key => 
             {
-                string camIp = locationToConfigDict[key];
+                string camIp = locationToConfigDict[key].IpAddress;
                 _cameraStateOnLocation[key] = CameraState.Undefined;
 
                 ICameraInfo cameraInfo = CameraFinder.Enumerate().Find(info => info[CameraInfoKey.DeviceIpAddress] == camIp);

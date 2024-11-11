@@ -13,7 +13,7 @@ namespace loadingBox2dGui.models
     {
         private bool disposedValue;
         public bool IsConnected { get; }
-        public abstract bool Connect(Dictionary<InspectionLocation, string> locationToConfigDict);
+        public abstract bool Connect(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
         public abstract bool Disconnect();
         public abstract Task StartCamera(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
         public abstract bool StopCamera();

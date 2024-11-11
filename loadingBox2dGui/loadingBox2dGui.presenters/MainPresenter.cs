@@ -19,12 +19,14 @@ namespace loadingBox2dGui.presenters
         private static readonly LogHelper Logger = LogHelper.Logger;
         
         private readonly IMainForm _view;
-        private Config _config;
+        private volatile Config _config;
         private OperationMode _mode;
         private PlcCommunicatorForLoadingBox _plcComm;
         private LightCommunicatorForLoadingBox _lightComm;
         private CameraCommunicatorForLoadingBox _camComm;
         private bool _isPlcEventHandlersRegistered = false;
+        private bool _isRunningCamera = false;
+        private bool _isConnectingCamera = false; 
         private CargoBox2DSettingManagerPresenter _settingManagerPresenter;
         private object _camSettingLock = new object();
         private Dictionary<string, Dictionary<InspectionLocation, bool>> _modifiedCameraBundleDict = new Dictionary<string, Dictionary<InspectionLocation, bool>>();
@@ -67,7 +69,6 @@ namespace loadingBox2dGui.presenters
 
             Logger.FileLoglevelFrom = _config.MinimumFileLogLevel;
             Logger.GuiLoglevelFrom = _config.MinimumUiLogLevel;
-            var camBundleName = _config[-1].Camera;
             if (_isCameraConfigChanged)
             {
                 var camBundleToAdd = _config.CameraConfigs.Keys.Except(_camParamDict.Keys).ToArray();
@@ -150,24 +151,22 @@ namespace loadingBox2dGui.presenters
 
         private async void View_ScanPointRequsted(object sender, EventArgs e)
         {
+            _view.SetStartCameraButton = false;
             Logger.Debug("Call [Camera Start]");
-
-            await _camComm.StartCamera(_camParamDict[_config[-1].Camera]);
-            var currentCamBundle = _config.CameraConfigs[_config[-1].Camera];
+            await StartCameraAsync();
             _view.LhImage = _camComm.GetImage(InspectionLocation.LH);
             _view.RhImage = _camComm.GetImage(InspectionLocation.RH);
+            _view.SetStartCameraButton = true;
             Logger.Debug("Complete [Camera Start]");
         }
 
-        private void View_ConnectCameraRequested(object sender, EventArgs e)
+        private async void View_ConnectCameraRequested(object sender, EventArgs e)
         {
-            if (!_camComm.IsConnected)
-            {
-                Logger.Debug("Call [Camera Connect]");
-                var currentCamBundle = _config[-1].RegisteredCameraSerials;
-                _camComm?.Connect(currentCamBundle);
-                Logger.Debug("Complete [Camera Connect]");
-            }
+            _view.SetConnectCameraButton = false;
+            Logger.Debug("Call [Camera Connect]");
+            await ConnectCameraAsync();
+            Logger.Debug("Complete [Camera Connect]");
+            _view.SetConnectCameraButton = true;
         }
 
         private async void View_LightStateChangedRequested(object sender, ChangeLightStateEventArgs e)
@@ -231,15 +230,22 @@ namespace loadingBox2dGui.presenters
             Logger.Info("Plc Update Received");
             try
             {
+                if (!_config.GetCarTypeList().Contains(e.CarType))
+                {
+                    Logger.Warning($"Lang.Msgs.InvalidCarType: ({_plcComm.CarType})");
+                    return;
+                }
+
                 Logger.Info($"cartype : {e.CarType} // seqnum : {e.CarSeq} // bodynum : {e.BodyNumber}");
+                ChangeCarType(e.CarType);
                 UpdatePlcInspectionInfo(e.CarType, e.CarSeq, e.BodyNumber);
                 Logger.Debug("Call [Camera Connect]");
                 _lightComm.WriteLightState(true);
 
                 if (!_camComm.IsConnected)
                 {
-                    var currentCamBundle = _config[-1].RegisteredCameraSerials;
-                    _camComm.Connect(currentCamBundle);
+                    var currentCam = _config[-1].Camera;
+                    _camComm.Connect(_camParamDict[currentCam]);
                 }
                 Logger.Debug("Complete [Camera Connect]");
             }
@@ -285,6 +291,54 @@ namespace loadingBox2dGui.presenters
                 Logger.Error(ex.ToString());
             }
             Logger.Debug("Complete [Camera Start]");
+        }
+
+        private Task<bool> StartCameraAsync()
+        {
+            if (_isRunningCamera)
+            {
+                return Task.FromResult(false);
+            }
+
+            if (_camComm == null)
+            {
+                return Task.FromResult(false);
+            }
+            _isRunningCamera = true;
+
+            return Task.Run(() =>
+            {
+                lock (_camSettingLock)
+                {
+                    _camComm.StartCamera(_camParamDict[_config[-1].Camera]).Wait();
+                }
+                _isRunningCamera = false;
+                return true;
+            });
+        }
+
+        private Task<bool> ConnectCameraAsync()
+        {
+            if (_isConnectingCamera)
+            {
+                return Task.FromResult(false);
+            }
+            if (_camComm == null || _config[-1].RegisteredCameraSerials.Count == 0)
+            {
+                return Task.FromResult(false);
+            }
+            _isConnectingCamera = true;
+
+            return Task.Run(() =>
+            {
+                lock (_camSettingLock)
+                {
+                    var currentCam = _config[-1].Camera;
+                    _camComm.Connect(_camParamDict[currentCam]);
+                }
+                _isConnectingCamera = false;
+                return true;
+            });
         }
 
         private async void PlcComm_VisionEnd(object sender, EventArgs e)
@@ -380,10 +434,6 @@ namespace loadingBox2dGui.presenters
         {
             return true;
         }
-        private bool StartCamera()
-        {
-            return true;
-        }
         private bool StartInspection()
         {
             return true;
@@ -418,6 +468,14 @@ namespace loadingBox2dGui.presenters
             _view.CarType = carType;
             _view.CarSeq = seqNum;
             _view.BodyNum = bodyNum;
+        }
+
+        private bool ChangeCarType(int carType)
+        {
+            _config.RecentlyUsedCar = carType;
+            SaveConfig();
+            Logger.Info($"Lang.Msgs.CarTypeChanged: {carType}");
+            return true;
         }
 
         private bool CreatePlcCommInstance(string selectedPlc)

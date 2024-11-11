@@ -197,14 +197,14 @@ namespace loadingBox2dGui.models
         {
             return new Dictionary<Camera2DAttribute, string>()
             {
-                [Camera2DAttribute.IPAdr] = "000.000.000.000",
-                [Camera2DAttribute.CameraResolutionRoiTopLeftX] = "0",
-                [Camera2DAttribute.CameraResolutionRoiTopLeftY] = "0",
-                [Camera2DAttribute.CameraResolutionRoiWidth] = "658",
-                [Camera2DAttribute.CameraResolutionRoiHeight] = "492",
-                [Camera2DAttribute.Exposure] = "3000",
+                [Camera2DAttribute.IPAdr] = "192.168.10.201",
+                [Camera2DAttribute.CameraResolutionRoiTopLeftX] = "8",
+                [Camera2DAttribute.CameraResolutionRoiTopLeftY] = "4",
+                [Camera2DAttribute.CameraResolutionRoiWidth] = "2048",
+                [Camera2DAttribute.CameraResolutionRoiHeight] = "2448",
+                [Camera2DAttribute.Exposure] = "20000",
                 [Camera2DAttribute.MaxFPS] = "30",
-                [Camera2DAttribute.Gain] = "30",
+                [Camera2DAttribute.Gain] = "1",
                 [Camera2DAttribute.FPS] = "30"
             };
         }
@@ -218,7 +218,7 @@ namespace loadingBox2dGui.models
                 [Camera2DAttribute.CameraResolutionRoiTopLeftY] = "0",
                 [Camera2DAttribute.CameraResolutionRoiWidth] = "2560",
                 [Camera2DAttribute.CameraResolutionRoiHeight] = "1920",
-                [Camera2DAttribute.Exposure] = "5000",
+                [Camera2DAttribute.Exposure] = "20000",
                 [Camera2DAttribute.Gain] = "1",
                 [Camera2DAttribute.MaxFPS] = "15",
             };

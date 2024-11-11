@@ -80,14 +80,40 @@ namespace loadingBox2dGui
         {
             set
             {
-                if (value)
+                this.InvokeIfNeeded(() =>
                 {
-                    btnLightOff_.Text = "Light Off";
-                }
-                else
+                    if (value)
+                    {
+                        btnLightOff_.Text = "Light Off";
+                    }
+                    else
+                    {
+                        btnLightOff_.Text = "Light On";
+                    }
+                });
+
+            }
+        }
+
+        public bool SetConnectCameraButton
+        {
+            set
+            {
+                this.InvokeIfNeeded(() =>
                 {
-                    btnLightOff_.Text = "Light On";
-                }
+                    btnCameraConnect_.Enabled = value;
+                });
+            }
+        }
+
+        public bool SetStartCameraButton
+        {
+            set
+            {
+                this.InvokeIfNeeded(() =>
+                {
+                    btnStartCamera_.Enabled = value;
+                });
             }
         }
 
@@ -239,6 +265,9 @@ namespace loadingBox2dGui
             rbAuto_.Checked = mode == OperationMode.Auto;
             rbManual_.Checked = mode == OperationMode.Manual;
             rbSet_.Checked = mode == OperationMode.Set;
+
+            btnCameraConnect_.Enabled = mode != OperationMode.Auto;
+            btnStartCamera_.Enabled = mode != OperationMode.Auto; 
         }
         #endregion
 

@@ -23,6 +23,8 @@ namespace loadingBox2dGui.views
         Image RhImage { set; }
         bool IsPlcConnected { get; set; }
         bool SetLightState { set; }
+        bool SetStartCameraButton { set; }
+        bool SetConnectCameraButton { set; }
         #endregion
 
         #region Event Handlers
