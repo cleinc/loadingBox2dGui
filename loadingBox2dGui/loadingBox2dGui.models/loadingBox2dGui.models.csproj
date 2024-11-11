@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="CameraCommunicatorForLoadingBox.cs" />
     <Compile Include="CameraCommunicationManager.cs" />
+    <Compile Include="CameraParameter.cs" />
     <Compile Include="CargoBox2DConfig.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="CustomAttributes.cs" />

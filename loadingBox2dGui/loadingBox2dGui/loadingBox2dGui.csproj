@@ -85,17 +85,23 @@
     <Compile Include="SettingManagerForm\AddCarTypeForm.Designer.cs">
       <DependentUpon>AddCarTypeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingManagerForm\Camera2DSettingManagerView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingManagerForm\Camera2DSettingManagerView.Designer.cs">
+      <DependentUpon>Camera2DSettingManagerView.cs</DependentUpon>
+    </Compile>
     <Compile Include="SettingManagerForm\CargoBox2DSettingManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SettingManagerForm\CargoBox2DSettingManagerForm.Designer.cs">
       <DependentUpon>CargoBox2DSettingManagerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SettingManagerForm\LightSettingManagerForm.cs">
+    <Compile Include="SettingManagerForm\LightSettingManagerView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingManagerForm\LightSettingManagerForm.Designer.cs">
-      <DependentUpon>LightSettingManagerForm.cs</DependentUpon>
+    <Compile Include="SettingManagerForm\LightSettingManagerView.Designer.cs">
+      <DependentUpon>LightSettingManagerView.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

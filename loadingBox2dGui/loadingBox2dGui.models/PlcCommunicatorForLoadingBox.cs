@@ -74,6 +74,7 @@ namespace loadingBox2dGui.models
             {
                 if (IsConnecting || IsConnected)
                 {
+                    Logger.Info($"Plc is Connecting");
                     return true;
                 }
                 IsConnecting = true;

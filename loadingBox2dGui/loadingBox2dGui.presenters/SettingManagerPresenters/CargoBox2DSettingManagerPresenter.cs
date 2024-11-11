@@ -281,9 +281,18 @@ namespace loadingBox2dGui.presenters
             var deviceValidatorAttr = (DeviceSerialAttribute)e.PropertyDescriptor.Attributes[typeof(DeviceSerialAttribute)]; 
             if (deviceValidatorAttr != null)
             {
-                var cameraName = _config[-1].Camera;
+                var cameraName = _config[-1].Camera ?? "";
                 var inspectionLocation = deviceValidatorAttr.InspectionLocation;
-                _config.CameraConfigs[cameraName][inspectionLocation][Camera2DAttribute.IPAdr] = e.NewValue.ToString();
+                if (_config.CameraConfigs.ContainsKey(cameraName))
+                {
+                    _config.CameraConfigs[cameraName][inspectionLocation][Camera2DAttribute.IPAdr] = e.NewValue.ToString();
+                }
+                else
+                {
+                    _config[-1].RegisteredCameraSerials?.Clear();
+                    _view.RefreshTaskGrid();
+                    return;
+                }
             }
             
             if (e.OldValue != e.NewValue)
@@ -375,6 +384,7 @@ namespace loadingBox2dGui.presenters
                 foreach (var carType in _config.GetCarTypeList())
                 {
                     _config[carType].Camera = null;
+                    _config[carType].RegisterCameras(null);
                     ChangeTracker.NotifyChange($"Task/{carType}/Camera", e.RemovedCamera2DName, "null");
                 }
             }
@@ -386,6 +396,7 @@ namespace loadingBox2dGui.presenters
                     if (_config[carType].Camera == e.RemovedCamera2DName)
                     {
                         _config[carType].Camera = firstCam;
+                        _config[carType].RegisterCameras(_config.CameraConfigs[firstCam]);
                         ChangeTracker.NotifyChange($"Task/{carType}/Camera", e.RemovedCamera2DName, firstCam);
                     }
                 }

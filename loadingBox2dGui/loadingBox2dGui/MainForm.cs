@@ -7,14 +7,11 @@ using loadingBox2dGui.views;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace loadingBox2dGui
@@ -43,10 +40,6 @@ namespace loadingBox2dGui
         }
 
         #region Properties
-        public OperationMode ProgramMode
-        {
-            get => _programMode;
-        }
         public string PlcInfo
         {
             set => tbPlc.BeginInvokeIfNeeded(() => tbPlc.Text = value);
@@ -83,6 +76,20 @@ namespace loadingBox2dGui
         }
 
         public bool IsPlcConnected { get; set; }
+        public bool SetLightState
+        {
+            set
+            {
+                if (value)
+                {
+                    btnLightOff_.Text = "Light Off";
+                }
+                else
+                {
+                    btnLightOff_.Text = "Light On";
+                }
+            }
+        }
 
         #endregion
 
@@ -154,6 +161,20 @@ namespace loadingBox2dGui
             });
         }
 
+        public void SetCarTypeList(BindingList<CarTypeAndName> carTypeList, int selectedCarType = -1)
+        {
+            cmbCarTypeName.InvokeIfNeeded(() =>
+            {
+                cmbCarTypeName.DisplayMember = "CarName";
+                cmbCarTypeName.ValueMember = "CarType";
+                cmbCarTypeName.DataSource = carTypeList;
+                if (selectedCarType != -1 && carTypeList.Any(c => c.CarType == selectedCarType))
+                {
+                    cmbCarTypeName.SelectedValue = selectedCarType;
+                }
+            });
+        }
+
         private void gbPLC_Paint(object sender, PaintEventArgs e)
         {
             _plcStatusPainter.DrawDefaultSketch(System.Threading.Thread.CurrentThread.CurrentUICulture);
@@ -208,6 +229,17 @@ namespace loadingBox2dGui
             _plcSignalLabelDict[PlcSignalForLoadingBox.SHIFT_RY | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable1.LblValues[4];
             _plcSignalLabelDict[PlcSignalForLoadingBox.SHIFT_RZ | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable1.LblValues[5];
         }
+
+        public void SetUiToMode(OperationMode mode)
+        {
+            btnCameraConnect_.Enabled = mode != OperationMode.Auto;
+            btnStartCamera_.Enabled = mode != OperationMode.Auto;
+            btnLightOff_.Enabled = mode != OperationMode.Auto;
+
+            rbAuto_.Checked = mode == OperationMode.Auto;
+            rbManual_.Checked = mode == OperationMode.Manual;
+            rbSet_.Checked = mode == OperationMode.Set;
+        }
         #endregion
 
         #region EventHandlers
@@ -224,14 +256,14 @@ namespace loadingBox2dGui
         public event EventHandler<FormClosingEventArgs> ProgramCloseRequested;
         public event EventHandler<ChangeLightStateEventArgs> LightStateChangeRequested;
 
-        private void btnCameraConnect__Click(object sender, System.EventArgs e)
+        private void btnCameraConnect__Click(object sender, EventArgs e)
         {
             ConnectCameraRequested?.Invoke(sender, EventArgs.Empty);
         }
 
         private void btnSettingManager__Click(object sender, System.EventArgs e)
         {
-           
+           ShowSettingManagerRequested?.Invoke(sender, EventArgs.Empty);
         }
 
         private void btnNgListClear__Click(object sender, System.EventArgs e)
@@ -315,42 +347,6 @@ namespace loadingBox2dGui
             ProgramCloseRequested?.Invoke(this, e);
         }
 
-        private void rbAuto__CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton rb = sender as RadioButton;
-            if (rb.Checked && rb.Name == "rbAuto_")
-            {
-                ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Auto, ModifierKeys == Keys.Shift));
-                btnStartCamera_.Enabled = false;
-                btnCameraConnect_.Enabled = false;
-                btnLightOff_.Enabled = false;
-            }
-        }
-
-        private void rbManual__CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton rb = sender as RadioButton;
-            if (rb.Checked && rb.Name == "rbManual_")
-            {
-                ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Manual, ModifierKeys == Keys.Shift));
-                btnStartCamera_.Enabled = true;
-                btnCameraConnect_.Enabled = true;
-                btnLightOff_.Enabled = true;
-            }
-        }
-
-        private void rbSet__CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton rb = sender as RadioButton;
-            if (rb.Checked && rb.Name == "rbSet_")
-            {
-                ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Set, ModifierKeys == Keys.Shift));
-                btnStartCamera_.Enabled = true;
-                btnCameraConnect_.Enabled = true;
-                btnLightOff_.Enabled = true;
-            }
-        }
-
         private void btnLightOff__Click(object sender, EventArgs e)
         {
             ChangeLightStateEventArgs args;
@@ -370,6 +366,21 @@ namespace loadingBox2dGui
         private void MainForm_Load(object sender, EventArgs e)
         {
             MainFormLoadRequested?.Invoke(sender, EventArgs.Empty);
+        }
+
+        private void rbSet__Click(object sender, EventArgs e)
+        {
+            ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Set, true));
+        }
+
+        private void rbManual__Click(object sender, EventArgs e)
+        {
+            ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Manual, true));
+        }
+
+        private void rbAuto__Click(object sender, EventArgs e)
+        {
+            ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Auto, true));
         }
     }
 }

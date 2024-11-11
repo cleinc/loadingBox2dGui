@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CoPick.Setting;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -11,11 +13,24 @@ namespace loadingBox2dGui.models
     {
         bool IsConnected { get; }
 
-        bool Connect();
-        bool DisConnect();
-        Task StartCamera();
+        bool Connect(Dictionary<InspectionLocation, string> locationToConfigDict);
+        bool Disconnect();
+        Task StartCamera(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
         bool StopCamera();
         bool SaveImage(Bitmap bmp);
         Bitmap GetImage(string cameraName);
+        Bitmap GetImage(InspectionLocation inspectionLocation);
+        bool SetCameraSettings(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
+    }
+
+    
+
+    public enum CameraState
+    {
+        Undefined,
+        Disconnected,
+        Reconnecting, 
+        Connected, 
+        Grabbing,
     }
 }

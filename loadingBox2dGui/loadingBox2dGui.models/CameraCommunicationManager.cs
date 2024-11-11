@@ -71,7 +71,7 @@ namespace loadingBox2dGui.models
         {
             try
             {
-                return (ICameraCommunicator)Activator.CreateInstance(typeOfCameraCommunicator, cameraConfigs);
+                return (ICameraCommunicator)Activator.CreateInstance(typeOfCameraCommunicator);
             }
             catch (Exception ex)
             {

@@ -15,7 +15,6 @@ namespace loadingBox2dGui.views
     public interface IMainForm
     {
         #region Properties
-        OperationMode ProgramMode { get; }
         string PlcInfo { set; }
         int CarType { get; set; }
         string BodyNum { get; set; }
@@ -23,6 +22,7 @@ namespace loadingBox2dGui.views
         Image LhImage { set; }
         Image RhImage { set; }
         bool IsPlcConnected { get; set; }
+        bool SetLightState { set; }
         #endregion
 
         #region Event Handlers
@@ -47,6 +47,8 @@ namespace loadingBox2dGui.views
         void BlinkWriteStatus(int time);
         void UpdatePlcSignalLabel(PlcSignalForLoadingBox signal, string value);
         void TogglePlcSignalLabel(PlcSignalForLoadingBox signal, bool isOn);
+        void SetUiToMode(OperationMode mode);
+        void SetCarTypeList(BindingList<CarTypeAndName> carTypeList, int selectedCarType = -1);
         #endregion
     }
 }

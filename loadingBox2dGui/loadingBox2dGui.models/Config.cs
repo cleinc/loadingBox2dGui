@@ -58,6 +58,8 @@ namespace loadingBox2dGui.models
             {
                 ["ModbusLightCommunicator"] = DefaultSettingLoader.Lights[LightMaker.MODBUS]()
             };
+            ConfigDict[0] = new CargoBox2DConfig();
+            ConfigDict[0].RegisterCameras(CameraConfigs["Unknown"]);
         }
         public bool Delete(int k)
         {
@@ -162,7 +164,7 @@ namespace loadingBox2dGui.models
             };
         }
 
-        public static Dictionary<Camera2DMaker, Func<Dictionary<Camera2DAttribute, string>>> Cameras = new Dictionary<Camera2DMaker, Func<Dictionary<Camera2DAttribute, string>>>()
+        public static Dictionary<Camera2DMaker, Func<Dictionary<Camera2DAttribute, string>>> Camera = new Dictionary<Camera2DMaker, Func<Dictionary<Camera2DAttribute, string>>>()
         {
             [Camera2DMaker.BASLER] = GetBaslerSettings,
         };
@@ -202,6 +204,7 @@ namespace loadingBox2dGui.models
                 [Camera2DAttribute.CameraResolutionRoiHeight] = "492",
                 [Camera2DAttribute.Exposure] = "3000",
                 [Camera2DAttribute.MaxFPS] = "30",
+                [Camera2DAttribute.Gain] = "30",
                 [Camera2DAttribute.FPS] = "30"
             };
         }

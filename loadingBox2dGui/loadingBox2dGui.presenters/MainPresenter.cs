@@ -4,6 +4,8 @@ using CoPick.Setting;
 using loadingBox2dGui.models;
 using loadingBox2dGui.views;
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -23,11 +25,17 @@ namespace loadingBox2dGui.presenters
         private LightCommunicatorForLoadingBox _lightComm;
         private CameraCommunicatorForLoadingBox _camComm;
         private bool _isPlcEventHandlersRegistered = false;
-        public MainPresenter(IMainForm view, Config config)
+        private CargoBox2DSettingManagerPresenter _settingManagerPresenter;
+        private object _camSettingLock = new object();
+        private Dictionary<string, Dictionary<InspectionLocation, bool>> _modifiedCameraBundleDict = new Dictionary<string, Dictionary<InspectionLocation, bool>>();
+        private ConcurrentDictionary<string, ConcurrentDictionary<InspectionLocation, CameraParameter>> _camParamDict = new ConcurrentDictionary<string, ConcurrentDictionary<InspectionLocation, CameraParameter>>();
+        public MainPresenter(IMainForm view, CargoBox2DSettingManagerPresenter cargoBox2DSettingManagerPresenter, Config config)
         {
+
             _view = view;
             _config = config;
             _mode = OperationMode.Auto;
+            _settingManagerPresenter = cargoBox2DSettingManagerPresenter;
 
             CreateLightCommInstance(_config.Light);
             CreateCameraCommInstance(_config.Camera);
@@ -41,6 +49,54 @@ namespace loadingBox2dGui.presenters
             _view.ProgramCloseRequested += View_ProgramCloseRequested;
             _view.LightStateChangeRequested += View_LightStateChangedRequested;
             _view.MainFormLoadRequested += View_MainFormLoadRequested;
+            _view.ShowSettingManagerRequested += View_ShowSettingManagerRequested;
+            _settingManagerPresenter.SettingChangeConfirmed += SettingManagerPresenter_SettingChangeConfirmed;
+        }
+
+        private void SettingManagerPresenter_SettingChangeConfirmed(object sender, EventArgs e)
+        {
+            bool isPlcChanged = (_config.Plc != _settingManagerPresenter.ConfigCandidate.Plc) ||
+                                _settingManagerPresenter.ChangeTracker.IsPlcSettingModified;
+            _settingManagerPresenter.ConfigCandidate.RecentlyUsedCar = _config.RecentlyUsedCar;
+            Config configCandidate = _settingManagerPresenter.ConfigCandidate;
+            bool _isCameraConfigChanged = _settingManagerPresenter.Cam2DSettingManager.Camera2DBundleModified()
+                                    || configCandidate.CameraConfigs.Count != _config.CameraConfigs.Count;
+            _modifiedCameraBundleDict = _settingManagerPresenter.Cam2DSettingManager.ModifiedCamera2DBundles;
+            _config = configCandidate;
+            SaveConfig();
+
+            Logger.FileLoglevelFrom = _config.MinimumFileLogLevel;
+            Logger.GuiLoglevelFrom = _config.MinimumUiLogLevel;
+            var camBundleName = _config[-1].Camera;
+            if (_isCameraConfigChanged)
+            {
+                var camBundleToAdd = _config.CameraConfigs.Keys.Except(_camParamDict.Keys).ToArray();
+                var camBundleToModify = _config.CameraConfigs.Keys.Intersect(_camParamDict.Keys).ToArray();
+                var camBundleToDelete = _camParamDict.Keys.Except(_config.CameraConfigs.Keys).ToArray();
+                UpdateCameraParametersFromConfig(camBundleToAdd, camBundleToModify, camBundleToDelete);
+            }
+
+            if (_mode == OperationMode.Auto)
+            {
+                Logger.Info($"Lang.Msgs.SettingChangeAutoMode\n{_settingManagerPresenter.ChangeTracker}");
+            }
+            else
+            {
+                Logger.LogPath = _config.LogPath;
+
+                if (isPlcChanged)
+                {
+                    CreatePlcCommInstance(_settingManagerPresenter.ConfigCandidate.Plc);
+                    LoadPlcSignalLabelTitle();
+                }
+                Logger.Info($"Lang.Msgs.SettingChange\n{_settingManagerPresenter.ChangeTracker}");
+            }
+            UpdateUiByConfig();
+        }
+
+        private void View_ShowSettingManagerRequested(object sender, EventArgs e)
+        {
+            _settingManagerPresenter?.Start(_mode);
         }
 
         private async void View_MainFormLoadRequested(object sender, EventArgs e)
@@ -49,30 +105,41 @@ namespace loadingBox2dGui.presenters
             {
                 await InitializePlc();
             }
+
+            await UpdateCameraParametersFromConfig(_config.CameraConfigs.Keys.ToArray(), null, null);
         }
 
         private async void View_ChangeModeRequested(object sender, ChangeModeEventArgs e)
         {
             Logger.Debug($"Mode Change Request : {_mode} -> {e.Mode}");
+            if (_mode == e.Mode)
+            {
+                return;
+            }
             _mode = e.Mode;
             try
             {
                 if (e.Mode == OperationMode.Auto)
                 {
-                    if (!_plcComm.IsConnected)
-                    {
-                        await InitializePlc();
-                    }
+                    await InitializePlc();
                 }
                 else
                 {
-                    await _plcComm.DisconnectAsync();
+                    if (_plcComm != null)
+                    {
+                        await _plcComm.DisconnectAsync();
+                    }
                 }
+
+                _lightComm?.WriteLightState(false);
+                _view.SetLightState = false;
             }
             catch (Exception ex)
             {
                 Logger.Error(ex.ToString());
             }
+
+            _view.SetUiToMode(_mode);
         }
 
         private void View_DisconnectLhCameraRequested(object sender, EventArgs e)
@@ -85,9 +152,10 @@ namespace loadingBox2dGui.presenters
         {
             Logger.Debug("Call [Camera Start]");
 
-           await _camComm.StartCamera();
-            _view.LhImage = _camComm.GetImage(_config.CameraConfigs.Keys.ToList()[0]);
-            _view.RhImage = _camComm.GetImage(_config.CameraConfigs.Keys.ToList()[1]);
+            await _camComm.StartCamera(_camParamDict[_config[-1].Camera]);
+            var currentCamBundle = _config.CameraConfigs[_config[-1].Camera];
+            _view.LhImage = _camComm.GetImage(InspectionLocation.LH);
+            _view.RhImage = _camComm.GetImage(InspectionLocation.RH);
             Logger.Debug("Complete [Camera Start]");
         }
 
@@ -96,19 +164,20 @@ namespace loadingBox2dGui.presenters
             if (!_camComm.IsConnected)
             {
                 Logger.Debug("Call [Camera Connect]");
-                _camComm.Connect();
+                var currentCamBundle = _config[-1].RegisteredCameraSerials;
+                _camComm?.Connect(currentCamBundle);
                 Logger.Debug("Complete [Camera Connect]");
             }
         }
 
-        private void View_LightStateChangedRequested(object sender, ChangeLightStateEventArgs e)
+        private async void View_LightStateChangedRequested(object sender, ChangeLightStateEventArgs e)
         {
-            _lightComm.WriteLightState(e.State);
+            var result = await Task.Run(() => _lightComm?.WriteLightState(e.State));
         }
 
         private void View_ProgramCloseRequested(object sender, FormClosingEventArgs e)
         {
-            _plcComm.Disconnect();
+            _plcComm?.Disconnect();
             _view.RefreshPlcStatus();
             if (MessageBox.Show("Are you sure to Exit Program?", "Warning", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -169,7 +238,8 @@ namespace loadingBox2dGui.presenters
 
                 if (!_camComm.IsConnected)
                 {
-                    _camComm.Connect();
+                    var currentCamBundle = _config[-1].RegisteredCameraSerials;
+                    _camComm.Connect(currentCamBundle);
                 }
                 Logger.Debug("Complete [Camera Connect]");
             }
@@ -185,7 +255,7 @@ namespace loadingBox2dGui.presenters
             Logger.Debug("Call [Camera Start]");
             try
             {
-                await _camComm.StartCamera();
+                await _camComm.StartCamera(_camParamDict[_config[-1].Camera]);
 
                 int ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, true, 100, 10);
                 if (ret != 0)
@@ -197,8 +267,8 @@ namespace loadingBox2dGui.presenters
                     Logger.Info("SEND P1 COMPLETE SUCCEED");
                 }
 
-                _view.LhImage = _camComm.GetImage(_config.CameraConfigs.Keys.ToList()[0]);
-                _view.RhImage = _camComm.GetImage(_config.CameraConfigs.Keys.ToList()[1]);
+                _view.LhImage = _camComm.GetImage(InspectionLocation.LH);
+                _view.RhImage = _camComm.GetImage(InspectionLocation.RH);
                 
                 ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, true, 100, 10);
                 if (ret != 0)
@@ -278,9 +348,8 @@ namespace loadingBox2dGui.presenters
         }
         private async Task<bool> InitializePlc()
         {
-            if (_plcComm != null)
+            if (_plcComm != null && !_plcComm.IsConnected)
             {
-
                 Console.WriteLine("Intialize PLC Thread Id : " + Thread.CurrentThread.ManagedThreadId);
                 await _plcComm.ConnectAsync();
                 if (_plcComm.IsConnected)
@@ -405,7 +474,7 @@ namespace loadingBox2dGui.presenters
             }
 
             _camComm?.Dispose();
-            _camComm = CameraCommunicationManager.CreateCameraCommunicator(selectedCamera, _config.CameraConfigs) as CameraCommunicatorForLoadingBox;
+            _camComm = CameraCommunicationManager.CreateCameraCommunicator(selectedCamera, null) as CameraCommunicatorForLoadingBox;
             if (_camComm == null)
             {
                 Logger.Error("Lang.Msgs.NotFindCameraCommunicator");
@@ -443,8 +512,6 @@ namespace loadingBox2dGui.presenters
             _isPlcEventHandlersRegistered = true;
         }
 
-        
-
         private void UpdatePlcSignalStatus()
         {
             foreach (var mInfo in _plcComm.PlcMonitorInfos)
@@ -479,6 +546,122 @@ namespace loadingBox2dGui.presenters
                                                mInfo.GetLabelTitle(bareSig.ToString(), kv.Key));
                 }
             }
+        }
+
+        private Task UpdateCameraParametersFromConfig(string[] cameraBundleToAdd, string[] cameraBundleToModify, string[] cameraBundleToDelete)
+        {
+            return Task.Run(() =>
+            {
+                lock (_camSettingLock)
+                {
+                    _modifiedCameraBundleDict = _settingManagerPresenter.Cam2DSettingManager.ModifiedCamera2DBundles;
+                    SetNewCameraParametersFromConfig(cameraBundleToAdd);
+                    UpdateCameraParametersFromConfig(cameraBundleToModify);
+                    DeleteCameraParametersFromConfig(cameraBundleToDelete);
+                }
+            });
+        }
+
+        private void SetNewCameraParametersFromConfig(IEnumerable<string> cameraBundleNames)
+        {
+            if (cameraBundleNames == null || cameraBundleNames.Count() == 0)
+            {
+                return;
+            }
+            foreach (var camBundleName in cameraBundleNames)
+            {
+                if (!_config.CameraConfigs.TryGetValue(camBundleName, out var camBundleConfig))
+                {
+                    throw new ArgumentOutOfRangeException(camBundleName);
+                }
+                if (!_camParamDict.ContainsKey(camBundleName))
+                {
+                    _camParamDict[camBundleName] = new ConcurrentDictionary<InspectionLocation, CameraParameter>();
+        
+                    foreach (var kvp in camBundleConfig)
+                    {
+                        _camParamDict[camBundleName][kvp.Key] = new CameraParameter(kvp.Value);
+                    }
+                }
+
+                foreach (var kvp in _config.ConfigDict)
+                {
+                    var config = kvp.Value;
+                    if (config.Camera == camBundleName)
+                    {
+                        config.RegisterCameras(_config.CameraConfigs[camBundleName]);
+                    }
+                }
+            }
+        }
+
+        private void UpdateCameraParametersFromConfig(IEnumerable<string> cameraBundleNames)
+        {
+            if (cameraBundleNames == null || cameraBundleNames.Count() == 0)
+            {
+                return;
+            }
+            foreach (var camBundleName in cameraBundleNames)
+            {
+                if (_modifiedCameraBundleDict.TryGetValue(camBundleName, out var modifiedLocations))
+                {
+                    foreach (var kvp in modifiedLocations)
+                    {
+                        if (kvp.Value)
+                        {
+                            var location = kvp.Key;
+                            var newParameters = _config.CameraConfigs[camBundleName][location];
+                            _camParamDict[camBundleName][location].AdjustCameraParameters(newParameters);
+                        }
+                    }
+                }
+
+                foreach (var kvp in _config.ConfigDict)
+                {
+                    var config = kvp.Value;
+                    if (config.Camera == camBundleName)
+                    {
+                        config.RegisterCameras(_config.CameraConfigs[camBundleName]);
+                    }
+                }
+            }
+        }
+
+        private void DeleteCameraParametersFromConfig(IEnumerable<string> cameraBundleNames)
+        {
+            if (cameraBundleNames == null || cameraBundleNames.Count() == 0)
+            {
+                return;
+            }
+
+            foreach (var camBundleName in cameraBundleNames)
+            {
+                if (!_camParamDict.ContainsKey(camBundleName))
+                {
+                    throw new ArgumentOutOfRangeException(camBundleName);
+                }
+                if (!_camParamDict.TryRemove(camBundleName, out var existingConfig))
+                {
+                    Logger.Error($"Removing Camera Parameter Setting From Presenter Failed {camBundleName}");
+                }
+            }
+        }
+
+        private void SaveConfig()
+        {
+            try
+            {
+                ConfigFileManager.SaveToFile(_config, ConfigFileManager.GetConfigFilePath());
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+            }
+        }
+
+        private void UpdateUiByConfig()
+        {
+            _view.SetCarTypeList(_config.GetCarTypeAndNameList(), _config.RecentlyUsedCar);
         }
         #endregion
         #region Enums

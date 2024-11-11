@@ -2569,7 +2569,7 @@ namespace loadingBox2dGui
             this.rbManual_.TabStop = true;
             this.rbManual_.Text = "Manual";
             this.rbManual_.UseVisualStyleBackColor = true;
-            this.rbManual_.CheckedChanged += new System.EventHandler(this.rbManual__CheckedChanged);
+            this.rbManual_.Click += new System.EventHandler(this.rbManual__Click);
             // 
             // rbSet_
             // 
@@ -2587,7 +2587,7 @@ namespace loadingBox2dGui
             this.rbSet_.TabStop = true;
             this.rbSet_.Text = "Setting";
             this.rbSet_.UseVisualStyleBackColor = true;
-            this.rbSet_.CheckedChanged += new System.EventHandler(this.rbSet__CheckedChanged);
+            this.rbSet_.Click += new System.EventHandler(this.rbSet__Click);
             // 
             // rbAuto_
             // 
@@ -2606,7 +2606,7 @@ namespace loadingBox2dGui
             this.rbAuto_.TabStop = true;
             this.rbAuto_.Text = "Auto";
             this.rbAuto_.UseVisualStyleBackColor = true;
-            this.rbAuto_.CheckedChanged += new System.EventHandler(this.rbAuto__CheckedChanged);
+            this.rbAuto_.Click += new System.EventHandler(this.rbAuto__Click);
             // 
             // gbPLC
             // 

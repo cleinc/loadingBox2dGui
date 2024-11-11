@@ -114,8 +114,8 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
             _view.SettingChanged += View_SettingChanged;
             InitUi();
             UpdateUiByConfig();
-            ResetModifiedDictionary();
             _view.ShowSettingManager();
+
         }
 
         public void Stop()
@@ -125,6 +125,7 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
             _view.Camera2DSettingRemoveRequested -= View_Camera2DSettingRemoveRequested;
             _view.Camera2DSettingCopyRequested -= View_Camera2DSettingCopyRequested;
             _view.SettingChanged -= View_SettingChanged;
+            ResetModifiedDictionary();
         }
 
         private void InitUi()
@@ -266,21 +267,21 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
                 }
             }
 
-            //bool parseSuccess = Enum.TryParse(e.PropertyDescriptor.Name, out Camera2DAttribute cam2DAttribute);
-            //if (parseSuccess)
-            //{
-            //    bool ret = IdsCameraParameter.ValidateCamParameter(e.NewValue.ToString(), cam2DAttribute, out object output);
-            //    if (!ret)
-            //    {
-            //        _view.ResetInvalidValue(e.PropertyDescriptor, e.ParentValue, e.OldValue, "cam parameter validation failed");
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        e.NewValue = output;
-            //        e.PropertyDescriptor.SetValue(e.ParentValue, output);
-            //    }
-            //}
+            bool parseSuccess = Enum.TryParse(e.PropertyDescriptor.Name, out Camera2DAttribute cam2DAttribute);
+            if (parseSuccess)
+            {
+                bool ret = CameraParameter.ValidateCamParameter(e.NewValue.ToString(), cam2DAttribute, out object output);
+                if (!ret)
+                {
+                    _view.ResetInvalidValue(e.PropertyDescriptor, e.ParentValue, e.OldValue, "cam parameter validation failed");
+                    return;
+                }
+                else
+                {
+                    e.NewValue = output;
+                    e.PropertyDescriptor.SetValue(e.ParentValue, output);
+                }
+            }
 
             // Add CustomCameraParameterValidator
             if (e.OldValue != e.NewValue)
