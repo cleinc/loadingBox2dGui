@@ -51,6 +51,7 @@ namespace loadingBox2dGui.views
 
         void SetCarTypeList(List<int> carTypeList, int selectedCarType = -1);
         void SetCameraList(List<string> cameraList, string selectedCamera = null);
+        void SetLightList(List<string> lightList, string selectedLight = null);
         void SetPlcList(List<string> plcList, string selectedPlc);
         void SetFileLogLevelList(Array LogLevels, LogLevel selectedLevel);
         void SetUiLogLevelList(Array LogLevels, LogLevel selectedLevel);

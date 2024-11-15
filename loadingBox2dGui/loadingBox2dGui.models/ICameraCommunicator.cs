@@ -20,7 +20,7 @@ namespace loadingBox2dGui.models
         bool SaveImage(Bitmap bmp);
         Bitmap GetImage(string cameraName);
         Bitmap GetImage(InspectionLocation inspectionLocation);
-        bool SetCameraSettings(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
+        bool ApplyCameraSettings(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
     }
 
     
@@ -28,6 +28,7 @@ namespace loadingBox2dGui.models
     public enum CameraState
     {
         Undefined,
+        Error,
         Disconnected,
         Reconnecting, 
         Connected, 

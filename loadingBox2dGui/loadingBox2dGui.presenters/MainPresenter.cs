@@ -63,7 +63,6 @@ namespace loadingBox2dGui.presenters
             Config configCandidate = _settingManagerPresenter.ConfigCandidate;
             bool _isCameraConfigChanged = _settingManagerPresenter.Cam2DSettingManager.Camera2DBundleModified()
                                     || configCandidate.CameraConfigs.Count != _config.CameraConfigs.Count;
-            _modifiedCameraBundleDict = _settingManagerPresenter.Cam2DSettingManager.ModifiedCamera2DBundles;
             _config = configCandidate;
             SaveConfig();
 
@@ -106,8 +105,8 @@ namespace loadingBox2dGui.presenters
             {
                 await InitializePlc();
             }
-
             await UpdateCameraParametersFromConfig(_config.CameraConfigs.Keys.ToArray(), null, null);
+            _view.SetUiToMode(_mode);
         }
 
         private async void View_ChangeModeRequested(object sender, ChangeModeEventArgs e)
@@ -164,7 +163,8 @@ namespace loadingBox2dGui.presenters
         {
             _view.SetConnectCameraButton = false;
             Logger.Debug("Call [Camera Connect]");
-            await ConnectCameraAsync();
+            var cameraName = _config[-1].Camera;
+            await ConnectCameraAsync(cameraName);
             Logger.Debug("Complete [Camera Connect]");
             _view.SetConnectCameraButton = true;
         }
@@ -176,13 +176,13 @@ namespace loadingBox2dGui.presenters
 
         private void View_ProgramCloseRequested(object sender, FormClosingEventArgs e)
         {
-            _plcComm?.Disconnect();
-            _view.RefreshPlcStatus();
             if (MessageBox.Show("Are you sure to Exit Program?", "Warning", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 //_config.DarkMode = _view.DarkModeChecked;
                 //ConfigFileManager.SaveToFile(_config, ConfigFileManager.GetConfigFilePath());
 
+                _view.RefreshPlcStatus();
+                _plcComm?.Disconnect();
                 _plcComm?.Dispose();
                 _lightComm?.Dispose();
 
@@ -308,22 +308,29 @@ namespace loadingBox2dGui.presenters
 
             return Task.Run(() =>
             {
-                lock (_camSettingLock)
+                try
                 {
-                    _camComm.StartCamera(_camParamDict[_config[-1].Camera]).Wait();
+                    lock (_camSettingLock)
+                    {
+                        _camComm.StartCamera(_camParamDict[_config[-1].Camera]).Wait();
+                    }
+                    _isRunningCamera = false;
                 }
-                _isRunningCamera = false;
+                catch (Exception ex)
+                {
+                    _isRunningCamera = false;
+                }
                 return true;
             });
         }
 
-        private Task<bool> ConnectCameraAsync()
+        private Task<bool> ConnectCameraAsync(string cameraName)
         {
             if (_isConnectingCamera)
             {
                 return Task.FromResult(false);
             }
-            if (_camComm == null || _config[-1].RegisteredCameraSerials.Count == 0)
+            if (_camComm == null || cameraName == null)
             {
                 return Task.FromResult(false);
             }
@@ -331,12 +338,18 @@ namespace loadingBox2dGui.presenters
 
             return Task.Run(() =>
             {
-                lock (_camSettingLock)
+                try
                 {
-                    var currentCam = _config[-1].Camera;
-                    _camComm.Connect(_camParamDict[currentCam]);
+                    lock (_camSettingLock)
+                    {
+                        _camComm.Connect(_camParamDict[cameraName]);
+                    }
+                    _isConnectingCamera = false;
                 }
-                _isConnectingCamera = false;
+                catch (Exception ex)
+                {
+                    _isConnectingCamera = false;
+                }
                 return true;
             });
         }
@@ -344,8 +357,8 @@ namespace loadingBox2dGui.presenters
         private async void PlcComm_VisionEnd(object sender, EventArgs e)
         {
             Logger.Info("Plc End Received");
-            _lightComm?.WriteLightState(false);
             _view.DisplayVisionResult(VisionStatus.OK);
+            await Task.Run(() => _lightComm?.WriteLightState(false));
         }
 
         private async void PlcComm_VisionReset(object sender, EventArgs e)

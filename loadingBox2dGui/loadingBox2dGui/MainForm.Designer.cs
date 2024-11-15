@@ -2630,7 +2630,7 @@ namespace loadingBox2dGui
             this.lblPlc.BackColor = System.Drawing.Color.Transparent;
             this.lblPlc.Depth = 0;
             this.lblPlc.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblPlc.Location = new System.Drawing.Point(-2, 0);
+            this.lblPlc.Location = new System.Drawing.Point(12, 0);
             this.lblPlc.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblPlc.Name = "lblPlc";
             this.lblPlc.Size = new System.Drawing.Size(5, 18);

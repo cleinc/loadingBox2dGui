@@ -39,10 +39,6 @@ namespace loadingBox2dGui
             this.ConfigDict_ = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
-            this.cmbRobot2_ = new MaterialSkin.Controls.MaterialComboBox();
-            this.lblRobot2_ = new MaterialSkin.Controls.MaterialLabel();
-            this.cmbRobot1_ = new MaterialSkin.Controls.MaterialComboBox();
-            this.lblRobot1_ = new MaterialSkin.Controls.MaterialLabel();
             this.cardFolderPath = new MaterialSkin.Controls.MaterialCard();
             this.tbRoiPath = new MaterialSkin.Controls.MaterialTextBox2();
             this.tbModelPath = new MaterialSkin.Controls.MaterialTextBox2();
@@ -116,7 +112,6 @@ namespace loadingBox2dGui
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.materialCard1.SuspendLayout();
             this.cardFolderPath.SuspendLayout();
             this.cardCamera.SuspendLayout();
             this.cardCarType.SuspendLayout();
@@ -230,81 +225,17 @@ namespace loadingBox2dGui
             // materialCard1
             // 
             this.materialCard1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard1.Controls.Add(this.cmbRobot2_);
-            this.materialCard1.Controls.Add(this.lblRobot2_);
-            this.materialCard1.Controls.Add(this.cmbRobot1_);
-            this.materialCard1.Controls.Add(this.lblRobot1_);
             this.materialCard1.Depth = 0;
+            this.materialCard1.Enabled = false;
             this.materialCard1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard1.Location = new System.Drawing.Point(18, 347);
+            this.materialCard1.Location = new System.Drawing.Point(18, 315);
             this.materialCard1.Margin = new System.Windows.Forms.Padding(14);
             this.materialCard1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard1.Name = "materialCard1";
             this.materialCard1.Padding = new System.Windows.Forms.Padding(14);
             this.materialCard1.Size = new System.Drawing.Size(281, 132);
             this.materialCard1.TabIndex = 2;
-            // 
-            // cmbRobot2_
-            // 
-            this.cmbRobot2_.AutoResize = false;
-            this.cmbRobot2_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cmbRobot2_.Depth = 0;
-            this.cmbRobot2_.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.cmbRobot2_.DropDownHeight = 174;
-            this.cmbRobot2_.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRobot2_.DropDownWidth = 121;
-            this.cmbRobot2_.Font = new System.Drawing.Font("NanumSquareRound Bold", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.cmbRobot2_.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cmbRobot2_.IntegralHeight = false;
-            this.cmbRobot2_.ItemHeight = 43;
-            this.cmbRobot2_.Location = new System.Drawing.Point(0, 0);
-            this.cmbRobot2_.MaxDropDownItems = 4;
-            this.cmbRobot2_.MouseState = MaterialSkin.MouseState.OUT;
-            this.cmbRobot2_.Name = "cmbRobot2_";
-            this.cmbRobot2_.Size = new System.Drawing.Size(121, 49);
-            this.cmbRobot2_.StartIndex = 0;
-            this.cmbRobot2_.TabIndex = 0;
-            // 
-            // lblRobot2_
-            // 
-            this.lblRobot2_.Depth = 0;
-            this.lblRobot2_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblRobot2_.Location = new System.Drawing.Point(0, 0);
-            this.lblRobot2_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblRobot2_.Name = "lblRobot2_";
-            this.lblRobot2_.Size = new System.Drawing.Size(100, 23);
-            this.lblRobot2_.TabIndex = 1;
-            // 
-            // cmbRobot1_
-            // 
-            this.cmbRobot1_.AutoResize = false;
-            this.cmbRobot1_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cmbRobot1_.Depth = 0;
-            this.cmbRobot1_.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.cmbRobot1_.DropDownHeight = 174;
-            this.cmbRobot1_.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRobot1_.DropDownWidth = 121;
-            this.cmbRobot1_.Font = new System.Drawing.Font("NanumSquareRound Bold", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.cmbRobot1_.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cmbRobot1_.IntegralHeight = false;
-            this.cmbRobot1_.ItemHeight = 43;
-            this.cmbRobot1_.Location = new System.Drawing.Point(0, 0);
-            this.cmbRobot1_.MaxDropDownItems = 4;
-            this.cmbRobot1_.MouseState = MaterialSkin.MouseState.OUT;
-            this.cmbRobot1_.Name = "cmbRobot1_";
-            this.cmbRobot1_.Size = new System.Drawing.Size(121, 49);
-            this.cmbRobot1_.StartIndex = 0;
-            this.cmbRobot1_.TabIndex = 2;
-            // 
-            // lblRobot1_
-            // 
-            this.lblRobot1_.Depth = 0;
-            this.lblRobot1_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblRobot1_.Location = new System.Drawing.Point(0, 0);
-            this.lblRobot1_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblRobot1_.Name = "lblRobot1_";
-            this.lblRobot1_.Size = new System.Drawing.Size(100, 23);
-            this.lblRobot1_.TabIndex = 3;
+            this.materialCard1.Visible = false;
             // 
             // cardFolderPath
             // 
@@ -317,6 +248,7 @@ namespace loadingBox2dGui
             this.cardFolderPath.Controls.Add(this.btnRoiPath);
             this.cardFolderPath.Controls.Add(this.btnModelPath);
             this.cardFolderPath.Depth = 0;
+            this.cardFolderPath.Enabled = false;
             this.cardFolderPath.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.cardFolderPath.Location = new System.Drawing.Point(14, 507);
             this.cardFolderPath.Margin = new System.Windows.Forms.Padding(14);
@@ -749,7 +681,7 @@ namespace loadingBox2dGui
             this.cmbPlc.FormattingEnabled = true;
             this.cmbPlc.IntegralHeight = false;
             this.cmbPlc.ItemHeight = 25;
-            this.cmbPlc.Location = new System.Drawing.Point(73, 19);
+            this.cmbPlc.Location = new System.Drawing.Point(82, 19);
             this.cmbPlc.MaxDropDownItems = 4;
             this.cmbPlc.MouseState = MaterialSkin.MouseState.OUT;
             this.cmbPlc.Name = "cmbPlc";
@@ -1200,6 +1132,7 @@ namespace loadingBox2dGui
             this.materialCard3.Controls.Add(this.lblFileLogLev_);
             this.materialCard3.Controls.Add(this.lblLogLabel_);
             this.materialCard3.Depth = 0;
+            this.materialCard3.Enabled = false;
             this.materialCard3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialCard3.Location = new System.Drawing.Point(14, 10);
             this.materialCard3.Margin = new System.Windows.Forms.Padding(14);
@@ -1208,6 +1141,7 @@ namespace loadingBox2dGui
             this.materialCard3.Padding = new System.Windows.Forms.Padding(14);
             this.materialCard3.Size = new System.Drawing.Size(1371, 147);
             this.materialCard3.TabIndex = 14;
+            this.materialCard3.Visible = false;
             // 
             // cmbUiLogLev
             // 
@@ -1438,7 +1372,6 @@ namespace loadingBox2dGui
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.materialCard1.ResumeLayout(false);
             this.cardFolderPath.ResumeLayout(false);
             this.cardFolderPath.PerformLayout();
             this.cardCamera.ResumeLayout(false);
@@ -1534,9 +1467,5 @@ namespace loadingBox2dGui
         private CoPick.Controls.CleTimePicker dtpScheduleStartTime;
         private CoPick.Controls.CleTimePicker dtpDailyProdResetTime;
         private MaterialSkin.Controls.MaterialCard materialCard1;
-        private MaterialSkin.Controls.MaterialComboBox cmbRobot2_;
-        private MaterialSkin.Controls.MaterialLabel lblRobot2_;
-        private MaterialSkin.Controls.MaterialComboBox cmbRobot1_;
-        private MaterialSkin.Controls.MaterialLabel lblRobot1_;
     }
 }

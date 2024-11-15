@@ -30,6 +30,7 @@ namespace loadingBox2dGui
 
             Logger.RtbLog = rtbLog;
             Logger.MaxLine = 1000;
+            this.ApplyFont();
             _plcStatusPainter = new PlcStatusPainter(gbPLC.CreateGraphics(), 20, 14);
             //_plcStatusPainter.PenColor = Color.White;
             gbPLC.Paint += gbPLC_Paint;
@@ -99,7 +100,7 @@ namespace loadingBox2dGui
         {
             set
             {
-                this.InvokeIfNeeded(() =>
+                btnCameraConnect_.InvokeIfNeeded(() =>
                 {
                     btnCameraConnect_.Enabled = value;
                 });
@@ -110,7 +111,7 @@ namespace loadingBox2dGui
         {
             set
             {
-                this.InvokeIfNeeded(() =>
+                btnStartCamera_.InvokeIfNeeded(() =>
                 {
                     btnStartCamera_.Enabled = value;
                 });

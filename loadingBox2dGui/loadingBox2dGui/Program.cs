@@ -42,7 +42,7 @@ namespace loadingBox2dGui
             }
 
             Logger.Configure(config.LogPath, config.MinimumUiLogLevel, config.MinimumFileLogLevel);
-            FontManager.SetCustomFont("./Resources/NanumSquareRoundB.ttf");
+            //FontManager.SetCustomFont("./Resources/NanumSquareRoundB.ttf");
 
             var camera2DSettingManagerForm = new Camera2DSettingManagerView();
             var plcSettingManagerForm = new PlcSettingManagerView();

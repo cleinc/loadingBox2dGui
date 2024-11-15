@@ -213,8 +213,6 @@ namespace loadingBox2dGui
             { 
                 cmbPlc.Enabled = false;
                 cmbCamera.Enabled = false;
-                cmbRobot1_.Enabled = false;
-                cmbRobot2_.Enabled = false;
                 taskGrid.Enabled = false;
             });
             _factorySettingTimer = null;
@@ -225,8 +223,6 @@ namespace loadingBox2dGui
             { 
                 cmbPlc.Enabled = true;
                 cmbCamera.Enabled = true;
-                cmbRobot1_.Enabled = true;
-                cmbRobot2_.Enabled = true;
                 taskGrid.Enabled = true;
             });
             _factorySettingTimer = null;
@@ -238,8 +234,6 @@ namespace loadingBox2dGui
             { 
                 cmbPlc.Enabled = true;
                 cmbCamera.Enabled = true;
-                cmbRobot1_.Enabled = true;
-                cmbRobot2_.Enabled = true;
                 taskGrid.Enabled = true;
             });
             SetFactorySettingsTimer();
@@ -450,16 +444,6 @@ namespace loadingBox2dGui
             });
         }
         public string InstallRobot { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Robot1 
-        { 
-            get => cmbRobot1_.InvokeIfNeeded(() => { return cmbRobot1_.SelectedItem?.ToString(); });
-            set => cmbRobot1_.InvokeIfNeeded(() => cmbRobot1_.SelectedItem = value); 
-        }
-        public string Robot2
-        { 
-            get => cmbRobot2_.InvokeIfNeeded(() => { return cmbRobot2_.SelectedItem?.ToString(); });
-            set => cmbRobot2_.InvokeIfNeeded(() => cmbRobot2_.SelectedItem = value); 
-        }
         public long CameraMaxScanTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool CanLogManagerScheduleBeDeleted { set => throw new NotImplementedException(); }
 
@@ -545,38 +529,6 @@ namespace loadingBox2dGui
                 if (lightList.Contains(selectedLight))
                 {
                     cmbLight.SelectedItem = selectedLight;
-                }
-            });
-        }
-
-        public void SetRobot1List(List<string> robotList, string selectedRobot = null)
-        {
-            cmbRobot1_.InvokeIfNeeded(() =>
-            {
-                cmbRobot1_.DataSource = robotList;
-                if (selectedRobot == null)
-                {
-                    cmbRobot1_.SelectedItem = -1;
-                }
-                else if (robotList.Contains(selectedRobot))
-                {
-                    cmbRobot1_.SelectedItem = selectedRobot;
-                }
-            });
-        }
-
-        public void SetRobot2List(List<string> robotList, string selectedRobot = null)
-        {
-            cmbRobot2_.InvokeIfNeeded(() =>
-            {
-                cmbRobot2_.DataSource = robotList;
-                if (selectedRobot == null)
-                {
-                    cmbRobot2_.SelectedItem = -1;
-                }
-                else if (robotList.Contains(selectedRobot))
-                {
-                    cmbRobot2_.SelectedItem = selectedRobot;
                 }
             });
         }

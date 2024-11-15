@@ -11,7 +11,7 @@ namespace loadingBox2dGui.models
 {
     public abstract class CameraCommunicatorForLoadingBox : ICameraCommunicator, IDisposable
     {
-        private bool disposedValue;
+        protected bool _disposed;
         public bool IsConnected { get; }
         public abstract bool Connect(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
         public abstract bool Disconnect();
@@ -20,11 +20,11 @@ namespace loadingBox2dGui.models
         public abstract bool SaveImage(Bitmap bmp);
         public abstract Bitmap GetImage(string cameraName);
         public abstract Bitmap GetImage(InspectionLocation inspectionLocation);
-        public abstract bool SetCameraSettings(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
+        public abstract bool ApplyCameraSettings(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposed)
             {
                 if (disposing){}
 
@@ -34,7 +34,7 @@ namespace loadingBox2dGui.models
                 }
                 catch (Exception) { }
 
-                disposedValue = true;
+                _disposed = true;
             }
         }
         ~CameraCommunicatorForLoadingBox()
