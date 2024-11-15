@@ -1,6 +1,7 @@
 ﻿using CoPick.Logging;
 using CoPick.Plc;
 using CoPick.Setting;
+using CoPick.Robot;
 using loadingBox2dGui.models;
 using loadingBox2dGui.views;
 using System;
@@ -11,6 +12,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CoPick;
 
 namespace loadingBox2dGui.presenters
 {
@@ -24,6 +26,7 @@ namespace loadingBox2dGui.presenters
         private PlcCommunicatorForLoadingBox _plcComm;
         private LightCommunicatorForLoadingBox _lightComm;
         private CameraCommunicatorForLoadingBox _camComm;
+        private IRobotCommunicator _robotComm;
         private bool _isPlcEventHandlersRegistered = false;
         private bool _isRunningCamera = false;
         private bool _isConnectingCamera = false; 
@@ -733,6 +736,21 @@ namespace loadingBox2dGui.presenters
         private void UpdateUiByConfig()
         {
             _view.SetCarTypeList(_config.GetCarTypeAndNameList(), _config.RecentlyUsedCar);
+        }
+
+        public void ConfigureInstallRobot(Dictionary<RobotAttribute, string> robotConfig, bool wantRemake = false)
+        {
+            if (wantRemake)
+            {
+                _robotComm?.Dispose();
+                _robotComm = null;
+            }
+
+            if (_robotComm == null)
+            {
+                var robotMaker = robotConfig[RobotAttribute.Maker].ToEnum<RobotMaker>();
+                _robotComm = RobotCommMaker.Make(robotMaker, robotConfig);
+            }
         }
         #endregion
         #region Enums

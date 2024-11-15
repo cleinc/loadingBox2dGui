@@ -1,6 +1,7 @@
 ﻿using CoPick.Logging;
 using CoPick.Plc;
 using CoPick.Setting;
+using CoPick.Robot;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -221,6 +222,63 @@ namespace loadingBox2dGui.models
                 [Camera2DAttribute.Exposure] = "20000",
                 [Camera2DAttribute.Gain] = "1",
                 [Camera2DAttribute.MaxFPS] = "15",
+            };
+        }
+
+        public static Dictionary<RobotMaker, Func<Dictionary<RobotAttribute, string>>> Robots = new Dictionary<RobotMaker, Func<Dictionary<RobotAttribute, string>>>()
+        {
+            [RobotMaker.YASKAWA] = GetYaskawaSettings,
+            [RobotMaker.KAWASAKI] = GetKawasakiSettings,
+            [RobotMaker.FANUC] = GetFanucSettings,
+            [RobotMaker.HYUNDAI] = GetHyundaiSettings
+        };
+
+        public static Dictionary<RobotAttribute, string> GetYaskawaSettings()
+        {
+            return new Dictionary<RobotAttribute, string>()
+            {
+                [RobotAttribute.Maker] = RobotMaker.YASKAWA.ToString(),
+                [RobotAttribute.Ip] = "",
+                [RobotAttribute.Port] = "",
+                [RobotAttribute.YrcCoordinateSystem] = YrcCoordinateSystem.BASE.ToString()
+            };
+        }
+
+        public static Dictionary<RobotAttribute, string> GetKawasakiSettings()
+        {
+            return new Dictionary<RobotAttribute, string>()
+            {
+                [RobotAttribute.Maker] = RobotMaker.KAWASAKI.ToString(),
+                [RobotAttribute.Ip] = "",
+                [RobotAttribute.Port] = "",
+                [RobotAttribute.WheelHubInstallVars] = "",
+                [RobotAttribute.WheelHubShiftVars] = "",
+                [RobotAttribute.MaxNumberOfTrials] = "",
+                [RobotAttribute.HasR7] = "False"
+            };
+        }
+
+        public static Dictionary<RobotAttribute, string> GetFanucSettings()
+        {
+            return new Dictionary<RobotAttribute, string>()
+            {
+                [RobotAttribute.Maker] = RobotMaker.FANUC.ToString(),
+                [RobotAttribute.Ip] = "",
+                [RobotAttribute.Port] = "",
+                [RobotAttribute.ReadPRs] = "1,2,3",
+                [RobotAttribute.WritePRs] = "11,12,13",
+                [RobotAttribute.UserFrame] = FanucUserFrame.WORLD.ToString()
+            };
+        }
+
+        public static Dictionary<RobotAttribute, string> GetHyundaiSettings()
+        {
+            return new Dictionary<RobotAttribute, string>()
+            {
+                [RobotAttribute.Maker] = RobotMaker.HYUNDAI.ToString(),
+                [RobotAttribute.Ip] = "192.168.178.206",
+                [RobotAttribute.ClientIp] = "192.168.178.102",
+                [RobotAttribute.HrCoordinateSystem] = HrCoordinateSystem.BASE.ToString()
             };
         }
     }
