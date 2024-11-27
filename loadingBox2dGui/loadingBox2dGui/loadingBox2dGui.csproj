@@ -48,6 +48,9 @@
     <Reference Include="CoPick.Plc">
       <HintPath>..\..\libs\CoPick.Plc.dll</HintPath>
     </Reference>
+    <Reference Include="CoPick.Robot">
+      <HintPath>..\..\libs\CoPick.Robot.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialSkin">
       <HintPath>..\..\libs\MaterialSkin.dll</HintPath>
     </Reference>
@@ -116,6 +119,12 @@
     </Compile>
     <Compile Include="SettingManagerForm\PlcSettingManagerView.Designer.cs">
       <DependentUpon>PlcSettingManagerView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingManagerForm\RobotSettingManagerView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingManagerForm\RobotSettingManagerView.Designer.cs">
+      <DependentUpon>RobotSettingManagerView.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="SettingManagerForm\CargoBox2DSettingManagerForm.resx">
       <DependentUpon>CargoBox2DSettingManagerForm.cs</DependentUpon>
