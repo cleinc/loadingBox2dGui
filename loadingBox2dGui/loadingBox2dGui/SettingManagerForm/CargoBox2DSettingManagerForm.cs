@@ -2,6 +2,7 @@
 using CoPick.Logging;
 using CoPick.Plc.Setting;
 using CoPick.Setting;
+using CoPick.Robot.Setting;
 using loadingBox2dGui.views;
 using MaterialSkin;
 using MaterialSkin.Controls;
@@ -63,6 +64,11 @@ namespace loadingBox2dGui
 
         public string ScheduleValues { get; set; }
 
+        public string Robot
+        {
+            get => ""; 
+            set => throw new Exception();
+        }
         public void ShowSettingManager(bool isBlocking)
         {
             this.BeginInvokeIfNeeded(() =>
@@ -82,7 +88,8 @@ namespace loadingBox2dGui
             });
         }
 
-        public CargoBox2DSettingManagerForm_(IPlcSettingManagerView plcSettingManagerView, 
+        public CargoBox2DSettingManagerForm_(IRobotSettingManagerView robotSettingManagerView, 
+                                                    IPlcSettingManagerView plcSettingManagerView, 
                                                     ILightSettingManagerView lightSettingManagerView, 
                                                     ICamera2DSettingManagerView camera2DSettingManageView)
         {
@@ -92,6 +99,7 @@ namespace loadingBox2dGui
             materialSkinManager.AddFormToManage(this, true);
 
             SettingManagerTabControl.DrawItem += new DrawItemEventHandler(tabControl1_DrawItem);
+            RobotConfig_.Controls.Add((Control)robotSettingManagerView);
             PlcConfigs_.Controls.Add((Control)plcSettingManagerView);
             LightConfigs_.Controls.Add((Control)lightSettingManagerView);
             Cam2DConfigs_.Controls.Add((Control)camera2DSettingManageView);
@@ -177,16 +185,16 @@ namespace loadingBox2dGui
         public event EventHandler PassValueChangeRequested;
         public event EventHandler PaintSectionRequested;
         public event EventHandler DailyProdResetTimeChangeRequested;
-        public event EventHandler InstallRobotChanged;
-        public event EventHandler ScanRobotChanged;
+        public event EventHandler<ModelSettingPathChangeEventArgs> ModelSettingPathChangeRequested;
+        public event EventHandler RobotChanged;
         public event EventHandler CameraMaxScanTimeChanged;
         public event EventHandler LogManagerArgsRegisterAsked;
         public event EventHandler LogManagerArgsDeleteAsked;
-
+        public event EventHandler UpdateMasterDataRequested;
         public event EventHandler<SettingTabChangeEventArgs> SettingTabChangeRequested;
         #endregion
 
-        private void PrimerSettingManagerForm_Load(object sender, EventArgs e)
+        private void CargoBox2DSettingManagerForm_Load(object sender, EventArgs e)
         {
             taskGrid.InvokeIfNeeded(() => taskGrid.MoveSplitter(240));
         }
@@ -250,7 +258,7 @@ namespace loadingBox2dGui
             };
         }
 
-        private void PrimerSettingManagerForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void CargoBox2DSettingManagerForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (_isInvalidValue)
             {
@@ -271,6 +279,21 @@ namespace loadingBox2dGui
             EndRequested?.Invoke(this, EventArgs.Empty);
         }
 
+        public void SetRobotList(List<string> robotList, string selectedRobot = null)
+        {
+            //cmbRobotFront_.InvokeIfNeeded(() =>
+            //{
+            //    cmbRobotFront_.DataSource = robotList;
+            //    if (selectedRobot == null)
+            //    {
+            //        cmbRobotFront_.SelectedItem = -1;
+            //    }
+            //    else if (robotList.Contains(selectedRobot))
+            //    {
+            //        cmbRobotFront_.SelectedItem = selectedRobot;
+            //    }
+            //});
+        }
         public DialogResult ShowMessageBox(string message, string title, MessageBoxButtons buttons, MessageBoxIcon icon)
         {
             return this.InvokeIfNeeded(() => MessageBox.Show(message, title, buttons, icon));
@@ -420,30 +443,11 @@ namespace loadingBox2dGui
             get => IsDisposed;
         }
 
-        public string ModelPath
-        {
-            get => tbModelPath.InvokeIfNeeded(() =>
-            {
-                return tbModelPath.Text;
-            });
-            set => tbModelPath.InvokeIfNeeded(() =>
-            {
-                tbModelPath.Text = value;
-            });
-        }
-
-        public string RoiFolderPath
-        {
-            get => tbRoiPath.InvokeIfNeeded(() =>
-            {
-                return tbRoiPath.Text;
-            });
-            set => tbRoiPath.InvokeIfNeeded(() =>
-            {
-                tbRoiPath.Text = value;
-            });
-        }
-        public string InstallRobot { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ShiftModelPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string CheckerBoardImageRootFolderPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string MasterImageRootFolderPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string CalibrationDataRootFolderPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string CameraTcpDataRootFolderPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public long CameraMaxScanTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool CanLogManagerScheduleBeDeleted { set => throw new NotImplementedException(); }
 
@@ -836,6 +840,11 @@ namespace loadingBox2dGui
         public void UpdateLogManagerScheduleToUi(int logPeriod, int imgPeriod, int csvPeriod, DateTime startDateTime)
         {
             // TODO: Implement LogManagerScheduler, consider how to manage accumulating log files and other images
+        }
+
+        private void btnUpdateMasterData__Click(object sender, EventArgs e)
+        {
+            UpdateMasterDataRequested?.Invoke(sender, e);
         }
     }
 }

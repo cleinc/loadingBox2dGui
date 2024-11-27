@@ -17,7 +17,7 @@ namespace loadingBox2dGui.models
         bool Disconnect();
         Task StartCamera(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
         bool StopCamera();
-        bool SaveImage(Bitmap bmp);
+        bool SaveImage(InspectionLocation loc, Bitmap bmp);
         Bitmap GetImage(string cameraName);
         Bitmap GetImage(InspectionLocation inspectionLocation);
         bool ApplyCameraSettings(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);

@@ -6,6 +6,7 @@ using loadingBox2dGui.models;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CoPick;
 
 namespace loadingBox2dGui.presenters.SettingManagerPresenters
 {
@@ -266,17 +267,19 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
                     return;
                 }
             }
-
+            string configuringCamera = _view.ConfiguringCamera2D;
+            InspectionLocation inspectionLocation = e.ParentLabel.ToString().ToEnum<InspectionLocation>();
             bool parseSuccess = Enum.TryParse(e.PropertyDescriptor.Name, out Camera2DAttribute cam2DAttribute);
             if (parseSuccess)
             {
-                bool ret = CameraParameter.ValidateCamParameter(e.NewValue.ToString(), cam2DAttribute, out object output);
-                if (!ret)
+                CameraParameter cameraParamter = new CameraParameter(_camera2DBundleConfigs[configuringCamera][inspectionLocation]);
+                ValidityCheckResult validityCheckResult = cameraParamter.ValidateCamParameterFromInstance(e.NewValue.ToString(), cam2DAttribute, out object output);
+                if (validityCheckResult == ValidityCheckResult.Error)
                 {
                     _view.ResetInvalidValue(e.PropertyDescriptor, e.ParentValue, e.OldValue, "cam parameter validation failed");
                     return;
                 }
-                else
+                else if (validityCheckResult == ValidityCheckResult.Adjusted)
                 {
                     e.NewValue = output;
                     e.PropertyDescriptor.SetValue(e.ParentValue, output);
@@ -286,8 +289,7 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
             // Add CustomCameraParameterValidator
             if (e.OldValue != e.NewValue)
             {
-                InspectionLocation inspectionLocation = (InspectionLocation) Enum.Parse(typeof(InspectionLocation), e.ParentLabel.ToString());
-                _modifiedCamera2DBundles[_view.ConfiguringCamera2D][inspectionLocation] = true;
+                _modifiedCamera2DBundles[configuringCamera][inspectionLocation] = true;
                 _settingChangeTracker.NotifyChange($"{e.ParentLabel}/{e.Label}", e.OldValue.ToString(), e.NewValue.ToString());
                 _view.RefreshPropertyGrid();
             }

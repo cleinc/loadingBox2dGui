@@ -285,6 +285,7 @@ namespace loadingBox2dGui
         public event EventHandler DisconnectLhCameraRequested;
         public event EventHandler<FormClosingEventArgs> ProgramCloseRequested;
         public event EventHandler<ChangeLightStateEventArgs> LightStateChangeRequested;
+        public event EventHandler CarTypeChanged;
 
         private void btnCameraConnect__Click(object sender, EventArgs e)
         {
@@ -411,6 +412,12 @@ namespace loadingBox2dGui
         private void rbAuto__Click(object sender, EventArgs e)
         {
             ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Auto, true));
+        }
+
+        private void cmbCarTypeName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tbCarType.Text = cmbCarTypeName.SelectedValue?.ToString();
+            CarTypeChanged?.Invoke(sender, EventArgs.Empty);
         }
     }
 }

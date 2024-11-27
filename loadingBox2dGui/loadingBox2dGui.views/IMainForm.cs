@@ -40,6 +40,7 @@ namespace loadingBox2dGui.views
         event EventHandler<ChangeLightStateEventArgs> LightStateChangeRequested;
         event EventHandler DisconnectLhCameraRequested;
         event EventHandler MainFormLoadRequested;
+        event EventHandler CarTypeChanged;
         #endregion
 
         #region Methods

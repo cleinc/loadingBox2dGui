@@ -2,6 +2,7 @@
 using CoPick.Logging;
 using CoPick.Plc.Setting;
 using CoPick.Setting;
+using CoPick.Robot.Setting;
 using CoPick.Setting.Presenters;
 using loadingBox2dGui.models;
 using loadingBox2dGui.presenters;
@@ -43,23 +44,29 @@ namespace loadingBox2dGui
 
             Logger.Configure(config.LogPath, config.MinimumUiLogLevel, config.MinimumFileLogLevel);
             //FontManager.SetCustomFont("./Resources/NanumSquareRoundB.ttf");
-
+            var robotSettingManagerForm = new RobotSettingManagerView();
             var camera2DSettingManagerForm = new Camera2DSettingManagerView();
             var plcSettingManagerForm = new PlcSettingManagerView();
             var lightSettingManagerForm = new LightSettingManagerView();
             var copyLightConfigsForm = new CopyConfigsMaterialForm_();
             var addNewLightForm = new AddLightConfigForm();
+            var addRobotConfigForm = new AddRobotConfigForm_();
             var copyRobotConfigForm = new CopyConfigsForm_();
             var addCam2DConfigForm = new AddCamera2DForm_();
             var copyCamConfigForm = new CopyConfigsForm_();
             var copyCarTypeConfigForm = new CopyConfigsForm_();
             var addCarTypeForm = new AddCarTypeForm_();
 
-            var settingForm = new CargoBox2DSettingManagerForm_(plcSettingManagerForm,
+            var settingForm = new CargoBox2DSettingManagerForm_(robotSettingManagerForm,
+                                                                        plcSettingManagerForm,
                                                                         lightSettingManagerForm,
                                                                         camera2DSettingManagerForm);
             SettingChangeTracker settingChangeTracker = new SettingChangeTracker();
-
+            var addRobotConfigPresenter = new AddRobotConfigPresenter(addRobotConfigForm, DefaultSettingLoader.Robots);
+            var copyRobotConfigPresenter = new CopyRobotConfigPresenter(copyRobotConfigForm);
+            var robotSettingManagerPresenter = new RobotSettingManagerPresenter(robotSettingManagerForm,
+                                                                                addRobotConfigPresenter, copyRobotConfigPresenter,
+                                                                                settingChangeTracker);
             var addCamera2DConfigPresenter = new AddCamera2DBundleConfigPresenter(addCam2DConfigForm, DefaultSettingLoader.CameraBundle);
             var copyCamera2DConfigPresenter = new CopyCamera2DBundleConfigPresenter(copyCamConfigForm);
             var cameraSettingManagerPresenter = new Camera2DBundleSettingManagerPresenter(camera2DSettingManagerForm,
@@ -75,7 +82,7 @@ namespace loadingBox2dGui
             var copyCarTypeConfigPresenter = new CopyCarTypeConfigPresenter(copyCarTypeConfigForm);
             var addCarTypePresenter = new AddCarTypePresenter(addCarTypeForm);
             var settingManagerPresenter = new CargoBox2DSettingManagerPresenter(settingForm,
-                                                               cameraSettingManagerPresenter, plcSettingManagerPresenter, copyCarTypeConfigPresenter,
+                                                               robotSettingManagerPresenter, cameraSettingManagerPresenter, plcSettingManagerPresenter, copyCarTypeConfigPresenter,
                                                                addCarTypePresenter, lightSettingManagerPresenter, new List<string> { "en-US" }, settingChangeTracker);
             var mainForm = new MainForm();
             var mainPresenter = new MainPresenter(mainForm, settingManagerPresenter, config);

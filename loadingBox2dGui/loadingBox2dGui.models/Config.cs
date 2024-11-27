@@ -16,6 +16,7 @@ namespace loadingBox2dGui.models
     {
         public Dictionary<string, Dictionary<PlcAttribute, string>> PlcConfigs { get; set; }
         public Dictionary<string, Dictionary<LightAttribute, string>> LightConfigs { get; set;}
+        public Dictionary<string, Dictionary<RobotAttribute, string>> RobotConfigs { get; set;}
         public Dictionary<string, Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>>> CameraConfigs { get; set; }
         public Dictionary<int, CargoBox2DConfig> ConfigDict { get; set; } = new Dictionary<int, CargoBox2DConfig>();
         public string Plc { get; set; }
@@ -23,9 +24,9 @@ namespace loadingBox2dGui.models
         public string Camera { get; set; }
         public int RecentlyUsedCar { get; set; } = 0;
         public string Language { get; set; } = "ko-KR";
-
+        public TaskType TaskType { get; set; } = TaskType.Cargo;
         public LogLevel MinimumFileLogLevel { get; set; } = LogLevel.Debug;
-        public LogLevel MinimumUiLogLevel { get; set; } = LogLevel.Info;
+        public LogLevel MinimumUiLogLevel { get; set; } = LogLevel.Debug;
         private string _logPath = Path.GetFullPath("D:/log");
         public string LogPath
         {
@@ -40,6 +41,11 @@ namespace loadingBox2dGui.models
                 catch (Exception) { }
             }
         }
+        public string CheckerBoardRootFolderPath { get; set; } = "undefined";
+        public string CalibrationDataRootPath { get; set; } = "undefined";
+        public string ZRotationPerLocationDataFilePath { get; set; } = "undefined";
+        public string CameraTcpDataRootFolderPath { get; set; } = "undefined";
+        public bool OfflineMode { get; set; } = false;
 
         public Config()
         {
@@ -60,7 +66,6 @@ namespace loadingBox2dGui.models
                 ["ModbusLightCommunicator"] = DefaultSettingLoader.Lights[LightMaker.MODBUS]()
             };
             ConfigDict[0] = new CargoBox2DConfig();
-            ConfigDict[0].RegisterCameras(CameraConfigs["Unknown"]);
         }
         public bool Delete(int k)
         {
@@ -85,6 +90,10 @@ namespace loadingBox2dGui.models
         public List<string> GetCamSetList()
         {
             return CameraConfigs.Keys.ToList();
+        }
+        public List<string> GetRobotList()
+        {
+            return RobotConfigs.Keys.ToList();
         }
 
         public CargoBox2DConfig this[int key]
@@ -240,7 +249,10 @@ namespace loadingBox2dGui.models
                 [RobotAttribute.Maker] = RobotMaker.YASKAWA.ToString(),
                 [RobotAttribute.Ip] = "",
                 [RobotAttribute.Port] = "",
-                [RobotAttribute.YrcCoordinateSystem] = YrcCoordinateSystem.BASE.ToString()
+                [RobotAttribute.YrcCoordinateSystem] = YrcCoordinateSystem.BASE.ToString(),
+                [RobotAttribute.VehicleInstallVars] = "",
+                [RobotAttribute.GapScanPoseVars] = "",
+                [RobotAttribute.VehicleShiftVars] = ""
             };
         }
 

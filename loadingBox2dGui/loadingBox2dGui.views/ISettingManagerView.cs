@@ -15,6 +15,12 @@ namespace loadingBox2dGui.views
         object TaskPropertyGridDataSource { set; }
         string Plc { get; set; }
         string Camera { get; set; }
+        string ShiftModelPath { get; set; }
+        string CheckerBoardImageRootFolderPath { get; set; }
+        string MasterImageRootFolderPath { get; set; }
+        string CalibrationDataRootFolderPath { get; set; }
+        string CameraTcpDataRootFolderPath { get; set; }
+        string Robot { get; set; }
         long CameraMaxScanTime { get; set; }
         bool IsControlDisposed { get; }
         string SelectedLanguage { get; set; }
@@ -48,7 +54,10 @@ namespace loadingBox2dGui.views
         event EventHandler LogManagerArgsRegisterAsked;
         event EventHandler LogManagerArgsDeleteAsked;
         event EventHandler<SettingTabChangeEventArgs> SettingTabChangeRequested;
-
+        event EventHandler RobotChanged;
+        event EventHandler <ModelSettingPathChangeEventArgs> ModelSettingPathChangeRequested;
+        event EventHandler UpdateMasterDataRequested;
+        void SetRobotList(List<string> robotList, string selectedRobot = null);
         void SetCarTypeList(List<int> carTypeList, int selectedCarType = -1);
         void SetCameraList(List<string> cameraList, string selectedCamera = null);
         void SetLightList(List<string> lightList, string selectedLight = null);
@@ -83,6 +92,26 @@ namespace loadingBox2dGui.views
         public SettingTabChangeEventArgs (SettingTab settingTab)
         {
             SettingTab = settingTab;
+        }
+    }
+
+    public enum ModelPathType
+    {
+       CheckerBoardRootFolderPath,
+       MasterImageRootFolderPath,
+       CalibrationDataRootFolderPath,
+       CameraTcpDataRootFolderPath,
+       ShiftModelFilePath,
+    }
+
+    public class ModelSettingPathChangeEventArgs : EventArgs
+    {
+        public ModelPathType ModelPathType { get; private set; }
+        public string NewPath { get; private set; }
+        public ModelSettingPathChangeEventArgs(ModelPathType modelDataType, string newPath)
+        {
+            ModelPathType = modelDataType;
+            NewPath = newPath;
         }
     }
 }

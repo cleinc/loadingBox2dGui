@@ -38,14 +38,27 @@ namespace loadingBox2dGui
             this.SettingManagerTabControl = new MaterialSkin.Controls.MaterialTabControl();
             this.ConfigDict_ = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.materialCard2 = new MaterialSkin.Controls.MaterialCard();
+            this.btnCameraTcpRootFolderPath = new MaterialSkin.Controls.MaterialButton();
+            this.tbCameraTcp = new MaterialSkin.Controls.MaterialTextBox2();
+            this.lblCameraTcp = new MaterialSkin.Controls.MaterialLabel();
+            this.btnCalibrationRootFolderPath_ = new MaterialSkin.Controls.MaterialButton();
+            this.tbCalibrationRootFolderPath = new MaterialSkin.Controls.MaterialTextBox2();
+            this.lblCalibrationRootFolderPath_ = new MaterialSkin.Controls.MaterialLabel();
+            this.tbMasterImageRootPath = new MaterialSkin.Controls.MaterialTextBox2();
+            this.tbCheckerBoardRootPath = new MaterialSkin.Controls.MaterialTextBox2();
+            this.lblMasterImageFilePath = new MaterialSkin.Controls.MaterialLabel();
+            this.lblCharucoFilePath = new MaterialSkin.Controls.MaterialLabel();
+            this.lblImageRootFolderPath_ = new MaterialSkin.Controls.MaterialLabel();
+            this.btnMasterImageFilePath = new MaterialSkin.Controls.MaterialButton();
+            this.btnCharucoFilePath = new MaterialSkin.Controls.MaterialButton();
             this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
+            this.cmbRobot_ = new MaterialSkin.Controls.MaterialComboBox();
+            this.lblRobot_ = new MaterialSkin.Controls.MaterialLabel();
             this.cardFolderPath = new MaterialSkin.Controls.MaterialCard();
-            this.tbRoiPath = new MaterialSkin.Controls.MaterialTextBox2();
             this.tbModelPath = new MaterialSkin.Controls.MaterialTextBox2();
-            this.lblRoiPath_ = new MaterialSkin.Controls.MaterialLabel();
-            this.lblPrimerModel_ = new MaterialSkin.Controls.MaterialLabel();
-            this.lblFilePaths_ = new MaterialSkin.Controls.MaterialLabel();
-            this.btnRoiPath = new MaterialSkin.Controls.MaterialButton();
+            this.lblShiftModel_ = new MaterialSkin.Controls.MaterialLabel();
+            this.lblModelFilePaths_ = new MaterialSkin.Controls.MaterialLabel();
             this.btnModelPath = new MaterialSkin.Controls.MaterialButton();
             this.cardCamera = new MaterialSkin.Controls.MaterialCard();
             this.cmbLight = new MaterialSkin.Controls.MaterialComboBox();
@@ -63,6 +76,7 @@ namespace loadingBox2dGui
             this.cmbPlc = new MaterialSkin.Controls.MaterialComboBox();
             this.lblPlc_ = new MaterialSkin.Controls.MaterialLabel();
             this.taskGrid = new System.Windows.Forms.PropertyGrid();
+            this.RobotConfig_ = new System.Windows.Forms.TabPage();
             this.Cam2DConfigs_ = new System.Windows.Forms.TabPage();
             this.LightConfigs_ = new System.Windows.Forms.TabPage();
             this.PlcConfigs_ = new System.Windows.Forms.TabPage();
@@ -101,6 +115,7 @@ namespace loadingBox2dGui
             this.materialDivider3 = new MaterialSkin.Controls.MaterialDivider();
             this.lblSaveData_ = new MaterialSkin.Controls.MaterialLabel();
             this.folderBrowserDialoglogPath = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnUpdateMasterData_ = new MaterialSkin.Controls.MaterialButton();
             this.ctxtMenuCameraDel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -112,6 +127,8 @@ namespace loadingBox2dGui
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.materialCard2.SuspendLayout();
+            this.materialCard1.SuspendLayout();
             this.cardFolderPath.SuspendLayout();
             this.cardCamera.SuspendLayout();
             this.cardCarType.SuspendLayout();
@@ -159,6 +176,7 @@ namespace loadingBox2dGui
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.btnUpdateMasterData_);
             this.splitContainer1.Panel2.Controls.Add(this.cmbLanguage);
             this.splitContainer1.Panel2.Controls.Add(this.btnChangePassword_);
             this.splitContainer1.Panel2.Controls.Add(this.btnFactoryReset_);
@@ -171,6 +189,7 @@ namespace loadingBox2dGui
             // SettingManagerTabControl
             // 
             this.SettingManagerTabControl.Controls.Add(this.ConfigDict_);
+            this.SettingManagerTabControl.Controls.Add(this.RobotConfig_);
             this.SettingManagerTabControl.Controls.Add(this.Cam2DConfigs_);
             this.SettingManagerTabControl.Controls.Add(this.LightConfigs_);
             this.SettingManagerTabControl.Controls.Add(this.PlcConfigs_);
@@ -207,6 +226,7 @@ namespace loadingBox2dGui
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.materialCard2);
             this.splitContainer2.Panel1.Controls.Add(this.materialCard1);
             this.splitContainer2.Panel1.Controls.Add(this.cardFolderPath);
             this.splitContainer2.Panel1.Controls.Add(this.cardCamera);
@@ -222,73 +242,376 @@ namespace loadingBox2dGui
             this.splitContainer2.TabIndex = 20;
             this.splitContainer2.TabStop = false;
             // 
+            // materialCard2
+            // 
+            this.materialCard2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard2.Controls.Add(this.btnCameraTcpRootFolderPath);
+            this.materialCard2.Controls.Add(this.tbCameraTcp);
+            this.materialCard2.Controls.Add(this.lblCameraTcp);
+            this.materialCard2.Controls.Add(this.btnCalibrationRootFolderPath_);
+            this.materialCard2.Controls.Add(this.tbCalibrationRootFolderPath);
+            this.materialCard2.Controls.Add(this.lblCalibrationRootFolderPath_);
+            this.materialCard2.Controls.Add(this.tbMasterImageRootPath);
+            this.materialCard2.Controls.Add(this.tbCheckerBoardRootPath);
+            this.materialCard2.Controls.Add(this.lblMasterImageFilePath);
+            this.materialCard2.Controls.Add(this.lblCharucoFilePath);
+            this.materialCard2.Controls.Add(this.lblImageRootFolderPath_);
+            this.materialCard2.Controls.Add(this.btnMasterImageFilePath);
+            this.materialCard2.Controls.Add(this.btnCharucoFilePath);
+            this.materialCard2.Depth = 0;
+            this.materialCard2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialCard2.Location = new System.Drawing.Point(4, 345);
+            this.materialCard2.Margin = new System.Windows.Forms.Padding(14);
+            this.materialCard2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCard2.Name = "materialCard2";
+            this.materialCard2.Padding = new System.Windows.Forms.Padding(14);
+            this.materialCard2.Size = new System.Drawing.Size(291, 179);
+            this.materialCard2.TabIndex = 42;
+            // 
+            // btnCameraTcpRootFolderPath
+            // 
+            this.btnCameraTcpRootFolderPath.AutoSize = false;
+            this.btnCameraTcpRootFolderPath.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnCameraTcpRootFolderPath.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnCameraTcpRootFolderPath.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnCameraTcpRootFolderPath.Depth = 0;
+            this.btnCameraTcpRootFolderPath.HighEmphasis = true;
+            this.btnCameraTcpRootFolderPath.Icon = null;
+            this.btnCameraTcpRootFolderPath.Location = new System.Drawing.Point(245, 142);
+            this.btnCameraTcpRootFolderPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnCameraTcpRootFolderPath.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnCameraTcpRootFolderPath.Name = "btnCameraTcpRootFolderPath";
+            this.btnCameraTcpRootFolderPath.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnCameraTcpRootFolderPath.Size = new System.Drawing.Size(32, 24);
+            this.btnCameraTcpRootFolderPath.TabIndex = 46;
+            this.btnCameraTcpRootFolderPath.Text = "...";
+            this.btnCameraTcpRootFolderPath.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnCameraTcpRootFolderPath.UseAccentColor = false;
+            this.btnCameraTcpRootFolderPath.UseVisualStyleBackColor = true;
+            // 
+            // tbCameraTcp
+            // 
+            this.tbCameraTcp.AnimateReadOnly = false;
+            this.tbCameraTcp.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbCameraTcp.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbCameraTcp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbCameraTcp.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbCameraTcp.Depth = 0;
+            this.tbCameraTcp.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbCameraTcp.HideSelection = true;
+            this.tbCameraTcp.LeadingIcon = null;
+            this.tbCameraTcp.Location = new System.Drawing.Point(114, 141);
+            this.tbCameraTcp.MaxLength = 32767;
+            this.tbCameraTcp.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbCameraTcp.Name = "tbCameraTcp";
+            this.tbCameraTcp.PasswordChar = '\0';
+            this.tbCameraTcp.PrefixSuffixText = null;
+            this.tbCameraTcp.ReadOnly = false;
+            this.tbCameraTcp.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbCameraTcp.SelectedText = "";
+            this.tbCameraTcp.SelectionLength = 0;
+            this.tbCameraTcp.SelectionStart = 0;
+            this.tbCameraTcp.ShortcutsEnabled = true;
+            this.tbCameraTcp.Size = new System.Drawing.Size(125, 26);
+            this.tbCameraTcp.TabIndex = 45;
+            this.tbCameraTcp.TabStop = false;
+            this.tbCameraTcp.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbCameraTcp.TrailingIcon = null;
+            this.tbCameraTcp.UseSystemPasswordChar = false;
+            this.tbCameraTcp.UseTallSize = false;
+            // 
+            // lblCameraTcp
+            // 
+            this.lblCameraTcp.AutoSize = true;
+            this.lblCameraTcp.BackColor = System.Drawing.Color.Transparent;
+            this.lblCameraTcp.Depth = 0;
+            this.lblCameraTcp.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblCameraTcp.Location = new System.Drawing.Point(8, 145);
+            this.lblCameraTcp.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblCameraTcp.Name = "lblCameraTcp";
+            this.lblCameraTcp.Size = new System.Drawing.Size(87, 18);
+            this.lblCameraTcp.TabIndex = 44;
+            this.lblCameraTcp.Text = "CameraTcp";
+            // 
+            // btnCalibrationRootFolderPath_
+            // 
+            this.btnCalibrationRootFolderPath_.AutoSize = false;
+            this.btnCalibrationRootFolderPath_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnCalibrationRootFolderPath_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnCalibrationRootFolderPath_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnCalibrationRootFolderPath_.Depth = 0;
+            this.btnCalibrationRootFolderPath_.HighEmphasis = true;
+            this.btnCalibrationRootFolderPath_.Icon = null;
+            this.btnCalibrationRootFolderPath_.Location = new System.Drawing.Point(245, 104);
+            this.btnCalibrationRootFolderPath_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnCalibrationRootFolderPath_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnCalibrationRootFolderPath_.Name = "btnCalibrationRootFolderPath_";
+            this.btnCalibrationRootFolderPath_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnCalibrationRootFolderPath_.Size = new System.Drawing.Size(32, 24);
+            this.btnCalibrationRootFolderPath_.TabIndex = 43;
+            this.btnCalibrationRootFolderPath_.Text = "...";
+            this.btnCalibrationRootFolderPath_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnCalibrationRootFolderPath_.UseAccentColor = false;
+            this.btnCalibrationRootFolderPath_.UseVisualStyleBackColor = true;
+            // 
+            // tbCalibrationRootFolderPath
+            // 
+            this.tbCalibrationRootFolderPath.AnimateReadOnly = false;
+            this.tbCalibrationRootFolderPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbCalibrationRootFolderPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbCalibrationRootFolderPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbCalibrationRootFolderPath.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbCalibrationRootFolderPath.Depth = 0;
+            this.tbCalibrationRootFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbCalibrationRootFolderPath.HideSelection = true;
+            this.tbCalibrationRootFolderPath.LeadingIcon = null;
+            this.tbCalibrationRootFolderPath.Location = new System.Drawing.Point(114, 103);
+            this.tbCalibrationRootFolderPath.MaxLength = 32767;
+            this.tbCalibrationRootFolderPath.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbCalibrationRootFolderPath.Name = "tbCalibrationRootFolderPath";
+            this.tbCalibrationRootFolderPath.PasswordChar = '\0';
+            this.tbCalibrationRootFolderPath.PrefixSuffixText = null;
+            this.tbCalibrationRootFolderPath.ReadOnly = false;
+            this.tbCalibrationRootFolderPath.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbCalibrationRootFolderPath.SelectedText = "";
+            this.tbCalibrationRootFolderPath.SelectionLength = 0;
+            this.tbCalibrationRootFolderPath.SelectionStart = 0;
+            this.tbCalibrationRootFolderPath.ShortcutsEnabled = true;
+            this.tbCalibrationRootFolderPath.Size = new System.Drawing.Size(125, 26);
+            this.tbCalibrationRootFolderPath.TabIndex = 42;
+            this.tbCalibrationRootFolderPath.TabStop = false;
+            this.tbCalibrationRootFolderPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbCalibrationRootFolderPath.TrailingIcon = null;
+            this.tbCalibrationRootFolderPath.UseSystemPasswordChar = false;
+            this.tbCalibrationRootFolderPath.UseTallSize = false;
+            // 
+            // lblCalibrationRootFolderPath_
+            // 
+            this.lblCalibrationRootFolderPath_.AutoSize = true;
+            this.lblCalibrationRootFolderPath_.BackColor = System.Drawing.Color.Transparent;
+            this.lblCalibrationRootFolderPath_.Depth = 0;
+            this.lblCalibrationRootFolderPath_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblCalibrationRootFolderPath_.Location = new System.Drawing.Point(8, 111);
+            this.lblCalibrationRootFolderPath_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblCalibrationRootFolderPath_.Name = "lblCalibrationRootFolderPath_";
+            this.lblCalibrationRootFolderPath_.Size = new System.Drawing.Size(84, 18);
+            this.lblCalibrationRootFolderPath_.TabIndex = 41;
+            this.lblCalibrationRootFolderPath_.Text = "Calibration";
+            // 
+            // tbMasterImageRootPath
+            // 
+            this.tbMasterImageRootPath.AnimateReadOnly = false;
+            this.tbMasterImageRootPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbMasterImageRootPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbMasterImageRootPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbMasterImageRootPath.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbMasterImageRootPath.Depth = 0;
+            this.tbMasterImageRootPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbMasterImageRootPath.HideSelection = true;
+            this.tbMasterImageRootPath.LeadingIcon = null;
+            this.tbMasterImageRootPath.Location = new System.Drawing.Point(114, 68);
+            this.tbMasterImageRootPath.MaxLength = 32767;
+            this.tbMasterImageRootPath.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbMasterImageRootPath.Name = "tbMasterImageRootPath";
+            this.tbMasterImageRootPath.PasswordChar = '\0';
+            this.tbMasterImageRootPath.PrefixSuffixText = null;
+            this.tbMasterImageRootPath.ReadOnly = false;
+            this.tbMasterImageRootPath.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbMasterImageRootPath.SelectedText = "";
+            this.tbMasterImageRootPath.SelectionLength = 0;
+            this.tbMasterImageRootPath.SelectionStart = 0;
+            this.tbMasterImageRootPath.ShortcutsEnabled = true;
+            this.tbMasterImageRootPath.Size = new System.Drawing.Size(125, 26);
+            this.tbMasterImageRootPath.TabIndex = 40;
+            this.tbMasterImageRootPath.TabStop = false;
+            this.tbMasterImageRootPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbMasterImageRootPath.TrailingIcon = null;
+            this.tbMasterImageRootPath.UseSystemPasswordChar = false;
+            this.tbMasterImageRootPath.UseTallSize = false;
+            // 
+            // tbCheckerBoardRootPath
+            // 
+            this.tbCheckerBoardRootPath.AnimateReadOnly = false;
+            this.tbCheckerBoardRootPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbCheckerBoardRootPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbCheckerBoardRootPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbCheckerBoardRootPath.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbCheckerBoardRootPath.Depth = 0;
+            this.tbCheckerBoardRootPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbCheckerBoardRootPath.HideSelection = true;
+            this.tbCheckerBoardRootPath.LeadingIcon = null;
+            this.tbCheckerBoardRootPath.Location = new System.Drawing.Point(114, 27);
+            this.tbCheckerBoardRootPath.MaxLength = 32767;
+            this.tbCheckerBoardRootPath.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbCheckerBoardRootPath.Name = "tbCheckerBoardRootPath";
+            this.tbCheckerBoardRootPath.PasswordChar = '\0';
+            this.tbCheckerBoardRootPath.PrefixSuffixText = null;
+            this.tbCheckerBoardRootPath.ReadOnly = false;
+            this.tbCheckerBoardRootPath.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbCheckerBoardRootPath.SelectedText = "";
+            this.tbCheckerBoardRootPath.SelectionLength = 0;
+            this.tbCheckerBoardRootPath.SelectionStart = 0;
+            this.tbCheckerBoardRootPath.ShortcutsEnabled = true;
+            this.tbCheckerBoardRootPath.Size = new System.Drawing.Size(125, 26);
+            this.tbCheckerBoardRootPath.TabIndex = 40;
+            this.tbCheckerBoardRootPath.TabStop = false;
+            this.tbCheckerBoardRootPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbCheckerBoardRootPath.TrailingIcon = null;
+            this.tbCheckerBoardRootPath.UseSystemPasswordChar = false;
+            this.tbCheckerBoardRootPath.UseTallSize = false;
+            // 
+            // lblMasterImageFilePath
+            // 
+            this.lblMasterImageFilePath.AutoSize = true;
+            this.lblMasterImageFilePath.BackColor = System.Drawing.Color.Transparent;
+            this.lblMasterImageFilePath.Depth = 0;
+            this.lblMasterImageFilePath.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblMasterImageFilePath.Location = new System.Drawing.Point(9, 73);
+            this.lblMasterImageFilePath.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblMasterImageFilePath.Name = "lblMasterImageFilePath";
+            this.lblMasterImageFilePath.Size = new System.Drawing.Size(101, 18);
+            this.lblMasterImageFilePath.TabIndex = 2;
+            this.lblMasterImageFilePath.Text = "MasterImage";
+            // 
+            // lblCharucoFilePath
+            // 
+            this.lblCharucoFilePath.AutoSize = true;
+            this.lblCharucoFilePath.BackColor = System.Drawing.Color.Transparent;
+            this.lblCharucoFilePath.Depth = 0;
+            this.lblCharucoFilePath.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblCharucoFilePath.Location = new System.Drawing.Point(9, 32);
+            this.lblCharucoFilePath.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblCharucoFilePath.Name = "lblCharucoFilePath";
+            this.lblCharucoFilePath.Size = new System.Drawing.Size(65, 18);
+            this.lblCharucoFilePath.TabIndex = 2;
+            this.lblCharucoFilePath.Text = "Charuco";
+            // 
+            // lblImageRootFolderPath_
+            // 
+            this.lblImageRootFolderPath_.AutoSize = true;
+            this.lblImageRootFolderPath_.BackColor = System.Drawing.Color.Transparent;
+            this.lblImageRootFolderPath_.Depth = 0;
+            this.lblImageRootFolderPath_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblImageRootFolderPath_.Location = new System.Drawing.Point(5, 5);
+            this.lblImageRootFolderPath_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblImageRootFolderPath_.Name = "lblImageRootFolderPath_";
+            this.lblImageRootFolderPath_.Size = new System.Drawing.Size(180, 18);
+            this.lblImageRootFolderPath_.TabIndex = 0;
+            this.lblImageRootFolderPath_.Text = "Image Root Folder Path";
+            // 
+            // btnMasterImageFilePath
+            // 
+            this.btnMasterImageFilePath.AutoSize = false;
+            this.btnMasterImageFilePath.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnMasterImageFilePath.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnMasterImageFilePath.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnMasterImageFilePath.Depth = 0;
+            this.btnMasterImageFilePath.HighEmphasis = true;
+            this.btnMasterImageFilePath.Icon = null;
+            this.btnMasterImageFilePath.Location = new System.Drawing.Point(245, 67);
+            this.btnMasterImageFilePath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnMasterImageFilePath.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnMasterImageFilePath.Name = "btnMasterImageFilePath";
+            this.btnMasterImageFilePath.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnMasterImageFilePath.Size = new System.Drawing.Size(32, 24);
+            this.btnMasterImageFilePath.TabIndex = 18;
+            this.btnMasterImageFilePath.Text = "...";
+            this.btnMasterImageFilePath.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnMasterImageFilePath.UseAccentColor = false;
+            this.btnMasterImageFilePath.UseVisualStyleBackColor = true;
+            // 
+            // btnCharucoFilePath
+            // 
+            this.btnCharucoFilePath.AutoSize = false;
+            this.btnCharucoFilePath.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnCharucoFilePath.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnCharucoFilePath.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnCharucoFilePath.Depth = 0;
+            this.btnCharucoFilePath.HighEmphasis = true;
+            this.btnCharucoFilePath.Icon = null;
+            this.btnCharucoFilePath.Location = new System.Drawing.Point(245, 26);
+            this.btnCharucoFilePath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnCharucoFilePath.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnCharucoFilePath.Name = "btnCharucoFilePath";
+            this.btnCharucoFilePath.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnCharucoFilePath.Size = new System.Drawing.Size(32, 24);
+            this.btnCharucoFilePath.TabIndex = 18;
+            this.btnCharucoFilePath.Text = "...";
+            this.btnCharucoFilePath.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnCharucoFilePath.UseAccentColor = false;
+            this.btnCharucoFilePath.UseVisualStyleBackColor = true;
+            // 
             // materialCard1
             // 
             this.materialCard1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard1.Controls.Add(this.cmbRobot_);
+            this.materialCard1.Controls.Add(this.lblRobot_);
             this.materialCard1.Depth = 0;
             this.materialCard1.Enabled = false;
             this.materialCard1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard1.Location = new System.Drawing.Point(18, 315);
+            this.materialCard1.Location = new System.Drawing.Point(4, 277);
             this.materialCard1.Margin = new System.Windows.Forms.Padding(14);
             this.materialCard1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCard1.Name = "materialCard1";
             this.materialCard1.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard1.Size = new System.Drawing.Size(281, 132);
+            this.materialCard1.Size = new System.Drawing.Size(291, 62);
             this.materialCard1.TabIndex = 2;
             this.materialCard1.Visible = false;
+            // 
+            // cmbRobot_
+            // 
+            this.cmbRobot_.AutoResize = false;
+            this.cmbRobot_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cmbRobot_.Depth = 0;
+            this.cmbRobot_.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.cmbRobot_.DropDownHeight = 102;
+            this.cmbRobot_.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRobot_.DropDownWidth = 121;
+            this.cmbRobot_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.cmbRobot_.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.cmbRobot_.FormattingEnabled = true;
+            this.cmbRobot_.IntegralHeight = false;
+            this.cmbRobot_.ItemHeight = 25;
+            this.cmbRobot_.Location = new System.Drawing.Point(81, 17);
+            this.cmbRobot_.MaxDropDownItems = 4;
+            this.cmbRobot_.MouseState = MaterialSkin.MouseState.OUT;
+            this.cmbRobot_.Name = "cmbRobot_";
+            this.cmbRobot_.Size = new System.Drawing.Size(185, 31);
+            this.cmbRobot_.StartIndex = 0;
+            this.cmbRobot_.TabIndex = 2;
+            this.cmbRobot_.UseTallSize = false;
+            // 
+            // lblRobot_
+            // 
+            this.lblRobot_.AutoSize = true;
+            this.lblRobot_.BackColor = System.Drawing.Color.Transparent;
+            this.lblRobot_.Depth = 0;
+            this.lblRobot_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblRobot_.Location = new System.Drawing.Point(6, 30);
+            this.lblRobot_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblRobot_.Name = "lblRobot_";
+            this.lblRobot_.Size = new System.Drawing.Size(47, 18);
+            this.lblRobot_.TabIndex = 2;
+            this.lblRobot_.Text = "Robot";
             // 
             // cardFolderPath
             // 
             this.cardFolderPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cardFolderPath.Controls.Add(this.tbRoiPath);
             this.cardFolderPath.Controls.Add(this.tbModelPath);
-            this.cardFolderPath.Controls.Add(this.lblRoiPath_);
-            this.cardFolderPath.Controls.Add(this.lblPrimerModel_);
-            this.cardFolderPath.Controls.Add(this.lblFilePaths_);
-            this.cardFolderPath.Controls.Add(this.btnRoiPath);
+            this.cardFolderPath.Controls.Add(this.lblShiftModel_);
+            this.cardFolderPath.Controls.Add(this.lblModelFilePaths_);
             this.cardFolderPath.Controls.Add(this.btnModelPath);
             this.cardFolderPath.Depth = 0;
             this.cardFolderPath.Enabled = false;
             this.cardFolderPath.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cardFolderPath.Location = new System.Drawing.Point(14, 507);
+            this.cardFolderPath.Location = new System.Drawing.Point(4, 544);
             this.cardFolderPath.Margin = new System.Windows.Forms.Padding(14);
             this.cardFolderPath.MouseState = MaterialSkin.MouseState.HOVER;
             this.cardFolderPath.Name = "cardFolderPath";
             this.cardFolderPath.Padding = new System.Windows.Forms.Padding(14);
-            this.cardFolderPath.Size = new System.Drawing.Size(281, 123);
+            this.cardFolderPath.Size = new System.Drawing.Size(291, 75);
             this.cardFolderPath.TabIndex = 1;
             this.cardFolderPath.Visible = false;
-            // 
-            // tbRoiPath
-            // 
-            this.tbRoiPath.AnimateReadOnly = false;
-            this.tbRoiPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbRoiPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbRoiPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbRoiPath.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbRoiPath.Depth = 0;
-            this.tbRoiPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbRoiPath.HideSelection = true;
-            this.tbRoiPath.LeadingIcon = null;
-            this.tbRoiPath.Location = new System.Drawing.Point(114, 81);
-            this.tbRoiPath.MaxLength = 32767;
-            this.tbRoiPath.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbRoiPath.Name = "tbRoiPath";
-            this.tbRoiPath.PasswordChar = '\0';
-            this.tbRoiPath.PrefixSuffixText = null;
-            this.tbRoiPath.ReadOnly = false;
-            this.tbRoiPath.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbRoiPath.SelectedText = "";
-            this.tbRoiPath.SelectionLength = 0;
-            this.tbRoiPath.SelectionStart = 0;
-            this.tbRoiPath.ShortcutsEnabled = true;
-            this.tbRoiPath.Size = new System.Drawing.Size(125, 26);
-            this.tbRoiPath.TabIndex = 40;
-            this.tbRoiPath.TabStop = false;
-            this.tbRoiPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbRoiPath.TrailingIcon = null;
-            this.tbRoiPath.UseSystemPasswordChar = false;
-            this.tbRoiPath.UseTallSize = false;
             // 
             // tbModelPath
             // 
@@ -321,66 +644,31 @@ namespace loadingBox2dGui
             this.tbModelPath.UseSystemPasswordChar = false;
             this.tbModelPath.UseTallSize = false;
             // 
-            // lblRoiPath_
+            // lblShiftModel_
             // 
-            this.lblRoiPath_.AutoSize = true;
-            this.lblRoiPath_.BackColor = System.Drawing.Color.Transparent;
-            this.lblRoiPath_.Depth = 0;
-            this.lblRoiPath_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblRoiPath_.Location = new System.Drawing.Point(9, 86);
-            this.lblRoiPath_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblRoiPath_.Name = "lblRoiPath_";
-            this.lblRoiPath_.Size = new System.Drawing.Size(74, 18);
-            this.lblRoiPath_.TabIndex = 2;
-            this.lblRoiPath_.Text = "RoiFolder";
+            this.lblShiftModel_.AutoSize = true;
+            this.lblShiftModel_.BackColor = System.Drawing.Color.Transparent;
+            this.lblShiftModel_.Depth = 0;
+            this.lblShiftModel_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblShiftModel_.Location = new System.Drawing.Point(9, 45);
+            this.lblShiftModel_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblShiftModel_.Name = "lblShiftModel_";
+            this.lblShiftModel_.Size = new System.Drawing.Size(37, 18);
+            this.lblShiftModel_.TabIndex = 2;
+            this.lblShiftModel_.Text = "Shift";
             // 
-            // lblPrimerModel_
+            // lblModelFilePaths_
             // 
-            this.lblPrimerModel_.AutoSize = true;
-            this.lblPrimerModel_.BackColor = System.Drawing.Color.Transparent;
-            this.lblPrimerModel_.Depth = 0;
-            this.lblPrimerModel_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblPrimerModel_.Location = new System.Drawing.Point(9, 45);
-            this.lblPrimerModel_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblPrimerModel_.Name = "lblPrimerModel_";
-            this.lblPrimerModel_.Size = new System.Drawing.Size(100, 18);
-            this.lblPrimerModel_.TabIndex = 2;
-            this.lblPrimerModel_.Text = "PrimerModel";
-            // 
-            // lblFilePaths_
-            // 
-            this.lblFilePaths_.AutoSize = true;
-            this.lblFilePaths_.BackColor = System.Drawing.Color.Transparent;
-            this.lblFilePaths_.Depth = 0;
-            this.lblFilePaths_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblFilePaths_.Location = new System.Drawing.Point(5, 5);
-            this.lblFilePaths_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblFilePaths_.Name = "lblFilePaths_";
-            this.lblFilePaths_.Size = new System.Drawing.Size(62, 18);
-            this.lblFilePaths_.TabIndex = 0;
-            this.lblFilePaths_.Text = "FilePath";
-            // 
-            // btnRoiPath
-            // 
-            this.btnRoiPath.AutoSize = false;
-            this.btnRoiPath.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnRoiPath.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnRoiPath.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnRoiPath.Depth = 0;
-            this.btnRoiPath.HighEmphasis = true;
-            this.btnRoiPath.Icon = null;
-            this.btnRoiPath.Location = new System.Drawing.Point(245, 81);
-            this.btnRoiPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnRoiPath.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnRoiPath.Name = "btnRoiPath";
-            this.btnRoiPath.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnRoiPath.Size = new System.Drawing.Size(32, 24);
-            this.btnRoiPath.TabIndex = 18;
-            this.btnRoiPath.Text = "...";
-            this.btnRoiPath.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnRoiPath.UseAccentColor = false;
-            this.btnRoiPath.UseVisualStyleBackColor = true;
-            this.btnRoiPath.Click += new System.EventHandler(this.btnRoiPath_Click);
+            this.lblModelFilePaths_.AutoSize = true;
+            this.lblModelFilePaths_.BackColor = System.Drawing.Color.Transparent;
+            this.lblModelFilePaths_.Depth = 0;
+            this.lblModelFilePaths_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblModelFilePaths_.Location = new System.Drawing.Point(5, 5);
+            this.lblModelFilePaths_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblModelFilePaths_.Name = "lblModelFilePaths_";
+            this.lblModelFilePaths_.Size = new System.Drawing.Size(109, 18);
+            this.lblModelFilePaths_.TabIndex = 0;
+            this.lblModelFilePaths_.Text = "ModelFilePath";
             // 
             // btnModelPath
             // 
@@ -413,12 +701,12 @@ namespace loadingBox2dGui
             this.cardCamera.Controls.Add(this.cmbCamera);
             this.cardCamera.Depth = 0;
             this.cardCamera.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cardCamera.Location = new System.Drawing.Point(18, 109);
+            this.cardCamera.Location = new System.Drawing.Point(4, 90);
             this.cardCamera.Margin = new System.Windows.Forms.Padding(14);
             this.cardCamera.MouseState = MaterialSkin.MouseState.HOVER;
             this.cardCamera.Name = "cardCamera";
             this.cardCamera.Padding = new System.Windows.Forms.Padding(14);
-            this.cardCamera.Size = new System.Drawing.Size(281, 107);
+            this.cardCamera.Size = new System.Drawing.Size(291, 107);
             this.cardCamera.TabIndex = 12;
             // 
             // cmbLight
@@ -508,12 +796,12 @@ namespace loadingBox2dGui
             this.cardCarType.Controls.Add(this.cmbCarType);
             this.cardCarType.Depth = 0;
             this.cardCarType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cardCarType.Location = new System.Drawing.Point(18, 14);
+            this.cardCarType.Location = new System.Drawing.Point(4, 4);
             this.cardCarType.Margin = new System.Windows.Forms.Padding(14);
             this.cardCarType.MouseState = MaterialSkin.MouseState.HOVER;
             this.cardCarType.Name = "cardCarType";
             this.cardCarType.Padding = new System.Windows.Forms.Padding(14);
-            this.cardCarType.Size = new System.Drawing.Size(281, 82);
+            this.cardCarType.Size = new System.Drawing.Size(291, 82);
             this.cardCarType.TabIndex = 1;
             // 
             // tbCarType
@@ -659,12 +947,12 @@ namespace loadingBox2dGui
             this.cardPlc.Controls.Add(this.lblPlc_);
             this.cardPlc.Depth = 0;
             this.cardPlc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cardPlc.Location = new System.Drawing.Point(18, 231);
+            this.cardPlc.Location = new System.Drawing.Point(4, 202);
             this.cardPlc.Margin = new System.Windows.Forms.Padding(14);
             this.cardPlc.MouseState = MaterialSkin.MouseState.HOVER;
             this.cardPlc.Name = "cardPlc";
             this.cardPlc.Padding = new System.Windows.Forms.Padding(14);
-            this.cardPlc.Size = new System.Drawing.Size(281, 70);
+            this.cardPlc.Size = new System.Drawing.Size(291, 70);
             this.cardPlc.TabIndex = 1;
             // 
             // cmbPlc
@@ -726,6 +1014,16 @@ namespace loadingBox2dGui
             this.taskGrid.ToolbarVisible = false;
             this.taskGrid.ViewBackColor = System.Drawing.Color.White;
             this.taskGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.taskGrid_PropertyValueChanged);
+            // 
+            // RobotConfig_
+            // 
+            this.RobotConfig_.BackColor = System.Drawing.Color.White;
+            this.RobotConfig_.Location = new System.Drawing.Point(4, 22);
+            this.RobotConfig_.Name = "RobotConfig_";
+            this.RobotConfig_.Padding = new System.Windows.Forms.Padding(3);
+            this.RobotConfig_.Size = new System.Drawing.Size(1399, 643);
+            this.RobotConfig_.TabIndex = 11;
+            this.RobotConfig_.Text = "ROBOT";
             // 
             // Cam2DConfigs_
             // 
@@ -1345,6 +1643,30 @@ namespace loadingBox2dGui
             this.lblSaveData_.TabIndex = 15;
             this.lblSaveData_.Text = "Save Data";
             // 
+            // btnUpdateMasterData_
+            // 
+            this.btnUpdateMasterData_.AutoSize = false;
+            this.btnUpdateMasterData_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnUpdateMasterData_.BackColor = System.Drawing.SystemColors.Control;
+            this.btnUpdateMasterData_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnUpdateMasterData_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnUpdateMasterData_.Depth = 0;
+            this.btnUpdateMasterData_.HighEmphasis = true;
+            this.btnUpdateMasterData_.Icon = null;
+            this.btnUpdateMasterData_.Location = new System.Drawing.Point(1184, 6);
+            this.btnUpdateMasterData_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnUpdateMasterData_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnUpdateMasterData_.Name = "btnUpdateMasterData_";
+            this.btnUpdateMasterData_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnUpdateMasterData_.Size = new System.Drawing.Size(219, 36);
+            this.btnUpdateMasterData_.TabIndex = 31;
+            this.btnUpdateMasterData_.Text = "Update MasterData";
+            this.btnUpdateMasterData_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnUpdateMasterData_.UseAccentColor = false;
+            this.btnUpdateMasterData_.UseVisualStyleBackColor = false;
+            this.btnUpdateMasterData_.Visible = false;
+            this.btnUpdateMasterData_.Click += new System.EventHandler(this.btnUpdateMasterData__Click);
+            // 
             // CargoBox2DSettingManagerForm_
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1359,8 +1681,8 @@ namespace loadingBox2dGui
             this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Setting Manager";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PrimerSettingManagerForm_FormClosing);
-            this.Load += new System.EventHandler(this.PrimerSettingManagerForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CargoBox2DSettingManagerForm_FormClosing);
+            this.Load += new System.EventHandler(this.CargoBox2DSettingManagerForm_Load);
             this.ctxtMenuCameraDel.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -1372,6 +1694,10 @@ namespace loadingBox2dGui
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.materialCard2.ResumeLayout(false);
+            this.materialCard2.PerformLayout();
+            this.materialCard1.ResumeLayout(false);
+            this.materialCard1.PerformLayout();
             this.cardFolderPath.ResumeLayout(false);
             this.cardFolderPath.PerformLayout();
             this.cardCamera.ResumeLayout(false);
@@ -1458,14 +1784,29 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialLabel lblCarType_;
         private MaterialSkin.Controls.MaterialComboBox cmbCarType;
         private MaterialSkin.Controls.MaterialCard cardFolderPath;
-        private MaterialSkin.Controls.MaterialLabel lblFilePaths_;
-        private MaterialSkin.Controls.MaterialLabel lblPrimerModel_;
+        private MaterialSkin.Controls.MaterialLabel lblModelFilePaths_;
+        private MaterialSkin.Controls.MaterialLabel lblShiftModel_;
         private MaterialSkin.Controls.MaterialLabel lblLogSavePath_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbRoiPath;
-        private MaterialSkin.Controls.MaterialLabel lblRoiPath_;
-        private MaterialSkin.Controls.MaterialButton btnRoiPath;
         private CoPick.Controls.CleTimePicker dtpScheduleStartTime;
         private CoPick.Controls.CleTimePicker dtpDailyProdResetTime;
         private MaterialSkin.Controls.MaterialCard materialCard1;
+        private MaterialSkin.Controls.MaterialComboBox cmbRobot_;
+        private MaterialSkin.Controls.MaterialLabel lblRobot_;
+        private MaterialSkin.Controls.MaterialCard materialCard2;
+        private MaterialSkin.Controls.MaterialButton btnCalibrationRootFolderPath_;
+        private MaterialSkin.Controls.MaterialTextBox2 tbCalibrationRootFolderPath;
+        private MaterialSkin.Controls.MaterialLabel lblCalibrationRootFolderPath_;
+        private MaterialSkin.Controls.MaterialTextBox2 tbMasterImageRootPath;
+        private MaterialSkin.Controls.MaterialTextBox2 tbCheckerBoardRootPath;
+        private MaterialSkin.Controls.MaterialLabel lblMasterImageFilePath;
+        private MaterialSkin.Controls.MaterialLabel lblCharucoFilePath;
+        private MaterialSkin.Controls.MaterialLabel lblImageRootFolderPath_;
+        private MaterialSkin.Controls.MaterialButton btnMasterImageFilePath;
+        private MaterialSkin.Controls.MaterialButton btnCharucoFilePath;
+        private MaterialSkin.Controls.MaterialButton btnCameraTcpRootFolderPath;
+        private MaterialSkin.Controls.MaterialTextBox2 tbCameraTcp;
+        private MaterialSkin.Controls.MaterialLabel lblCameraTcp;
+        private TabPage RobotConfig_;
+        private MaterialSkin.Controls.MaterialButton btnUpdateMasterData_;
     }
 }
