@@ -34,7 +34,49 @@ namespace loadingBox2dGui.models
             RoiHeight = int.Parse(camParameterDict[Camera2DAttribute.CameraResolutionRoiHeight]);
             IpAddress = camParameterDict[Camera2DAttribute.IPAdr];
         }
+        public Dictionary<Camera2DAttribute, string> ToDictionary()
+        {
+            var camParameterDict = new Dictionary<Camera2DAttribute, string>
+            {
+                { Camera2DAttribute.Gain, Gain.ToString() },
+                { Camera2DAttribute.Exposure, ExposureTimeMicroSeconds.ToString() },
+                { Camera2DAttribute.CameraResolutionRoiTopLeftX, RoiX.ToString() },
+                { Camera2DAttribute.CameraResolutionRoiTopLeftY, RoiY.ToString() },
+                { Camera2DAttribute.CameraResolutionRoiWidth, RoiWidth.ToString() },
+                { Camera2DAttribute.CameraResolutionRoiHeight, RoiHeight.ToString() },
+                { Camera2DAttribute.IPAdr, IpAddress }
+            };
+        
+            return camParameterDict;
+        }
+        public bool AdjustInstanceValues()
+        {
+            bool adjustmentOccured = false;
+            // Loop through each property of IdsCamParameter
+            foreach (var property in GetType().GetProperties())
+            {
+                // Retrieve the MinMaxIntervalValidator attribute from the property
+                var validatorAttribute = (MinMaxIntervalAdjustmentValidator)Attribute.GetCustomAttribute(property, typeof(MinMaxIntervalAdjustmentValidator));
+                
+                if (validatorAttribute != null)
+                {
+                    var value = property.GetValue(this);
+                    var (validationResult, errorCode, adjustedValue) = validatorAttribute.ValidateValueFromInstance(this, value);
+                    if (validationResult == ValidityCheckResult.Error)
+                    {
+                        continue;
+                    }
+                    else if (validationResult == ValidityCheckResult.Adjusted)
+                    {
+                        adjustmentOccured = true; 
+                    }
+                    else { }
 
+                    property.SetValue(this, adjustedValue);
+                }
+            }
+            return adjustmentOccured;
+        }
         public void AdjustCameraParameters(Dictionary<Camera2DAttribute, string> camParameterDict)
         {
             Gain = int.Parse(camParameterDict[Camera2DAttribute.Gain]);
@@ -111,7 +153,8 @@ namespace loadingBox2dGui.models
                     output = input; 
                     return ValidityCheckResult.Pass;
 
-                default: // passing back camera2dattributes that does not have implementations
+                default:
+                    // passing back camera2dattributes that does not have custom validator implementations
                     output = input;
                     return ValidityCheckResult.Pass;
             }
@@ -124,10 +167,6 @@ namespace loadingBox2dGui.models
         {
             var propertyInfo = instance.GetType().GetProperty(propertyName);
             MinMaxIntervalAdjustmentValidator validator = propertyInfo.GetCustomAttribute(typeof(MinMaxIntervalAdjustmentValidator)) as MinMaxIntervalAdjustmentValidator;
-            if (validator == null)
-            {
-                throw new InvalidOperationException($"{nameof(MinMaxIntervalAdjustmentValidator)} not found on the given instance {nameof(instance)}");
-            }
             return validator;
         }
     }

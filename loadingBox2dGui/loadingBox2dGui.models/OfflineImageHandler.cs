@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace loadingBox2dGui.models
 {
-    public class OfflineImageHandler: IImageProvider<InspectionLocation>
+    public class OfflineImageHandler : IImageProvider<InspectionLocation>
     {
         private static readonly LogHelper Logger = LogHelper.Logger;
         private int _currentCar = 0;
@@ -122,6 +122,7 @@ namespace loadingBox2dGui.models
             {
                 try
                 {
+                    Logger.Info($"Fetching image");
                     BitmapData bmpData = bitmap.LockBits(
                     new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                     ImageLockMode.ReadOnly,
@@ -141,6 +142,7 @@ namespace loadingBox2dGui.models
             }
             else
             {
+                Logger.Error($"no image found!on location {location}");
                 return null;
             }
         }
@@ -172,9 +174,15 @@ namespace loadingBox2dGui.models
                 return null;
             }
         }
+
+        public (InspectionLocation, Bitmap)[] GetAllBitmaps()
+        {
+            return _cartypeToBmpDict[_currentCar].Select(x => (x.Key, x.Value)).ToArray();
+        }
     }
     public interface IImageProvider<T> where T: Enum
     {
         Bitmap GetBitmapImage(T camLoc);
+        (InspectionLocation, Bitmap)[] GetAllBitmaps();
     }
 }

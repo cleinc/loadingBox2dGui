@@ -41,10 +41,10 @@ namespace loadingBox2dGui.models
                 catch (Exception) { }
             }
         }
-        public string CheckerBoardRootFolderPath { get; set; } = "undefined";
         public string CalibrationDataRootPath { get; set; } = "undefined";
         public string ZRotationPerLocationDataFilePath { get; set; } = "undefined";
         public string CameraTcpDataRootFolderPath { get; set; } = "undefined";
+        public string ArucoDataRootFolderPath { get; set; } = "C:/Data/Aruco";
         public bool OfflineMode { get; set; } = false;
 
         public Config()
@@ -64,6 +64,10 @@ namespace loadingBox2dGui.models
             LightConfigs = new Dictionary<string, Dictionary<LightAttribute, string>>()
             {
                 ["ModbusLightCommunicator"] = DefaultSettingLoader.Lights[LightMaker.MODBUS]()
+            };
+            RobotConfigs = new Dictionary<string, Dictionary<RobotAttribute, string>>()
+            {
+                ["Install"] = DefaultSettingLoader.Robots[RobotMaker.YASKAWA]()
             };
             ConfigDict[0] = new CargoBox2DConfig();
         }
@@ -93,7 +97,7 @@ namespace loadingBox2dGui.models
         }
         public List<string> GetRobotList()
         {
-            return RobotConfigs.Keys.ToList();
+            return RobotConfigs.Keys?.ToList();
         }
 
         public CargoBox2DConfig this[int key]
@@ -127,8 +131,7 @@ namespace loadingBox2dGui.models
         {
             try
             {
-                string carString = Encoding.UTF8.GetString(Convert.FromBase64String(File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "msg_format.dat"))));
-                var carList = carString.Replace("C", "").Replace("L", "").Split('E').Select(c => Convert.ToInt32(c)).ToArray();
+                var carList = GetPermittedCarTypeList();
                 var invalidList = ConfigDict.Keys.Where(k => !carList.Contains(k)).ToArray();
                 foreach (var carType in invalidList)
                 {
@@ -138,6 +141,22 @@ namespace loadingBox2dGui.models
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+            }
+        }
+
+        public List<int> GetPermittedCarTypeList()
+        {
+            List<int> permittedCarTypeList = new List<int>();
+            try
+            {
+                string carString = Encoding.UTF8.GetString(Convert.FromBase64String(File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "msg_format.dat"))));
+                permittedCarTypeList = carString.Replace("C", "").Replace("L", "").Split('E').Select(c => Convert.ToInt32(c)).ToList();
+                return permittedCarTypeList;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return permittedCarTypeList;
             }
         }
     }

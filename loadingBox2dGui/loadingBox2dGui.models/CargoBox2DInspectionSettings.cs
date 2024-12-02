@@ -60,28 +60,30 @@ namespace loadingBox2dGui.models
         public ulong ImageDataLength; // Corresponds to size_t in C++
         
         public SensorType SensorType; // IDS RO PYLON 
-        public int CarType; // ~= CarName. Should be identical to when loading master Image and charucoboardconfig. TODO: Decide whether to switch this to int format
+        public int CarType;
         public InspectionLocation CameraLocation; // int section
 
         public int Width; // Image width
         public int Height; // Image height
         public int Stride; // Image stride
         public Pose6D Shift6D;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+        public double[] ScanPose4x4Matrix;
         public uint CheckSum;
-        public static ImageStruct GetIdsImageStruct(IntPtr imageData, ulong imageDataLength, int width, int height, int stride)
+        public static ImageStruct GetPylonImageStruct(IntPtr imageData, ulong imageDataLength, int width, int height, int stride)
         {
             return new ImageStruct()
             {
                 Version = 1, ImageData = imageData, ImageDataLength = imageDataLength,
                 SensorType = SensorType.PYLON, Width = width, Height = height, Stride = stride, 
-                Shift6D = new Pose6D(), CheckSum = 123456789
+                Shift6D = new Pose6D(), ScanPose4x4Matrix = new double[16], CheckSum = 123456789
             };
         }
 
         public static ImageStruct GetDefaultImageStruct(IntPtr imageData, ulong imageDataLength, int width, int height, int stride,
             int carType, InspectionLocation location)
         {
-            ImageStruct newImgStruct = ImageStruct.GetIdsImageStruct(imageData, imageDataLength, width, height, stride);
+            ImageStruct newImgStruct = ImageStruct.GetPylonImageStruct(imageData, imageDataLength, width, height, stride);
             newImgStruct.CameraLocation = location;
             newImgStruct.CarType = carType;
             return newImgStruct;
@@ -95,7 +97,7 @@ namespace loadingBox2dGui.models
                 Version = 1, ImageData = imageData, ImageDataLength = imageDataLength,
                 SensorType = SensorType.OFFLINE, CarType = carType, CameraLocation = location, 
                 Width = width, Height = height, Stride = stride, 
-                Shift6D = new Pose6D(), CheckSum = 123456789
+                Shift6D = new Pose6D(), ScanPose4x4Matrix = new double[16], CheckSum = 123456789
             };
         }
 
@@ -123,7 +125,7 @@ namespace loadingBox2dGui.models
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 300)]
         public string SegModelPath; // Segmentation Model Path
     
-        public ImageType ImageType; // MasterImage or CheckerBoard
+        public DataType ImageType; // MasterImage or CheckerBoard
     
         public int CarType; // CarType ~ CarName
     
@@ -145,7 +147,7 @@ namespace loadingBox2dGui.models
             {
                 Version = 1,
                 SensorType = SensorType.PYLON,
-                ImageType = ImageType.MasterImage,
+                ImageType = DataType.MasterImage,
                 CameraMatrix = calibrationData?.CameraMatrix.Data.ToArray() ?? new double[9] { 0,0,0, 
                                                                                                0,0,0,
                                                                                                0,0,0 }, 
@@ -170,7 +172,7 @@ namespace loadingBox2dGui.models
             {
                 Version = 1,
                 SensorType = SensorType.PYLON,
-                ImageType = ImageType.CheckerBoard,
+                ImageType = DataType.CheckerBoard,
                 CameraMatrix = calibrationData?.CameraMatrix.Data.ToArray() ?? new double[9] { 0,0,0, 
                                                                                                0,0,0,
                                                                                                0,0,0 }, 
@@ -198,6 +200,15 @@ namespace loadingBox2dGui.models
         public float Rx;
         public float Ry;
         public float Rz;
+
+        public override string ToString()
+        {
+            return string.Format(
+            "Position: [Tx: {0:F2}, Ty: {1:F2}, Tz: {2:F2}], " +
+            "Rotation: [Rx: {3:F2}, Ry: {4:F2}, Rz: {5:F2}]",
+            Tx, Ty, Tz, Rx, Ry, Rz
+            );
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -205,7 +216,47 @@ namespace loadingBox2dGui.models
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
         public double[] TcpMatrix;
-        public static TCP GetFlattenMatrix4x4FromRobotPose(RobotPose pose)
+        public static TCP GetTCPFromRobotPose(RobotPose pose)
+            {
+            // Compute cosines and sines for the rotation matrix
+            double cosX = Math.Cos(pose.Rx);
+            double sinX = Math.Sin(pose.Rx);
+            double cosY = Math.Cos(pose.Ry);
+            double sinY = Math.Sin(pose.Ry);
+            double cosZ = Math.Cos(pose.Rz);
+            double sinZ = Math.Sin(pose.Rz);
+
+            // Compute the rotation matrix using ZYX Euler angles
+            double m11 = cosY * cosZ;
+            double m12 = cosY * sinZ;
+            double m13 = -sinY;
+
+            double m21 = sinX * sinY * cosZ - cosX * sinZ;
+            double m22 = sinX * sinY * sinZ + cosX * cosZ;
+            double m23 = sinX * cosY;
+
+            double m31 = cosX * sinY * cosZ + sinX * sinZ;
+            double m32 = cosX * sinY * sinZ - sinX * cosZ;
+            double m33 = cosX * cosY;
+
+            // Translation components
+            double tx = pose.Tx;
+            double ty = pose.Ty;
+            double tz = pose.Tz;
+
+            // Flattened 4x4 matrix
+            return new TCP
+            {
+                TcpMatrix = new double[]
+                {
+                    m11, m12, m13, 0,  // First row
+                    m21, m22, m23, 0,  // Second row
+                    m31, m32, m33, 0,  // Third row
+                    tx,  ty,  tz,  1   // Fourth row (translation + homogeneous coord)
+                }
+            };
+        }
+        public static double[] GetFlattenMatrix4x4FromRobotPose(RobotPose pose)
         {
             // Compute cosines and sines for the rotation matrix
             double cosX = Math.Cos(pose.Rx);
@@ -234,20 +285,31 @@ namespace loadingBox2dGui.models
             double tz = pose.Tz;
 
             // Flattened 4x4 matrix
-            return new TCP() 
+            return new double[]
             {
-                TcpMatrix = new double[]
-                {
-                    m11, m12, m13, 0,  // First row
-                    m21, m22, m23, 0,  // Second row
-                    m31, m32, m33, 0,  // Third row
-                    tx,  ty,  tz,  1   // Fourth row (translation + homogeneous coord)
-                }
+                m11, m12, m13, 0,  // First row
+                m21, m22, m23, 0,  // Second row
+                m31, m32, m33, 0,  // Third row
+                tx,  ty,  tz,  1   // Fourth row (translation + homogeneous coord)
             };
         }
+
         public static TCP GetDefault()
         {
             return new TCP() { TcpMatrix = new double[16] };
+        }
+        public static TCP IdentityMatrix()
+        {
+            return new TCP()
+            {
+                TcpMatrix = new double[16]
+                {
+                    1, 0, 0, 0,
+                    0, 1, 0, 0,
+                    0, 0, 1, 0,
+                    0, 0, 0, 1 
+                }
+            };
         }
         public override string ToString()
         {
@@ -268,7 +330,7 @@ namespace loadingBox2dGui.models
             );
         }
     }
-    public enum ImageType
+    public enum DataType
     {
         MasterImage, 
         CheckerBoard
@@ -281,7 +343,7 @@ namespace loadingBox2dGui.models
         PYLON
     }
 
-    public enum TaskType: int
+    public enum TaskType
     {
         Cargo, 
         TouchUp

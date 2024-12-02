@@ -1,4 +1,5 @@
 ﻿using Basler.Pylon;
+using CoPick.Robot;
 using CoPick.Setting;
 using System;
 using System.Collections.Generic;
@@ -23,22 +24,63 @@ namespace loadingBox2dGui.models
         [LocalizedDescription("DescCameraGroupName")]
         [ReadOnly(true)]
         public string Camera { get; set; } = "Unknown";
-
-        [LocalizedCategory("CategoryInspectRH", 3, 4)]
-        [LocalizedDescription("DescModelPath")]
-        [ReadOnly(true)]
-        public string ShiftModelPath { get; set; }
-        [LocalizedCategory("CategoryInspectRH", 3, 4)]
-        [LocalizedDescription("DescMasterImageRootPath")]
-        [ReadOnly(true)]
-        public string MasterImageRootFolderPath { get; set; }
-        [LocalizedCategory("CategoryInspectRH", 3, 4)]
-        [LocalizedDescription("DescOfflineImageRootPath")]
-        public string OfflineImageRootFolderPath { get; set; }
-        [LocalizedCategory("Robot", 4, 4)]
+        [LocalizedCategory("CategoryGeneral", 2, 4)]
         [LocalizedDescription("DescRobotName")]
         [ReadOnly(true)]
         public string Robot { get; set; }
+        [LocalizedCategory("CategoryMasterData", 3, 4)]
+        [LocalizedDescription("DescModelPath")]
+        [ReadOnly(true)]
+        public string ShiftModelPath { get; set; }
+        [LocalizedCategory("CategoryMasterData", 3, 4)]
+        [LocalizedDescription("DescMasterImageRootPath")]
+        [ReadOnly(true)]
+        public string MasterImageRootFolderPath { get; set; }
+        [LocalizedCategory("CategoryMasterData", 3, 4)]
+        [LocalizedDescription("DescCheckerBoardRootFolderPath")]
+        [ReadOnly(true)]
+        public string CheckerBoardRootFolderPath { get; set; } = "undefined";
+        [LocalizedCategory("CategoryMasterData", 3, 4)]
+        [LocalizedDescription("DescOfflineImageRootPath")]
+        public string OfflineImageRootFolderPath { get; set; }
+        
+
+        [LocalizedCategory("CategoryShiftCalculationParameter", 4, 4)]
+        [LocalizedDescription("DescMaxTranslationX")]
+        //[ValidatorType(ValidatorType.Float, 5.0f, 1000.0f)]
+        public float MaxTranslationX { get; set; } = 30.0f;
+
+        [LocalizedCategory("CategoryShiftCalculationParameter", 4, 4)]
+        [LocalizedDescription("DescMaxTranslationY")]
+        //[ValidatorType(ValidatorType.Float, 5.0f, 1000.0f)]
+        public float MaxTranslationY { get; set; } = 30.0f;
+
+        [LocalizedCategory("CategoryShiftCalculationParameter", 4, 4)]
+        [LocalizedDescription("DescMaxTranslationZ")]
+        //[ValidatorType(ValidatorType.Float, 5.0f, 1000.0f)]
+        public float MaxTranslationZ { get; set; } = 30.0f;
+
+        [LocalizedCategory("CategoryShiftCalculationParameter", 4, 4)]
+        [LocalizedDescription("DescMaxRotationX")]
+        public float MaxRotationX { get; set; } = 3.0f;
+
+        [LocalizedCategory("CategoryShiftCalculationParameter", 4, 4)]
+        [LocalizedDescription("DescMaxRotationY")]
+        public float MaxRotationY { get; set; } = 3.0f;
+
+        [LocalizedCategory("CategoryShiftCalculationParameter", 4, 4)]
+        [LocalizedDescription("DescMaxRotationZ")]
+        public float MaxRotationZ { get; set; } = 3.0f;
+        //[Browsable(false)]
+        //public RobotPose PoseThreshold => new RobotPose()
+        //{
+        //    Tx = MaxTranslationX, 
+        //    Ty = MaxTranslationY, 
+        //    Tz = MaxTranslationZ,
+        //    Rx = MaxRotationX,
+        //    Ry = MaxRotationY,
+        //    Rz = MaxRotationZ
+        //};
         public CargoBox2DConfig()
         {
             UpdatePropertyDescriptors();

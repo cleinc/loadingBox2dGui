@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace loadingBox2dGui.models
 {
-    public class CargoBox2DInspectionEngine
+    public class CargoBox2DInspectionEngine: ICargoBox2DInspectionEngine
     { 
         private static readonly LogHelper Logger = LogHelper.Logger;
         private bool disposedValue;
@@ -120,6 +120,12 @@ namespace loadingBox2dGui.models
             return CargoBox2DInspectionEngineApi.loadTransMat(_engineHandler, ref scanPoseTcp, ref installPoseTcp, ref leftCamTcp, ref rightCamTcp);
         }
 
+        public bool PoseAdjustmentCargoBox2D(ImageStruct[] images, int imageCount)
+        {
+            Logger.Debug("[GUI] Called PoseAdjustmentCargoBox2D API");
+            return CargoBox2DInspectionEngineApi.poseAdjustment2D(_engineHandler, images, imageCount);
+        }
+
         public class CargoBox2DInspectionEngineApi
         {
             private const string _dllName = "CargoBoxTouchUpEngine.dll";
@@ -180,12 +186,20 @@ namespace loadingBox2dGui.models
 
             [DllImport(_dllName)]
             [return: MarshalAs(UnmanagedType.I1)]
+            public static extern bool checkModelPath(IntPtr enginePointer, [MarshalAs(UnmanagedType.LPStr)] string modelPath);
+            
+            [DllImport(_dllName)]
+            [return: MarshalAs(UnmanagedType.I1)]
             public static extern bool showCharuco(IntPtr enginePointer);
 
             [DllImport(_dllName)]
             [return: MarshalAs(UnmanagedType.I1)]
             public static extern bool poseAdjustment2D(IntPtr enginePointer, [In, Out, MarshalAs(UnmanagedType.LPArray)] ImageStruct[] images, int imageCount);
-
+            
+            [DllImport(_dllName)]
+            [return: MarshalAs(UnmanagedType.I1)]
+            public static extern bool poseAdjustment2DCargo(IntPtr enginePointer, [In, Out, MarshalAs(UnmanagedType.LPArray)] ImageStruct[] images, int imageCount);
+            
             [DllImport(_dllName)]
             [return: MarshalAs(UnmanagedType.I1)]
             public static extern bool loadTransMat(
