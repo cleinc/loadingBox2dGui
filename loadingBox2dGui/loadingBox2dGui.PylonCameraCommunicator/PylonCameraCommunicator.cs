@@ -19,16 +19,16 @@ using System.Threading.Tasks;
 
 namespace loadingBox2dGui.PylonCameraCommunicator
 {
-    public class PylonCameraCommunicator : CameraCommunicatorForLoadingBox, IDisposable
+    public class PylonCameraCommunicator : CameraCommunicatorForLoadingBox, IDisposable, IImageProvider<InspectionLocation>
     {
         private readonly static LogHelper Logger = LogHelper.Logger;
         private PixelDataConverter _converter;
         private Timer _updateDeviceTimer;
         private SemaphoreSlim _sem = new SemaphoreSlim(1, 1);
-        private Dictionary<string, InspectionLocation> _ipToLocationDict;
-        private Dictionary<InspectionLocation, Bitmap> _bitmapsOnLocation;
-        private ConcurrentDictionary<InspectionLocation, Camera> _cameraOnLocation;
-        private ConcurrentDictionary<InspectionLocation, CameraState> _cameraStateOnLocation;
+        private Dictionary<string, InspectionLocation> _ipToLoc;
+        private Dictionary<InspectionLocation, Bitmap> _locToBmp;
+        private Dictionary<Bitmap, BitmapData> _bmpToBmpData;
+        private ConcurrentDictionary<InspectionLocation, Camera> _locToCamera;
         private bool _isConnected = false;
         private static readonly int reconnectTimeoutMs = 15000;
         public bool IsConnected => _isConnected;
@@ -48,7 +48,6 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
             if (_isConnected)
             {
-                Logger.Info(GetCameraStatus());
                 Logger.Info($"PylonCommunicator Already Connected");
                 return true;
             }
@@ -57,22 +56,21 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             Logger.Info($"Connecting PylonCommunicator");
             try
             {
-                _ipToLocationDict = new Dictionary<string, InspectionLocation>();
-                _cameraStateOnLocation = new ConcurrentDictionary<InspectionLocation, CameraState>();
-                _bitmapsOnLocation = new Dictionary<InspectionLocation, Bitmap>();
+                _ipToLoc = new Dictionary<string, InspectionLocation>();
+                _locToBmp = new Dictionary<InspectionLocation, Bitmap>();
+                _bmpToBmpData = new Dictionary<Bitmap, BitmapData>();
                 locationToCamParameter.Keys.ToList().ForEach( key => 
                 {
                     string camIp = locationToCamParameter[key].IpAddress;
-                    _cameraStateOnLocation[key] = CameraState.Disconnected;
-                    _cameraOnLocation = new ConcurrentDictionary<InspectionLocation, Camera>();
-                    if (_ipToLocationDict.ContainsKey(camIp))
+                    _locToCamera = new ConcurrentDictionary<InspectionLocation, Camera>();
+                    if (_ipToLoc.ContainsKey(camIp))
                     {
                         Logger.Error($"Overlapping Cam IP {camIp}. Camera IP Address must be Unique for each Inspection Location");
                         return;
                     }
                     else
                     {
-                        _ipToLocationDict.Add(camIp, key);
+                        _ipToLoc.Add(camIp, key);
                     }
                 });
                 Logger.Info($"Starting Device Updater at interval {1000}");
@@ -93,7 +91,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                 throw new ObjectDisposedException(nameof(PylonCameraCommunicator));
             }
 
-            if (!_isConnected || _ipToLocationDict is null || _cameraOnLocation is null || _cameraStateOnLocation is null)
+            if (!_isConnected || _ipToLoc is null || _locToCamera is null)
             {
                 return;
             }
@@ -105,44 +103,41 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
             try
             {
+                if(_ipToLoc.Count == _locToCamera.Count)
+                {
+                    return;
+                }
                 var camDevices = CameraFinder.Enumerate();
                 foreach (var camDevice in camDevices)
                 {
                     string ipAddress = camDevice[CameraInfoKey.DeviceIpAddress];
-                    if (!_ipToLocationDict.TryGetValue(ipAddress, out InspectionLocation location))
+                    if (!_ipToLoc.TryGetValue(ipAddress, out InspectionLocation location))
                     {
                         return;
                     }
                     
-                    if(_cameraOnLocation.TryGetValue(location, out Camera newCamera))
+                    if(_locToCamera.TryGetValue(location, out var _))
                     {
-                        if (_cameraStateOnLocation[location] == CameraState.Disconnected)
-                        {
-                            DestroyCamera(location);
-                        }
-                        else
-                        {
-                            return;
-                        }
+                        return;
                     }
 
-                    Camera camera = new Camera(ipAddress);
-                    newCamera.ConnectionLost += (sender, e) => OnConnectionLostAsync(newCamera, location, ipAddress);
-                    bool ret = OpenCamera(newCamera, location, ipAddress, 1000);
+                    Camera camera = new Camera(camDevice);
+                    camera.ConnectionLost += (sender, e) => OnConnectionLostAsync(camera, location, ipAddress);
+                    bool ret = OpenCamera(camera, location, ipAddress, 2500);
                     if (ret)
                     {
                         Logger.Info($"Camera on {location}, IP : {ipAddress} Added");
-                        _cameraOnLocation[location] = newCamera;
+                        _locToCamera[location] = camera;
                     }
                     else
                     {
-                        newCamera.ConnectionLost -= (sender, e) => OnConnectionLostAsync(newCamera, location, ipAddress);
+                        camera.ConnectionLost -= (sender, e) => OnConnectionLostAsync(camera, location, ipAddress);
                     }
                 }
             }
             catch (Exception ex)
             {
-                Logger.Error($"Error while Updating Devices, Error : {ex}");
+                Logger.Debug($"Error while Updating Devices, Error : {ex}");
             }
             finally
             {
@@ -234,27 +229,68 @@ namespace loadingBox2dGui.PylonCameraCommunicator
         {
             foreach (var kvp in camParamDict)
             {
-                if (_cameraOnLocation.TryGetValue(kvp.Key, out Camera cam))
+                if (_locToCamera.TryGetValue(kvp.Key, out Camera cam))
                 {
                     var camParams = kvp.Value;
-                    SetCameraSetting(camParams, cam, _cameraStateOnLocation[kvp.Key]);
-                }
-                else
-                {
-                    _cameraStateOnLocation[kvp.Key] = CameraState.Undefined;
+                    SetCameraSetting(camParams, cam);
                 }
             }
             return true;
         }
 
-        private bool CheckConnection(InspectionLocation location)
+        public ImageStruct[] GetImageStructArray(int carType)
         {
-            return false;
+            List<ImageStruct> imgStructsList = new List<ImageStruct>();
+            foreach (var kvp in _locToCamera)
+            {
+                ImageStruct? imgStruct = GetImageStructImpl(carType, kvp.Key);
+                if (imgStruct != null)
+                {
+                    imgStructsList.Add(imgStruct.Value);
+                }
+            }
+
+            return imgStructsList.ToArray(); 
         }
 
-        private bool SetCameraSetting(CameraParameter camParameter, Camera camera, CameraState state)
+        private ImageStruct? GetImageStructImpl(int carType, InspectionLocation location)
         {
-            if (camera == null || state != CameraState.Connected)
+            if (_locToBmp.Count == 0)
+            {
+                Logger.Error($"Check if ConvertBitmapFromPath has been Called"); 
+                return null;
+            }
+            if (_locToBmp.TryGetValue(location, out Bitmap bitmap))
+            {
+                try
+                {
+                    BitmapData bmpData = bitmap.LockBits(
+                    new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                    ImageLockMode.ReadOnly,
+                    bitmap.PixelFormat);
+                    int width = bitmap.Width;
+                    int height = bitmap.Height;
+                    int stride = bmpData.Stride;
+                    int totalBytes = checked(stride * height);
+                    _bmpToBmpData[bitmap] = bmpData; // Saved to Free After finishing sending data to unmanaged side
+                    return ImageStruct.GetDefaultImageStruct(bmpData.Scan0, (ulong)totalBytes, 
+                        width, height, stride, carType, location);
+                }
+                catch(Exception ex)
+                {
+                    Logger.Error($"Getting Image Ptr Failed from Location {location}: {ex}");
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private bool SetCameraSetting(CameraParameter camParameter, Camera camera)
+        {
+            if (camera == null)
             {
                 return false;
             }
@@ -338,15 +374,14 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             }
 
             await _sem.WaitAsync();
-            Logger.Info(GetCameraStatus());
             try
             {
                 ApplyCameraSettings(camParamDict);
                 List<Task> tasks = new List<Task>();
-                _cameraOnLocation.Keys.ToList().ForEach(location =>
+                foreach (var loc in _locToCamera.Keys)
                 {
-                    tasks.Add(Task.Run(() => GrabImage(location)));
-                });
+                    tasks.Add(Task.Run(() => GrabImage(loc)));
+                }
                 await Task.WhenAll(tasks);
             }
             catch (Exception ex)
@@ -364,38 +399,32 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             try
             {
                 Logger.Info($"Starting Capturing Image on Camera {location}");
-                if (_cameraStateOnLocation[location] != CameraState.Grabbing)
-                {
-                    _cameraOnLocation[location].StreamGrabber.Start(1);
-                }
-                else
-                {
-                    Logger.Info($"Camera on {location} already grabbing images");
-                    return;
-                }
-
-                _cameraStateOnLocation[location] = CameraState.Grabbing;
-
-                IGrabResult grabResult = _cameraOnLocation[location]?.StreamGrabber.RetrieveResult(5000, TimeoutHandling.ThrowException);
+                Console.WriteLine($"Camera is Null {_locToCamera[location] is null}");
+                _locToCamera[location]?.StreamGrabber.Start(1);
+                IGrabResult grabResult = _locToCamera[location]?.StreamGrabber.RetrieveResult(8000, TimeoutHandling.ThrowException);
+                Console.WriteLine($"Grab result succeed {grabResult.GrabSucceeded}");
+                _locToCamera[location].StreamGrabber.Stop();
                 if (grabResult.GrabSucceeded)
                 {
                     Bitmap bmp = ConvertGrabResultToBitmap(grabResult);
-                    _bitmapsOnLocation[location] = bmp;
-                    SaveImage(bmp);
+                    Console.WriteLine($"bmp result is Null {bmp is null}");
+                    _locToBmp[location] = bmp;
+                    //SaveImage(location, bmp);
                 }
-                _cameraOnLocation[location].StreamGrabber.Stop();
-                _cameraStateOnLocation[location] = CameraState.Connected;
+                else
+                {
+                    Console.WriteLine($"Error indicationL {grabResult.ErrorCode}, {grabResult.ErrorDescription}");
+                }
             }
             catch (Exception ex)
             {
-                var currentCamState = _cameraStateOnLocation[location];
-                Logger.Error($"Camera {location} Grab Image Failed, State: {currentCamState}, Error: {ex.Message}");
+                Logger.Error($"Camera {location} Grab Image Failed, Error: {ex}");
             }
         }
 
-        public override Bitmap GetImage(string cameraName)
+        public override Bitmap GetImage(string ipAddress)
         {
-            if (_ipToLocationDict.TryGetValue(cameraName, out var location))
+            if (_ipToLoc.TryGetValue(ipAddress, out var location))
             {
                 return GetImage(location);
             }
@@ -407,7 +436,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
         public override Bitmap GetImage(InspectionLocation location)
         {
-            if (_bitmapsOnLocation.TryGetValue(location, out var bitmap))
+            if (_locToBmp.TryGetValue(location, out var bitmap))
             {
                 return bitmap;
             }
@@ -428,7 +457,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             return bmp;
         }
 
-        public override bool SaveImage(Bitmap bmp)
+        public override bool SaveImage(InspectionLocation location, Bitmap bmp)
         {
             string filePath = $"./images/{DateTime.Now.ToString("yyMMdd_hhmmssfff")}.png";
             string parentDirectory = Path.GetDirectoryName(filePath);
@@ -458,10 +487,9 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             {
                 _updateDeviceTimer.Change(-1, -1);
                 Disconnect();
-                _bitmapsOnLocation = null; 
-                _cameraOnLocation = null; 
-                _cameraStateOnLocation = null; 
-                _ipToLocationDict = null;
+                _locToBmp = null; 
+                _locToCamera = null; 
+                _ipToLoc = null;
                 return true;
             }
             catch(Exception ex)
@@ -477,7 +505,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
         public override bool Disconnect()
         {
-            _cameraOnLocation.ToList().ForEach(kvp =>
+            _locToCamera.ToList().ForEach(kvp =>
             {
                 ResetDevice(kvp.Key);
             });
@@ -489,9 +517,8 @@ namespace loadingBox2dGui.PylonCameraCommunicator
         #region Utils
         private void ResetDevice(InspectionLocation location)
         {
-            if (!_cameraOnLocation.TryGetValue(location, out var cam))
+            if (!_locToCamera.TryGetValue(location, out var cam))
             {
-                _cameraStateOnLocation[location] = CameraState.Undefined;
                 return;
             }
             if (cam.IsOpen)
@@ -499,52 +526,59 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                 cam.Close();
             }
             cam?.Dispose();
-            _cameraOnLocation[location] = null;
-            _cameraStateOnLocation[location] = CameraState.Disconnected;
-        }
-        private string GetCameraStatus()
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.Append("Device Previously Connected");
-            foreach (var kvp in _cameraStateOnLocation)
+            _locToCamera[location] = null;
+            if (_locToBmp.TryGetValue(location, out var bmp))
             {
-                builder.Append($" Camera on {kvp.Key}, State: {kvp.Value}.");
+                bmp?.Dispose();
+                _locToBmp[location] = null;
             }
-            return builder.ToString();
+            if(_locToCamera.TryRemove(location, out _))
+            {
+                Logger.Info($"Remove Camera Success at Location: {location}");
+            }
+            else
+            {
+                Logger.Info($"Remove Camera Fail at Location: {location}");
+            }
         }
+
+        public bool ClearBmpData()
+        {
+            if (_bmpToBmpData.Count == 0)
+            {
+                return false;
+            }
+            foreach (var kvp in _bmpToBmpData)
+            {
+                kvp.Key.UnlockBits(kvp.Value);
+            }
+            _bmpToBmpData.Clear();
+            Logger.Info($"BitmapData Cleared");
+            return true;
+        }
+
         #endregion
         private void OnConnectionLostAsync(Camera camera, InspectionLocation inspectionLocation, string ipAddress, int trials = 15)
         {
-            if (_cameraStateOnLocation[inspectionLocation] == CameraState.Disconnected)
-            {
-                return;
-            }
             Logger.Error($"Connection to Camera {inspectionLocation}, IP : {ipAddress} lost.");
             
             try
             {
-                if (camera == null || _cameraStateOnLocation[inspectionLocation] == CameraState.Disconnected)
-                {
-                    return;
-                }
-
                 if (camera.IsOpen)
                 {
                     camera.Close();
                 }
-                _cameraStateOnLocation[inspectionLocation] = CameraState.Disconnected;
+                ResetDevice(inspectionLocation);
             }
             catch (Exception ex)
             {
                 Logger.Info($"Closing attempt failed for Camera {inspectionLocation}, IP : {ipAddress}, Error: {ex}");
-                Console.WriteLine($"Reconnection : Error: {ex}");
-                _cameraStateOnLocation[inspectionLocation] = CameraState.Error;
             }
         }
 
         private void DestroyCamera(InspectionLocation location)
         {
-            if (!_cameraOnLocation.TryGetValue(location, out var cam))
+            if (!_locToCamera.TryGetValue(location, out var cam))
             {
                 throw new ArgumentException();
             }
@@ -554,8 +588,17 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                 cam.Close();
             }
             cam?.Dispose();
-            _cameraOnLocation[location] = null;
+            _locToCamera[location] = null;
         }
-           
+
+        public Bitmap GetBitmapImage(InspectionLocation camLoc)
+        {
+            return GetImage(camLoc);
+        }
+
+        public (InspectionLocation, Bitmap)[] GetAllBitmaps()
+        {
+            return _locToBmp.Select(x => (x.Key, x.Value)).ToArray();
+        }
     }
 }
