@@ -1,5 +1,6 @@
 ﻿using CoPick.Logging;
 using CoPick.Setting;
+using loadingBox2dGui.models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -58,7 +59,7 @@ namespace loadingBox2dGui.views
         event EventHandler <ModelSettingPathChangeEventArgs> ModelSettingPathChangeRequested;
         event EventHandler UpdateMasterDataRequested;
         void SetRobotList(List<string> robotList, string selectedRobot = null);
-        void SetCarTypeList(List<int> carTypeList, int selectedCarType = -1);
+        void SetCarTypeList(BindingList<CarTypeAndName> carTypeList, int selectedCarType = -1);
         void SetCameraList(List<string> cameraList, string selectedCamera = null);
         void SetLightList(List<string> lightList, string selectedLight = null);
         void SetPlcList(List<string> plcList, string selectedPlc);

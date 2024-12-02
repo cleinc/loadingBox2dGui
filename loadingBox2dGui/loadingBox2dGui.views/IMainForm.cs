@@ -25,6 +25,7 @@ namespace loadingBox2dGui.views
         bool SetLightState { set; }
         bool SetStartCameraButton { set; }
         bool SetConnectCameraButton { set; }
+        bool SetCaptureCameraButton { set; }
         #endregion
 
         #region Event Handlers
@@ -41,6 +42,12 @@ namespace loadingBox2dGui.views
         event EventHandler DisconnectLhCameraRequested;
         event EventHandler MainFormLoadRequested;
         event EventHandler CarTypeChanged;
+        event EventHandler<StartWithModifierEventArgs> CaptureRequested;
+        event EventHandler ReadInstallPoseRequested; 
+        event EventHandler ReadScanPoseRequested;
+        event EventHandler<double[]> WriteShiftPoseRequested;
+        event EventHandler CheckWrittenShiftPoseRequested;
+        event EventHandler ScanPointUsingArucoRequested;
         #endregion
 
         #region Methods
@@ -52,6 +59,10 @@ namespace loadingBox2dGui.views
         void TogglePlcSignalLabel(PlcSignalForLoadingBox signal, bool isOn);
         void SetUiToMode(OperationMode mode);
         void SetCarTypeList(BindingList<CarTypeAndName> carTypeList, int selectedCarType = -1);
+        void SetInspectionImage(InspectionLocation location, Image image);
+        void SetReadScanPose(double[] poses); 
+        void SetReadInstallPose(double[] poses); 
+        void SetReadWrittenShiftPose(double[] poses); 
         #endregion
     }
 }
@@ -74,6 +85,16 @@ public class ChangeLightStateEventArgs
     public ChangeLightStateEventArgs(bool state)
     {
         State = state;
+    }
+}
+
+public class StartWithModifierEventArgs : EventArgs
+{
+    public bool HasFreePassTicket { get; set; }
+
+    public StartWithModifierEventArgs(bool hasFreePassTicket)
+    {
+        HasFreePassTicket = hasFreePassTicket; 
     }
 }
 #endregion

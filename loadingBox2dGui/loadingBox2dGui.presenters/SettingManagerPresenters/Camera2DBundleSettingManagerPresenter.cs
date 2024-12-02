@@ -15,7 +15,7 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
         private ICamera2DSettingManagerView _view;
         private readonly AddCamera2DBundleConfigPresenter _addCamera2DBundlePresenter;
         private readonly CopyCamera2DBundleConfigPresenter _copyCamera2DBundlePresenter;
-        private Dictionary<string, Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>>> _camera2DBundleConfigs;
+        private Dictionary<string, Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>>> _camera2DGroupConfigs;
         private readonly Dictionary<Camera2DMaker, Func<Dictionary<Camera2DAttribute, string>>> _defaultSettings;
         private SettingChangeTracker _settingChangeTracker;
         private Type _typeOfView;
@@ -24,7 +24,7 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
 
         public Dictionary<string, Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>>> Camera2DConfigs
         {
-            set => _camera2DBundleConfigs = value;
+            set => _camera2DGroupConfigs = value;
         }
 
         public Dictionary<string, Dictionary<InspectionLocation, bool>> ModifiedCamera2DBundles
@@ -69,7 +69,7 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
 
         public List<string> AvailableCamera2DBundleList
         {
-            get => _camera2DBundleConfigs?.Keys?.ToList() ?? new List<string>();
+            get => _camera2DGroupConfigs?.Keys?.ToList() ?? new List<string>();
         }
 
         public event EventHandler AvailableCamera2DAdded;
@@ -86,7 +86,7 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
         {
             _view = view;
             _typeOfView = view.GetType();
-            _camera2DBundleConfigs = camera2DConfigs;
+            _camera2DGroupConfigs = camera2DConfigs;
             _settingChangeTracker = settingChangeTracker;
             _addCamera2DBundlePresenter = addCamera2DPresenter;
             _copyCamera2DBundlePresenter = copyCamera2DPresenter;
@@ -106,7 +106,7 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
             }
 
             _mode = mode;
-            _camera2DBundleConfigs = camera2DConfigs;
+            _camera2DGroupConfigs = camera2DConfigs;
 
             _view.ConfiguringCamera2DChanged += View_ConfiguringCamera2DChanged;
             _view.Camera2DSettingAddRequested += View_Camera2DSettingAddRequested;
@@ -149,23 +149,23 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
         {
             _view.AvailableCamera2DList = AvailableCamera2DBundleList;
             string configuringCamera = _view.ConfiguringCamera2D;
-            if (configuringCamera != null && _camera2DBundleConfigs.TryGetValue(configuringCamera, out var cameraConfig))
+            if (configuringCamera != null && _camera2DGroupConfigs.TryGetValue(configuringCamera, out var cameraConfig))
             {
-                UpdateCamera2DBundlePropertyGrid(cameraConfig);
+                UpdateCamera2DGroupPropertyGrid(cameraConfig);
             }
         }
 
         public void ChangeLanguage(string language)
         {
-            if (_camera2DBundleConfigs.TryGetValue(_view.ConfiguringCamera2D ?? "", out var cameraConfig))
+            if (_camera2DGroupConfigs.TryGetValue(_view.ConfiguringCamera2D ?? "", out var cameraConfig))
             {
-                UpdateCamera2DBundlePropertyGrid(cameraConfig);
+                UpdateCamera2DGroupPropertyGrid(cameraConfig);
             }
 
             //_view.Localize();
         }
 
-        private void UpdateCamera2DBundlePropertyGrid(Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>> cameraConfig)
+        private void UpdateCamera2DGroupPropertyGrid(Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>> cameraConfig)
         {
             if (_view.ConfiguringCamera2D != null)
             {
@@ -187,7 +187,7 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
             _view.AvailableCamera2DList = AvailableCamera2DBundleList;
             _view.ConfiguringCamera2D = camera2DBundleName;
             _settingChangeTracker.NotifyAdd("Camera2DBundle", camera2DBundleName);
-            _modifiedCamera2DBundles[camera2DBundleName] = _camera2DBundleConfigs[camera2DBundleName].ToDictionary(
+            _modifiedCamera2DBundles[camera2DBundleName] = _camera2DGroupConfigs[camera2DBundleName].ToDictionary(
                 i => i.Key, 
                 i => true);
             AvailableCamera2DAdded?.Invoke(this, EventArgs.Empty);
@@ -198,7 +198,7 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
             string camera2DBundleToCopy = _view.ConfiguringCamera2D;
             if (!string.IsNullOrEmpty(camera2DBundleToCopy))
             {
-                string copiedCamera2DBundleName = _copyCamera2DBundlePresenter.StartCopyCameraConfig(_camera2DBundleConfigs, camera2DBundleToCopy);
+                string copiedCamera2DBundleName = _copyCamera2DBundlePresenter.StartCopyCameraConfig(_camera2DGroupConfigs, camera2DBundleToCopy);
                 if (!string.IsNullOrEmpty(copiedCamera2DBundleName))
                 {
                     AddCamera2DSetting(copiedCamera2DBundleName);
@@ -208,7 +208,7 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
 
         public void View_Camera2DSettingAddRequested(object sender, EventArgs e)
         {
-            string addedCamera2DBundleName = _addCamera2DBundlePresenter.StartAddingCameraConfig(_camera2DBundleConfigs);
+            string addedCamera2DBundleName = _addCamera2DBundlePresenter.StartAddingCameraConfig(_camera2DGroupConfigs);
             if (!string.IsNullOrEmpty(addedCamera2DBundleName))
             {
                 AddCamera2DSetting(addedCamera2DBundleName);
@@ -229,7 +229,7 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
             if (_view.ConfirmUserChoiceToRemove())
             {
                 string camera2DToRemove = _view.ConfiguringCamera2D;
-                _camera2DBundleConfigs.Remove(camera2DToRemove);
+                _camera2DGroupConfigs.Remove(camera2DToRemove);
                 _settingChangeTracker.NotifyRemove("Camera2D", camera2DToRemove);
                 _view.AvailableCamera2DList = AvailableCamera2DBundleList;
                 
@@ -245,9 +245,9 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
         public void View_ConfiguringCamera2DChanged(object sender, EventArgs e)
         {
             string configuringCamera = _view.ConfiguringCamera2D;
-            if (_camera2DBundleConfigs.TryGetValue(configuringCamera ?? "", out var camera2DBundleConfig))
+            if (_camera2DGroupConfigs.TryGetValue(configuringCamera ?? "", out var camera2DBundleConfig))
             {
-                UpdateCamera2DBundlePropertyGrid(camera2DBundleConfig);
+                UpdateCamera2DGroupPropertyGrid(camera2DBundleConfig);
             }
             else
             {
@@ -267,12 +267,14 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
                     return;
                 }
             }
+            bool additionalChange = false;
+            Dictionary<Camera2DAttribute, string> prevCameraConfig = null;
             string configuringCamera = _view.ConfiguringCamera2D;
             InspectionLocation inspectionLocation = e.ParentLabel.ToString().ToEnum<InspectionLocation>();
             bool parseSuccess = Enum.TryParse(e.PropertyDescriptor.Name, out Camera2DAttribute cam2DAttribute);
             if (parseSuccess)
             {
-                CameraParameter cameraParamter = new CameraParameter(_camera2DBundleConfigs[configuringCamera][inspectionLocation]);
+                CameraParameter cameraParamter = new CameraParameter(_camera2DGroupConfigs[configuringCamera][inspectionLocation]);
                 ValidityCheckResult validityCheckResult = cameraParamter.ValidateCamParameterFromInstance(e.NewValue.ToString(), cam2DAttribute, out object output);
                 if (validityCheckResult == ValidityCheckResult.Error)
                 {
@@ -284,6 +286,13 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
                     e.NewValue = output;
                     e.PropertyDescriptor.SetValue(e.ParentValue, output);
                 }
+
+                if (cam2DAttribute == Camera2DAttribute.CameraResolutionRoiTopLeftX || cam2DAttribute == Camera2DAttribute.CameraResolutionRoiTopLeftY)
+                {
+                    prevCameraConfig = new Dictionary<Camera2DAttribute, string> (_camera2DGroupConfigs[configuringCamera][inspectionLocation]);
+                    additionalChange = cameraParamter.AdjustInstanceValues();
+                    _camera2DGroupConfigs[configuringCamera][inspectionLocation] = cameraParamter.ToDictionary();
+                }
             }
 
             // Add CustomCameraParameterValidator
@@ -292,6 +301,19 @@ namespace loadingBox2dGui.presenters.SettingManagerPresenters
                 _modifiedCamera2DBundles[configuringCamera][inspectionLocation] = true;
                 _settingChangeTracker.NotifyChange($"{e.ParentLabel}/{e.Label}", e.OldValue.ToString(), e.NewValue.ToString());
                 _view.RefreshPropertyGrid();
+            }
+
+            if (additionalChange)
+            {
+                var currentCameraConfig = _camera2DGroupConfigs[configuringCamera][inspectionLocation];
+                foreach (var camAttribute in currentCameraConfig)
+                {
+                    if (prevCameraConfig[cam2DAttribute] != currentCameraConfig[cam2DAttribute])
+                    {
+                        _settingChangeTracker.NotifyChange($"CameraSetting/{configuringCamera}/{e.ParentLabel}/{camAttribute}", prevCameraConfig[cam2DAttribute], currentCameraConfig[cam2DAttribute]);
+                    }
+                }
+                UpdateCamera2DGroupPropertyGrid(_camera2DGroupConfigs[configuringCamera]);
             }
         }
 

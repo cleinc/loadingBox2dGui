@@ -57,15 +57,17 @@ namespace loadingBox2dGui.presenters
         public bool ModifiedDataPaths => _modifiedDataPaths;
         private bool _isOpen = false; 
         public bool IsOpen => _isOpen;
+        private readonly ICargoBox2DInspectionEngine _engine;
         public CargoBox2DSettingManagerPresenter(ISettingManagerView view, RobotSettingManagerPresenter robotSettingManagerPresenter,
                                        Camera2DBundleSettingManagerPresenter camera2DSettingManagerPresenter, PlcSettingManagerPresenter plcSettingManagerPresenter,
                                        CopyCarTypeConfigPresenter copyCarTypeConfigPresenter, AddCarTypePresenter addCarTypePresenter,
                                        LightSettingManagerPresenter lightSettingManagerPresenter, 
-                                       List<string> langList, SettingChangeTracker settingChangeTracker)
+                                       List<string> langList, SettingChangeTracker settingChangeTracker, ICargoBox2DInspectionEngine engine)
         {
             _view = view;
             _typeOfView = view.GetType();
             _langList = langList;
+            _engine = engine;
             ChangeTracker = settingChangeTracker;
 
             _robotSettingManagerPresenter = robotSettingManagerPresenter;
@@ -87,15 +89,20 @@ namespace loadingBox2dGui.presenters
         {
             _mode = mode;
             _isOpen = true;
+            _modifiedDataPaths = false;
             _config = ConfigFileManager.LoadFromFile<Config>(ConfigFileManager.GetConfigFilePath());
+            _config.LockCarType();
+            _currentCarType = _config.RecentlyUsedCar;
             ChangeTracker.Clear();
 
+            _robotSettingManagerPresenter?.Start(mode, _config.RobotConfigs);
             _camera2DBundleSettingManagerPresenter?.Start(mode, _config.CameraConfigs);
             _plcSettingManagerPresenter?.Start(mode, _config.PlcConfigs, _config.Plc);
             _lightSettingManagerPresenter?.Start(mode, _config.LightConfigs);
             if (_view.IsControlDisposed)
             {
                 _view = (ISettingManagerView)Activator.CreateInstance(_typeOfView,
+                    _robotSettingManagerPresenter?.View,
                     _plcSettingManagerPresenter?.View,
                     _lightSettingManagerPresenter?.View,
                     _camera2DBundleSettingManagerPresenter?.View);
@@ -118,6 +125,8 @@ namespace loadingBox2dGui.presenters
             _view.FactoryResetAsked += View_FactoryResetAsked;
             _view.LogPathChanged += View_LogPathChanged;
             _view.EndRequested += View_EndRequested;
+            _view.RobotChanged += View_RobotChanged;
+            _view.ModelSettingPathChangeRequested += View_ModelSettingPathChangeRequested;
             _view.LogManagerArgsRegisterAsked += View_LogManagerRegisterAsked;
             _view.LogManagerArgsDeleteAsked += View_LogManagerDeleteAsked;
             _view.SettingTabChangeRequested += View_SettingTabChangeRequested;
@@ -133,8 +142,10 @@ namespace loadingBox2dGui.presenters
         public void Stop()
         {
             _isOpen = false;
+            _robotSettingManagerPresenter?.Stop();
             _camera2DBundleSettingManagerPresenter?.Stop();
             _plcSettingManagerPresenter?.Stop();
+            _lightSettingManagerPresenter?.Stop();
 
             _view.CarTypeAddRequested -= View_CarTypeAddRequested;
             _view.CarTypeRemoveRequested -= View_CarTypeRemoveRequested;
@@ -150,9 +161,17 @@ namespace loadingBox2dGui.presenters
             _view.FactoryResetAsked -= View_FactoryResetAsked;
             _view.LogPathChanged -= View_LogPathChanged;
             _view.EndRequested -= View_EndRequested;
+            _view.RobotChanged -= View_RobotChanged;
+            _view.ModelSettingPathChangeRequested -= View_ModelSettingPathChangeRequested;
             _view.LogManagerArgsRegisterAsked -= View_LogManagerRegisterAsked;
             _view.LogManagerArgsDeleteAsked -= View_LogManagerDeleteAsked;
             _view.SettingTabChangeRequested -= View_SettingTabChangeRequested;
+            _view.UpdateMasterDataRequested -= View_UpdateMasterDataRequested;
+        }
+
+        private void View_RobotChanged(object sender, EventArgs e)
+        {
+            ChangeInstallRobot(_view.Robot);
         }
 
         private void View_LogManagerDeleteAsked(object sender, EventArgs e)
@@ -319,7 +338,7 @@ namespace loadingBox2dGui.presenters
             string carNameToRemove = _config[carTypeToRemove].CarName;
             if (_config.Delete(carTypeToRemove))
             {
-                _view.SetCarTypeList(_config.GetCarTypeList(), -1);
+                _view.SetCarTypeList(_config.GetCarTypeAndNameList(), -1);
                 ChangeTracker.NotifyRemove("CarType", $"{carNameToRemove}({carTypeToRemove})");
             }
         }
@@ -329,9 +348,14 @@ namespace loadingBox2dGui.presenters
             var result = _addCarTypePresenter.StartAddingCarType(_config.GetCarTypeList());
             if (result.carTypeNumber >= 0)
             {
+                if (!_config.GetPermittedCarTypeList().Contains(result.carTypeNumber))
+                {
+                    _view.ShowMessage($"Given Cartype {result.carTypeNumber} is not permitted to add.", "WARNING");
+                    return;
+                }
                 _config[result.carTypeNumber] = new CargoBox2DConfig();
                 _config[result.carTypeNumber].CarName = result.carTypeName;
-                _view.SetCarTypeList(_config.GetCarTypeList(), result.carTypeNumber);
+                _view.SetCarTypeList(_config.GetCarTypeAndNameList(), result.carTypeNumber);
                 ChangeTracker.NotifyAdd("CarType", $"{result.carTypeName}({result.carTypeNumber})");
             }
         }
@@ -341,10 +365,15 @@ namespace loadingBox2dGui.presenters
             int copiedCarType = _copyCarTypeConfigPresenter.StartCopyCarTypeConfig(_config.GetCarTypeStringList());
             if (copiedCarType >= 0)
             {
+                if (!_config.GetPermittedCarTypeList().Contains(copiedCarType))
+                {
+                    _view.ShowMessage($"Given Cartype {copiedCarType} is not permitted to add", "WARNING");
+                    return;
+                }
                 int selectedCarType = _view.ConfiguringCarType;
                 _config[copiedCarType] = _config[selectedCarType].DeepClone();
                 _config[copiedCarType].CarName = $"{_config[selectedCarType].CarName}_copy";
-                _view.SetCarTypeList(_config.GetCarTypeList(), copiedCarType);
+                _view.SetCarTypeList(_config.GetCarTypeAndNameList(), copiedCarType);
                 ChangeTracker.NotifyAdd("CarType", $"{_config[copiedCarType].CarName}({copiedCarType})");
             }
         }
@@ -372,13 +401,36 @@ namespace loadingBox2dGui.presenters
             }
             if (_config[-1].Robot == null || !_config.RobotConfigs.ContainsKey(_config[-1].Robot))
             {
-                ChangeRobotFront(_view.Robot);
+                ChangeInstallRobot(_view.Robot);
             }
             else
             {
                 _view.Robot = _config[-1].Robot;
             }
-
+            if (_config[-1].ShiftModelPath == null)
+            {
+                ChangeShiftModelPath(_view.ShiftModelPath);
+            }
+            else
+            {
+                _view.ShiftModelPath = _config[-1].ShiftModelPath;
+            }
+            if (_config[-1].MasterImageRootFolderPath == null)
+            {
+                ChangeMasterImageFolderPath(_view.MasterImageRootFolderPath);
+            }
+            else
+            {
+                _view.MasterImageRootFolderPath = _config[-1].MasterImageRootFolderPath;
+            }
+            if (_config[-1].CheckerBoardRootFolderPath == null)
+            {
+                ChangeCheckerBoardFolderPath(_view.CheckerBoardImageRootFolderPath);
+            }
+            else
+            {
+                _view.CheckerBoardImageRootFolderPath = _config[-1].CheckerBoardRootFolderPath;
+            }
 
             _config[-1].UpdatePropertyDescriptors();
             _view.TaskPropertyGridDataSource = _config[-1];
@@ -422,43 +474,33 @@ namespace loadingBox2dGui.presenters
 
         private void RobotSettingManagerPresenter_AvailableRobotRemoved(object sender, AvailableRobotRemovedEventArgs e)
         {
-            //if (_robotSettingManagerPresenter.AvailableRobotList.Count == 0)
-            //{
-            //    foreach (var carType in _config.GetCarTypeList())
-            //    {
-            //        _config[carType].InstallRobot = null;
-            //        _config[carType].ScanRobot = null;
-            //        ChangeTracker.NotifyChange($"Task/{carType}/InstallRobot", e.RemovedRobotName, "null");
-            //        ChangeTracker.NotifyChange($"Task/{carType}/ScanRobot", e.RemovedRobotName, "null");
-            //    }
-            //}
-            //else
-            //{
-            //    string firstRobot = _robotSettingManagerPresenter.AvailableRobotList[0];
-            //    foreach (var carType in _config.GetCarTypeList())
-            //    {
-            //        if (_config[carType].InstallRobot == e.RemovedRobotName)
-            //        {
-            //            ChangeTracker.NotifyChange($"Task/{carType}/InstallRobot", e.RemovedRobotName, firstRobot);
-            //            _config[carType].InstallRobot = firstRobot;
-            //        }
+            if (_robotSettingManagerPresenter.AvailableRobotList.Count == 0)
+            {
+                foreach (var carType in _config.GetCarTypeList())
+                {
+                    _config[carType].Robot = null;
+                    ChangeTracker.NotifyChange($"Task/{carType}/Robot", e.RemovedRobotName, "null");
+                }
+            }
+            else
+            {
+                string firstRobot = _robotSettingManagerPresenter.AvailableRobotList[0];
+                foreach (var carType in _config.GetCarTypeList())
+                {
+                    if (_config[carType].Robot == e.RemovedRobotName)
+                    {
+                        ChangeTracker.NotifyChange($"Task/{carType}/Robot", e.RemovedRobotName, firstRobot);
+                        _config[carType].Robot = firstRobot;
+                    }
+                }
+            }
 
-            //        if (_config[carType].ScanRobot == e.RemovedRobotName)
-            //        {
-            //            ChangeTracker.NotifyChange($"Task/{carType}/ScanRobot", e.RemovedRobotName, firstRobot);
-            //            _config[carType].ScanRobot = firstRobot;
-            //        }
-            //    }
-            //}
-
-            //_view.SetInstallRobotList(_robotSettingManagerPresenter.AvailableRobotList, _config[-1].InstallRobot);
-            //_view.SetScanRobotList(_robotSettingManagerPresenter.AvailableRobotList, _config[-1].ScanRobot);
+            _view.SetRobotList(_robotSettingManagerPresenter.AvailableRobotList, _config[-1].Robot);
         }
 
         private void RobotSettingManagerPresenter_AvailableRobotAdded(object sender, EventArgs e)
         {
-            //_view.SetInstallRobotList(_robotSettingManagerPresenter.AvailableRobotList, _config[-1].InstallRobot);
-            //_view.SetScanRobotList(_robotSettingManagerPresenter.AvailableRobotList, _config[-1].ScanRobot);
+            _view.SetRobotList(_robotSettingManagerPresenter.AvailableRobotList, _config[-1].Robot);
         }
 
         private void PlcSettingManagerPresenter_AvailablePlcAdded(object sender, EventArgs e)
@@ -513,7 +555,7 @@ namespace loadingBox2dGui.presenters
                     ChangeShiftModelPath(e.NewPath);
                     break;
                 case ModelPathType.CameraTcpDataRootFolderPath:
-                    ChangeDetectModelPath(e.NewPath);
+                    ChangeCameraTcpRootFolderPath(e.NewPath);
                     break;
                 default: 
                     break;
@@ -588,8 +630,7 @@ namespace loadingBox2dGui.presenters
             _view.SetRobotList(_config.GetRobotList(), _config[-1].Robot);
             _view.SetPlcList(_plcSettingManagerPresenter.AvailablePlcList, _config.Plc);
             _view.SetCameraList(_config.GetCamSetList(), _config[-1].Camera);
-            _view.SetCarTypeList(_config.GetCarTypeList(), _config.RecentlyUsedCar);
-            _view.CheckerBoardImageRootFolderPath = _config.CheckerBoardRootFolderPath;
+            _view.SetCarTypeList(_config.GetCarTypeAndNameList(), _config.RecentlyUsedCar);
             _view.CalibrationDataRootFolderPath = _config.CalibrationDataRootPath;
             _view.CameraTcpDataRootFolderPath = _config.CameraTcpDataRootFolderPath;
             RefreshConfiguringCarTypeConfig();
@@ -603,6 +644,7 @@ namespace loadingBox2dGui.presenters
                 ChangeTracker.NotifyChange($"Task/{_config.RecentlyUsedCar}/Camera", _config[-1].Camera, cameraName);
                 _config[-1].Camera = cameraName;
             }
+            RefreshConfiguringCarTypeConfig();
         }
 
         private void ChangePlc(string plcName)
@@ -612,14 +654,16 @@ namespace loadingBox2dGui.presenters
                 ChangeTracker.NotifyChange("Task/PLC", _config.Plc, plcName);
                 _config.Plc = plcName;
             }
+            RefreshConfiguringCarTypeConfig();
         }
-        private void ChangeRobotFront(string robotName)
+        private void ChangeInstallRobot(string robotName)
         {
             if (_config[-1].Robot != robotName)
             {
-                ChangeTracker.NotifyChange($"Task/{_config.RecentlyUsedCar}/Robot", _config[-1].Robot, robotName);
+                ChangeTracker.NotifyChange($"Task/{_currentCarType}/Robot", _config.ConfigDict[_currentCarType].Robot, robotName);
                 _config[-1].Robot = robotName;
             }
+            RefreshConfiguringCarTypeConfig();
         }
 
         private void ChangeShiftModelPath(string shiftModelPath)
@@ -647,11 +691,11 @@ namespace loadingBox2dGui.presenters
 
         private void ChangeCheckerBoardFolderPath(string checkerBoardFolderPath)
         {
-            if (_config.CheckerBoardRootFolderPath != checkerBoardFolderPath)
+            if (_config.ConfigDict[_currentCarType].CheckerBoardRootFolderPath != checkerBoardFolderPath)
             {
                 _modifiedDataPaths = true;
-                ChangeTracker.NotifyChange($"Task/CheckerBoardRootFolderPath", _config.CheckerBoardRootFolderPath, checkerBoardFolderPath);
-                _config.CheckerBoardRootFolderPath = checkerBoardFolderPath;
+                ChangeTracker.NotifyChange($"Task/CheckerBoardRootFolderPath", _config.ConfigDict[_currentCarType].CheckerBoardRootFolderPath, checkerBoardFolderPath);
+                _config.ConfigDict[_currentCarType].CheckerBoardRootFolderPath = checkerBoardFolderPath;
                 _view.CheckerBoardImageRootFolderPath = checkerBoardFolderPath;
             }
         }
@@ -660,6 +704,7 @@ namespace loadingBox2dGui.presenters
         {
             if (_config.CalibrationDataRootPath != calibrationDataRootFolderPath)
             {
+                //Add Validation Step
                 _modifiedDataPaths = true;
                 ChangeTracker.NotifyChange($"Task/CalibrationDataRootFolderPath", _config.CalibrationDataRootPath, calibrationDataRootFolderPath);
                 _config.CalibrationDataRootPath = calibrationDataRootFolderPath;
