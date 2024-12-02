@@ -37,7 +37,40 @@ namespace loadingBox2dGui
             this.materialCard14 = new MaterialSkin.Controls.MaterialCard();
             this.lblLH_ = new MaterialSkin.Controls.MaterialLabel();
             this.materialCard6 = new MaterialSkin.Controls.MaterialCard();
-            this.btnStartCamera_ = new MaterialSkin.Controls.MaterialButton();
+            this.btnDetectAruco_ = new MaterialSkin.Controls.MaterialButton();
+            this.btnCapture_ = new MaterialSkin.Controls.MaterialButton();
+            this.gbRobotRead = new MaterialSkin.Controls.MaterialCard();
+            this.tbReadInstallPoseTxyz = new MaterialSkin.Controls.MaterialTextBox2();
+            this.materialLabel13 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel16 = new MaterialSkin.Controls.MaterialLabel();
+            this.tbReadInstallPoseRxyz = new MaterialSkin.Controls.MaterialTextBox2();
+            this.tbReadScanPoseTxyz = new MaterialSkin.Controls.MaterialTextBox2();
+            this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel12 = new MaterialSkin.Controls.MaterialLabel();
+            this.tbReadScanPoseRxyz = new MaterialSkin.Controls.MaterialTextBox2();
+            this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialButton1 = new MaterialSkin.Controls.MaterialButton();
+            this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
+            this.btnReadScanPose_ = new MaterialSkin.Controls.MaterialButton();
+            this.tbCurrRobotTz = new MaterialSkin.Controls.MaterialTextBox2();
+            this.tbCurrRobotRx = new MaterialSkin.Controls.MaterialTextBox2();
+            this.materialLabel18 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel14 = new MaterialSkin.Controls.MaterialLabel();
+            this.gbRobotWrite = new MaterialSkin.Controls.MaterialCard();
+            this.btnReadWrittenShiftPose_ = new MaterialSkin.Controls.MaterialButton();
+            this.btnWriteShiftPose_ = new MaterialSkin.Controls.MaterialButton();
+            this.tbWrittenTxyz_ = new MaterialSkin.Controls.MaterialTextBox2();
+            this.tbShiftTxyz = new MaterialSkin.Controls.MaterialTextBox2();
+            this.materialLabel21 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel26 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel11 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel20 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel15 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel25 = new MaterialSkin.Controls.MaterialLabel();
+            this.tbWrittenRxyz_ = new MaterialSkin.Controls.MaterialTextBox2();
+            this.lblShiftPoseRxyz_ = new MaterialSkin.Controls.MaterialLabel();
+            this.tbShiftRxyz = new MaterialSkin.Controls.MaterialTextBox2();
+            this.btnScanPoint_ = new MaterialSkin.Controls.MaterialButton();
             this.btnCameraConnect_ = new MaterialSkin.Controls.MaterialButton();
             this.btnLightOff_ = new MaterialSkin.Controls.MaterialButton();
             this.pbRh = new System.Windows.Forms.PictureBox();
@@ -165,62 +198,6 @@ namespace loadingBox2dGui
             this.tbCarSeqNumber = new MaterialSkin.Controls.MaterialTextBox2();
             this.btnSettingManage_ = new MaterialSkin.Controls.MaterialButton();
             this.label22 = new MaterialSkin.Controls.MaterialLabel();
-            this.gbRobotRead = new MaterialSkin.Controls.MaterialCard();
-            this.materialLabel24 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel13 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
-            this.tbScanPoseRz_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbScanPoseTz_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.btnReadScanPose_ = new MaterialSkin.Controls.MaterialButton();
-            this.tbCurrRobotTz = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbCurrRobotRx = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbScanPoseRx_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbScanPoseTx_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialLabel18 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel14 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel23 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel22 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel12 = new MaterialSkin.Controls.MaterialLabel();
-            this.tbScanPoseRy_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbScanPoseTy_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.gbRobotWrite = new MaterialSkin.Controls.MaterialCard();
-            this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
-            this.btnWriteShiftPose_ = new MaterialSkin.Controls.MaterialButton();
-            this.tbShiftRzR1 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbShiftTxR1 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialLabel11 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel20 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel15 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel28 = new MaterialSkin.Controls.MaterialLabel();
-            this.tbShiftTyR1 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbWrittenTx_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbWrittenTy_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbWrittenRz_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialLabel17 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel25 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel26 = new MaterialSkin.Controls.MaterialLabel();
-            this.btnReadWrittenShiftPose_ = new MaterialSkin.Controls.MaterialButton();
-            this.materialLabel21 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialCard7 = new MaterialSkin.Controls.MaterialCard();
-            this.materialLabel16 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel27 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel29 = new MaterialSkin.Controls.MaterialLabel();
-            this.tbInstallPoseRz_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbInstallPoseTz_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.btnReadInstallPose_ = new MaterialSkin.Controls.MaterialButton();
-            this.materialTextBox29 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialTextBox210 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbInstallPoseRx_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbInstallPoseTx_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialLabel32 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel33 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel34 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel35 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel36 = new MaterialSkin.Controls.MaterialLabel();
-            this.tbInstallPoseRy_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbInstallPoseTy_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialLabel31 = new MaterialSkin.Controls.MaterialLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -228,6 +205,8 @@ namespace loadingBox2dGui
             this.materialCard15.SuspendLayout();
             this.materialCard14.SuspendLayout();
             this.materialCard6.SuspendLayout();
+            this.gbRobotRead.SuspendLayout();
+            this.gbRobotWrite.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbRh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLh)).BeginInit();
             this.materialCard4.SuspendLayout();
@@ -261,9 +240,6 @@ namespace loadingBox2dGui
             this.splitContainer1.SuspendLayout();
             this.materialCard5.SuspendLayout();
             this.gbCarSeqNumber_.SuspendLayout();
-            this.gbRobotRead.SuspendLayout();
-            this.gbRobotWrite.SuspendLayout();
-            this.materialCard7.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer2
@@ -372,10 +348,11 @@ namespace loadingBox2dGui
             // materialCard6
             // 
             this.materialCard6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard6.Controls.Add(this.materialCard7);
+            this.materialCard6.Controls.Add(this.btnDetectAruco_);
+            this.materialCard6.Controls.Add(this.btnCapture_);
             this.materialCard6.Controls.Add(this.gbRobotRead);
             this.materialCard6.Controls.Add(this.gbRobotWrite);
-            this.materialCard6.Controls.Add(this.btnStartCamera_);
+            this.materialCard6.Controls.Add(this.btnScanPoint_);
             this.materialCard6.Controls.Add(this.btnCameraConnect_);
             this.materialCard6.Controls.Add(this.btnLightOff_);
             this.materialCard6.Depth = 0;
@@ -388,31 +365,755 @@ namespace loadingBox2dGui
             this.materialCard6.Size = new System.Drawing.Size(1097, 395);
             this.materialCard6.TabIndex = 194;
             // 
-            // btnStartCamera_
+            // btnDetectAruco_
             // 
-            this.btnStartCamera_.AutoSize = false;
-            this.btnStartCamera_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnStartCamera_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
-            this.btnStartCamera_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnStartCamera_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnStartCamera_.Depth = 0;
-            this.btnStartCamera_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnStartCamera_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStartCamera_.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btnStartCamera_.HighEmphasis = true;
-            this.btnStartCamera_.Icon = null;
-            this.btnStartCamera_.Location = new System.Drawing.Point(25, 253);
-            this.btnStartCamera_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnStartCamera_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnStartCamera_.Name = "btnStartCamera_";
-            this.btnStartCamera_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnStartCamera_.Size = new System.Drawing.Size(325, 94);
-            this.btnStartCamera_.TabIndex = 22;
-            this.btnStartCamera_.Text = "Start Camera";
-            this.btnStartCamera_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnStartCamera_.UseAccentColor = false;
-            this.btnStartCamera_.UseVisualStyleBackColor = false;
-            this.btnStartCamera_.Click += new System.EventHandler(this.btnGlassPoint__Click);
+            this.btnDetectAruco_.AutoSize = false;
+            this.btnDetectAruco_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnDetectAruco_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
+            this.btnDetectAruco_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnDetectAruco_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnDetectAruco_.Depth = 0;
+            this.btnDetectAruco_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnDetectAruco_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDetectAruco_.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.btnDetectAruco_.HighEmphasis = true;
+            this.btnDetectAruco_.Icon = null;
+            this.btnDetectAruco_.Location = new System.Drawing.Point(359, 247);
+            this.btnDetectAruco_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnDetectAruco_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnDetectAruco_.Name = "btnDetectAruco_";
+            this.btnDetectAruco_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnDetectAruco_.Size = new System.Drawing.Size(157, 87);
+            this.btnDetectAruco_.TabIndex = 181;
+            this.btnDetectAruco_.Text = "Try Aruco";
+            this.btnDetectAruco_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnDetectAruco_.UseAccentColor = false;
+            this.btnDetectAruco_.UseVisualStyleBackColor = false;
+            this.btnDetectAruco_.Click += new System.EventHandler(this.btnDetectAruco__Click);
+            // 
+            // btnCapture_
+            // 
+            this.btnCapture_.AutoSize = false;
+            this.btnCapture_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnCapture_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
+            this.btnCapture_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnCapture_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnCapture_.Depth = 0;
+            this.btnCapture_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnCapture_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCapture_.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.btnCapture_.HighEmphasis = true;
+            this.btnCapture_.Icon = null;
+            this.btnCapture_.Location = new System.Drawing.Point(521, 247);
+            this.btnCapture_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnCapture_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnCapture_.Name = "btnCapture_";
+            this.btnCapture_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnCapture_.Size = new System.Drawing.Size(157, 87);
+            this.btnCapture_.TabIndex = 180;
+            this.btnCapture_.Text = "Capture";
+            this.btnCapture_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnCapture_.UseAccentColor = false;
+            this.btnCapture_.UseVisualStyleBackColor = false;
+            this.btnCapture_.Click += new System.EventHandler(this.btnCapture_Click);
+            // 
+            // gbRobotRead
+            // 
+            this.gbRobotRead.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.gbRobotRead.Controls.Add(this.tbReadInstallPoseTxyz);
+            this.gbRobotRead.Controls.Add(this.materialLabel13);
+            this.gbRobotRead.Controls.Add(this.materialLabel16);
+            this.gbRobotRead.Controls.Add(this.tbReadInstallPoseRxyz);
+            this.gbRobotRead.Controls.Add(this.tbReadScanPoseTxyz);
+            this.gbRobotRead.Controls.Add(this.materialLabel10);
+            this.gbRobotRead.Controls.Add(this.materialLabel12);
+            this.gbRobotRead.Controls.Add(this.tbReadScanPoseRxyz);
+            this.gbRobotRead.Controls.Add(this.materialLabel8);
+            this.gbRobotRead.Controls.Add(this.materialButton1);
+            this.gbRobotRead.Controls.Add(this.materialLabel9);
+            this.gbRobotRead.Controls.Add(this.btnReadScanPose_);
+            this.gbRobotRead.Controls.Add(this.tbCurrRobotTz);
+            this.gbRobotRead.Controls.Add(this.tbCurrRobotRx);
+            this.gbRobotRead.Controls.Add(this.materialLabel18);
+            this.gbRobotRead.Controls.Add(this.materialLabel14);
+            this.gbRobotRead.Depth = 0;
+            this.gbRobotRead.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.gbRobotRead.Location = new System.Drawing.Point(688, 13);
+            this.gbRobotRead.Margin = new System.Windows.Forms.Padding(14);
+            this.gbRobotRead.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gbRobotRead.Name = "gbRobotRead";
+            this.gbRobotRead.Padding = new System.Windows.Forms.Padding(14);
+            this.gbRobotRead.Size = new System.Drawing.Size(198, 354);
+            this.gbRobotRead.TabIndex = 178;
+            // 
+            // tbReadInstallPoseTxyz
+            // 
+            this.tbReadInstallPoseTxyz.AnimateReadOnly = false;
+            this.tbReadInstallPoseTxyz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbReadInstallPoseTxyz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbReadInstallPoseTxyz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbReadInstallPoseTxyz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbReadInstallPoseTxyz.Depth = 0;
+            this.tbReadInstallPoseTxyz.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbReadInstallPoseTxyz.HideSelection = true;
+            this.tbReadInstallPoseTxyz.LeadingIcon = null;
+            this.tbReadInstallPoseTxyz.Location = new System.Drawing.Point(55, 255);
+            this.tbReadInstallPoseTxyz.MaxLength = 32767;
+            this.tbReadInstallPoseTxyz.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbReadInstallPoseTxyz.Name = "tbReadInstallPoseTxyz";
+            this.tbReadInstallPoseTxyz.PasswordChar = '\0';
+            this.tbReadInstallPoseTxyz.PrefixSuffixText = null;
+            this.tbReadInstallPoseTxyz.ReadOnly = false;
+            this.tbReadInstallPoseTxyz.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbReadInstallPoseTxyz.SelectedText = "";
+            this.tbReadInstallPoseTxyz.SelectionLength = 0;
+            this.tbReadInstallPoseTxyz.SelectionStart = 0;
+            this.tbReadInstallPoseTxyz.ShortcutsEnabled = true;
+            this.tbReadInstallPoseTxyz.Size = new System.Drawing.Size(132, 26);
+            this.tbReadInstallPoseTxyz.TabIndex = 186;
+            this.tbReadInstallPoseTxyz.TabStop = false;
+            this.tbReadInstallPoseTxyz.Text = "1";
+            this.tbReadInstallPoseTxyz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbReadInstallPoseTxyz.TrailingIcon = null;
+            this.tbReadInstallPoseTxyz.UseSystemPasswordChar = false;
+            this.tbReadInstallPoseTxyz.UseTallSize = false;
+            // 
+            // materialLabel13
+            // 
+            this.materialLabel13.AutoSize = true;
+            this.materialLabel13.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel13.Depth = 0;
+            this.materialLabel13.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel13.Location = new System.Drawing.Point(7, 258);
+            this.materialLabel13.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel13.Name = "materialLabel13";
+            this.materialLabel13.Size = new System.Drawing.Size(35, 18);
+            this.materialLabel13.TabIndex = 187;
+            this.materialLabel13.Text = "Txyz";
+            // 
+            // materialLabel16
+            // 
+            this.materialLabel16.AutoSize = true;
+            this.materialLabel16.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel16.Depth = 0;
+            this.materialLabel16.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel16.Location = new System.Drawing.Point(7, 286);
+            this.materialLabel16.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel16.Name = "materialLabel16";
+            this.materialLabel16.Size = new System.Drawing.Size(36, 18);
+            this.materialLabel16.TabIndex = 188;
+            this.materialLabel16.Text = "Rxyz";
+            // 
+            // tbReadInstallPoseRxyz
+            // 
+            this.tbReadInstallPoseRxyz.AnimateReadOnly = false;
+            this.tbReadInstallPoseRxyz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbReadInstallPoseRxyz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbReadInstallPoseRxyz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbReadInstallPoseRxyz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbReadInstallPoseRxyz.Depth = 0;
+            this.tbReadInstallPoseRxyz.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbReadInstallPoseRxyz.HideSelection = true;
+            this.tbReadInstallPoseRxyz.LeadingIcon = null;
+            this.tbReadInstallPoseRxyz.Location = new System.Drawing.Point(55, 283);
+            this.tbReadInstallPoseRxyz.MaxLength = 32767;
+            this.tbReadInstallPoseRxyz.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbReadInstallPoseRxyz.Name = "tbReadInstallPoseRxyz";
+            this.tbReadInstallPoseRxyz.PasswordChar = '\0';
+            this.tbReadInstallPoseRxyz.PrefixSuffixText = null;
+            this.tbReadInstallPoseRxyz.ReadOnly = false;
+            this.tbReadInstallPoseRxyz.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbReadInstallPoseRxyz.SelectedText = "";
+            this.tbReadInstallPoseRxyz.SelectionLength = 0;
+            this.tbReadInstallPoseRxyz.SelectionStart = 0;
+            this.tbReadInstallPoseRxyz.ShortcutsEnabled = true;
+            this.tbReadInstallPoseRxyz.Size = new System.Drawing.Size(132, 26);
+            this.tbReadInstallPoseRxyz.TabIndex = 189;
+            this.tbReadInstallPoseRxyz.TabStop = false;
+            this.tbReadInstallPoseRxyz.Text = "2";
+            this.tbReadInstallPoseRxyz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbReadInstallPoseRxyz.TrailingIcon = null;
+            this.tbReadInstallPoseRxyz.UseSystemPasswordChar = false;
+            this.tbReadInstallPoseRxyz.UseTallSize = false;
+            // 
+            // tbReadScanPoseTxyz
+            // 
+            this.tbReadScanPoseTxyz.AnimateReadOnly = false;
+            this.tbReadScanPoseTxyz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbReadScanPoseTxyz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbReadScanPoseTxyz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbReadScanPoseTxyz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbReadScanPoseTxyz.Depth = 0;
+            this.tbReadScanPoseTxyz.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbReadScanPoseTxyz.HideSelection = true;
+            this.tbReadScanPoseTxyz.LeadingIcon = null;
+            this.tbReadScanPoseTxyz.Location = new System.Drawing.Point(55, 68);
+            this.tbReadScanPoseTxyz.MaxLength = 32767;
+            this.tbReadScanPoseTxyz.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbReadScanPoseTxyz.Name = "tbReadScanPoseTxyz";
+            this.tbReadScanPoseTxyz.PasswordChar = '\0';
+            this.tbReadScanPoseTxyz.PrefixSuffixText = null;
+            this.tbReadScanPoseTxyz.ReadOnly = false;
+            this.tbReadScanPoseTxyz.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbReadScanPoseTxyz.SelectedText = "";
+            this.tbReadScanPoseTxyz.SelectionLength = 0;
+            this.tbReadScanPoseTxyz.SelectionStart = 0;
+            this.tbReadScanPoseTxyz.ShortcutsEnabled = true;
+            this.tbReadScanPoseTxyz.Size = new System.Drawing.Size(132, 26);
+            this.tbReadScanPoseTxyz.TabIndex = 182;
+            this.tbReadScanPoseTxyz.TabStop = false;
+            this.tbReadScanPoseTxyz.Text = "1";
+            this.tbReadScanPoseTxyz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbReadScanPoseTxyz.TrailingIcon = null;
+            this.tbReadScanPoseTxyz.UseSystemPasswordChar = false;
+            this.tbReadScanPoseTxyz.UseTallSize = false;
+            // 
+            // materialLabel10
+            // 
+            this.materialLabel10.AutoSize = true;
+            this.materialLabel10.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel10.Depth = 0;
+            this.materialLabel10.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel10.Location = new System.Drawing.Point(7, 71);
+            this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel10.Name = "materialLabel10";
+            this.materialLabel10.Size = new System.Drawing.Size(35, 18);
+            this.materialLabel10.TabIndex = 183;
+            this.materialLabel10.Text = "Txyz";
+            // 
+            // materialLabel12
+            // 
+            this.materialLabel12.AutoSize = true;
+            this.materialLabel12.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel12.Depth = 0;
+            this.materialLabel12.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel12.Location = new System.Drawing.Point(7, 99);
+            this.materialLabel12.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel12.Name = "materialLabel12";
+            this.materialLabel12.Size = new System.Drawing.Size(36, 18);
+            this.materialLabel12.TabIndex = 184;
+            this.materialLabel12.Text = "Rxyz";
+            // 
+            // tbReadScanPoseRxyz
+            // 
+            this.tbReadScanPoseRxyz.AnimateReadOnly = false;
+            this.tbReadScanPoseRxyz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbReadScanPoseRxyz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbReadScanPoseRxyz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbReadScanPoseRxyz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbReadScanPoseRxyz.Depth = 0;
+            this.tbReadScanPoseRxyz.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbReadScanPoseRxyz.HideSelection = true;
+            this.tbReadScanPoseRxyz.LeadingIcon = null;
+            this.tbReadScanPoseRxyz.Location = new System.Drawing.Point(55, 96);
+            this.tbReadScanPoseRxyz.MaxLength = 32767;
+            this.tbReadScanPoseRxyz.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbReadScanPoseRxyz.Name = "tbReadScanPoseRxyz";
+            this.tbReadScanPoseRxyz.PasswordChar = '\0';
+            this.tbReadScanPoseRxyz.PrefixSuffixText = null;
+            this.tbReadScanPoseRxyz.ReadOnly = false;
+            this.tbReadScanPoseRxyz.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbReadScanPoseRxyz.SelectedText = "";
+            this.tbReadScanPoseRxyz.SelectionLength = 0;
+            this.tbReadScanPoseRxyz.SelectionStart = 0;
+            this.tbReadScanPoseRxyz.ShortcutsEnabled = true;
+            this.tbReadScanPoseRxyz.Size = new System.Drawing.Size(132, 26);
+            this.tbReadScanPoseRxyz.TabIndex = 185;
+            this.tbReadScanPoseRxyz.TabStop = false;
+            this.tbReadScanPoseRxyz.Text = "2";
+            this.tbReadScanPoseRxyz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbReadScanPoseRxyz.TrailingIcon = null;
+            this.tbReadScanPoseRxyz.UseSystemPasswordChar = false;
+            this.tbReadScanPoseRxyz.UseTallSize = false;
+            // 
+            // materialLabel8
+            // 
+            this.materialLabel8.AutoSize = true;
+            this.materialLabel8.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel8.Depth = 0;
+            this.materialLabel8.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel8.Location = new System.Drawing.Point(14, 222);
+            this.materialLabel8.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel8.Name = "materialLabel8";
+            this.materialLabel8.Size = new System.Drawing.Size(87, 18);
+            this.materialLabel8.TabIndex = 181;
+            this.materialLabel8.Text = "Install Pose";
+            // 
+            // materialButton1
+            // 
+            this.materialButton1.AutoSize = false;
+            this.materialButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialButton1.BackColor = System.Drawing.Color.DimGray;
+            this.materialButton1.CustomBackColor = System.Drawing.Color.Empty;
+            this.materialButton1.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.materialButton1.Depth = 0;
+            this.materialButton1.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.materialButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.materialButton1.Font = new System.Drawing.Font("Consolas", 12F);
+            this.materialButton1.HighEmphasis = true;
+            this.materialButton1.Icon = null;
+            this.materialButton1.Location = new System.Drawing.Point(110, 222);
+            this.materialButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialButton1.Name = "materialButton1";
+            this.materialButton1.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.materialButton1.Size = new System.Drawing.Size(77, 21);
+            this.materialButton1.TabIndex = 180;
+            this.materialButton1.Text = "READ";
+            this.materialButton1.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.materialButton1.UseAccentColor = false;
+            this.materialButton1.UseVisualStyleBackColor = false;
+            this.materialButton1.Click += new System.EventHandler(this.btnReadInstallPose_Click);
+            // 
+            // materialLabel9
+            // 
+            this.materialLabel9.AutoSize = true;
+            this.materialLabel9.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel9.Depth = 0;
+            this.materialLabel9.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel9.Location = new System.Drawing.Point(207, 10);
+            this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel9.Name = "materialLabel9";
+            this.materialLabel9.Size = new System.Drawing.Size(18, 18);
+            this.materialLabel9.TabIndex = 17;
+            this.materialLabel9.Text = "Tz";
+            // 
+            // btnReadScanPose_
+            // 
+            this.btnReadScanPose_.AutoSize = false;
+            this.btnReadScanPose_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnReadScanPose_.BackColor = System.Drawing.Color.DimGray;
+            this.btnReadScanPose_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnReadScanPose_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnReadScanPose_.Depth = 0;
+            this.btnReadScanPose_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnReadScanPose_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReadScanPose_.Font = new System.Drawing.Font("Consolas", 12F);
+            this.btnReadScanPose_.HighEmphasis = true;
+            this.btnReadScanPose_.Icon = null;
+            this.btnReadScanPose_.Location = new System.Drawing.Point(110, 33);
+            this.btnReadScanPose_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnReadScanPose_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnReadScanPose_.Name = "btnReadScanPose_";
+            this.btnReadScanPose_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnReadScanPose_.Size = new System.Drawing.Size(77, 21);
+            this.btnReadScanPose_.TabIndex = 178;
+            this.btnReadScanPose_.Text = "READ";
+            this.btnReadScanPose_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnReadScanPose_.UseAccentColor = false;
+            this.btnReadScanPose_.UseVisualStyleBackColor = false;
+            this.btnReadScanPose_.Click += new System.EventHandler(this.btnReadScanPose_Click);
+            // 
+            // tbCurrRobotTz
+            // 
+            this.tbCurrRobotTz.AnimateReadOnly = false;
+            this.tbCurrRobotTz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbCurrRobotTz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbCurrRobotTz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbCurrRobotTz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbCurrRobotTz.Depth = 0;
+            this.tbCurrRobotTz.Font = new System.Drawing.Font("Consolas", 11.25F);
+            this.tbCurrRobotTz.HideSelection = true;
+            this.tbCurrRobotTz.LeadingIcon = null;
+            this.tbCurrRobotTz.Location = new System.Drawing.Point(236, 6);
+            this.tbCurrRobotTz.MaxLength = 32767;
+            this.tbCurrRobotTz.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbCurrRobotTz.Name = "tbCurrRobotTz";
+            this.tbCurrRobotTz.PasswordChar = '\0';
+            this.tbCurrRobotTz.PrefixSuffixText = null;
+            this.tbCurrRobotTz.ReadOnly = false;
+            this.tbCurrRobotTz.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbCurrRobotTz.SelectedText = "";
+            this.tbCurrRobotTz.SelectionLength = 0;
+            this.tbCurrRobotTz.SelectionStart = 0;
+            this.tbCurrRobotTz.ShortcutsEnabled = true;
+            this.tbCurrRobotTz.Size = new System.Drawing.Size(139, 26);
+            this.tbCurrRobotTz.TabIndex = 18;
+            this.tbCurrRobotTz.TabStop = false;
+            this.tbCurrRobotTz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbCurrRobotTz.TrailingIcon = null;
+            this.tbCurrRobotTz.UseSystemPasswordChar = false;
+            this.tbCurrRobotTz.UseTallSize = false;
+            // 
+            // tbCurrRobotRx
+            // 
+            this.tbCurrRobotRx.AnimateReadOnly = false;
+            this.tbCurrRobotRx.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbCurrRobotRx.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbCurrRobotRx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbCurrRobotRx.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbCurrRobotRx.Depth = 0;
+            this.tbCurrRobotRx.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbCurrRobotRx.HideSelection = true;
+            this.tbCurrRobotRx.LeadingIcon = null;
+            this.tbCurrRobotRx.Location = new System.Drawing.Point(231, 38);
+            this.tbCurrRobotRx.MaxLength = 32767;
+            this.tbCurrRobotRx.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbCurrRobotRx.Name = "tbCurrRobotRx";
+            this.tbCurrRobotRx.PasswordChar = '\0';
+            this.tbCurrRobotRx.PrefixSuffixText = null;
+            this.tbCurrRobotRx.ReadOnly = false;
+            this.tbCurrRobotRx.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbCurrRobotRx.SelectedText = "";
+            this.tbCurrRobotRx.SelectionLength = 0;
+            this.tbCurrRobotRx.SelectionStart = 0;
+            this.tbCurrRobotRx.ShortcutsEnabled = true;
+            this.tbCurrRobotRx.Size = new System.Drawing.Size(139, 26);
+            this.tbCurrRobotRx.TabIndex = 6;
+            this.tbCurrRobotRx.TabStop = false;
+            this.tbCurrRobotRx.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbCurrRobotRx.TrailingIcon = null;
+            this.tbCurrRobotRx.UseSystemPasswordChar = false;
+            this.tbCurrRobotRx.UseTallSize = false;
+            // 
+            // materialLabel18
+            // 
+            this.materialLabel18.AutoSize = true;
+            this.materialLabel18.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel18.Depth = 0;
+            this.materialLabel18.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel18.Location = new System.Drawing.Point(14, 36);
+            this.materialLabel18.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel18.Name = "materialLabel18";
+            this.materialLabel18.Size = new System.Drawing.Size(79, 18);
+            this.materialLabel18.TabIndex = 7;
+            this.materialLabel18.Text = "Scan Pose";
+            // 
+            // materialLabel14
+            // 
+            this.materialLabel14.AutoSize = true;
+            this.materialLabel14.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel14.Depth = 0;
+            this.materialLabel14.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel14.Location = new System.Drawing.Point(11, 11);
+            this.materialLabel14.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel14.Name = "materialLabel14";
+            this.materialLabel14.Size = new System.Drawing.Size(128, 18);
+            this.materialLabel14.TabIndex = 7;
+            this.materialLabel14.Text = "ROBOT -> VISION";
+            // 
+            // gbRobotWrite
+            // 
+            this.gbRobotWrite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.gbRobotWrite.Controls.Add(this.btnReadWrittenShiftPose_);
+            this.gbRobotWrite.Controls.Add(this.btnWriteShiftPose_);
+            this.gbRobotWrite.Controls.Add(this.tbWrittenTxyz_);
+            this.gbRobotWrite.Controls.Add(this.tbShiftTxyz);
+            this.gbRobotWrite.Controls.Add(this.materialLabel21);
+            this.gbRobotWrite.Controls.Add(this.materialLabel26);
+            this.gbRobotWrite.Controls.Add(this.materialLabel11);
+            this.gbRobotWrite.Controls.Add(this.materialLabel20);
+            this.gbRobotWrite.Controls.Add(this.materialLabel15);
+            this.gbRobotWrite.Controls.Add(this.materialLabel25);
+            this.gbRobotWrite.Controls.Add(this.tbWrittenRxyz_);
+            this.gbRobotWrite.Controls.Add(this.lblShiftPoseRxyz_);
+            this.gbRobotWrite.Controls.Add(this.tbShiftRxyz);
+            this.gbRobotWrite.Depth = 0;
+            this.gbRobotWrite.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.gbRobotWrite.Location = new System.Drawing.Point(890, 13);
+            this.gbRobotWrite.Margin = new System.Windows.Forms.Padding(14);
+            this.gbRobotWrite.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gbRobotWrite.Name = "gbRobotWrite";
+            this.gbRobotWrite.Padding = new System.Windows.Forms.Padding(14);
+            this.gbRobotWrite.Size = new System.Drawing.Size(198, 354);
+            this.gbRobotWrite.TabIndex = 179;
+            // 
+            // btnReadWrittenShiftPose_
+            // 
+            this.btnReadWrittenShiftPose_.AutoSize = false;
+            this.btnReadWrittenShiftPose_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnReadWrittenShiftPose_.BackColor = System.Drawing.Color.DimGray;
+            this.btnReadWrittenShiftPose_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnReadWrittenShiftPose_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnReadWrittenShiftPose_.Depth = 0;
+            this.btnReadWrittenShiftPose_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnReadWrittenShiftPose_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReadWrittenShiftPose_.Font = new System.Drawing.Font("Consolas", 12F);
+            this.btnReadWrittenShiftPose_.HighEmphasis = true;
+            this.btnReadWrittenShiftPose_.Icon = null;
+            this.btnReadWrittenShiftPose_.Location = new System.Drawing.Point(123, 220);
+            this.btnReadWrittenShiftPose_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnReadWrittenShiftPose_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnReadWrittenShiftPose_.Name = "btnReadWrittenShiftPose_";
+            this.btnReadWrittenShiftPose_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnReadWrittenShiftPose_.Size = new System.Drawing.Size(57, 26);
+            this.btnReadWrittenShiftPose_.TabIndex = 179;
+            this.btnReadWrittenShiftPose_.Text = "READ";
+            this.btnReadWrittenShiftPose_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnReadWrittenShiftPose_.UseAccentColor = false;
+            this.btnReadWrittenShiftPose_.UseVisualStyleBackColor = false;
+            this.btnReadWrittenShiftPose_.Click += new System.EventHandler(this.btnReadWrittenShiftPose_Click);
+            // 
+            // btnWriteShiftPose_
+            // 
+            this.btnWriteShiftPose_.AutoSize = false;
+            this.btnWriteShiftPose_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnWriteShiftPose_.BackColor = System.Drawing.Color.DimGray;
+            this.btnWriteShiftPose_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnWriteShiftPose_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnWriteShiftPose_.Depth = 0;
+            this.btnWriteShiftPose_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnWriteShiftPose_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWriteShiftPose_.Font = new System.Drawing.Font("Consolas", 12F);
+            this.btnWriteShiftPose_.HighEmphasis = true;
+            this.btnWriteShiftPose_.Icon = null;
+            this.btnWriteShiftPose_.Location = new System.Drawing.Point(101, 32);
+            this.btnWriteShiftPose_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnWriteShiftPose_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnWriteShiftPose_.Name = "btnWriteShiftPose_";
+            this.btnWriteShiftPose_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnWriteShiftPose_.Size = new System.Drawing.Size(82, 20);
+            this.btnWriteShiftPose_.TabIndex = 179;
+            this.btnWriteShiftPose_.Text = "WRITE";
+            this.btnWriteShiftPose_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnWriteShiftPose_.UseAccentColor = false;
+            this.btnWriteShiftPose_.UseVisualStyleBackColor = false;
+            this.btnWriteShiftPose_.Click += new System.EventHandler(this.btnWriteShiftPose_Click);
+            // 
+            // tbWrittenTxyz_
+            // 
+            this.tbWrittenTxyz_.AnimateReadOnly = false;
+            this.tbWrittenTxyz_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbWrittenTxyz_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbWrittenTxyz_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbWrittenTxyz_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbWrittenTxyz_.Depth = 0;
+            this.tbWrittenTxyz_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbWrittenTxyz_.HideSelection = true;
+            this.tbWrittenTxyz_.LeadingIcon = null;
+            this.tbWrittenTxyz_.Location = new System.Drawing.Point(51, 255);
+            this.tbWrittenTxyz_.MaxLength = 32767;
+            this.tbWrittenTxyz_.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbWrittenTxyz_.Name = "tbWrittenTxyz_";
+            this.tbWrittenTxyz_.PasswordChar = '\0';
+            this.tbWrittenTxyz_.PrefixSuffixText = null;
+            this.tbWrittenTxyz_.ReadOnly = false;
+            this.tbWrittenTxyz_.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbWrittenTxyz_.SelectedText = "";
+            this.tbWrittenTxyz_.SelectionLength = 0;
+            this.tbWrittenTxyz_.SelectionStart = 0;
+            this.tbWrittenTxyz_.ShortcutsEnabled = true;
+            this.tbWrittenTxyz_.Size = new System.Drawing.Size(132, 26);
+            this.tbWrittenTxyz_.TabIndex = 6;
+            this.tbWrittenTxyz_.TabStop = false;
+            this.tbWrittenTxyz_.Text = "1";
+            this.tbWrittenTxyz_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbWrittenTxyz_.TrailingIcon = null;
+            this.tbWrittenTxyz_.UseSystemPasswordChar = false;
+            this.tbWrittenTxyz_.UseTallSize = false;
+            // 
+            // tbShiftTxyz
+            // 
+            this.tbShiftTxyz.AnimateReadOnly = false;
+            this.tbShiftTxyz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbShiftTxyz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbShiftTxyz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbShiftTxyz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbShiftTxyz.Depth = 0;
+            this.tbShiftTxyz.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbShiftTxyz.HideSelection = true;
+            this.tbShiftTxyz.LeadingIcon = null;
+            this.tbShiftTxyz.Location = new System.Drawing.Point(53, 68);
+            this.tbShiftTxyz.MaxLength = 32767;
+            this.tbShiftTxyz.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbShiftTxyz.Name = "tbShiftTxyz";
+            this.tbShiftTxyz.PasswordChar = '\0';
+            this.tbShiftTxyz.PrefixSuffixText = null;
+            this.tbShiftTxyz.ReadOnly = false;
+            this.tbShiftTxyz.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbShiftTxyz.SelectedText = "";
+            this.tbShiftTxyz.SelectionLength = 0;
+            this.tbShiftTxyz.SelectionStart = 0;
+            this.tbShiftTxyz.ShortcutsEnabled = true;
+            this.tbShiftTxyz.Size = new System.Drawing.Size(132, 26);
+            this.tbShiftTxyz.TabIndex = 6;
+            this.tbShiftTxyz.TabStop = false;
+            this.tbShiftTxyz.Text = "1";
+            this.tbShiftTxyz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbShiftTxyz.TrailingIcon = null;
+            this.tbShiftTxyz.UseSystemPasswordChar = false;
+            this.tbShiftTxyz.UseTallSize = false;
+            // 
+            // materialLabel21
+            // 
+            this.materialLabel21.AutoSize = true;
+            this.materialLabel21.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel21.Depth = 0;
+            this.materialLabel21.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel21.Location = new System.Drawing.Point(10, 223);
+            this.materialLabel21.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel21.Name = "materialLabel21";
+            this.materialLabel21.Size = new System.Drawing.Size(109, 18);
+            this.materialLabel21.TabIndex = 7;
+            this.materialLabel21.Text = "Check Written";
+            // 
+            // materialLabel26
+            // 
+            this.materialLabel26.AutoSize = true;
+            this.materialLabel26.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel26.Depth = 0;
+            this.materialLabel26.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel26.Location = new System.Drawing.Point(5, 259);
+            this.materialLabel26.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel26.Name = "materialLabel26";
+            this.materialLabel26.Size = new System.Drawing.Size(35, 18);
+            this.materialLabel26.TabIndex = 7;
+            this.materialLabel26.Text = "Txyz";
+            // 
+            // materialLabel11
+            // 
+            this.materialLabel11.AutoSize = true;
+            this.materialLabel11.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel11.Depth = 0;
+            this.materialLabel11.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel11.Location = new System.Drawing.Point(5, 71);
+            this.materialLabel11.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel11.Name = "materialLabel11";
+            this.materialLabel11.Size = new System.Drawing.Size(35, 18);
+            this.materialLabel11.TabIndex = 7;
+            this.materialLabel11.Text = "Txyz";
+            // 
+            // materialLabel20
+            // 
+            this.materialLabel20.AutoSize = true;
+            this.materialLabel20.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel20.Depth = 0;
+            this.materialLabel20.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel20.Location = new System.Drawing.Point(13, 36);
+            this.materialLabel20.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel20.Name = "materialLabel20";
+            this.materialLabel20.Size = new System.Drawing.Size(78, 18);
+            this.materialLabel20.TabIndex = 7;
+            this.materialLabel20.Text = "Shift Pose";
+            // 
+            // materialLabel15
+            // 
+            this.materialLabel15.AutoSize = true;
+            this.materialLabel15.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel15.Depth = 0;
+            this.materialLabel15.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel15.Location = new System.Drawing.Point(10, 11);
+            this.materialLabel15.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel15.Name = "materialLabel15";
+            this.materialLabel15.Size = new System.Drawing.Size(128, 18);
+            this.materialLabel15.TabIndex = 7;
+            this.materialLabel15.Text = "VISION -> ROBOT";
+            // 
+            // materialLabel25
+            // 
+            this.materialLabel25.AutoSize = true;
+            this.materialLabel25.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel25.Depth = 0;
+            this.materialLabel25.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel25.Location = new System.Drawing.Point(5, 287);
+            this.materialLabel25.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel25.Name = "materialLabel25";
+            this.materialLabel25.Size = new System.Drawing.Size(36, 18);
+            this.materialLabel25.TabIndex = 8;
+            this.materialLabel25.Text = "Rxyz";
+            // 
+            // tbWrittenRxyz_
+            // 
+            this.tbWrittenRxyz_.AnimateReadOnly = false;
+            this.tbWrittenRxyz_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbWrittenRxyz_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbWrittenRxyz_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbWrittenRxyz_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbWrittenRxyz_.Depth = 0;
+            this.tbWrittenRxyz_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbWrittenRxyz_.HideSelection = true;
+            this.tbWrittenRxyz_.LeadingIcon = null;
+            this.tbWrittenRxyz_.Location = new System.Drawing.Point(51, 283);
+            this.tbWrittenRxyz_.MaxLength = 32767;
+            this.tbWrittenRxyz_.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbWrittenRxyz_.Name = "tbWrittenRxyz_";
+            this.tbWrittenRxyz_.PasswordChar = '\0';
+            this.tbWrittenRxyz_.PrefixSuffixText = null;
+            this.tbWrittenRxyz_.ReadOnly = false;
+            this.tbWrittenRxyz_.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbWrittenRxyz_.SelectedText = "";
+            this.tbWrittenRxyz_.SelectionLength = 0;
+            this.tbWrittenRxyz_.SelectionStart = 0;
+            this.tbWrittenRxyz_.ShortcutsEnabled = true;
+            this.tbWrittenRxyz_.Size = new System.Drawing.Size(132, 26);
+            this.tbWrittenRxyz_.TabIndex = 13;
+            this.tbWrittenRxyz_.TabStop = false;
+            this.tbWrittenRxyz_.Text = "2";
+            this.tbWrittenRxyz_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbWrittenRxyz_.TrailingIcon = null;
+            this.tbWrittenRxyz_.UseSystemPasswordChar = false;
+            this.tbWrittenRxyz_.UseTallSize = false;
+            // 
+            // lblShiftPoseRxyz_
+            // 
+            this.lblShiftPoseRxyz_.AutoSize = true;
+            this.lblShiftPoseRxyz_.BackColor = System.Drawing.Color.Transparent;
+            this.lblShiftPoseRxyz_.Depth = 0;
+            this.lblShiftPoseRxyz_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblShiftPoseRxyz_.Location = new System.Drawing.Point(5, 99);
+            this.lblShiftPoseRxyz_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblShiftPoseRxyz_.Name = "lblShiftPoseRxyz_";
+            this.lblShiftPoseRxyz_.Size = new System.Drawing.Size(36, 18);
+            this.lblShiftPoseRxyz_.TabIndex = 8;
+            this.lblShiftPoseRxyz_.Text = "Rxyz";
+            // 
+            // tbShiftRxyz
+            // 
+            this.tbShiftRxyz.AnimateReadOnly = false;
+            this.tbShiftRxyz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbShiftRxyz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbShiftRxyz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbShiftRxyz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbShiftRxyz.Depth = 0;
+            this.tbShiftRxyz.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbShiftRxyz.HideSelection = true;
+            this.tbShiftRxyz.LeadingIcon = null;
+            this.tbShiftRxyz.Location = new System.Drawing.Point(53, 96);
+            this.tbShiftRxyz.MaxLength = 32767;
+            this.tbShiftRxyz.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbShiftRxyz.Name = "tbShiftRxyz";
+            this.tbShiftRxyz.PasswordChar = '\0';
+            this.tbShiftRxyz.PrefixSuffixText = null;
+            this.tbShiftRxyz.ReadOnly = false;
+            this.tbShiftRxyz.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbShiftRxyz.SelectedText = "";
+            this.tbShiftRxyz.SelectionLength = 0;
+            this.tbShiftRxyz.SelectionStart = 0;
+            this.tbShiftRxyz.ShortcutsEnabled = true;
+            this.tbShiftRxyz.Size = new System.Drawing.Size(132, 26);
+            this.tbShiftRxyz.TabIndex = 13;
+            this.tbShiftRxyz.TabStop = false;
+            this.tbShiftRxyz.Text = "2";
+            this.tbShiftRxyz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbShiftRxyz.TrailingIcon = null;
+            this.tbShiftRxyz.UseSystemPasswordChar = false;
+            this.tbShiftRxyz.UseTallSize = false;
+            // 
+            // btnScanPoint_
+            // 
+            this.btnScanPoint_.AutoSize = false;
+            this.btnScanPoint_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnScanPoint_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
+            this.btnScanPoint_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnScanPoint_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnScanPoint_.Depth = 0;
+            this.btnScanPoint_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnScanPoint_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnScanPoint_.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.btnScanPoint_.HighEmphasis = true;
+            this.btnScanPoint_.Icon = null;
+            this.btnScanPoint_.Location = new System.Drawing.Point(25, 247);
+            this.btnScanPoint_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnScanPoint_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnScanPoint_.Name = "btnScanPoint_";
+            this.btnScanPoint_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnScanPoint_.Size = new System.Drawing.Size(325, 87);
+            this.btnScanPoint_.TabIndex = 22;
+            this.btnScanPoint_.Text = "Scan Point";
+            this.btnScanPoint_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnScanPoint_.UseAccentColor = false;
+            this.btnScanPoint_.UseVisualStyleBackColor = false;
+            this.btnScanPoint_.Click += new System.EventHandler(this.btnGlassPoint__Click);
             // 
             // btnCameraConnect_
             // 
@@ -2955,1237 +3656,6 @@ namespace loadingBox2dGui
             this.label22.TabIndex = 71;
             this.label22.Text = "label22";
             // 
-            // gbRobotRead
-            // 
-            this.gbRobotRead.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.gbRobotRead.Controls.Add(this.materialLabel24);
-            this.gbRobotRead.Controls.Add(this.materialLabel13);
-            this.gbRobotRead.Controls.Add(this.materialLabel9);
-            this.gbRobotRead.Controls.Add(this.tbScanPoseRz_);
-            this.gbRobotRead.Controls.Add(this.tbScanPoseTz_);
-            this.gbRobotRead.Controls.Add(this.btnReadScanPose_);
-            this.gbRobotRead.Controls.Add(this.tbCurrRobotTz);
-            this.gbRobotRead.Controls.Add(this.tbCurrRobotRx);
-            this.gbRobotRead.Controls.Add(this.tbScanPoseRx_);
-            this.gbRobotRead.Controls.Add(this.tbScanPoseTx_);
-            this.gbRobotRead.Controls.Add(this.materialLabel18);
-            this.gbRobotRead.Controls.Add(this.materialLabel14);
-            this.gbRobotRead.Controls.Add(this.materialLabel23);
-            this.gbRobotRead.Controls.Add(this.materialLabel10);
-            this.gbRobotRead.Controls.Add(this.materialLabel22);
-            this.gbRobotRead.Controls.Add(this.materialLabel12);
-            this.gbRobotRead.Controls.Add(this.tbScanPoseRy_);
-            this.gbRobotRead.Controls.Add(this.tbScanPoseTy_);
-            this.gbRobotRead.Depth = 0;
-            this.gbRobotRead.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gbRobotRead.Location = new System.Drawing.Point(688, 13);
-            this.gbRobotRead.Margin = new System.Windows.Forms.Padding(14);
-            this.gbRobotRead.MouseState = MaterialSkin.MouseState.HOVER;
-            this.gbRobotRead.Name = "gbRobotRead";
-            this.gbRobotRead.Padding = new System.Windows.Forms.Padding(14);
-            this.gbRobotRead.Size = new System.Drawing.Size(198, 354);
-            this.gbRobotRead.TabIndex = 178;
-            // 
-            // materialLabel24
-            // 
-            this.materialLabel24.AutoSize = true;
-            this.materialLabel24.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel24.Depth = 0;
-            this.materialLabel24.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel24.Location = new System.Drawing.Point(17, 262);
-            this.materialLabel24.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel24.Name = "materialLabel24";
-            this.materialLabel24.Size = new System.Drawing.Size(19, 18);
-            this.materialLabel24.TabIndex = 17;
-            this.materialLabel24.Text = "Rz";
-            // 
-            // materialLabel13
-            // 
-            this.materialLabel13.AutoSize = true;
-            this.materialLabel13.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel13.Depth = 0;
-            this.materialLabel13.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel13.Location = new System.Drawing.Point(17, 122);
-            this.materialLabel13.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel13.Name = "materialLabel13";
-            this.materialLabel13.Size = new System.Drawing.Size(18, 18);
-            this.materialLabel13.TabIndex = 17;
-            this.materialLabel13.Text = "Tz";
-            // 
-            // materialLabel9
-            // 
-            this.materialLabel9.AutoSize = true;
-            this.materialLabel9.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel9.Depth = 0;
-            this.materialLabel9.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel9.Location = new System.Drawing.Point(207, 10);
-            this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel9.Name = "materialLabel9";
-            this.materialLabel9.Size = new System.Drawing.Size(18, 18);
-            this.materialLabel9.TabIndex = 17;
-            this.materialLabel9.Text = "Tz";
-            // 
-            // tbScanPoseRz_
-            // 
-            this.tbScanPoseRz_.AnimateReadOnly = false;
-            this.tbScanPoseRz_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbScanPoseRz_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbScanPoseRz_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbScanPoseRz_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbScanPoseRz_.Depth = 0;
-            this.tbScanPoseRz_.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.tbScanPoseRz_.HideSelection = true;
-            this.tbScanPoseRz_.LeadingIcon = null;
-            this.tbScanPoseRz_.Location = new System.Drawing.Point(48, 258);
-            this.tbScanPoseRz_.MaxLength = 32767;
-            this.tbScanPoseRz_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbScanPoseRz_.Name = "tbScanPoseRz_";
-            this.tbScanPoseRz_.PasswordChar = '\0';
-            this.tbScanPoseRz_.PrefixSuffixText = null;
-            this.tbScanPoseRz_.ReadOnly = true;
-            this.tbScanPoseRz_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbScanPoseRz_.SelectedText = "";
-            this.tbScanPoseRz_.SelectionLength = 0;
-            this.tbScanPoseRz_.SelectionStart = 0;
-            this.tbScanPoseRz_.ShortcutsEnabled = true;
-            this.tbScanPoseRz_.Size = new System.Drawing.Size(139, 26);
-            this.tbScanPoseRz_.TabIndex = 18;
-            this.tbScanPoseRz_.TabStop = false;
-            this.tbScanPoseRz_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbScanPoseRz_.TrailingIcon = null;
-            this.tbScanPoseRz_.UseSystemPasswordChar = false;
-            this.tbScanPoseRz_.UseTallSize = false;
-            // 
-            // tbScanPoseTz_
-            // 
-            this.tbScanPoseTz_.AnimateReadOnly = false;
-            this.tbScanPoseTz_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbScanPoseTz_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbScanPoseTz_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbScanPoseTz_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbScanPoseTz_.Depth = 0;
-            this.tbScanPoseTz_.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.tbScanPoseTz_.HideSelection = true;
-            this.tbScanPoseTz_.LeadingIcon = null;
-            this.tbScanPoseTz_.Location = new System.Drawing.Point(48, 118);
-            this.tbScanPoseTz_.MaxLength = 32767;
-            this.tbScanPoseTz_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbScanPoseTz_.Name = "tbScanPoseTz_";
-            this.tbScanPoseTz_.PasswordChar = '\0';
-            this.tbScanPoseTz_.PrefixSuffixText = null;
-            this.tbScanPoseTz_.ReadOnly = true;
-            this.tbScanPoseTz_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbScanPoseTz_.SelectedText = "";
-            this.tbScanPoseTz_.SelectionLength = 0;
-            this.tbScanPoseTz_.SelectionStart = 0;
-            this.tbScanPoseTz_.ShortcutsEnabled = true;
-            this.tbScanPoseTz_.Size = new System.Drawing.Size(139, 26);
-            this.tbScanPoseTz_.TabIndex = 18;
-            this.tbScanPoseTz_.TabStop = false;
-            this.tbScanPoseTz_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbScanPoseTz_.TrailingIcon = null;
-            this.tbScanPoseTz_.UseSystemPasswordChar = false;
-            this.tbScanPoseTz_.UseTallSize = false;
-            // 
-            // btnReadScanPose_
-            // 
-            this.btnReadScanPose_.AutoSize = false;
-            this.btnReadScanPose_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnReadScanPose_.BackColor = System.Drawing.Color.DimGray;
-            this.btnReadScanPose_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnReadScanPose_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnReadScanPose_.Depth = 0;
-            this.btnReadScanPose_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnReadScanPose_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReadScanPose_.Font = new System.Drawing.Font("Consolas", 12F);
-            this.btnReadScanPose_.HighEmphasis = true;
-            this.btnReadScanPose_.Icon = null;
-            this.btnReadScanPose_.Location = new System.Drawing.Point(110, 33);
-            this.btnReadScanPose_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnReadScanPose_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnReadScanPose_.Name = "btnReadScanPose_";
-            this.btnReadScanPose_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnReadScanPose_.Size = new System.Drawing.Size(77, 21);
-            this.btnReadScanPose_.TabIndex = 178;
-            this.btnReadScanPose_.Text = "READ";
-            this.btnReadScanPose_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnReadScanPose_.UseAccentColor = false;
-            this.btnReadScanPose_.UseVisualStyleBackColor = false;
-            // 
-            // tbCurrRobotTz
-            // 
-            this.tbCurrRobotTz.AnimateReadOnly = false;
-            this.tbCurrRobotTz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbCurrRobotTz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbCurrRobotTz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbCurrRobotTz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbCurrRobotTz.Depth = 0;
-            this.tbCurrRobotTz.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.tbCurrRobotTz.HideSelection = true;
-            this.tbCurrRobotTz.LeadingIcon = null;
-            this.tbCurrRobotTz.Location = new System.Drawing.Point(236, 6);
-            this.tbCurrRobotTz.MaxLength = 32767;
-            this.tbCurrRobotTz.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbCurrRobotTz.Name = "tbCurrRobotTz";
-            this.tbCurrRobotTz.PasswordChar = '\0';
-            this.tbCurrRobotTz.PrefixSuffixText = null;
-            this.tbCurrRobotTz.ReadOnly = false;
-            this.tbCurrRobotTz.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbCurrRobotTz.SelectedText = "";
-            this.tbCurrRobotTz.SelectionLength = 0;
-            this.tbCurrRobotTz.SelectionStart = 0;
-            this.tbCurrRobotTz.ShortcutsEnabled = true;
-            this.tbCurrRobotTz.Size = new System.Drawing.Size(139, 26);
-            this.tbCurrRobotTz.TabIndex = 18;
-            this.tbCurrRobotTz.TabStop = false;
-            this.tbCurrRobotTz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbCurrRobotTz.TrailingIcon = null;
-            this.tbCurrRobotTz.UseSystemPasswordChar = false;
-            this.tbCurrRobotTz.UseTallSize = false;
-            // 
-            // tbCurrRobotRx
-            // 
-            this.tbCurrRobotRx.AnimateReadOnly = false;
-            this.tbCurrRobotRx.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbCurrRobotRx.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbCurrRobotRx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbCurrRobotRx.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbCurrRobotRx.Depth = 0;
-            this.tbCurrRobotRx.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbCurrRobotRx.HideSelection = true;
-            this.tbCurrRobotRx.LeadingIcon = null;
-            this.tbCurrRobotRx.Location = new System.Drawing.Point(231, 38);
-            this.tbCurrRobotRx.MaxLength = 32767;
-            this.tbCurrRobotRx.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbCurrRobotRx.Name = "tbCurrRobotRx";
-            this.tbCurrRobotRx.PasswordChar = '\0';
-            this.tbCurrRobotRx.PrefixSuffixText = null;
-            this.tbCurrRobotRx.ReadOnly = false;
-            this.tbCurrRobotRx.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbCurrRobotRx.SelectedText = "";
-            this.tbCurrRobotRx.SelectionLength = 0;
-            this.tbCurrRobotRx.SelectionStart = 0;
-            this.tbCurrRobotRx.ShortcutsEnabled = true;
-            this.tbCurrRobotRx.Size = new System.Drawing.Size(139, 26);
-            this.tbCurrRobotRx.TabIndex = 6;
-            this.tbCurrRobotRx.TabStop = false;
-            this.tbCurrRobotRx.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbCurrRobotRx.TrailingIcon = null;
-            this.tbCurrRobotRx.UseSystemPasswordChar = false;
-            this.tbCurrRobotRx.UseTallSize = false;
-            // 
-            // tbScanPoseRx_
-            // 
-            this.tbScanPoseRx_.AnimateReadOnly = false;
-            this.tbScanPoseRx_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbScanPoseRx_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbScanPoseRx_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbScanPoseRx_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbScanPoseRx_.Depth = 0;
-            this.tbScanPoseRx_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbScanPoseRx_.HideSelection = true;
-            this.tbScanPoseRx_.LeadingIcon = null;
-            this.tbScanPoseRx_.Location = new System.Drawing.Point(48, 202);
-            this.tbScanPoseRx_.MaxLength = 32767;
-            this.tbScanPoseRx_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbScanPoseRx_.Name = "tbScanPoseRx_";
-            this.tbScanPoseRx_.PasswordChar = '\0';
-            this.tbScanPoseRx_.PrefixSuffixText = null;
-            this.tbScanPoseRx_.ReadOnly = true;
-            this.tbScanPoseRx_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbScanPoseRx_.SelectedText = "";
-            this.tbScanPoseRx_.SelectionLength = 0;
-            this.tbScanPoseRx_.SelectionStart = 0;
-            this.tbScanPoseRx_.ShortcutsEnabled = true;
-            this.tbScanPoseRx_.Size = new System.Drawing.Size(139, 26);
-            this.tbScanPoseRx_.TabIndex = 6;
-            this.tbScanPoseRx_.TabStop = false;
-            this.tbScanPoseRx_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbScanPoseRx_.TrailingIcon = null;
-            this.tbScanPoseRx_.UseSystemPasswordChar = false;
-            this.tbScanPoseRx_.UseTallSize = false;
-            // 
-            // tbScanPoseTx_
-            // 
-            this.tbScanPoseTx_.AnimateReadOnly = false;
-            this.tbScanPoseTx_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbScanPoseTx_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbScanPoseTx_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbScanPoseTx_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbScanPoseTx_.Depth = 0;
-            this.tbScanPoseTx_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbScanPoseTx_.HideSelection = true;
-            this.tbScanPoseTx_.LeadingIcon = null;
-            this.tbScanPoseTx_.Location = new System.Drawing.Point(48, 62);
-            this.tbScanPoseTx_.MaxLength = 32767;
-            this.tbScanPoseTx_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbScanPoseTx_.Name = "tbScanPoseTx_";
-            this.tbScanPoseTx_.PasswordChar = '\0';
-            this.tbScanPoseTx_.PrefixSuffixText = null;
-            this.tbScanPoseTx_.ReadOnly = true;
-            this.tbScanPoseTx_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbScanPoseTx_.SelectedText = "";
-            this.tbScanPoseTx_.SelectionLength = 0;
-            this.tbScanPoseTx_.SelectionStart = 0;
-            this.tbScanPoseTx_.ShortcutsEnabled = true;
-            this.tbScanPoseTx_.Size = new System.Drawing.Size(139, 26);
-            this.tbScanPoseTx_.TabIndex = 6;
-            this.tbScanPoseTx_.TabStop = false;
-            this.tbScanPoseTx_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbScanPoseTx_.TrailingIcon = null;
-            this.tbScanPoseTx_.UseSystemPasswordChar = false;
-            this.tbScanPoseTx_.UseTallSize = false;
-            // 
-            // materialLabel18
-            // 
-            this.materialLabel18.AutoSize = true;
-            this.materialLabel18.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel18.Depth = 0;
-            this.materialLabel18.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel18.Location = new System.Drawing.Point(14, 36);
-            this.materialLabel18.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel18.Name = "materialLabel18";
-            this.materialLabel18.Size = new System.Drawing.Size(79, 18);
-            this.materialLabel18.TabIndex = 7;
-            this.materialLabel18.Text = "Scan Pose";
-            // 
-            // materialLabel14
-            // 
-            this.materialLabel14.AutoSize = true;
-            this.materialLabel14.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel14.Depth = 0;
-            this.materialLabel14.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel14.Location = new System.Drawing.Point(11, 11);
-            this.materialLabel14.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel14.Name = "materialLabel14";
-            this.materialLabel14.Size = new System.Drawing.Size(128, 18);
-            this.materialLabel14.TabIndex = 7;
-            this.materialLabel14.Text = "ROBOT -> VISION";
-            // 
-            // materialLabel23
-            // 
-            this.materialLabel23.AutoSize = true;
-            this.materialLabel23.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel23.Depth = 0;
-            this.materialLabel23.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel23.Location = new System.Drawing.Point(17, 206);
-            this.materialLabel23.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel23.Name = "materialLabel23";
-            this.materialLabel23.Size = new System.Drawing.Size(19, 18);
-            this.materialLabel23.TabIndex = 7;
-            this.materialLabel23.Text = "Rx";
-            // 
-            // materialLabel10
-            // 
-            this.materialLabel10.AutoSize = true;
-            this.materialLabel10.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel10.Depth = 0;
-            this.materialLabel10.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel10.Location = new System.Drawing.Point(17, 66);
-            this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel10.Name = "materialLabel10";
-            this.materialLabel10.Size = new System.Drawing.Size(18, 18);
-            this.materialLabel10.TabIndex = 7;
-            this.materialLabel10.Text = "Tx";
-            // 
-            // materialLabel22
-            // 
-            this.materialLabel22.AutoSize = true;
-            this.materialLabel22.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel22.Depth = 0;
-            this.materialLabel22.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel22.Location = new System.Drawing.Point(17, 234);
-            this.materialLabel22.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel22.Name = "materialLabel22";
-            this.materialLabel22.Size = new System.Drawing.Size(20, 18);
-            this.materialLabel22.TabIndex = 8;
-            this.materialLabel22.Text = "Ry";
-            // 
-            // materialLabel12
-            // 
-            this.materialLabel12.AutoSize = true;
-            this.materialLabel12.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel12.Depth = 0;
-            this.materialLabel12.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel12.Location = new System.Drawing.Point(17, 94);
-            this.materialLabel12.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel12.Name = "materialLabel12";
-            this.materialLabel12.Size = new System.Drawing.Size(19, 18);
-            this.materialLabel12.TabIndex = 8;
-            this.materialLabel12.Text = "Ty";
-            // 
-            // tbScanPoseRy_
-            // 
-            this.tbScanPoseRy_.AnimateReadOnly = false;
-            this.tbScanPoseRy_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbScanPoseRy_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbScanPoseRy_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbScanPoseRy_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbScanPoseRy_.Depth = 0;
-            this.tbScanPoseRy_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbScanPoseRy_.HideSelection = true;
-            this.tbScanPoseRy_.LeadingIcon = null;
-            this.tbScanPoseRy_.Location = new System.Drawing.Point(48, 230);
-            this.tbScanPoseRy_.MaxLength = 32767;
-            this.tbScanPoseRy_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbScanPoseRy_.Name = "tbScanPoseRy_";
-            this.tbScanPoseRy_.PasswordChar = '\0';
-            this.tbScanPoseRy_.PrefixSuffixText = null;
-            this.tbScanPoseRy_.ReadOnly = true;
-            this.tbScanPoseRy_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbScanPoseRy_.SelectedText = "";
-            this.tbScanPoseRy_.SelectionLength = 0;
-            this.tbScanPoseRy_.SelectionStart = 0;
-            this.tbScanPoseRy_.ShortcutsEnabled = true;
-            this.tbScanPoseRy_.Size = new System.Drawing.Size(139, 26);
-            this.tbScanPoseRy_.TabIndex = 13;
-            this.tbScanPoseRy_.TabStop = false;
-            this.tbScanPoseRy_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbScanPoseRy_.TrailingIcon = null;
-            this.tbScanPoseRy_.UseSystemPasswordChar = false;
-            this.tbScanPoseRy_.UseTallSize = false;
-            // 
-            // tbScanPoseTy_
-            // 
-            this.tbScanPoseTy_.AnimateReadOnly = false;
-            this.tbScanPoseTy_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbScanPoseTy_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbScanPoseTy_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbScanPoseTy_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbScanPoseTy_.Depth = 0;
-            this.tbScanPoseTy_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbScanPoseTy_.HideSelection = true;
-            this.tbScanPoseTy_.LeadingIcon = null;
-            this.tbScanPoseTy_.Location = new System.Drawing.Point(48, 90);
-            this.tbScanPoseTy_.MaxLength = 32767;
-            this.tbScanPoseTy_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbScanPoseTy_.Name = "tbScanPoseTy_";
-            this.tbScanPoseTy_.PasswordChar = '\0';
-            this.tbScanPoseTy_.PrefixSuffixText = null;
-            this.tbScanPoseTy_.ReadOnly = true;
-            this.tbScanPoseTy_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbScanPoseTy_.SelectedText = "";
-            this.tbScanPoseTy_.SelectionLength = 0;
-            this.tbScanPoseTy_.SelectionStart = 0;
-            this.tbScanPoseTy_.ShortcutsEnabled = true;
-            this.tbScanPoseTy_.Size = new System.Drawing.Size(139, 26);
-            this.tbScanPoseTy_.TabIndex = 13;
-            this.tbScanPoseTy_.TabStop = false;
-            this.tbScanPoseTy_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbScanPoseTy_.TrailingIcon = null;
-            this.tbScanPoseTy_.UseSystemPasswordChar = false;
-            this.tbScanPoseTy_.UseTallSize = false;
-            // 
-            // gbRobotWrite
-            // 
-            this.gbRobotWrite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.gbRobotWrite.Controls.Add(this.materialLabel17);
-            this.gbRobotWrite.Controls.Add(this.materialLabel8);
-            this.gbRobotWrite.Controls.Add(this.btnReadWrittenShiftPose_);
-            this.gbRobotWrite.Controls.Add(this.btnWriteShiftPose_);
-            this.gbRobotWrite.Controls.Add(this.tbWrittenRz_);
-            this.gbRobotWrite.Controls.Add(this.tbShiftRzR1);
-            this.gbRobotWrite.Controls.Add(this.tbWrittenTx_);
-            this.gbRobotWrite.Controls.Add(this.tbShiftTxR1);
-            this.gbRobotWrite.Controls.Add(this.materialLabel21);
-            this.gbRobotWrite.Controls.Add(this.materialLabel26);
-            this.gbRobotWrite.Controls.Add(this.materialLabel11);
-            this.gbRobotWrite.Controls.Add(this.materialLabel20);
-            this.gbRobotWrite.Controls.Add(this.materialLabel15);
-            this.gbRobotWrite.Controls.Add(this.materialLabel25);
-            this.gbRobotWrite.Controls.Add(this.tbWrittenTy_);
-            this.gbRobotWrite.Controls.Add(this.materialLabel28);
-            this.gbRobotWrite.Controls.Add(this.tbShiftTyR1);
-            this.gbRobotWrite.Depth = 0;
-            this.gbRobotWrite.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gbRobotWrite.Location = new System.Drawing.Point(890, 13);
-            this.gbRobotWrite.Margin = new System.Windows.Forms.Padding(14);
-            this.gbRobotWrite.MouseState = MaterialSkin.MouseState.HOVER;
-            this.gbRobotWrite.Name = "gbRobotWrite";
-            this.gbRobotWrite.Padding = new System.Windows.Forms.Padding(14);
-            this.gbRobotWrite.Size = new System.Drawing.Size(198, 354);
-            this.gbRobotWrite.TabIndex = 179;
-            // 
-            // materialLabel8
-            // 
-            this.materialLabel8.AutoSize = true;
-            this.materialLabel8.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel8.Depth = 0;
-            this.materialLabel8.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel8.Location = new System.Drawing.Point(15, 125);
-            this.materialLabel8.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel8.Name = "materialLabel8";
-            this.materialLabel8.Size = new System.Drawing.Size(19, 18);
-            this.materialLabel8.TabIndex = 17;
-            this.materialLabel8.Text = "Rz";
-            // 
-            // btnWriteShiftPose_
-            // 
-            this.btnWriteShiftPose_.AutoSize = false;
-            this.btnWriteShiftPose_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnWriteShiftPose_.BackColor = System.Drawing.Color.DimGray;
-            this.btnWriteShiftPose_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnWriteShiftPose_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnWriteShiftPose_.Depth = 0;
-            this.btnWriteShiftPose_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnWriteShiftPose_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnWriteShiftPose_.Font = new System.Drawing.Font("Consolas", 12F);
-            this.btnWriteShiftPose_.HighEmphasis = true;
-            this.btnWriteShiftPose_.Icon = null;
-            this.btnWriteShiftPose_.Location = new System.Drawing.Point(101, 32);
-            this.btnWriteShiftPose_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnWriteShiftPose_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnWriteShiftPose_.Name = "btnWriteShiftPose_";
-            this.btnWriteShiftPose_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnWriteShiftPose_.Size = new System.Drawing.Size(82, 20);
-            this.btnWriteShiftPose_.TabIndex = 179;
-            this.btnWriteShiftPose_.Text = "WRITE";
-            this.btnWriteShiftPose_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnWriteShiftPose_.UseAccentColor = false;
-            this.btnWriteShiftPose_.UseVisualStyleBackColor = false;
-            // 
-            // tbShiftRzR1
-            // 
-            this.tbShiftRzR1.AnimateReadOnly = false;
-            this.tbShiftRzR1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbShiftRzR1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbShiftRzR1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbShiftRzR1.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbShiftRzR1.Depth = 0;
-            this.tbShiftRzR1.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.tbShiftRzR1.HideSelection = true;
-            this.tbShiftRzR1.LeadingIcon = null;
-            this.tbShiftRzR1.Location = new System.Drawing.Point(44, 122);
-            this.tbShiftRzR1.MaxLength = 32767;
-            this.tbShiftRzR1.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbShiftRzR1.Name = "tbShiftRzR1";
-            this.tbShiftRzR1.PasswordChar = '\0';
-            this.tbShiftRzR1.PrefixSuffixText = null;
-            this.tbShiftRzR1.ReadOnly = false;
-            this.tbShiftRzR1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbShiftRzR1.SelectedText = "";
-            this.tbShiftRzR1.SelectionLength = 0;
-            this.tbShiftRzR1.SelectionStart = 0;
-            this.tbShiftRzR1.ShortcutsEnabled = true;
-            this.tbShiftRzR1.Size = new System.Drawing.Size(142, 26);
-            this.tbShiftRzR1.TabIndex = 18;
-            this.tbShiftRzR1.TabStop = false;
-            this.tbShiftRzR1.Text = "3";
-            this.tbShiftRzR1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbShiftRzR1.TrailingIcon = null;
-            this.tbShiftRzR1.UseSystemPasswordChar = false;
-            this.tbShiftRzR1.UseTallSize = false;
-            // 
-            // tbShiftTxR1
-            // 
-            this.tbShiftTxR1.AnimateReadOnly = false;
-            this.tbShiftTxR1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbShiftTxR1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbShiftTxR1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbShiftTxR1.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbShiftTxR1.Depth = 0;
-            this.tbShiftTxR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbShiftTxR1.HideSelection = true;
-            this.tbShiftTxR1.LeadingIcon = null;
-            this.tbShiftTxR1.Location = new System.Drawing.Point(44, 68);
-            this.tbShiftTxR1.MaxLength = 32767;
-            this.tbShiftTxR1.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbShiftTxR1.Name = "tbShiftTxR1";
-            this.tbShiftTxR1.PasswordChar = '\0';
-            this.tbShiftTxR1.PrefixSuffixText = null;
-            this.tbShiftTxR1.ReadOnly = false;
-            this.tbShiftTxR1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbShiftTxR1.SelectedText = "";
-            this.tbShiftTxR1.SelectionLength = 0;
-            this.tbShiftTxR1.SelectionStart = 0;
-            this.tbShiftTxR1.ShortcutsEnabled = true;
-            this.tbShiftTxR1.Size = new System.Drawing.Size(141, 26);
-            this.tbShiftTxR1.TabIndex = 6;
-            this.tbShiftTxR1.TabStop = false;
-            this.tbShiftTxR1.Text = "1";
-            this.tbShiftTxR1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbShiftTxR1.TrailingIcon = null;
-            this.tbShiftTxR1.UseSystemPasswordChar = false;
-            this.tbShiftTxR1.UseTallSize = false;
-            // 
-            // materialLabel11
-            // 
-            this.materialLabel11.AutoSize = true;
-            this.materialLabel11.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel11.Depth = 0;
-            this.materialLabel11.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel11.Location = new System.Drawing.Point(15, 72);
-            this.materialLabel11.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel11.Name = "materialLabel11";
-            this.materialLabel11.Size = new System.Drawing.Size(18, 18);
-            this.materialLabel11.TabIndex = 7;
-            this.materialLabel11.Text = "Tx";
-            // 
-            // materialLabel20
-            // 
-            this.materialLabel20.AutoSize = true;
-            this.materialLabel20.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel20.Depth = 0;
-            this.materialLabel20.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel20.Location = new System.Drawing.Point(13, 36);
-            this.materialLabel20.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel20.Name = "materialLabel20";
-            this.materialLabel20.Size = new System.Drawing.Size(78, 18);
-            this.materialLabel20.TabIndex = 7;
-            this.materialLabel20.Text = "Shift Pose";
-            // 
-            // materialLabel15
-            // 
-            this.materialLabel15.AutoSize = true;
-            this.materialLabel15.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel15.Depth = 0;
-            this.materialLabel15.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel15.Location = new System.Drawing.Point(10, 11);
-            this.materialLabel15.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel15.Name = "materialLabel15";
-            this.materialLabel15.Size = new System.Drawing.Size(128, 18);
-            this.materialLabel15.TabIndex = 7;
-            this.materialLabel15.Text = "VISION -> ROBOT";
-            // 
-            // materialLabel28
-            // 
-            this.materialLabel28.AutoSize = true;
-            this.materialLabel28.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel28.Depth = 0;
-            this.materialLabel28.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel28.Location = new System.Drawing.Point(15, 100);
-            this.materialLabel28.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel28.Name = "materialLabel28";
-            this.materialLabel28.Size = new System.Drawing.Size(19, 18);
-            this.materialLabel28.TabIndex = 8;
-            this.materialLabel28.Text = "Ty";
-            // 
-            // tbShiftTyR1
-            // 
-            this.tbShiftTyR1.AnimateReadOnly = false;
-            this.tbShiftTyR1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbShiftTyR1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbShiftTyR1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbShiftTyR1.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbShiftTyR1.Depth = 0;
-            this.tbShiftTyR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbShiftTyR1.HideSelection = true;
-            this.tbShiftTyR1.LeadingIcon = null;
-            this.tbShiftTyR1.Location = new System.Drawing.Point(44, 96);
-            this.tbShiftTyR1.MaxLength = 32767;
-            this.tbShiftTyR1.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbShiftTyR1.Name = "tbShiftTyR1";
-            this.tbShiftTyR1.PasswordChar = '\0';
-            this.tbShiftTyR1.PrefixSuffixText = null;
-            this.tbShiftTyR1.ReadOnly = false;
-            this.tbShiftTyR1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbShiftTyR1.SelectedText = "";
-            this.tbShiftTyR1.SelectionLength = 0;
-            this.tbShiftTyR1.SelectionStart = 0;
-            this.tbShiftTyR1.ShortcutsEnabled = true;
-            this.tbShiftTyR1.Size = new System.Drawing.Size(141, 26);
-            this.tbShiftTyR1.TabIndex = 13;
-            this.tbShiftTyR1.TabStop = false;
-            this.tbShiftTyR1.Text = "2";
-            this.tbShiftTyR1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbShiftTyR1.TrailingIcon = null;
-            this.tbShiftTyR1.UseSystemPasswordChar = false;
-            this.tbShiftTyR1.UseTallSize = false;
-            // 
-            // tbWrittenTx_
-            // 
-            this.tbWrittenTx_.AnimateReadOnly = false;
-            this.tbWrittenTx_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbWrittenTx_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbWrittenTx_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbWrittenTx_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbWrittenTx_.Depth = 0;
-            this.tbWrittenTx_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbWrittenTx_.HideSelection = true;
-            this.tbWrittenTx_.LeadingIcon = null;
-            this.tbWrittenTx_.Location = new System.Drawing.Point(42, 255);
-            this.tbWrittenTx_.MaxLength = 32767;
-            this.tbWrittenTx_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbWrittenTx_.Name = "tbWrittenTx_";
-            this.tbWrittenTx_.PasswordChar = '\0';
-            this.tbWrittenTx_.PrefixSuffixText = null;
-            this.tbWrittenTx_.ReadOnly = false;
-            this.tbWrittenTx_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbWrittenTx_.SelectedText = "";
-            this.tbWrittenTx_.SelectionLength = 0;
-            this.tbWrittenTx_.SelectionStart = 0;
-            this.tbWrittenTx_.ShortcutsEnabled = true;
-            this.tbWrittenTx_.Size = new System.Drawing.Size(141, 26);
-            this.tbWrittenTx_.TabIndex = 6;
-            this.tbWrittenTx_.TabStop = false;
-            this.tbWrittenTx_.Text = "1";
-            this.tbWrittenTx_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbWrittenTx_.TrailingIcon = null;
-            this.tbWrittenTx_.UseSystemPasswordChar = false;
-            this.tbWrittenTx_.UseTallSize = false;
-            // 
-            // tbWrittenTy_
-            // 
-            this.tbWrittenTy_.AnimateReadOnly = false;
-            this.tbWrittenTy_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbWrittenTy_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbWrittenTy_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbWrittenTy_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbWrittenTy_.Depth = 0;
-            this.tbWrittenTy_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbWrittenTy_.HideSelection = true;
-            this.tbWrittenTy_.LeadingIcon = null;
-            this.tbWrittenTy_.Location = new System.Drawing.Point(42, 283);
-            this.tbWrittenTy_.MaxLength = 32767;
-            this.tbWrittenTy_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbWrittenTy_.Name = "tbWrittenTy_";
-            this.tbWrittenTy_.PasswordChar = '\0';
-            this.tbWrittenTy_.PrefixSuffixText = null;
-            this.tbWrittenTy_.ReadOnly = false;
-            this.tbWrittenTy_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbWrittenTy_.SelectedText = "";
-            this.tbWrittenTy_.SelectionLength = 0;
-            this.tbWrittenTy_.SelectionStart = 0;
-            this.tbWrittenTy_.ShortcutsEnabled = true;
-            this.tbWrittenTy_.Size = new System.Drawing.Size(141, 26);
-            this.tbWrittenTy_.TabIndex = 13;
-            this.tbWrittenTy_.TabStop = false;
-            this.tbWrittenTy_.Text = "2";
-            this.tbWrittenTy_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbWrittenTy_.TrailingIcon = null;
-            this.tbWrittenTy_.UseSystemPasswordChar = false;
-            this.tbWrittenTy_.UseTallSize = false;
-            // 
-            // tbWrittenRz_
-            // 
-            this.tbWrittenRz_.AnimateReadOnly = false;
-            this.tbWrittenRz_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbWrittenRz_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbWrittenRz_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbWrittenRz_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbWrittenRz_.Depth = 0;
-            this.tbWrittenRz_.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.tbWrittenRz_.HideSelection = true;
-            this.tbWrittenRz_.LeadingIcon = null;
-            this.tbWrittenRz_.Location = new System.Drawing.Point(41, 311);
-            this.tbWrittenRz_.MaxLength = 32767;
-            this.tbWrittenRz_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbWrittenRz_.Name = "tbWrittenRz_";
-            this.tbWrittenRz_.PasswordChar = '\0';
-            this.tbWrittenRz_.PrefixSuffixText = null;
-            this.tbWrittenRz_.ReadOnly = false;
-            this.tbWrittenRz_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbWrittenRz_.SelectedText = "";
-            this.tbWrittenRz_.SelectionLength = 0;
-            this.tbWrittenRz_.SelectionStart = 0;
-            this.tbWrittenRz_.ShortcutsEnabled = true;
-            this.tbWrittenRz_.Size = new System.Drawing.Size(142, 26);
-            this.tbWrittenRz_.TabIndex = 18;
-            this.tbWrittenRz_.TabStop = false;
-            this.tbWrittenRz_.Text = "3";
-            this.tbWrittenRz_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbWrittenRz_.TrailingIcon = null;
-            this.tbWrittenRz_.UseSystemPasswordChar = false;
-            this.tbWrittenRz_.UseTallSize = false;
-            // 
-            // materialLabel17
-            // 
-            this.materialLabel17.AutoSize = true;
-            this.materialLabel17.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel17.Depth = 0;
-            this.materialLabel17.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel17.Location = new System.Drawing.Point(13, 315);
-            this.materialLabel17.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel17.Name = "materialLabel17";
-            this.materialLabel17.Size = new System.Drawing.Size(19, 18);
-            this.materialLabel17.TabIndex = 17;
-            this.materialLabel17.Text = "Rz";
-            // 
-            // materialLabel25
-            // 
-            this.materialLabel25.AutoSize = true;
-            this.materialLabel25.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel25.Depth = 0;
-            this.materialLabel25.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel25.Location = new System.Drawing.Point(13, 287);
-            this.materialLabel25.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel25.Name = "materialLabel25";
-            this.materialLabel25.Size = new System.Drawing.Size(19, 18);
-            this.materialLabel25.TabIndex = 8;
-            this.materialLabel25.Text = "Ty";
-            // 
-            // materialLabel26
-            // 
-            this.materialLabel26.AutoSize = true;
-            this.materialLabel26.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel26.Depth = 0;
-            this.materialLabel26.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel26.Location = new System.Drawing.Point(13, 259);
-            this.materialLabel26.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel26.Name = "materialLabel26";
-            this.materialLabel26.Size = new System.Drawing.Size(18, 18);
-            this.materialLabel26.TabIndex = 7;
-            this.materialLabel26.Text = "Tx";
-            // 
-            // btnReadWrittenShiftPose_
-            // 
-            this.btnReadWrittenShiftPose_.AutoSize = false;
-            this.btnReadWrittenShiftPose_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnReadWrittenShiftPose_.BackColor = System.Drawing.Color.DimGray;
-            this.btnReadWrittenShiftPose_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnReadWrittenShiftPose_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnReadWrittenShiftPose_.Depth = 0;
-            this.btnReadWrittenShiftPose_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnReadWrittenShiftPose_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReadWrittenShiftPose_.Font = new System.Drawing.Font("Consolas", 12F);
-            this.btnReadWrittenShiftPose_.HighEmphasis = true;
-            this.btnReadWrittenShiftPose_.Icon = null;
-            this.btnReadWrittenShiftPose_.Location = new System.Drawing.Point(12, 217);
-            this.btnReadWrittenShiftPose_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnReadWrittenShiftPose_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnReadWrittenShiftPose_.Name = "btnReadWrittenShiftPose_";
-            this.btnReadWrittenShiftPose_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnReadWrittenShiftPose_.Size = new System.Drawing.Size(168, 26);
-            this.btnReadWrittenShiftPose_.TabIndex = 179;
-            this.btnReadWrittenShiftPose_.Text = "READ";
-            this.btnReadWrittenShiftPose_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnReadWrittenShiftPose_.UseAccentColor = false;
-            this.btnReadWrittenShiftPose_.UseVisualStyleBackColor = false;
-            // 
-            // materialLabel21
-            // 
-            this.materialLabel21.AutoSize = true;
-            this.materialLabel21.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel21.Depth = 0;
-            this.materialLabel21.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel21.Location = new System.Drawing.Point(13, 193);
-            this.materialLabel21.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel21.Name = "materialLabel21";
-            this.materialLabel21.Size = new System.Drawing.Size(101, 18);
-            this.materialLabel21.TabIndex = 7;
-            this.materialLabel21.Text = "Read Written";
-            // 
-            // materialCard7
-            // 
-            this.materialCard7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard7.Controls.Add(this.materialLabel31);
-            this.materialCard7.Controls.Add(this.materialLabel16);
-            this.materialCard7.Controls.Add(this.materialLabel27);
-            this.materialCard7.Controls.Add(this.materialLabel29);
-            this.materialCard7.Controls.Add(this.tbInstallPoseRz_);
-            this.materialCard7.Controls.Add(this.tbInstallPoseTz_);
-            this.materialCard7.Controls.Add(this.btnReadInstallPose_);
-            this.materialCard7.Controls.Add(this.materialTextBox29);
-            this.materialCard7.Controls.Add(this.materialTextBox210);
-            this.materialCard7.Controls.Add(this.tbInstallPoseRx_);
-            this.materialCard7.Controls.Add(this.tbInstallPoseTx_);
-            this.materialCard7.Controls.Add(this.materialLabel32);
-            this.materialCard7.Controls.Add(this.materialLabel33);
-            this.materialCard7.Controls.Add(this.materialLabel34);
-            this.materialCard7.Controls.Add(this.materialLabel35);
-            this.materialCard7.Controls.Add(this.materialLabel36);
-            this.materialCard7.Controls.Add(this.tbInstallPoseRy_);
-            this.materialCard7.Controls.Add(this.tbInstallPoseTy_);
-            this.materialCard7.Depth = 0;
-            this.materialCard7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard7.Location = new System.Drawing.Point(485, 14);
-            this.materialCard7.Margin = new System.Windows.Forms.Padding(14);
-            this.materialCard7.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCard7.Name = "materialCard7";
-            this.materialCard7.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard7.Size = new System.Drawing.Size(198, 354);
-            this.materialCard7.TabIndex = 179;
-            // 
-            // materialLabel16
-            // 
-            this.materialLabel16.AutoSize = true;
-            this.materialLabel16.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel16.Depth = 0;
-            this.materialLabel16.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel16.Location = new System.Drawing.Point(17, 262);
-            this.materialLabel16.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel16.Name = "materialLabel16";
-            this.materialLabel16.Size = new System.Drawing.Size(19, 18);
-            this.materialLabel16.TabIndex = 17;
-            this.materialLabel16.Text = "Rz";
-            // 
-            // materialLabel27
-            // 
-            this.materialLabel27.AutoSize = true;
-            this.materialLabel27.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel27.Depth = 0;
-            this.materialLabel27.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel27.Location = new System.Drawing.Point(17, 122);
-            this.materialLabel27.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel27.Name = "materialLabel27";
-            this.materialLabel27.Size = new System.Drawing.Size(18, 18);
-            this.materialLabel27.TabIndex = 17;
-            this.materialLabel27.Text = "Tz";
-            // 
-            // materialLabel29
-            // 
-            this.materialLabel29.AutoSize = true;
-            this.materialLabel29.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel29.Depth = 0;
-            this.materialLabel29.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel29.Location = new System.Drawing.Point(207, 10);
-            this.materialLabel29.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel29.Name = "materialLabel29";
-            this.materialLabel29.Size = new System.Drawing.Size(18, 18);
-            this.materialLabel29.TabIndex = 17;
-            this.materialLabel29.Text = "Tz";
-            // 
-            // tbInstallPoseRz_
-            // 
-            this.tbInstallPoseRz_.AnimateReadOnly = false;
-            this.tbInstallPoseRz_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbInstallPoseRz_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbInstallPoseRz_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbInstallPoseRz_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbInstallPoseRz_.Depth = 0;
-            this.tbInstallPoseRz_.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.tbInstallPoseRz_.HideSelection = true;
-            this.tbInstallPoseRz_.LeadingIcon = null;
-            this.tbInstallPoseRz_.Location = new System.Drawing.Point(48, 258);
-            this.tbInstallPoseRz_.MaxLength = 32767;
-            this.tbInstallPoseRz_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbInstallPoseRz_.Name = "tbInstallPoseRz_";
-            this.tbInstallPoseRz_.PasswordChar = '\0';
-            this.tbInstallPoseRz_.PrefixSuffixText = null;
-            this.tbInstallPoseRz_.ReadOnly = true;
-            this.tbInstallPoseRz_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbInstallPoseRz_.SelectedText = "";
-            this.tbInstallPoseRz_.SelectionLength = 0;
-            this.tbInstallPoseRz_.SelectionStart = 0;
-            this.tbInstallPoseRz_.ShortcutsEnabled = true;
-            this.tbInstallPoseRz_.Size = new System.Drawing.Size(139, 26);
-            this.tbInstallPoseRz_.TabIndex = 18;
-            this.tbInstallPoseRz_.TabStop = false;
-            this.tbInstallPoseRz_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbInstallPoseRz_.TrailingIcon = null;
-            this.tbInstallPoseRz_.UseSystemPasswordChar = false;
-            this.tbInstallPoseRz_.UseTallSize = false;
-            // 
-            // tbInstallPoseTz_
-            // 
-            this.tbInstallPoseTz_.AnimateReadOnly = false;
-            this.tbInstallPoseTz_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbInstallPoseTz_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbInstallPoseTz_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbInstallPoseTz_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbInstallPoseTz_.Depth = 0;
-            this.tbInstallPoseTz_.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.tbInstallPoseTz_.HideSelection = true;
-            this.tbInstallPoseTz_.LeadingIcon = null;
-            this.tbInstallPoseTz_.Location = new System.Drawing.Point(48, 118);
-            this.tbInstallPoseTz_.MaxLength = 32767;
-            this.tbInstallPoseTz_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbInstallPoseTz_.Name = "tbInstallPoseTz_";
-            this.tbInstallPoseTz_.PasswordChar = '\0';
-            this.tbInstallPoseTz_.PrefixSuffixText = null;
-            this.tbInstallPoseTz_.ReadOnly = true;
-            this.tbInstallPoseTz_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbInstallPoseTz_.SelectedText = "";
-            this.tbInstallPoseTz_.SelectionLength = 0;
-            this.tbInstallPoseTz_.SelectionStart = 0;
-            this.tbInstallPoseTz_.ShortcutsEnabled = true;
-            this.tbInstallPoseTz_.Size = new System.Drawing.Size(139, 26);
-            this.tbInstallPoseTz_.TabIndex = 18;
-            this.tbInstallPoseTz_.TabStop = false;
-            this.tbInstallPoseTz_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbInstallPoseTz_.TrailingIcon = null;
-            this.tbInstallPoseTz_.UseSystemPasswordChar = false;
-            this.tbInstallPoseTz_.UseTallSize = false;
-            // 
-            // btnReadInstallPose_
-            // 
-            this.btnReadInstallPose_.AutoSize = false;
-            this.btnReadInstallPose_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnReadInstallPose_.BackColor = System.Drawing.Color.DimGray;
-            this.btnReadInstallPose_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnReadInstallPose_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnReadInstallPose_.Depth = 0;
-            this.btnReadInstallPose_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnReadInstallPose_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReadInstallPose_.Font = new System.Drawing.Font("Consolas", 12F);
-            this.btnReadInstallPose_.HighEmphasis = true;
-            this.btnReadInstallPose_.Icon = null;
-            this.btnReadInstallPose_.Location = new System.Drawing.Point(110, 33);
-            this.btnReadInstallPose_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnReadInstallPose_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnReadInstallPose_.Name = "btnReadInstallPose_";
-            this.btnReadInstallPose_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnReadInstallPose_.Size = new System.Drawing.Size(77, 21);
-            this.btnReadInstallPose_.TabIndex = 178;
-            this.btnReadInstallPose_.Text = "READ";
-            this.btnReadInstallPose_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnReadInstallPose_.UseAccentColor = false;
-            this.btnReadInstallPose_.UseVisualStyleBackColor = false;
-            // 
-            // materialTextBox29
-            // 
-            this.materialTextBox29.AnimateReadOnly = false;
-            this.materialTextBox29.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.materialTextBox29.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.materialTextBox29.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.materialTextBox29.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.materialTextBox29.Depth = 0;
-            this.materialTextBox29.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.materialTextBox29.HideSelection = true;
-            this.materialTextBox29.LeadingIcon = null;
-            this.materialTextBox29.Location = new System.Drawing.Point(236, 6);
-            this.materialTextBox29.MaxLength = 32767;
-            this.materialTextBox29.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialTextBox29.Name = "materialTextBox29";
-            this.materialTextBox29.PasswordChar = '\0';
-            this.materialTextBox29.PrefixSuffixText = null;
-            this.materialTextBox29.ReadOnly = false;
-            this.materialTextBox29.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.materialTextBox29.SelectedText = "";
-            this.materialTextBox29.SelectionLength = 0;
-            this.materialTextBox29.SelectionStart = 0;
-            this.materialTextBox29.ShortcutsEnabled = true;
-            this.materialTextBox29.Size = new System.Drawing.Size(139, 26);
-            this.materialTextBox29.TabIndex = 18;
-            this.materialTextBox29.TabStop = false;
-            this.materialTextBox29.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.materialTextBox29.TrailingIcon = null;
-            this.materialTextBox29.UseSystemPasswordChar = false;
-            this.materialTextBox29.UseTallSize = false;
-            // 
-            // materialTextBox210
-            // 
-            this.materialTextBox210.AnimateReadOnly = false;
-            this.materialTextBox210.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.materialTextBox210.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.materialTextBox210.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.materialTextBox210.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.materialTextBox210.Depth = 0;
-            this.materialTextBox210.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialTextBox210.HideSelection = true;
-            this.materialTextBox210.LeadingIcon = null;
-            this.materialTextBox210.Location = new System.Drawing.Point(231, 38);
-            this.materialTextBox210.MaxLength = 32767;
-            this.materialTextBox210.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialTextBox210.Name = "materialTextBox210";
-            this.materialTextBox210.PasswordChar = '\0';
-            this.materialTextBox210.PrefixSuffixText = null;
-            this.materialTextBox210.ReadOnly = false;
-            this.materialTextBox210.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.materialTextBox210.SelectedText = "";
-            this.materialTextBox210.SelectionLength = 0;
-            this.materialTextBox210.SelectionStart = 0;
-            this.materialTextBox210.ShortcutsEnabled = true;
-            this.materialTextBox210.Size = new System.Drawing.Size(139, 26);
-            this.materialTextBox210.TabIndex = 6;
-            this.materialTextBox210.TabStop = false;
-            this.materialTextBox210.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.materialTextBox210.TrailingIcon = null;
-            this.materialTextBox210.UseSystemPasswordChar = false;
-            this.materialTextBox210.UseTallSize = false;
-            // 
-            // tbInstallPoseRx_
-            // 
-            this.tbInstallPoseRx_.AnimateReadOnly = false;
-            this.tbInstallPoseRx_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbInstallPoseRx_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbInstallPoseRx_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbInstallPoseRx_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbInstallPoseRx_.Depth = 0;
-            this.tbInstallPoseRx_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbInstallPoseRx_.HideSelection = true;
-            this.tbInstallPoseRx_.LeadingIcon = null;
-            this.tbInstallPoseRx_.Location = new System.Drawing.Point(48, 202);
-            this.tbInstallPoseRx_.MaxLength = 32767;
-            this.tbInstallPoseRx_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbInstallPoseRx_.Name = "tbInstallPoseRx_";
-            this.tbInstallPoseRx_.PasswordChar = '\0';
-            this.tbInstallPoseRx_.PrefixSuffixText = null;
-            this.tbInstallPoseRx_.ReadOnly = true;
-            this.tbInstallPoseRx_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbInstallPoseRx_.SelectedText = "";
-            this.tbInstallPoseRx_.SelectionLength = 0;
-            this.tbInstallPoseRx_.SelectionStart = 0;
-            this.tbInstallPoseRx_.ShortcutsEnabled = true;
-            this.tbInstallPoseRx_.Size = new System.Drawing.Size(139, 26);
-            this.tbInstallPoseRx_.TabIndex = 6;
-            this.tbInstallPoseRx_.TabStop = false;
-            this.tbInstallPoseRx_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbInstallPoseRx_.TrailingIcon = null;
-            this.tbInstallPoseRx_.UseSystemPasswordChar = false;
-            this.tbInstallPoseRx_.UseTallSize = false;
-            // 
-            // tbInstallPoseTx_
-            // 
-            this.tbInstallPoseTx_.AnimateReadOnly = false;
-            this.tbInstallPoseTx_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbInstallPoseTx_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbInstallPoseTx_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbInstallPoseTx_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbInstallPoseTx_.Depth = 0;
-            this.tbInstallPoseTx_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbInstallPoseTx_.HideSelection = true;
-            this.tbInstallPoseTx_.LeadingIcon = null;
-            this.tbInstallPoseTx_.Location = new System.Drawing.Point(48, 62);
-            this.tbInstallPoseTx_.MaxLength = 32767;
-            this.tbInstallPoseTx_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbInstallPoseTx_.Name = "tbInstallPoseTx_";
-            this.tbInstallPoseTx_.PasswordChar = '\0';
-            this.tbInstallPoseTx_.PrefixSuffixText = null;
-            this.tbInstallPoseTx_.ReadOnly = true;
-            this.tbInstallPoseTx_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbInstallPoseTx_.SelectedText = "";
-            this.tbInstallPoseTx_.SelectionLength = 0;
-            this.tbInstallPoseTx_.SelectionStart = 0;
-            this.tbInstallPoseTx_.ShortcutsEnabled = true;
-            this.tbInstallPoseTx_.Size = new System.Drawing.Size(139, 26);
-            this.tbInstallPoseTx_.TabIndex = 6;
-            this.tbInstallPoseTx_.TabStop = false;
-            this.tbInstallPoseTx_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbInstallPoseTx_.TrailingIcon = null;
-            this.tbInstallPoseTx_.UseSystemPasswordChar = false;
-            this.tbInstallPoseTx_.UseTallSize = false;
-            // 
-            // materialLabel32
-            // 
-            this.materialLabel32.AutoSize = true;
-            this.materialLabel32.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel32.Depth = 0;
-            this.materialLabel32.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel32.Location = new System.Drawing.Point(11, 11);
-            this.materialLabel32.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel32.Name = "materialLabel32";
-            this.materialLabel32.Size = new System.Drawing.Size(128, 18);
-            this.materialLabel32.TabIndex = 7;
-            this.materialLabel32.Text = "ROBOT -> VISION";
-            // 
-            // materialLabel33
-            // 
-            this.materialLabel33.AutoSize = true;
-            this.materialLabel33.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel33.Depth = 0;
-            this.materialLabel33.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel33.Location = new System.Drawing.Point(17, 206);
-            this.materialLabel33.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel33.Name = "materialLabel33";
-            this.materialLabel33.Size = new System.Drawing.Size(19, 18);
-            this.materialLabel33.TabIndex = 7;
-            this.materialLabel33.Text = "Rx";
-            // 
-            // materialLabel34
-            // 
-            this.materialLabel34.AutoSize = true;
-            this.materialLabel34.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel34.Depth = 0;
-            this.materialLabel34.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel34.Location = new System.Drawing.Point(17, 66);
-            this.materialLabel34.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel34.Name = "materialLabel34";
-            this.materialLabel34.Size = new System.Drawing.Size(18, 18);
-            this.materialLabel34.TabIndex = 7;
-            this.materialLabel34.Text = "Tx";
-            // 
-            // materialLabel35
-            // 
-            this.materialLabel35.AutoSize = true;
-            this.materialLabel35.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel35.Depth = 0;
-            this.materialLabel35.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel35.Location = new System.Drawing.Point(17, 234);
-            this.materialLabel35.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel35.Name = "materialLabel35";
-            this.materialLabel35.Size = new System.Drawing.Size(20, 18);
-            this.materialLabel35.TabIndex = 8;
-            this.materialLabel35.Text = "Ry";
-            // 
-            // materialLabel36
-            // 
-            this.materialLabel36.AutoSize = true;
-            this.materialLabel36.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel36.Depth = 0;
-            this.materialLabel36.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel36.Location = new System.Drawing.Point(17, 94);
-            this.materialLabel36.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel36.Name = "materialLabel36";
-            this.materialLabel36.Size = new System.Drawing.Size(19, 18);
-            this.materialLabel36.TabIndex = 8;
-            this.materialLabel36.Text = "Ty";
-            // 
-            // tbInstallPoseRy_
-            // 
-            this.tbInstallPoseRy_.AnimateReadOnly = false;
-            this.tbInstallPoseRy_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbInstallPoseRy_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbInstallPoseRy_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbInstallPoseRy_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbInstallPoseRy_.Depth = 0;
-            this.tbInstallPoseRy_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbInstallPoseRy_.HideSelection = true;
-            this.tbInstallPoseRy_.LeadingIcon = null;
-            this.tbInstallPoseRy_.Location = new System.Drawing.Point(48, 230);
-            this.tbInstallPoseRy_.MaxLength = 32767;
-            this.tbInstallPoseRy_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbInstallPoseRy_.Name = "tbInstallPoseRy_";
-            this.tbInstallPoseRy_.PasswordChar = '\0';
-            this.tbInstallPoseRy_.PrefixSuffixText = null;
-            this.tbInstallPoseRy_.ReadOnly = true;
-            this.tbInstallPoseRy_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbInstallPoseRy_.SelectedText = "";
-            this.tbInstallPoseRy_.SelectionLength = 0;
-            this.tbInstallPoseRy_.SelectionStart = 0;
-            this.tbInstallPoseRy_.ShortcutsEnabled = true;
-            this.tbInstallPoseRy_.Size = new System.Drawing.Size(139, 26);
-            this.tbInstallPoseRy_.TabIndex = 13;
-            this.tbInstallPoseRy_.TabStop = false;
-            this.tbInstallPoseRy_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbInstallPoseRy_.TrailingIcon = null;
-            this.tbInstallPoseRy_.UseSystemPasswordChar = false;
-            this.tbInstallPoseRy_.UseTallSize = false;
-            // 
-            // tbInstallPoseTy_
-            // 
-            this.tbInstallPoseTy_.AnimateReadOnly = false;
-            this.tbInstallPoseTy_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbInstallPoseTy_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbInstallPoseTy_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbInstallPoseTy_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbInstallPoseTy_.Depth = 0;
-            this.tbInstallPoseTy_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbInstallPoseTy_.HideSelection = true;
-            this.tbInstallPoseTy_.LeadingIcon = null;
-            this.tbInstallPoseTy_.Location = new System.Drawing.Point(48, 90);
-            this.tbInstallPoseTy_.MaxLength = 32767;
-            this.tbInstallPoseTy_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbInstallPoseTy_.Name = "tbInstallPoseTy_";
-            this.tbInstallPoseTy_.PasswordChar = '\0';
-            this.tbInstallPoseTy_.PrefixSuffixText = null;
-            this.tbInstallPoseTy_.ReadOnly = true;
-            this.tbInstallPoseTy_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbInstallPoseTy_.SelectedText = "";
-            this.tbInstallPoseTy_.SelectionLength = 0;
-            this.tbInstallPoseTy_.SelectionStart = 0;
-            this.tbInstallPoseTy_.ShortcutsEnabled = true;
-            this.tbInstallPoseTy_.Size = new System.Drawing.Size(139, 26);
-            this.tbInstallPoseTy_.TabIndex = 13;
-            this.tbInstallPoseTy_.TabStop = false;
-            this.tbInstallPoseTy_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbInstallPoseTy_.TrailingIcon = null;
-            this.tbInstallPoseTy_.UseSystemPasswordChar = false;
-            this.tbInstallPoseTy_.UseTallSize = false;
-            // 
-            // materialLabel31
-            // 
-            this.materialLabel31.AutoSize = true;
-            this.materialLabel31.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel31.Depth = 0;
-            this.materialLabel31.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel31.Location = new System.Drawing.Point(14, 33);
-            this.materialLabel31.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel31.Name = "materialLabel31";
-            this.materialLabel31.Size = new System.Drawing.Size(87, 18);
-            this.materialLabel31.TabIndex = 179;
-            this.materialLabel31.Text = "Install Pose";
-            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -4210,6 +3680,10 @@ namespace loadingBox2dGui
             this.materialCard14.ResumeLayout(false);
             this.materialCard14.PerformLayout();
             this.materialCard6.ResumeLayout(false);
+            this.gbRobotRead.ResumeLayout(false);
+            this.gbRobotRead.PerformLayout();
+            this.gbRobotWrite.ResumeLayout(false);
+            this.gbRobotWrite.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbRh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLh)).EndInit();
             this.materialCard4.ResumeLayout(false);
@@ -4250,12 +3724,6 @@ namespace loadingBox2dGui
             this.splitContainer1.ResumeLayout(false);
             this.materialCard5.ResumeLayout(false);
             this.gbCarSeqNumber_.ResumeLayout(false);
-            this.gbRobotRead.ResumeLayout(false);
-            this.gbRobotRead.PerformLayout();
-            this.gbRobotWrite.ResumeLayout(false);
-            this.gbRobotWrite.PerformLayout();
-            this.materialCard7.ResumeLayout(false);
-            this.materialCard7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -4371,7 +3839,7 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialLabel label80;
         private MaterialSkin.Controls.MaterialTextBox2 tbGlassShiftValueTy;
         private MaterialSkin.Controls.MaterialCard gbGlassPoint_;
-        private MaterialSkin.Controls.MaterialButton btnStartCamera_;
+        private MaterialSkin.Controls.MaterialButton btnScanPoint_;
         private MaterialSkin.Controls.MaterialTextBox2 tbGlassPointTx;
         private MaterialSkin.Controls.MaterialLabel label73;
         private MaterialSkin.Controls.MaterialLabel label74;
@@ -4396,62 +3864,39 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialLabel lblRH_;
         private MaterialSkin.Controls.MaterialCard materialCard14;
         private MaterialSkin.Controls.MaterialLabel lblLH_;
-        private MaterialSkin.Controls.MaterialCard materialCard7;
-        private MaterialSkin.Controls.MaterialLabel materialLabel31;
-        private MaterialSkin.Controls.MaterialLabel materialLabel16;
-        private MaterialSkin.Controls.MaterialLabel materialLabel27;
-        private MaterialSkin.Controls.MaterialLabel materialLabel29;
-        private MaterialSkin.Controls.MaterialTextBox2 tbInstallPoseRz_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbInstallPoseTz_;
-        private MaterialSkin.Controls.MaterialButton btnReadInstallPose_;
-        private MaterialSkin.Controls.MaterialTextBox2 materialTextBox29;
-        private MaterialSkin.Controls.MaterialTextBox2 materialTextBox210;
-        private MaterialSkin.Controls.MaterialTextBox2 tbInstallPoseRx_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbInstallPoseTx_;
-        private MaterialSkin.Controls.MaterialLabel materialLabel32;
-        private MaterialSkin.Controls.MaterialLabel materialLabel33;
-        private MaterialSkin.Controls.MaterialLabel materialLabel34;
-        private MaterialSkin.Controls.MaterialLabel materialLabel35;
-        private MaterialSkin.Controls.MaterialLabel materialLabel36;
-        private MaterialSkin.Controls.MaterialTextBox2 tbInstallPoseRy_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbInstallPoseTy_;
-        private MaterialSkin.Controls.MaterialCard gbRobotRead;
-        private MaterialSkin.Controls.MaterialLabel materialLabel24;
-        private MaterialSkin.Controls.MaterialLabel materialLabel13;
-        private MaterialSkin.Controls.MaterialLabel materialLabel9;
-        private MaterialSkin.Controls.MaterialTextBox2 tbScanPoseRz_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbScanPoseTz_;
-        private MaterialSkin.Controls.MaterialButton btnReadScanPose_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbCurrRobotTz;
-        private MaterialSkin.Controls.MaterialTextBox2 tbCurrRobotRx;
-        private MaterialSkin.Controls.MaterialTextBox2 tbScanPoseRx_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbScanPoseTx_;
-        private MaterialSkin.Controls.MaterialLabel materialLabel18;
-        private MaterialSkin.Controls.MaterialLabel materialLabel14;
-        private MaterialSkin.Controls.MaterialLabel materialLabel23;
-        private MaterialSkin.Controls.MaterialLabel materialLabel10;
-        private MaterialSkin.Controls.MaterialLabel materialLabel22;
-        private MaterialSkin.Controls.MaterialLabel materialLabel12;
-        private MaterialSkin.Controls.MaterialTextBox2 tbScanPoseRy_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbScanPoseTy_;
         private MaterialSkin.Controls.MaterialCard gbRobotWrite;
-        private MaterialSkin.Controls.MaterialLabel materialLabel17;
-        private MaterialSkin.Controls.MaterialLabel materialLabel8;
         private MaterialSkin.Controls.MaterialButton btnReadWrittenShiftPose_;
         private MaterialSkin.Controls.MaterialButton btnWriteShiftPose_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbWrittenRz_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbShiftRzR1;
-        private MaterialSkin.Controls.MaterialTextBox2 tbWrittenTx_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbShiftTxR1;
+        private MaterialSkin.Controls.MaterialTextBox2 tbWrittenTxyz_;
+        private MaterialSkin.Controls.MaterialTextBox2 tbShiftTxyz;
         private MaterialSkin.Controls.MaterialLabel materialLabel21;
         private MaterialSkin.Controls.MaterialLabel materialLabel26;
         private MaterialSkin.Controls.MaterialLabel materialLabel11;
         private MaterialSkin.Controls.MaterialLabel materialLabel20;
         private MaterialSkin.Controls.MaterialLabel materialLabel15;
         private MaterialSkin.Controls.MaterialLabel materialLabel25;
-        private MaterialSkin.Controls.MaterialTextBox2 tbWrittenTy_;
-        private MaterialSkin.Controls.MaterialLabel materialLabel28;
-        private MaterialSkin.Controls.MaterialTextBox2 tbShiftTyR1;
+        private MaterialSkin.Controls.MaterialTextBox2 tbWrittenRxyz_;
+        private MaterialSkin.Controls.MaterialLabel lblShiftPoseRxyz_;
+        private MaterialSkin.Controls.MaterialTextBox2 tbShiftRxyz;
+        private MaterialSkin.Controls.MaterialButton btnCapture_;
+        private MaterialSkin.Controls.MaterialCard gbRobotRead;
+        private MaterialSkin.Controls.MaterialTextBox2 tbReadInstallPoseTxyz;
+        private MaterialSkin.Controls.MaterialLabel materialLabel13;
+        private MaterialSkin.Controls.MaterialLabel materialLabel16;
+        private MaterialSkin.Controls.MaterialTextBox2 tbReadInstallPoseRxyz;
+        private MaterialSkin.Controls.MaterialTextBox2 tbReadScanPoseTxyz;
+        private MaterialSkin.Controls.MaterialLabel materialLabel10;
+        private MaterialSkin.Controls.MaterialLabel materialLabel12;
+        private MaterialSkin.Controls.MaterialTextBox2 tbReadScanPoseRxyz;
+        private MaterialSkin.Controls.MaterialLabel materialLabel8;
+        private MaterialSkin.Controls.MaterialButton materialButton1;
+        private MaterialSkin.Controls.MaterialLabel materialLabel9;
+        private MaterialSkin.Controls.MaterialButton btnReadScanPose_;
+        private MaterialSkin.Controls.MaterialTextBox2 tbCurrRobotTz;
+        private MaterialSkin.Controls.MaterialTextBox2 tbCurrRobotRx;
+        private MaterialSkin.Controls.MaterialLabel materialLabel18;
+        private MaterialSkin.Controls.MaterialLabel materialLabel14;
+        private MaterialSkin.Controls.MaterialButton btnDetectAruco_;
     }
 }
 

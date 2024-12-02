@@ -111,9 +111,20 @@ namespace loadingBox2dGui
         {
             set
             {
-                btnStartCamera_.InvokeIfNeeded(() =>
+                btnScanPoint_.InvokeIfNeeded(() =>
                 {
-                    btnStartCamera_.Enabled = value;
+                    btnScanPoint_.Enabled = value;
+                });
+            }
+        }
+
+        public bool SetCaptureCameraButton
+        {
+            set
+            {
+                btnCapture_.InvokeIfNeeded(() =>
+                {
+                    btnCapture_.Enabled = value;
                 });
             }
         }
@@ -260,15 +271,87 @@ namespace loadingBox2dGui
         public void SetUiToMode(OperationMode mode)
         {
             btnCameraConnect_.Enabled = mode != OperationMode.Auto;
-            btnStartCamera_.Enabled = mode != OperationMode.Auto;
+            btnScanPoint_.Enabled = mode != OperationMode.Auto;
             btnLightOff_.Enabled = mode != OperationMode.Auto;
+            cmbCarTypeName.Enabled = mode != OperationMode.Auto;
 
             rbAuto_.Checked = mode == OperationMode.Auto;
             rbManual_.Checked = mode == OperationMode.Manual;
             rbSet_.Checked = mode == OperationMode.Set;
 
+            btnDetectAruco_.Enabled = mode != OperationMode.Auto;
+            btnCapture_.Enabled = mode != OperationMode.Auto;
             btnCameraConnect_.Enabled = mode != OperationMode.Auto;
-            btnStartCamera_.Enabled = mode != OperationMode.Auto; 
+            btnScanPoint_.Enabled = mode != OperationMode.Auto;
+
+            gbRobotRead.Enabled = mode != OperationMode.Auto;
+            gbRobotWrite.Enabled = mode != OperationMode.Auto;
+        }
+
+        public void SetInspectionImage(InspectionLocation location, Image image)
+        {
+            Console.WriteLine(location);
+            if (location == InspectionLocation.LH)
+            {
+                pbLh.InvokeIfNeeded(() =>
+                {
+                    if (image != null)
+                    {
+                        pbLh.Image?.Dispose();
+                        pbLh.Image = null;
+                    }
+                    pbLh.Image = image;
+                });
+            }
+            else if (location == InspectionLocation.RH)
+            {
+                pbRh.InvokeIfNeeded(() =>
+                {
+                    if (image != null)
+                    {
+                        pbRh.Image?.Dispose();
+                        pbRh.Image = null;
+                    }
+                    pbRh.Image = image;
+                });
+            }
+            else { }
+        }
+        public void SetReadScanPose(double[] poses)
+        {
+            if (poses.Length != 6)
+            {
+                return;
+            }
+            this.InvokeIfNeeded(() =>
+            {
+                tbReadScanPoseTxyz.Text = $"{poses[0]},{poses[1]},{poses[2]}";
+                tbReadScanPoseRxyz.Text = $"{poses[3]},{poses[4]},{poses[5]}";
+            });
+        }
+        public void SetReadInstallPose(double[] poses)
+        {
+            if (poses.Length != 6)
+            {
+                return;
+            }
+            this.InvokeIfNeeded(() =>
+            {
+                tbReadInstallPoseTxyz.Text = $"{poses[0]},{poses[1]},{poses[2]}";
+                tbReadInstallPoseRxyz.Text = $"{poses[3]},{poses[4]},{poses[5]}";
+            });
+        }
+        public void SetReadWrittenShiftPose(double[] poses)
+        {
+            if (poses.Length != 6)
+            {
+                return;
+            }
+            this.InvokeIfNeeded(() =>
+            {
+                tbWrittenTxyz_.Text = $"{poses[0]},{poses[1]},{poses[2]}";
+                tbWrittenRxyz_.Text = $"{poses[3]},{poses[4]},{poses[5]}";
+            });
         }
         #endregion
 
@@ -286,6 +369,12 @@ namespace loadingBox2dGui
         public event EventHandler<FormClosingEventArgs> ProgramCloseRequested;
         public event EventHandler<ChangeLightStateEventArgs> LightStateChangeRequested;
         public event EventHandler CarTypeChanged;
+        public event EventHandler<StartWithModifierEventArgs> CaptureRequested;
+        public event EventHandler ReadInstallPoseRequested; 
+        public event EventHandler ReadScanPoseRequested;
+        public event EventHandler<double[]> WriteShiftPoseRequested;
+        public event EventHandler CheckWrittenShiftPoseRequested;
+        public event EventHandler ScanPointUsingArucoRequested;
 
         private void btnCameraConnect__Click(object sender, EventArgs e)
         {
@@ -418,6 +507,61 @@ namespace loadingBox2dGui
         {
             tbCarType.Text = cmbCarTypeName.SelectedValue?.ToString();
             CarTypeChanged?.Invoke(sender, EventArgs.Empty);
+        }
+
+        private void btnCapture_Click(object sender, EventArgs e)
+        {
+            CaptureRequested?.Invoke(sender, new StartWithModifierEventArgs(ModifierKeys == Keys.Shift));
+        }
+
+        private void btnReadInstallPose__Click(object sender, EventArgs e)
+        {
+            ReadInstallPoseRequested?.Invoke(sender, EventArgs.Empty);
+        }
+
+        private void btnReadScanPose_Click(object sender, EventArgs e)
+        {
+            ReadScanPoseRequested?.Invoke(sender, EventArgs.Empty);
+        }
+
+        private void btnReadWrittenShiftPose_Click(object sender, EventArgs e)
+        {
+            CheckWrittenShiftPoseRequested?.Invoke(sender, EventArgs.Empty);
+        }
+
+        private void btnWriteShiftPose_Click(object sender, EventArgs e)
+        {
+            var tXYZ = tbShiftTxyz.Text.Split(',');
+            var rXYZ = tbShiftTxyz.Text.Split(',');
+            if (tXYZ.Length != rXYZ.Length || tXYZ.Length != 3 || rXYZ.Length != 3) return;
+            List<double>doubles = new List<double>();
+            try
+            {
+                foreach (var val in tXYZ)
+                {
+                    doubles.Add(Double.Parse(val));
+                }
+                foreach (var val in rXYZ)
+                {
+                    doubles.Add(Double.Parse(val));
+                }
+            }
+            catch (Exception) { }
+            
+            if (doubles.Count == 6)
+            {
+                WriteShiftPoseRequested?.Invoke(sender, doubles.ToArray());
+            }
+        }
+
+        private void btnReadInstallPose_Click(object sender, EventArgs e)
+        {
+            ReadInstallPoseRequested?.Invoke(sender, EventArgs.Empty);
+        }
+
+        private void btnDetectAruco__Click(object sender, EventArgs e)
+        {
+            ScanPointUsingArucoRequested?.Invoke(sender, EventArgs.Empty);
         }
     }
 }

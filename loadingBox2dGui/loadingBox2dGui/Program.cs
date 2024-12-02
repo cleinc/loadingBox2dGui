@@ -35,6 +35,7 @@ namespace loadingBox2dGui
             try
             {
                 config = ConfigFileManager.LoadFromFile<Config>(ConfigFileManager.GetConfigFilePath());
+                config.LockCarType();
             }
             catch (Exception ex)
             {
@@ -81,11 +82,12 @@ namespace loadingBox2dGui
             var plcSettingManagerPresenter = new PlcSettingManagerPresenter(plcSettingManagerForm, settingChangeTracker, DefaultSettingLoader.Plcs);
             var copyCarTypeConfigPresenter = new CopyCarTypeConfigPresenter(copyCarTypeConfigForm);
             var addCarTypePresenter = new AddCarTypePresenter(addCarTypeForm);
+            var engine = new CargoBox2DInspectionEngine(config);
             var settingManagerPresenter = new CargoBox2DSettingManagerPresenter(settingForm,
                                                                robotSettingManagerPresenter, cameraSettingManagerPresenter, plcSettingManagerPresenter, copyCarTypeConfigPresenter,
-                                                               addCarTypePresenter, lightSettingManagerPresenter, new List<string> { "en-US" }, settingChangeTracker);
+                                                               addCarTypePresenter, lightSettingManagerPresenter, new List<string> { "en-US" }, settingChangeTracker, engine);
             var mainForm = new MainForm();
-            var mainPresenter = new MainPresenter(mainForm, settingManagerPresenter, config);
+            var mainPresenter = new MainPresenter(mainForm, settingManagerPresenter, config, engine);
             Application.Run(mainForm);
         }
     }
