@@ -124,14 +124,6 @@ namespace loadingBox2dGui.SettingManagerForm
             }
         }
 
-        private void btnCopyRobot__Click(object sender, EventArgs e)
-        {
-            if (robotConfigGrid.SelectedGridItem != null)
-            {
-                RobotSettingCopyRequested?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
         private void cmbRobotConfig_SelectedIndexChanged(object sender, EventArgs e)
         {
             ConfiguringRobotChanged?.Invoke(this, EventArgs.Empty);
@@ -156,6 +148,14 @@ namespace loadingBox2dGui.SettingManagerForm
         {
             SettingChanged?.Invoke(this, new SettingChangedEventArgs(e.ChangedItem.PropertyDescriptor, e.OldValue, e.ChangedItem.Value,
                                                                      e.ChangedItem.Parent.Value, e.ChangedItem.Label, e.ChangedItem.Parent.Label));
+        }
+
+        private void btnCopyRobot_Click(object sender, EventArgs e)
+        {
+            if (robotConfigGrid.SelectedGridItem != null)
+            {
+                RobotSettingCopyRequested?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }

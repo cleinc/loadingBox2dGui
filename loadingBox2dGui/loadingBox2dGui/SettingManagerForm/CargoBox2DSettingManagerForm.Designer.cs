@@ -38,9 +38,9 @@ namespace loadingBox2dGui
             this.SettingManagerTabControl = new MaterialSkin.Controls.MaterialTabControl();
             this.ConfigDict_ = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.materialCard2 = new MaterialSkin.Controls.MaterialCard();
+            this.gbRootFolderPaths_ = new MaterialSkin.Controls.MaterialCard();
             this.btnCameraTcpRootFolderPath = new MaterialSkin.Controls.MaterialButton();
-            this.tbCameraTcp = new MaterialSkin.Controls.MaterialTextBox2();
+            this.tbCameraTcpRootFolderPath = new MaterialSkin.Controls.MaterialTextBox2();
             this.lblCameraTcp = new MaterialSkin.Controls.MaterialLabel();
             this.btnCalibrationRootFolderPath_ = new MaterialSkin.Controls.MaterialButton();
             this.tbCalibrationRootFolderPath = new MaterialSkin.Controls.MaterialTextBox2();
@@ -55,7 +55,7 @@ namespace loadingBox2dGui
             this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
             this.cmbRobot_ = new MaterialSkin.Controls.MaterialComboBox();
             this.lblRobot_ = new MaterialSkin.Controls.MaterialLabel();
-            this.cardFolderPath = new MaterialSkin.Controls.MaterialCard();
+            this.gbModelFilePath_ = new MaterialSkin.Controls.MaterialCard();
             this.tbModelPath = new MaterialSkin.Controls.MaterialTextBox2();
             this.lblShiftModel_ = new MaterialSkin.Controls.MaterialLabel();
             this.lblModelFilePaths_ = new MaterialSkin.Controls.MaterialLabel();
@@ -108,14 +108,15 @@ namespace loadingBox2dGui
             this.lblUILogLev_ = new MaterialSkin.Controls.MaterialLabel();
             this.lblFileLogLev_ = new MaterialSkin.Controls.MaterialLabel();
             this.lblLogLabel_ = new MaterialSkin.Controls.MaterialLabel();
+            this.btnUpdateMasterData_ = new MaterialSkin.Controls.MaterialButton();
             this.cmbLanguage = new MaterialSkin.Controls.MaterialComboBox();
             this.btnChangePassword_ = new MaterialSkin.Controls.MaterialButton();
             this.btnFactoryReset_ = new MaterialSkin.Controls.MaterialButton();
             this.btnSaveFactorySettings = new System.Windows.Forms.Button();
             this.materialDivider3 = new MaterialSkin.Controls.MaterialDivider();
             this.lblSaveData_ = new MaterialSkin.Controls.MaterialLabel();
-            this.folderBrowserDialoglogPath = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnUpdateMasterData_ = new MaterialSkin.Controls.MaterialButton();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.fileBrowserDialog = new System.Windows.Forms.OpenFileDialog();
             this.ctxtMenuCameraDel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -127,9 +128,9 @@ namespace loadingBox2dGui
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.materialCard2.SuspendLayout();
+            this.gbRootFolderPaths_.SuspendLayout();
             this.materialCard1.SuspendLayout();
-            this.cardFolderPath.SuspendLayout();
+            this.gbModelFilePath_.SuspendLayout();
             this.cardCamera.SuspendLayout();
             this.cardCarType.SuspendLayout();
             this.cardPlc.SuspendLayout();
@@ -226,9 +227,9 @@ namespace loadingBox2dGui
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.materialCard2);
+            this.splitContainer2.Panel1.Controls.Add(this.gbRootFolderPaths_);
             this.splitContainer2.Panel1.Controls.Add(this.materialCard1);
-            this.splitContainer2.Panel1.Controls.Add(this.cardFolderPath);
+            this.splitContainer2.Panel1.Controls.Add(this.gbModelFilePath_);
             this.splitContainer2.Panel1.Controls.Add(this.cardCamera);
             this.splitContainer2.Panel1.Controls.Add(this.cardCarType);
             this.splitContainer2.Panel1.Controls.Add(this.cardPlc);
@@ -242,31 +243,31 @@ namespace loadingBox2dGui
             this.splitContainer2.TabIndex = 20;
             this.splitContainer2.TabStop = false;
             // 
-            // materialCard2
+            // gbRootFolderPaths_
             // 
-            this.materialCard2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard2.Controls.Add(this.btnCameraTcpRootFolderPath);
-            this.materialCard2.Controls.Add(this.tbCameraTcp);
-            this.materialCard2.Controls.Add(this.lblCameraTcp);
-            this.materialCard2.Controls.Add(this.btnCalibrationRootFolderPath_);
-            this.materialCard2.Controls.Add(this.tbCalibrationRootFolderPath);
-            this.materialCard2.Controls.Add(this.lblCalibrationRootFolderPath_);
-            this.materialCard2.Controls.Add(this.tbMasterImageRootPath);
-            this.materialCard2.Controls.Add(this.tbCheckerBoardRootPath);
-            this.materialCard2.Controls.Add(this.lblMasterImageFilePath);
-            this.materialCard2.Controls.Add(this.lblCharucoFilePath);
-            this.materialCard2.Controls.Add(this.lblImageRootFolderPath_);
-            this.materialCard2.Controls.Add(this.btnMasterImageFilePath);
-            this.materialCard2.Controls.Add(this.btnCharucoFilePath);
-            this.materialCard2.Depth = 0;
-            this.materialCard2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard2.Location = new System.Drawing.Point(4, 345);
-            this.materialCard2.Margin = new System.Windows.Forms.Padding(14);
-            this.materialCard2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCard2.Name = "materialCard2";
-            this.materialCard2.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard2.Size = new System.Drawing.Size(291, 179);
-            this.materialCard2.TabIndex = 42;
+            this.gbRootFolderPaths_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.gbRootFolderPaths_.Controls.Add(this.btnCameraTcpRootFolderPath);
+            this.gbRootFolderPaths_.Controls.Add(this.tbCameraTcpRootFolderPath);
+            this.gbRootFolderPaths_.Controls.Add(this.lblCameraTcp);
+            this.gbRootFolderPaths_.Controls.Add(this.btnCalibrationRootFolderPath_);
+            this.gbRootFolderPaths_.Controls.Add(this.tbCalibrationRootFolderPath);
+            this.gbRootFolderPaths_.Controls.Add(this.lblCalibrationRootFolderPath_);
+            this.gbRootFolderPaths_.Controls.Add(this.tbMasterImageRootPath);
+            this.gbRootFolderPaths_.Controls.Add(this.tbCheckerBoardRootPath);
+            this.gbRootFolderPaths_.Controls.Add(this.lblMasterImageFilePath);
+            this.gbRootFolderPaths_.Controls.Add(this.lblCharucoFilePath);
+            this.gbRootFolderPaths_.Controls.Add(this.lblImageRootFolderPath_);
+            this.gbRootFolderPaths_.Controls.Add(this.btnMasterImageFilePath);
+            this.gbRootFolderPaths_.Controls.Add(this.btnCharucoFilePath);
+            this.gbRootFolderPaths_.Depth = 0;
+            this.gbRootFolderPaths_.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.gbRootFolderPaths_.Location = new System.Drawing.Point(4, 345);
+            this.gbRootFolderPaths_.Margin = new System.Windows.Forms.Padding(14);
+            this.gbRootFolderPaths_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gbRootFolderPaths_.Name = "gbRootFolderPaths_";
+            this.gbRootFolderPaths_.Padding = new System.Windows.Forms.Padding(14);
+            this.gbRootFolderPaths_.Size = new System.Drawing.Size(291, 179);
+            this.gbRootFolderPaths_.TabIndex = 42;
             // 
             // btnCameraTcpRootFolderPath
             // 
@@ -288,37 +289,38 @@ namespace loadingBox2dGui
             this.btnCameraTcpRootFolderPath.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnCameraTcpRootFolderPath.UseAccentColor = false;
             this.btnCameraTcpRootFolderPath.UseVisualStyleBackColor = true;
+            this.btnCameraTcpRootFolderPath.Click += new System.EventHandler(this.btnCameraTcpRootFolderPath_Click);
             // 
-            // tbCameraTcp
+            // tbCameraTcpRootFolderPath
             // 
-            this.tbCameraTcp.AnimateReadOnly = false;
-            this.tbCameraTcp.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbCameraTcp.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbCameraTcp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbCameraTcp.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbCameraTcp.Depth = 0;
-            this.tbCameraTcp.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbCameraTcp.HideSelection = true;
-            this.tbCameraTcp.LeadingIcon = null;
-            this.tbCameraTcp.Location = new System.Drawing.Point(114, 141);
-            this.tbCameraTcp.MaxLength = 32767;
-            this.tbCameraTcp.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbCameraTcp.Name = "tbCameraTcp";
-            this.tbCameraTcp.PasswordChar = '\0';
-            this.tbCameraTcp.PrefixSuffixText = null;
-            this.tbCameraTcp.ReadOnly = false;
-            this.tbCameraTcp.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbCameraTcp.SelectedText = "";
-            this.tbCameraTcp.SelectionLength = 0;
-            this.tbCameraTcp.SelectionStart = 0;
-            this.tbCameraTcp.ShortcutsEnabled = true;
-            this.tbCameraTcp.Size = new System.Drawing.Size(125, 26);
-            this.tbCameraTcp.TabIndex = 45;
-            this.tbCameraTcp.TabStop = false;
-            this.tbCameraTcp.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbCameraTcp.TrailingIcon = null;
-            this.tbCameraTcp.UseSystemPasswordChar = false;
-            this.tbCameraTcp.UseTallSize = false;
+            this.tbCameraTcpRootFolderPath.AnimateReadOnly = false;
+            this.tbCameraTcpRootFolderPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbCameraTcpRootFolderPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbCameraTcpRootFolderPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbCameraTcpRootFolderPath.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbCameraTcpRootFolderPath.Depth = 0;
+            this.tbCameraTcpRootFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbCameraTcpRootFolderPath.HideSelection = true;
+            this.tbCameraTcpRootFolderPath.LeadingIcon = null;
+            this.tbCameraTcpRootFolderPath.Location = new System.Drawing.Point(114, 141);
+            this.tbCameraTcpRootFolderPath.MaxLength = 32767;
+            this.tbCameraTcpRootFolderPath.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbCameraTcpRootFolderPath.Name = "tbCameraTcpRootFolderPath";
+            this.tbCameraTcpRootFolderPath.PasswordChar = '\0';
+            this.tbCameraTcpRootFolderPath.PrefixSuffixText = null;
+            this.tbCameraTcpRootFolderPath.ReadOnly = false;
+            this.tbCameraTcpRootFolderPath.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbCameraTcpRootFolderPath.SelectedText = "";
+            this.tbCameraTcpRootFolderPath.SelectionLength = 0;
+            this.tbCameraTcpRootFolderPath.SelectionStart = 0;
+            this.tbCameraTcpRootFolderPath.ShortcutsEnabled = true;
+            this.tbCameraTcpRootFolderPath.Size = new System.Drawing.Size(125, 26);
+            this.tbCameraTcpRootFolderPath.TabIndex = 45;
+            this.tbCameraTcpRootFolderPath.TabStop = false;
+            this.tbCameraTcpRootFolderPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbCameraTcpRootFolderPath.TrailingIcon = null;
+            this.tbCameraTcpRootFolderPath.UseSystemPasswordChar = false;
+            this.tbCameraTcpRootFolderPath.UseTallSize = false;
             // 
             // lblCameraTcp
             // 
@@ -353,6 +355,7 @@ namespace loadingBox2dGui
             this.btnCalibrationRootFolderPath_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnCalibrationRootFolderPath_.UseAccentColor = false;
             this.btnCalibrationRootFolderPath_.UseVisualStyleBackColor = true;
+            this.btnCalibrationRootFolderPath_.Click += new System.EventHandler(this.btnCalibrationRootFolderPath__Click);
             // 
             // tbCalibrationRootFolderPath
             // 
@@ -519,6 +522,7 @@ namespace loadingBox2dGui
             this.btnMasterImageFilePath.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnMasterImageFilePath.UseAccentColor = false;
             this.btnMasterImageFilePath.UseVisualStyleBackColor = true;
+            this.btnMasterImageFilePath.Click += new System.EventHandler(this.btnMasterImageFilePath_Click);
             // 
             // btnCharucoFilePath
             // 
@@ -540,6 +544,7 @@ namespace loadingBox2dGui
             this.btnCharucoFilePath.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnCharucoFilePath.UseAccentColor = false;
             this.btnCharucoFilePath.UseVisualStyleBackColor = true;
+            this.btnCharucoFilePath.Click += new System.EventHandler(this.btnCharucoFilePath_Click);
             // 
             // materialCard1
             // 
@@ -547,7 +552,6 @@ namespace loadingBox2dGui
             this.materialCard1.Controls.Add(this.cmbRobot_);
             this.materialCard1.Controls.Add(this.lblRobot_);
             this.materialCard1.Depth = 0;
-            this.materialCard1.Enabled = false;
             this.materialCard1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialCard1.Location = new System.Drawing.Point(4, 277);
             this.materialCard1.Margin = new System.Windows.Forms.Padding(14);
@@ -556,7 +560,6 @@ namespace loadingBox2dGui
             this.materialCard1.Padding = new System.Windows.Forms.Padding(14);
             this.materialCard1.Size = new System.Drawing.Size(291, 62);
             this.materialCard1.TabIndex = 2;
-            this.materialCard1.Visible = false;
             // 
             // cmbRobot_
             // 
@@ -580,6 +583,7 @@ namespace loadingBox2dGui
             this.cmbRobot_.StartIndex = 0;
             this.cmbRobot_.TabIndex = 2;
             this.cmbRobot_.UseTallSize = false;
+            this.cmbRobot_.SelectedIndexChanged += new System.EventHandler(this.cmbRobot__SelectedIndexChanged);
             // 
             // lblRobot_
             // 
@@ -594,24 +598,22 @@ namespace loadingBox2dGui
             this.lblRobot_.TabIndex = 2;
             this.lblRobot_.Text = "Robot";
             // 
-            // cardFolderPath
+            // gbModelFilePath_
             // 
-            this.cardFolderPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cardFolderPath.Controls.Add(this.tbModelPath);
-            this.cardFolderPath.Controls.Add(this.lblShiftModel_);
-            this.cardFolderPath.Controls.Add(this.lblModelFilePaths_);
-            this.cardFolderPath.Controls.Add(this.btnModelPath);
-            this.cardFolderPath.Depth = 0;
-            this.cardFolderPath.Enabled = false;
-            this.cardFolderPath.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cardFolderPath.Location = new System.Drawing.Point(4, 544);
-            this.cardFolderPath.Margin = new System.Windows.Forms.Padding(14);
-            this.cardFolderPath.MouseState = MaterialSkin.MouseState.HOVER;
-            this.cardFolderPath.Name = "cardFolderPath";
-            this.cardFolderPath.Padding = new System.Windows.Forms.Padding(14);
-            this.cardFolderPath.Size = new System.Drawing.Size(291, 75);
-            this.cardFolderPath.TabIndex = 1;
-            this.cardFolderPath.Visible = false;
+            this.gbModelFilePath_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.gbModelFilePath_.Controls.Add(this.tbModelPath);
+            this.gbModelFilePath_.Controls.Add(this.lblShiftModel_);
+            this.gbModelFilePath_.Controls.Add(this.lblModelFilePaths_);
+            this.gbModelFilePath_.Controls.Add(this.btnModelPath);
+            this.gbModelFilePath_.Depth = 0;
+            this.gbModelFilePath_.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.gbModelFilePath_.Location = new System.Drawing.Point(4, 544);
+            this.gbModelFilePath_.Margin = new System.Windows.Forms.Padding(14);
+            this.gbModelFilePath_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gbModelFilePath_.Name = "gbModelFilePath_";
+            this.gbModelFilePath_.Padding = new System.Windows.Forms.Padding(14);
+            this.gbModelFilePath_.Size = new System.Drawing.Size(291, 75);
+            this.gbModelFilePath_.TabIndex = 1;
             // 
             // tbModelPath
             // 
@@ -701,12 +703,12 @@ namespace loadingBox2dGui
             this.cardCamera.Controls.Add(this.cmbCamera);
             this.cardCamera.Depth = 0;
             this.cardCamera.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cardCamera.Location = new System.Drawing.Point(4, 90);
+            this.cardCamera.Location = new System.Drawing.Point(4, 121);
             this.cardCamera.Margin = new System.Windows.Forms.Padding(14);
             this.cardCamera.MouseState = MaterialSkin.MouseState.HOVER;
             this.cardCamera.Name = "cardCamera";
             this.cardCamera.Padding = new System.Windows.Forms.Padding(14);
-            this.cardCamera.Size = new System.Drawing.Size(291, 107);
+            this.cardCamera.Size = new System.Drawing.Size(291, 83);
             this.cardCamera.TabIndex = 12;
             // 
             // cmbLight
@@ -723,7 +725,7 @@ namespace loadingBox2dGui
             this.cmbLight.FormattingEnabled = true;
             this.cmbLight.IntegralHeight = false;
             this.cmbLight.ItemHeight = 25;
-            this.cmbLight.Location = new System.Drawing.Point(149, 59);
+            this.cmbLight.Location = new System.Drawing.Point(149, 45);
             this.cmbLight.MaxDropDownItems = 4;
             this.cmbLight.MouseState = MaterialSkin.MouseState.OUT;
             this.cmbLight.Name = "cmbLight";
@@ -740,7 +742,7 @@ namespace loadingBox2dGui
             this.lblLight_.BackColor = System.Drawing.Color.Transparent;
             this.lblLight_.Depth = 0;
             this.lblLight_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblLight_.Location = new System.Drawing.Point(6, 65);
+            this.lblLight_.Location = new System.Drawing.Point(6, 51);
             this.lblLight_.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblLight_.Name = "lblLight_";
             this.lblLight_.Size = new System.Drawing.Size(40, 18);
@@ -754,7 +756,7 @@ namespace loadingBox2dGui
             this.lblCamera_.BackColor = System.Drawing.Color.Transparent;
             this.lblCamera_.Depth = 0;
             this.lblCamera_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblCamera_.Location = new System.Drawing.Point(7, 25);
+            this.lblCamera_.Location = new System.Drawing.Point(7, 11);
             this.lblCamera_.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblCamera_.Name = "lblCamera_";
             this.lblCamera_.Size = new System.Drawing.Size(89, 18);
@@ -775,7 +777,7 @@ namespace loadingBox2dGui
             this.cmbCamera.FormattingEnabled = true;
             this.cmbCamera.IntegralHeight = false;
             this.cmbCamera.ItemHeight = 25;
-            this.cmbCamera.Location = new System.Drawing.Point(149, 18);
+            this.cmbCamera.Location = new System.Drawing.Point(149, 4);
             this.cmbCamera.MaxDropDownItems = 4;
             this.cmbCamera.MouseState = MaterialSkin.MouseState.OUT;
             this.cmbCamera.Name = "cmbCamera";
@@ -801,7 +803,7 @@ namespace loadingBox2dGui
             this.cardCarType.MouseState = MaterialSkin.MouseState.HOVER;
             this.cardCarType.Name = "cardCarType";
             this.cardCarType.Padding = new System.Windows.Forms.Padding(14);
-            this.cardCarType.Size = new System.Drawing.Size(291, 82);
+            this.cardCarType.Size = new System.Drawing.Size(291, 112);
             this.cardCarType.TabIndex = 1;
             // 
             // tbCarType
@@ -855,6 +857,7 @@ namespace loadingBox2dGui
             this.btnCopyCarType_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnCopyCarType_.UseAccentColor = false;
             this.btnCopyCarType_.UseVisualStyleBackColor = true;
+            this.btnCopyCarType_.Visible = false;
             this.btnCopyCarType_.Click += new System.EventHandler(this.btnCopyCarType__Click);
             // 
             // btnRemoveCarType_
@@ -947,12 +950,12 @@ namespace loadingBox2dGui
             this.cardPlc.Controls.Add(this.lblPlc_);
             this.cardPlc.Depth = 0;
             this.cardPlc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cardPlc.Location = new System.Drawing.Point(4, 202);
+            this.cardPlc.Location = new System.Drawing.Point(4, 214);
             this.cardPlc.Margin = new System.Windows.Forms.Padding(14);
             this.cardPlc.MouseState = MaterialSkin.MouseState.HOVER;
             this.cardPlc.Name = "cardPlc";
             this.cardPlc.Padding = new System.Windows.Forms.Padding(14);
-            this.cardPlc.Size = new System.Drawing.Size(291, 70);
+            this.cardPlc.Size = new System.Drawing.Size(291, 58);
             this.cardPlc.TabIndex = 1;
             // 
             // cmbPlc
@@ -1528,6 +1531,29 @@ namespace loadingBox2dGui
             this.lblLogLabel_.TabIndex = 0;
             this.lblLogLabel_.Text = "Log Level";
             // 
+            // btnUpdateMasterData_
+            // 
+            this.btnUpdateMasterData_.AutoSize = false;
+            this.btnUpdateMasterData_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnUpdateMasterData_.BackColor = System.Drawing.SystemColors.Control;
+            this.btnUpdateMasterData_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnUpdateMasterData_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnUpdateMasterData_.Depth = 0;
+            this.btnUpdateMasterData_.HighEmphasis = true;
+            this.btnUpdateMasterData_.Icon = null;
+            this.btnUpdateMasterData_.Location = new System.Drawing.Point(1184, 6);
+            this.btnUpdateMasterData_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnUpdateMasterData_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnUpdateMasterData_.Name = "btnUpdateMasterData_";
+            this.btnUpdateMasterData_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnUpdateMasterData_.Size = new System.Drawing.Size(219, 36);
+            this.btnUpdateMasterData_.TabIndex = 31;
+            this.btnUpdateMasterData_.Text = "Update MasterData";
+            this.btnUpdateMasterData_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnUpdateMasterData_.UseAccentColor = false;
+            this.btnUpdateMasterData_.UseVisualStyleBackColor = false;
+            this.btnUpdateMasterData_.Click += new System.EventHandler(this.btnUpdateMasterData__Click);
+            // 
             // cmbLanguage
             // 
             this.cmbLanguage.AutoResize = false;
@@ -1643,29 +1669,9 @@ namespace loadingBox2dGui
             this.lblSaveData_.TabIndex = 15;
             this.lblSaveData_.Text = "Save Data";
             // 
-            // btnUpdateMasterData_
+            // fileBrowserDialog
             // 
-            this.btnUpdateMasterData_.AutoSize = false;
-            this.btnUpdateMasterData_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnUpdateMasterData_.BackColor = System.Drawing.SystemColors.Control;
-            this.btnUpdateMasterData_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnUpdateMasterData_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnUpdateMasterData_.Depth = 0;
-            this.btnUpdateMasterData_.HighEmphasis = true;
-            this.btnUpdateMasterData_.Icon = null;
-            this.btnUpdateMasterData_.Location = new System.Drawing.Point(1184, 6);
-            this.btnUpdateMasterData_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnUpdateMasterData_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnUpdateMasterData_.Name = "btnUpdateMasterData_";
-            this.btnUpdateMasterData_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnUpdateMasterData_.Size = new System.Drawing.Size(219, 36);
-            this.btnUpdateMasterData_.TabIndex = 31;
-            this.btnUpdateMasterData_.Text = "Update MasterData";
-            this.btnUpdateMasterData_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnUpdateMasterData_.UseAccentColor = false;
-            this.btnUpdateMasterData_.UseVisualStyleBackColor = false;
-            this.btnUpdateMasterData_.Visible = false;
-            this.btnUpdateMasterData_.Click += new System.EventHandler(this.btnUpdateMasterData__Click);
+            this.fileBrowserDialog.FileName = "fileBrowserDialog";
             // 
             // CargoBox2DSettingManagerForm_
             // 
@@ -1694,12 +1700,12 @@ namespace loadingBox2dGui
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.materialCard2.ResumeLayout(false);
-            this.materialCard2.PerformLayout();
+            this.gbRootFolderPaths_.ResumeLayout(false);
+            this.gbRootFolderPaths_.PerformLayout();
             this.materialCard1.ResumeLayout(false);
             this.materialCard1.PerformLayout();
-            this.cardFolderPath.ResumeLayout(false);
-            this.cardFolderPath.PerformLayout();
+            this.gbModelFilePath_.ResumeLayout(false);
+            this.gbModelFilePath_.PerformLayout();
             this.cardCamera.ResumeLayout(false);
             this.cardCamera.PerformLayout();
             this.cardCarType.ResumeLayout(false);
@@ -1728,7 +1734,7 @@ namespace loadingBox2dGui
         private System.Windows.Forms.ContextMenuStrip ctxtMenuCameraDel;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem_;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem_;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialoglogPath;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private MaterialSkin.Controls.MaterialTabControl SettingManagerTabControl;
         private System.Windows.Forms.TabPage ConfigDict_;
         private System.Windows.Forms.SplitContainer splitContainer2;
@@ -1783,7 +1789,7 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialCard cardCarType;
         private MaterialSkin.Controls.MaterialLabel lblCarType_;
         private MaterialSkin.Controls.MaterialComboBox cmbCarType;
-        private MaterialSkin.Controls.MaterialCard cardFolderPath;
+        private MaterialSkin.Controls.MaterialCard gbModelFilePath_;
         private MaterialSkin.Controls.MaterialLabel lblModelFilePaths_;
         private MaterialSkin.Controls.MaterialLabel lblShiftModel_;
         private MaterialSkin.Controls.MaterialLabel lblLogSavePath_;
@@ -1792,7 +1798,7 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialCard materialCard1;
         private MaterialSkin.Controls.MaterialComboBox cmbRobot_;
         private MaterialSkin.Controls.MaterialLabel lblRobot_;
-        private MaterialSkin.Controls.MaterialCard materialCard2;
+        private MaterialSkin.Controls.MaterialCard gbRootFolderPaths_;
         private MaterialSkin.Controls.MaterialButton btnCalibrationRootFolderPath_;
         private MaterialSkin.Controls.MaterialTextBox2 tbCalibrationRootFolderPath;
         private MaterialSkin.Controls.MaterialLabel lblCalibrationRootFolderPath_;
@@ -1804,9 +1810,10 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialButton btnMasterImageFilePath;
         private MaterialSkin.Controls.MaterialButton btnCharucoFilePath;
         private MaterialSkin.Controls.MaterialButton btnCameraTcpRootFolderPath;
-        private MaterialSkin.Controls.MaterialTextBox2 tbCameraTcp;
+        private MaterialSkin.Controls.MaterialTextBox2 tbCameraTcpRootFolderPath;
         private MaterialSkin.Controls.MaterialLabel lblCameraTcp;
         private TabPage RobotConfig_;
         private MaterialSkin.Controls.MaterialButton btnUpdateMasterData_;
+        private OpenFileDialog fileBrowserDialog;
     }
 }

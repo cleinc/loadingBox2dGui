@@ -14,6 +14,8 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using loadingBox2dGui.models;
+using System.Linq;
 
 namespace loadingBox2dGui
 {
@@ -66,8 +68,11 @@ namespace loadingBox2dGui
 
         public string Robot
         {
-            get => ""; 
-            set => throw new Exception();
+            get => cmbRobot_.InvokeIfNeeded(() =>
+            {
+                return cmbRobot_.SelectedItem.ToString();
+            });
+            set => cmbRobot_.InvokeIfNeeded(() => cmbRobot_.SelectedItem = value);
         }
         public void ShowSettingManager(bool isBlocking)
         {
@@ -220,7 +225,9 @@ namespace loadingBox2dGui
             this.InvokeIfNeeded(() => 
             { 
                 cmbPlc.Enabled = false;
+                cmbLight.Enabled = false;
                 cmbCamera.Enabled = false;
+                cmbRobot_.Enabled = false;
                 taskGrid.Enabled = false;
             });
             _factorySettingTimer = null;
@@ -231,6 +238,8 @@ namespace loadingBox2dGui
             { 
                 cmbPlc.Enabled = true;
                 cmbCamera.Enabled = true;
+                cmbRobot_.Enabled = true;
+                cmbLight.Enabled = true;
                 taskGrid.Enabled = true;
             });
             _factorySettingTimer = null;
@@ -242,6 +251,8 @@ namespace loadingBox2dGui
             { 
                 cmbPlc.Enabled = true;
                 cmbCamera.Enabled = true;
+                cmbRobot_.Enabled = true;
+                cmbLight.Enabled = true;
                 taskGrid.Enabled = true;
             });
             SetFactorySettingsTimer();
@@ -281,18 +292,18 @@ namespace loadingBox2dGui
 
         public void SetRobotList(List<string> robotList, string selectedRobot = null)
         {
-            //cmbRobotFront_.InvokeIfNeeded(() =>
-            //{
-            //    cmbRobotFront_.DataSource = robotList;
-            //    if (selectedRobot == null)
-            //    {
-            //        cmbRobotFront_.SelectedItem = -1;
-            //    }
-            //    else if (robotList.Contains(selectedRobot))
-            //    {
-            //        cmbRobotFront_.SelectedItem = selectedRobot;
-            //    }
-            //});
+            cmbRobot_.InvokeIfNeeded(() =>
+            {
+                cmbRobot_.DataSource = robotList;
+                if (selectedRobot == null)
+                {
+                    cmbRobot_.SelectedItem = -1;
+                }
+                else if (robotList.Contains(selectedRobot))
+                {
+                    cmbRobot_.SelectedItem = selectedRobot;
+                }
+            });
         }
         public DialogResult ShowMessageBox(string message, string title, MessageBoxButtons buttons, MessageBoxIcon icon)
         {
@@ -443,11 +454,32 @@ namespace loadingBox2dGui
             get => IsDisposed;
         }
 
-        public string ShiftModelPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string CheckerBoardImageRootFolderPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string MasterImageRootFolderPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string CalibrationDataRootFolderPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string CameraTcpDataRootFolderPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ShiftModelPath
+        {
+            get => tbModelPath.InvokeIfNeeded(() => tbModelPath.Text);
+            set => tbModelPath.InvokeIfNeeded(() => tbModelPath.Text = value);
+        }
+        public string CheckerBoardImageRootFolderPath
+        {
+            get => tbCheckerBoardRootPath.InvokeIfNeeded(() => tbCheckerBoardRootPath.Text);
+            set => tbCheckerBoardRootPath.InvokeIfNeeded(() => tbCheckerBoardRootPath.Text = value);
+        }
+        public string MasterImageRootFolderPath
+        {
+            get => tbMasterImageRootPath.InvokeIfNeeded(() => tbMasterImageRootPath.Text);
+            set => tbMasterImageRootPath.InvokeIfNeeded(() => tbMasterImageRootPath.Text = value);
+        }
+
+        public string CalibrationDataRootFolderPath
+        {
+            get => tbCalibrationRootFolderPath.InvokeIfNeeded(() => tbCalibrationRootFolderPath.Text);
+            set => tbCalibrationRootFolderPath.InvokeIfNeeded(() => tbCalibrationRootFolderPath.Text = value);
+        }
+        public string CameraTcpDataRootFolderPath
+        {
+            get => tbCameraTcpRootFolderPath.InvokeIfNeeded(() => tbCameraTcpRootFolderPath.Text);
+            set => tbCameraTcpRootFolderPath.InvokeIfNeeded(() => tbCameraTcpRootFolderPath.Text = value);
+        }
         public long CameraMaxScanTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool CanLogManagerScheduleBeDeleted { set => throw new NotImplementedException(); }
 
@@ -625,15 +657,15 @@ namespace loadingBox2dGui
             {
                 try
                 {
-                    folderBrowserDialoglogPath.SelectedPath = Path.GetFullPath(tbLogPath.Text);
+                    folderBrowserDialog.SelectedPath = Path.GetFullPath(tbLogPath.Text);
                 }
                 catch
                 {
                 }
 
-                if (folderBrowserDialoglogPath.ShowDialog() == DialogResult.OK)
+                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
-                    tbLogPath.Text = folderBrowserDialoglogPath.SelectedPath;
+                    tbLogPath.Text = folderBrowserDialog.SelectedPath;
                     LogPathChanged.Invoke(this, EventArgs.Empty);
                 }
             });
@@ -656,7 +688,19 @@ namespace loadingBox2dGui
 
         private void btnModelPath__Click(object sender, EventArgs e)
         {
-            SearchModelPathRequested?.Invoke(this, EventArgs.Empty);
+            try
+            {
+                fileBrowserDialog.FileName = Path.GetFullPath(tbModelPath.Text);
+            }
+            catch(Exception) { }
+
+            if (fileBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (tbModelPath.Text != fileBrowserDialog.FileName)
+                {
+                    ModelSettingPathChangeRequested?.Invoke(sender, new ModelSettingPathChangeEventArgs(ModelPathType.ShiftModelFilePath, fileBrowserDialog.FileName.Replace('\\', '/')));
+                }
+            }
         }
 
         private void btnImageFolderPath__Click(object sender, EventArgs e)
@@ -812,12 +856,14 @@ namespace loadingBox2dGui
             SearchRoiPathRequested?.Invoke(this, EventArgs.Empty);
         }
 
-        public void SetCarTypeList(List<int> carTypeList, int selectedCarType = -1)
+        public void SetCarTypeList(BindingList<CarTypeAndName> carTypeList, int selectedCarType = -1)
         {
             cmbCarType.InvokeIfNeeded(() =>
             {
+                cmbCarType.DisplayMember = "CarName";
+                cmbCarType.ValueMember = "CarType";
                 cmbCarType.DataSource = carTypeList;
-                if (selectedCarType != -1 && carTypeList.Contains(selectedCarType))
+                if (selectedCarType != -1 && carTypeList.Any(c => c.CarType == selectedCarType))
                 {
                     cmbCarType.SelectedItem = selectedCarType;
                 }
@@ -845,6 +891,79 @@ namespace loadingBox2dGui
         private void btnUpdateMasterData__Click(object sender, EventArgs e)
         {
             UpdateMasterDataRequested?.Invoke(sender, e);
+        }
+
+        private void btnCharucoFilePath_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                folderBrowserDialog.SelectedPath = Path.GetFullPath(tbCheckerBoardRootPath.Text ?? "C:\\");
+            }
+            catch(Exception) { }
+
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (folderBrowserDialog.SelectedPath != tbCheckerBoardRootPath.Text)
+                {
+                    ModelSettingPathChangeRequested?.Invoke(sender, new ModelSettingPathChangeEventArgs(ModelPathType.CheckerBoardRootFolderPath, folderBrowserDialog.SelectedPath.Replace('\\', '/')));
+                }
+            }
+        }
+
+        private void btnMasterImageFilePath_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                folderBrowserDialog.SelectedPath = Path.GetFullPath(tbMasterImageRootPath.Text ?? "C:\\");
+            }
+            catch(Exception) { }
+
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (folderBrowserDialog.SelectedPath != tbMasterImageRootPath.Text)
+                {
+                    ModelSettingPathChangeRequested?.Invoke(sender, new ModelSettingPathChangeEventArgs(ModelPathType.MasterImageRootFolderPath, folderBrowserDialog.SelectedPath.Replace('\\', '/')));
+                }
+            }
+        }
+
+        private void btnCalibrationRootFolderPath__Click(object sender, EventArgs e)
+        {
+            try
+            {
+                folderBrowserDialog.SelectedPath = Path.GetFullPath(tbCalibrationRootFolderPath.Text ?? "C:\\");
+            }
+            catch(Exception) { }
+
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (folderBrowserDialog.SelectedPath != tbCalibrationRootFolderPath.Text)
+                {
+                    ModelSettingPathChangeRequested?.Invoke(sender, new ModelSettingPathChangeEventArgs(ModelPathType.CalibrationDataRootFolderPath, folderBrowserDialog.SelectedPath.Replace('\\', '/')));
+                }
+            }
+        }
+
+        private void btnCameraTcpRootFolderPath_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                folderBrowserDialog.SelectedPath = Path.GetFullPath(tbCameraTcpRootFolderPath.Text ?? "C:\\");
+            }
+            catch(Exception) { }
+
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (folderBrowserDialog.SelectedPath != tbCameraTcpRootFolderPath.Text)
+                {
+                    ModelSettingPathChangeRequested?.Invoke(sender, new ModelSettingPathChangeEventArgs(ModelPathType.CameraTcpDataRootFolderPath, folderBrowserDialog.SelectedPath.Replace('\\', '/')));
+                }
+            }
+        }
+
+        private void cmbRobot__SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RobotChanged?.Invoke(sender, EventArgs.Empty);
         }
     }
 }
