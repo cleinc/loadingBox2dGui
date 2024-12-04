@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PylonCameraCommunicator.cs" />
+    <Compile Include="PylonContinousCameraCommunicator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\loadingBox2dGui.models\loadingBox2dGui.models.csproj">

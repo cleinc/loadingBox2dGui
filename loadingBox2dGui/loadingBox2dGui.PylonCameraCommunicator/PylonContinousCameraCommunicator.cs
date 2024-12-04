@@ -1,39 +1,35 @@
 ﻿using Basler.Pylon;
 using CoPick.Logging;
-using CoPick.Setting;
 using loadingBox2dGui.models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace loadingBox2dGui.PylonCameraCommunicator
 {
-    public class PylonCameraCommunicator : CameraCommunicatorForLoadingBox, IDisposable, IImageProvider<InspectionLocation>
+    public class PylonContinousCameraCommunicator : CameraCommunicatorForLoadingBox, IDisposable, IImageProvider<InspectionLocation>
     {
         private readonly static LogHelper Logger = LogHelper.Logger;
         private PixelDataConverter _converter;
         private Timer _updateDeviceTimer;
         private SemaphoreSlim _sem = new SemaphoreSlim(1, 1);
+        private SemaphoreSlim _camRetrieveSem = new SemaphoreSlim(1, 1);
         private Dictionary<string, InspectionLocation> _ipToLoc;
         private Dictionary<InspectionLocation, Bitmap> _locToBmp;
         private Dictionary<Bitmap, BitmapData> _bmpToBmpData;
         private ConcurrentDictionary<InspectionLocation, Camera> _locToCamera;
         private bool _isConnected = false;
-        private static readonly int reconnectTimeoutMs = 15000;
         public bool IsConnected => _isConnected;
 
-        public PylonCameraCommunicator()
+        public PylonContinousCameraCommunicator()
         {
             _converter = new PixelDataConverter();
             _updateDeviceTimer = new Timer(UpdateDevices);
@@ -73,8 +69,8 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                         _ipToLoc.Add(camIp, key);
                     }
                 });
-                Logger.Info($"Starting Device Updater at interval {1000}");
-                _updateDeviceTimer.Change(0, 1000);
+                Logger.Info($"Starting Device Updater at interval {500}");
+                _updateDeviceTimer.Change(0, 500);
                 _isConnected = true;
             }
             finally
@@ -103,6 +99,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
             try
             {
+                Task.Run(() => GrabImages());
                 if(_ipToLoc.Count == _locToCamera.Count)
                 {
                     return;
@@ -123,6 +120,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
                     Camera camera = new Camera(camDevice);
                     camera.ConnectionLost += (sender, e) => OnConnectionLostAsync(camera, location, ipAddress);
+                    camera.CameraOpened += Configuration.AcquireContinuous;
                     bool ret = OpenCamera(camera, location, ipAddress, 2500);
                     if (ret)
                     {
@@ -132,6 +130,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                     else
                     {
                         camera.ConnectionLost -= (sender, e) => OnConnectionLostAsync(camera, location, ipAddress);
+                        camera.CameraOpened -= Configuration.AcquireContinuous;
                     }
                 }
             }
@@ -145,6 +144,32 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             }
         }
 
+        private async void GrabImages()
+        {
+            if (_locToCamera.Count == 0)
+            {
+                return;
+            }
+            if (!await _camRetrieveSem.WaitAsync(500))
+            {
+                Console.WriteLine($"Failed Attempting Grabbing ");
+                return;
+            }
+            try
+            {
+                List<Task> tasks = new List<Task>();
+                foreach (var loc in _locToCamera.Keys)
+                {
+                    tasks.Add(Task.Run(() => LightGrab(loc)));
+                }
+                await Task.WhenAll(tasks);
+            }
+            catch (Exception) { Console.WriteLine($"Caught Exception while light grabbing"); }
+            finally
+            {
+                _camRetrieveSem.Release();
+            }
+        }
         private static bool OpenCamera(Camera camera, InspectionLocation location, string ipAddress, int timeOut = 750)
         {
             try
@@ -160,6 +185,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             catch (Exception ex)
             {
                 Logger.Info($"Opening Cam Failed with Exception: Location {location}, IP: {ipAddress} Error: {ex}");
+                return false;
             }
             // Conditional Open?
             #region Read Current Camera Parameters
@@ -231,6 +257,10 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             {
                 if (_locToCamera.TryGetValue(kvp.Key, out Camera cam))
                 {
+                    if (cam.StreamGrabber.IsGrabbing)
+                    {
+                        cam.StreamGrabber.Stop();
+                    }
                     var camParams = kvp.Value;
                     SetCameraSetting(camParams, cam);
                 }
@@ -290,7 +320,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
         private bool SetCameraSetting(CameraParameter camParameter, Camera camera)
         {
-            if (camera == null)
+            if (camera == null || !camera.IsOpen)
             {
                 return false;
             }
@@ -390,8 +420,12 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             //}            
             if (camera.Parameters[PLCamera.ExposureAuto].IsWritable)
             {
-                camera.Parameters[PLCamera.ExposureAuto].SetValue(PLCamera.ExposureAuto.Once);
+                camera.Parameters[PLCamera.ExposureAuto].SetValue(PLCamera.ExposureAuto.Continuous);
                 Logger.Info($"Exposure set to: {camera.Parameters[PLCamera.ExposureTimeAbs].GetValue()}");
+                Logger.Info($"Exposure set to: {camera.Parameters[PLCamera.ExposureTimeAbs].GetMaximum()}");
+                Logger.Info($"Exposure set to: {camera.Parameters[PLCamera.AutoExposureTimeAbsLowerLimit].GetMinimum()}");
+                Logger.Info($"Exposure set to: {camera.Parameters[PLCamera.AutoExposureTimeAbsUpperLimit].GetMaximum()}");
+
             }
             else
             {
@@ -410,6 +444,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             }
 
             await _sem.WaitAsync();
+            await _camRetrieveSem.WaitAsync();
             try
             {
                 ApplyCameraSettings(camParamDict);
@@ -427,6 +462,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             finally
             {
                 _sem.Release();
+                _camRetrieveSem.Release();
             }
         }
 
@@ -436,10 +472,8 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             {
                 Logger.Info($"Starting Capturing Image on Camera {location}");
                 var camera = _locToCamera[location];
-                var burstTakeRet = BurstTakeImages(camera, 5);
-                
                 IGrabResult grabResult = camera.StreamGrabber.GrabOne(15000, TimeoutHandling.ThrowException);
-                camera.StreamGrabber.Stop();
+                Console.WriteLine($"Exposure: {camera.Parameters[PLCamera.ExposureTimeAbs].GetValue()}");
                 if (grabResult.GrabSucceeded)
                 {
                     Bitmap bmp = ConvertGrabResultToBitmap(grabResult);
@@ -454,6 +488,25 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             catch (Exception ex)
             {
                 Logger.Error($"Camera {location} Grab Image Failed, Error: {ex}");
+            }
+        }
+
+        private void LightGrab(InspectionLocation location)
+        {
+             var camera = _locToCamera[location];
+            if (camera == null || !camera.IsConnected || !camera.IsOpen)
+            {
+                return;
+            }
+
+            IGrabResult grabResult = camera.StreamGrabber?.GrabOne(15000, TimeoutHandling.ThrowException);
+            if (grabResult != null && grabResult.GrabSucceeded)
+            {
+                Console.WriteLine($"bmp grab at {location} succeed");
+            }
+            else
+            {
+                Logger.Error($"Error indication {grabResult.ErrorCode}, {grabResult.ErrorDescription}");
             }
         }
 
@@ -634,7 +687,6 @@ namespace loadingBox2dGui.PylonCameraCommunicator
         private void OnConnectionLostAsync(Camera camera, InspectionLocation inspectionLocation, string ipAddress, int trials = 15)
         {
             Logger.Error($"Connection to Camera {inspectionLocation}, IP : {ipAddress} lost.");
-            
             try
             {
                 if (camera.IsOpen)
@@ -646,6 +698,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             catch (Exception ex)
             {
                 Logger.Info($"Closing attempt failed for Camera {inspectionLocation}, IP : {ipAddress}, Error: {ex}");
+                ResetDevice(inspectionLocation);
             }
         }
 
