@@ -258,13 +258,18 @@ namespace loadingBox2dGui.models
         }
         public static double[] GetFlattenMatrix4x4FromRobotPose(RobotPose pose)
         {
+            // Convert degrees to radians
+            double rx = pose.Rx * Math.PI / 180.0;
+            double ry = pose.Ry * Math.PI / 180.0;
+            double rz = pose.Rz * Math.PI / 180.0;
+
             // Compute cosines and sines for the rotation matrix
-            double cosX = Math.Cos(pose.Rx);
-            double sinX = Math.Sin(pose.Rx);
-            double cosY = Math.Cos(pose.Ry);
-            double sinY = Math.Sin(pose.Ry);
-            double cosZ = Math.Cos(pose.Rz);
-            double sinZ = Math.Sin(pose.Rz);
+            double cosX = Math.Cos(rx);
+            double sinX = Math.Sin(rx);
+            double cosY = Math.Cos(ry);
+            double sinY = Math.Sin(ry);
+            double cosZ = Math.Cos(rz);
+            double sinZ = Math.Sin(rz);
 
             // Compute the rotation matrix using ZYX Euler angles
             double m11 = cosY * cosZ;
@@ -293,7 +298,6 @@ namespace loadingBox2dGui.models
                 tx,  ty,  tz,  1   // Fourth row (translation + homogeneous coord)
             };
         }
-
         public static TCP GetDefault()
         {
             return new TCP() { TcpMatrix = new double[16] };
@@ -319,16 +323,29 @@ namespace loadingBox2dGui.models
             }
 
             return string.Format(
-                "{0,10:F6} {1,10:F6} {2,10:F6} {3,10:F6}\n" +
-                "{4,10:F6} {5,10:F6} {6,10:F6} {7,10:F6}\n" +
-                "{8,10:F6} {9,10:F6} {10,10:F6} {11,10:F6}\n" +
-                "{12,10:F6} {13,10:F6} {14,10:F6} {15,10:F6}",
+                "{0,10:F12} {1,10:F12} {2,10:F12} {3,10:F12}\n" +
+                "{4,10:F12} {5,10:F12} {6,10:F12} {7,10:F12}\n" +
+                "{8,10:F12} {9,10:F12} {10,10:F12} {11,10:F12}\n" +
+                "{12,10:F12} {13,10:F12} {14,10:F12} {15,10:F12}\n",
                 TcpMatrix[0], TcpMatrix[1], TcpMatrix[2], TcpMatrix[3],
                 TcpMatrix[4], TcpMatrix[5], TcpMatrix[6], TcpMatrix[7],
                 TcpMatrix[8], TcpMatrix[9], TcpMatrix[10], TcpMatrix[11],
                 TcpMatrix[12], TcpMatrix[13], TcpMatrix[14], TcpMatrix[15]
             );
         }
+    }
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ExposureImage
+    {
+        public uint version;
+        public IntPtr ImageData;
+        public ulong ImageDataLength;
+        public int width;
+        public int height;
+        public int stride;
+        public int currentExposure;
+        public int setExposure;
+        public int score;
     }
     public enum DataType
     {
@@ -362,7 +379,11 @@ namespace loadingBox2dGui.models
         public int Cols { get; set; }
         public string Dt { get; set; } // Data type (e.g., "d")
         public List<double> Data { get; set; }
-    }
+    }   
 
-    
+    public class HandEyeCalibrationData
+    {
+        public Matrix Lh { get; set; }
+        public Matrix Rh { get; set; }
+    }
 }

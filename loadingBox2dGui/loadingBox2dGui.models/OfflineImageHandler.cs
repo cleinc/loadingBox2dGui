@@ -18,7 +18,7 @@ namespace loadingBox2dGui.models
         private Dictionary<int, Dictionary<InspectionLocation, Bitmap>> _cartypeToBmpDict;
         private Dictionary<Bitmap, BitmapData> _bmpToBitmapData;
         private Dictionary<InspectionLocation, byte[]> _locToBuffer;
-        public OfflineImageHandler(params InspectionLocation[] locations)
+        public OfflineImageHandler()
         {
             _cartypeToBmpDict = new Dictionary<int, Dictionary<InspectionLocation, Bitmap>>();
             _bmpToBitmapData = new Dictionary<Bitmap, BitmapData>();
@@ -53,8 +53,18 @@ namespace loadingBox2dGui.models
             {
                 RegisterCarType(carType);
             }
-            Bitmap bitmap = new Bitmap(path);
-            _cartypeToBmpDict[carType][location] = bitmap;
+
+            using (Bitmap bitmap = new Bitmap(path))
+            {
+                Bitmap bgraBitmap = new Bitmap(bitmap.Width, bitmap.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+                using (Graphics g = Graphics.FromImage(bgraBitmap))
+                {
+                    g.DrawImage(bitmap, new Rectangle(0, 0, bgraBitmap.Width, bgraBitmap.Height));
+                }
+
+                _cartypeToBmpDict[carType][location] = bgraBitmap;
+            }
             return true;
         }
 
@@ -131,6 +141,7 @@ namespace loadingBox2dGui.models
                     int height = bitmap.Height;
                     int stride = bmpData.Stride;
                     int totalBytes = checked(stride * height);
+                    _bmpToBitmapData[bitmap] = bmpData;
                     return ImageStruct.GetOfflineImageStruct(bmpData.Scan0, (ulong)totalBytes, 
                         width, height, stride, _currentCar, location);
                 }
@@ -147,16 +158,20 @@ namespace loadingBox2dGui.models
             }
         }
         
-        public bool UnlockBmpData()
+        public bool ClearBmpData()
         {
             if (_bmpToBitmapData.Count == 0 || _cartypeToBmpDict.Count == 0)
             {
                 Logger.Error($"Check if ImgStruct Function or ConvertBitmapFrom Path has not been Called");
                 return false;
             }
-            foreach (var kvp in _bmpToBitmapData)
+            var bmpDict = _cartypeToBmpDict[_currentCar];
+            foreach (var bmp in bmpDict.Values)
             {
-                kvp.Key.UnlockBits(kvp.Value);
+                if (_bmpToBitmapData.TryGetValue(bmp, out var bmpData))
+                {
+                    bmp.UnlockBits(bmpData);
+                }
             }
             _bmpToBitmapData.Clear();
             return true;

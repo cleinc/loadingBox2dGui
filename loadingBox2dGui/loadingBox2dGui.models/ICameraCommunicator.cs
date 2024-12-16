@@ -15,12 +15,14 @@ namespace loadingBox2dGui.models
 
         bool Connect(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
         bool Disconnect();
-        Task StartCamera(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
+        Task StartCamera(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict, int shotAttempt);
         bool StopCamera();
         bool SaveImage(InspectionLocation loc, Bitmap bmp);
         Bitmap GetImage(string cameraName);
         Bitmap GetImage(InspectionLocation inspectionLocation);
         bool ApplyCameraSettings(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
+        ImageStruct[] GetImageStructArray(int carType);
+        bool ClearBmpData();
     }
 
     

@@ -1,4 +1,5 @@
-﻿using CoPick.Plc.Setting;
+﻿using CoPick.Logging;
+using CoPick.Plc.Setting;
 using CoPick.Robot.Setting;
 using CoPick.Setting;
 using CoPick.Setting.Presenters;
@@ -18,7 +19,7 @@ namespace loadingBox2dGui.presenters
         private OperationMode _mode;
         private readonly List<string> _langList;
         private string _factorySettingsFilePath = "./gifnoc";
-        //private LogManagerScheduler _logManagerScheduler = new LogManagerScheduler();
+        private readonly LogManagerScheduler _logManagerScheduler = new LogManagerScheduler();
 
         private ISettingManagerView _view;
         private readonly Type _typeOfView;
@@ -176,19 +177,19 @@ namespace loadingBox2dGui.presenters
 
         private void View_LogManagerDeleteAsked(object sender, EventArgs e)
         {
-            //_logManagerScheduler.DeleteSchedule();
+            _logManagerScheduler.DeleteSchedule();
             _view.UpdateLogManagerScheduleToUi(0, 0, 0, DateTime.Today);
             _view.CanLogManagerScheduleBeDeleted = false;
         }
 
-        private void View_LogManagerRegisterAsked(object sender, EventArgs e)
+        private async void View_LogManagerRegisterAsked(object sender, EventArgs e)
         {
-            //_logManagerScheduler.LogPreservePeriod = _view.LogPeriodCount;
-            //_logManagerScheduler.ImgPreservePeriod = _view.ImgPeriodCount;
-            //_logManagerScheduler.CsvPreservePeriod = _view.CsvPeriodCount;
-            //_logManagerScheduler.StartDateTime = _view.LogManagerScheduleStartTime;
-            //_logManagerScheduler.LogPath = GetLogFullPath();
-            //await _logManagerScheduler.RegisterScheduleAsync();
+            _logManagerScheduler.LogPreservePeriod = _view.LogPeriodCount;
+            _logManagerScheduler.ImgPreservePeriod = _view.ImgPeriodCount;
+            _logManagerScheduler.CsvPreservePeriod = _view.CsvPeriodCount;
+            _logManagerScheduler.StartDateTime = _view.LogManagerScheduleStartTime;
+            _logManagerScheduler.LogPath = GetLogFullPath();
+            await _logManagerScheduler.RegisterScheduleAsync();
         }
 
         private string GetLogFullPath()
@@ -209,18 +210,18 @@ namespace loadingBox2dGui.presenters
                                                     $"Lang.MsgBoxFineLo.SettingManagerTitle");
                 if (isOk)
                 {
-                    //if (_logManagerScheduler.IsUsing && GetLogFullPath() != _logManagerScheduler.LogPath)
-                    //{
-                    //    _logManagerScheduler.LogPath = GetLogFullPath();
-                    //    await _logManagerScheduler.RegisterScheduleAsync();
-                    //}
+                    if (_logManagerScheduler.IsUsing && GetLogFullPath() != _logManagerScheduler.LogPath)
+                    {
+                        _logManagerScheduler.LogPath = GetLogFullPath();
+                        await _logManagerScheduler.RegisterScheduleAsync();
+                    }
 
-                    //_config.Language = Thread.CurrentThread.CurrentUICulture.Name;
+                    _config.Language = Thread.CurrentThread.CurrentUICulture.Name;
                     SettingChangeConfirmed?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
-                    //Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(_config.Language);
+                    Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(_config.Language);
                 }
             }
 
@@ -554,10 +555,10 @@ namespace loadingBox2dGui.presenters
                 case ModelPathType.ShiftModelFilePath:
                     ChangeShiftModelPath(e.NewPath);
                     break;
-                case ModelPathType.CameraTcpDataRootFolderPath:
+                case ModelPathType.CameraTcpDataFilePath:
                     ChangeCameraTcpRootFolderPath(e.NewPath);
                     break;
-                default: 
+                default:
                     break;
             }
 
@@ -589,20 +590,20 @@ namespace loadingBox2dGui.presenters
         {
             _view.IsFactoryResetPossible = File.Exists(_factorySettingsFilePath) && _mode == OperationMode.Set;
 
-            //await _logManagerScheduler.LoadScheduleInfoFromSystemAsync();
-            //if (_logManagerScheduler.IsUsing)
-            //{
-            //    _view.UpdateLogManagerScheduleToUi(_logManagerScheduler.LogPreservePeriod,
-            //                                       _logManagerScheduler.ImgPreservePeriod,
-            //                                       _logManagerScheduler.CsvPreservePeriod,
-            //                                       _logManagerScheduler.StartDateTime);
-            //    _view.CanLogManagerScheduleBeDeleted = true;
-            //}
-            //else
-            //{
-            //    _view.UpdateLogManagerScheduleToUi(0, 0, 0, DateTime.Today);
-            //    _view.CanLogManagerScheduleBeDeleted = false;
-            //}
+            await _logManagerScheduler.LoadScheduleInfoFromSystemAsync();
+            if (_logManagerScheduler.IsUsing)
+            {
+                _view.UpdateLogManagerScheduleToUi(_logManagerScheduler.LogPreservePeriod,
+                                                   _logManagerScheduler.ImgPreservePeriod,
+                                                   _logManagerScheduler.CsvPreservePeriod,
+                                                   _logManagerScheduler.StartDateTime);
+                _view.CanLogManagerScheduleBeDeleted = true;
+            }
+            else
+            {
+                _view.UpdateLogManagerScheduleToUi(0, 0, 0, DateTime.Today);
+                _view.CanLogManagerScheduleBeDeleted = false;
+            }
 
             switch (_mode)
             {
@@ -625,14 +626,14 @@ namespace loadingBox2dGui.presenters
             _view.LogPath = _config.LogPath;
             //_view.SetSupportedLanguageList(_langList, LangCodeToNameDict[_config.Language]);
             //Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(_config.Language);
-            //_view.SetFileLogLevelList(Enum.GetValues(typeof(Logging.LogLevel)), _config.MinimumFileLogLevel);
-            //_view.SetUiLogLevelList(Enum.GetValues(typeof(Logging.LogLevel)), _config.MinimumUiLogLevel);
+            _view.SetFileLogLevelList(Enum.GetValues(typeof(LogLevel)), _config.MinimumFileLogLevel);
+            _view.SetUiLogLevelList(Enum.GetValues(typeof(LogLevel)), _config.MinimumUiLogLevel);
             _view.SetRobotList(_config.GetRobotList(), _config[-1].Robot);
             _view.SetPlcList(_plcSettingManagerPresenter.AvailablePlcList, _config.Plc);
             _view.SetCameraList(_config.GetCamSetList(), _config[-1].Camera);
             _view.SetCarTypeList(_config.GetCarTypeAndNameList(), _config.RecentlyUsedCar);
             _view.CalibrationDataRootFolderPath = _config.CalibrationDataRootPath;
-            _view.CameraTcpDataRootFolderPath = _config.CameraTcpDataRootFolderPath;
+            _view.CameraTcpDataRootFolderPath = _config.CameraTcpFilePath;
             RefreshConfiguringCarTypeConfig();
             _view.RefreshTaskGrid();
         }
@@ -714,11 +715,11 @@ namespace loadingBox2dGui.presenters
 
         private void ChangeCameraTcpRootFolderPath(string cameraTcpDataRootFolderPath)
         {
-            if (_config.CalibrationDataRootPath != cameraTcpDataRootFolderPath)
+            if (_config.CameraTcpFilePath != cameraTcpDataRootFolderPath)
             {
                 _modifiedDataPaths = true;
-                ChangeTracker.NotifyChange($"Task/CalibrationDataRootFolderPath", _config.CameraTcpDataRootFolderPath, cameraTcpDataRootFolderPath);
-                _config.CameraTcpDataRootFolderPath = cameraTcpDataRootFolderPath;
+                ChangeTracker.NotifyChange($"Task/CalibrationDataRootFolderPath", _config.CameraTcpFilePath, cameraTcpDataRootFolderPath);
+                _config.CameraTcpFilePath = cameraTcpDataRootFolderPath;
                 _view.CameraTcpDataRootFolderPath = cameraTcpDataRootFolderPath;
             }
         }

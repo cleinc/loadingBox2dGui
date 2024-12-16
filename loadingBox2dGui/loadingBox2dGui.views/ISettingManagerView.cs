@@ -22,7 +22,6 @@ namespace loadingBox2dGui.views
         string CalibrationDataRootFolderPath { get; set; }
         string CameraTcpDataRootFolderPath { get; set; }
         string Robot { get; set; }
-        long CameraMaxScanTime { get; set; }
         bool IsControlDisposed { get; }
         string SelectedLanguage { get; set; }
         string LogPath { get; set; }
@@ -101,7 +100,7 @@ namespace loadingBox2dGui.views
        CheckerBoardRootFolderPath,
        MasterImageRootFolderPath,
        CalibrationDataRootFolderPath,
-       CameraTcpDataRootFolderPath,
+       CameraTcpDataFilePath,
        ShiftModelFilePath,
     }
 

@@ -9,19 +9,20 @@ using System.Threading.Tasks;
 
 namespace loadingBox2dGui.models
 {
-    public abstract class CameraCommunicatorForLoadingBox : ICameraCommunicator, IDisposable
+    public abstract class CameraCommunicatorForLoadingBox : ICameraCommunicator, IImageProvider<InspectionLocation>, IDisposable
     {
         protected bool _disposed;
         public bool IsConnected { get; }
         public abstract bool Connect(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
         public abstract bool Disconnect();
-        public abstract Task StartCamera(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
+        public abstract Task StartCamera(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict, int shotAttempt);
         public abstract bool StopCamera();
         public abstract bool SaveImage(InspectionLocation loc, Bitmap bmp);
         public abstract Bitmap GetImage(string cameraName);
         public abstract Bitmap GetImage(InspectionLocation inspectionLocation);
         public abstract bool ApplyCameraSettings(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
-
+        public abstract ImageStruct[] GetImageStructArray(int carType);
+        public abstract bool ClearBmpData();
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
@@ -47,5 +48,9 @@ namespace loadingBox2dGui.models
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+        public abstract Bitmap GetBitmapImage(InspectionLocation camLoc);
+
+        public abstract (InspectionLocation, Bitmap)[] GetAllBitmaps();
     }
 }

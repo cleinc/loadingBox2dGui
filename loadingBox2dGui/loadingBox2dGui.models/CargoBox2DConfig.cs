@@ -4,6 +4,7 @@ using CoPick.Setting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,29 +49,16 @@ namespace loadingBox2dGui.models
         [LocalizedCategory("CategoryShiftCalculationParameter", 4, 4)]
         [LocalizedDescription("DescMaxTranslationX")]
         //[ValidatorType(ValidatorType.Float, 5.0f, 1000.0f)]
-        public float MaxTranslationX { get; set; } = 30.0f;
+        public float MaxTranslationX { get; set; } = 20.0f;
 
         [LocalizedCategory("CategoryShiftCalculationParameter", 4, 4)]
-        [LocalizedDescription("DescMaxTranslationY")]
+        [LocalizedDescription("DescMaxAbsTranslationY")]
         //[ValidatorType(ValidatorType.Float, 5.0f, 1000.0f)]
-        public float MaxTranslationY { get; set; } = 30.0f;
+        public float MaxTranslationY { get; set; } = 20.0f;
 
         [LocalizedCategory("CategoryShiftCalculationParameter", 4, 4)]
-        [LocalizedDescription("DescMaxTranslationZ")]
-        //[ValidatorType(ValidatorType.Float, 5.0f, 1000.0f)]
-        public float MaxTranslationZ { get; set; } = 30.0f;
-
-        [LocalizedCategory("CategoryShiftCalculationParameter", 4, 4)]
-        [LocalizedDescription("DescMaxRotationX")]
-        public float MaxRotationX { get; set; } = 3.0f;
-
-        [LocalizedCategory("CategoryShiftCalculationParameter", 4, 4)]
-        [LocalizedDescription("DescMaxRotationY")]
-        public float MaxRotationY { get; set; } = 3.0f;
-
-        [LocalizedCategory("CategoryShiftCalculationParameter", 4, 4)]
-        [LocalizedDescription("DescMaxRotationZ")]
-        public float MaxRotationZ { get; set; } = 3.0f;
+        [LocalizedDescription("DescMaxAbsRotationZ")]
+        public float MaxRotationZ { get; set; } = 1f;
         //[Browsable(false)]
         //public RobotPose PoseThreshold => new RobotPose()
         //{
@@ -81,6 +69,13 @@ namespace loadingBox2dGui.models
         //    Ry = MaxRotationY,
         //    Rz = MaxRotationZ
         //};
+        [LocalizedCategory("CategoryShiftCalculationParameter")]
+        [LocalizedDescription("DescEvaluateExceededShiftValueThreshold")]
+        public bool DefaultIfExceeded { get; set; } = false;
+
+        [LocalizedCategory("CategoryShiftCalculationParameter")]
+        [LocalizedDescription("DescModelThreshold")]
+        public int ConfidenceThreshold { get; set; } = 50;
         public CargoBox2DConfig()
         {
             UpdatePropertyDescriptors();

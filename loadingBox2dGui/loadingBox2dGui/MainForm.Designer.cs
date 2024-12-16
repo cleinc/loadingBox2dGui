@@ -385,7 +385,7 @@ namespace loadingBox2dGui
             this.btnDetectAruco_.NoAccentTextColor = System.Drawing.Color.Empty;
             this.btnDetectAruco_.Size = new System.Drawing.Size(157, 87);
             this.btnDetectAruco_.TabIndex = 181;
-            this.btnDetectAruco_.Text = "Try Aruco";
+            this.btnDetectAruco_.Text = "Test Offline Aruco";
             this.btnDetectAruco_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnDetectAruco_.UseAccentColor = false;
             this.btnDetectAruco_.UseVisualStyleBackColor = false;
@@ -416,6 +416,8 @@ namespace loadingBox2dGui
             this.btnCapture_.UseAccentColor = false;
             this.btnCapture_.UseVisualStyleBackColor = false;
             this.btnCapture_.Click += new System.EventHandler(this.btnCapture_Click);
+            this.btnCapture_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnCapture__KeyDown);
+            this.btnCapture_.KeyUp += new System.Windows.Forms.KeyEventHandler(this.btnCapture__KeyUp);
             // 
             // gbRobotRead
             // 
@@ -3315,7 +3317,7 @@ namespace loadingBox2dGui
             this.gbMode.Name = "gbMode";
             this.gbMode.Padding = new System.Windows.Forms.Padding(14);
             this.gbMode.Size = new System.Drawing.Size(297, 62);
-            this.gbMode.TabIndex = 0;
+            this.gbMode.TabIndex = 2;
             // 
             // rbManual_
             // 
@@ -3328,11 +3330,11 @@ namespace loadingBox2dGui
             this.rbManual_.Name = "rbManual_";
             this.rbManual_.Ripple = true;
             this.rbManual_.Size = new System.Drawing.Size(91, 37);
-            this.rbManual_.TabIndex = 2;
+            this.rbManual_.TabIndex = 1;
             this.rbManual_.TabStop = true;
             this.rbManual_.Text = "Manual";
             this.rbManual_.UseVisualStyleBackColor = true;
-            this.rbManual_.Click += new System.EventHandler(this.rbManual__Click);
+            this.rbManual_.CheckedChanged += new System.EventHandler(this.rbMode_CheckedChanged);
             // 
             // rbSet_
             // 
@@ -3346,11 +3348,11 @@ namespace loadingBox2dGui
             this.rbSet_.Name = "rbSet_";
             this.rbSet_.Ripple = true;
             this.rbSet_.Size = new System.Drawing.Size(90, 37);
-            this.rbSet_.TabIndex = 1;
+            this.rbSet_.TabIndex = 2;
             this.rbSet_.TabStop = true;
             this.rbSet_.Text = "Setting";
             this.rbSet_.UseVisualStyleBackColor = true;
-            this.rbSet_.Click += new System.EventHandler(this.rbSet__Click);
+            this.rbSet_.CheckedChanged += new System.EventHandler(this.rbMode_CheckedChanged);
             // 
             // rbAuto_
             // 
@@ -3369,7 +3371,7 @@ namespace loadingBox2dGui
             this.rbAuto_.TabStop = true;
             this.rbAuto_.Text = "Auto";
             this.rbAuto_.UseVisualStyleBackColor = true;
-            this.rbAuto_.Click += new System.EventHandler(this.rbAuto__Click);
+            this.rbAuto_.CheckedChanged += new System.EventHandler(this.rbMode_CheckedChanged);
             // 
             // gbPLC
             // 

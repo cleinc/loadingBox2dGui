@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace loadingBox2dGui
 {
@@ -23,7 +24,7 @@ namespace loadingBox2dGui
         private OperationMode _programMode;
         private PlcStatusPainter _plcStatusPainter;
         private Dictionary<PlcSignalForLoadingBox, Label> _plcSignalLabelDict;
-        public MainForm()
+        public MainForm(OperationMode startMode)
         {
             InitializeComponent();
             _materialSkinManager.AddFormToManage(this);
@@ -37,7 +38,21 @@ namespace loadingBox2dGui
             LoadPlcSignalLabelDict();
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
             Console.WriteLine($"Current Culture {Thread.CurrentThread.CurrentUICulture}");
-            
+
+            switch (startMode)
+            {
+                case OperationMode.Auto:
+                    rbAuto_.Checked = true;
+                    break;
+
+                case OperationMode.Manual:
+                    rbManual_.Checked = true;
+                    break;
+
+                case OperationMode.Set:
+                    rbSet_.Checked = true;
+                    break;
+            }
         }
 
         #region Properties
@@ -50,7 +65,13 @@ namespace loadingBox2dGui
             get => cmbCarTypeName.InvokeIfNeeded(() => (int)cmbCarTypeName.SelectedValue);
             set => cmbCarTypeName.InvokeIfNeeded(() => cmbCarTypeName.SelectedValue = value);
         }
-
+        public bool IsModeChanging
+        {
+            set
+            {
+                gbMode.InvokeIfNeeded(() => gbMode.Enabled = !value);
+            }
+        }
         public Image LhImage
         {
             set => pbLh.BeginInvokeIfNeeded(() => pbLh.Image = value);
@@ -270,22 +291,50 @@ namespace loadingBox2dGui
 
         public void SetUiToMode(OperationMode mode)
         {
-            btnCameraConnect_.Enabled = mode != OperationMode.Auto;
-            btnScanPoint_.Enabled = mode != OperationMode.Auto;
-            btnLightOff_.Enabled = mode != OperationMode.Auto;
-            cmbCarTypeName.Enabled = mode != OperationMode.Auto;
+            this.InvokeIfNeeded(() =>
+            {
+                btnCameraConnect_.Enabled = mode != OperationMode.Auto;
+                btnScanPoint_.Enabled = mode != OperationMode.Auto;
+                btnLightOff_.Enabled = mode != OperationMode.Auto;
+                cmbCarTypeName.Enabled = mode != OperationMode.Auto;
 
-            rbAuto_.Checked = mode == OperationMode.Auto;
-            rbManual_.Checked = mode == OperationMode.Manual;
-            rbSet_.Checked = mode == OperationMode.Set;
+                btnDetectAruco_.Enabled = mode != OperationMode.Auto;
+                btnCapture_.Enabled = mode != OperationMode.Auto;
+                btnCameraConnect_.Enabled = mode != OperationMode.Auto;
+                btnScanPoint_.Enabled = mode != OperationMode.Auto;
 
-            btnDetectAruco_.Enabled = mode != OperationMode.Auto;
-            btnCapture_.Enabled = mode != OperationMode.Auto;
-            btnCameraConnect_.Enabled = mode != OperationMode.Auto;
-            btnScanPoint_.Enabled = mode != OperationMode.Auto;
+                gbRobotRead.Enabled = mode != OperationMode.Auto;
+                gbRobotWrite.Enabled = mode != OperationMode.Auto;
+            });
+        }
 
-            gbRobotRead.Enabled = mode != OperationMode.Auto;
-            gbRobotWrite.Enabled = mode != OperationMode.Auto;
+        public void ResetToAutoMode()
+        {
+            rbAuto_.InvokeIfNeeded(() => rbAuto_.Checked = true );
+        }
+
+        public bool ValidatePassword()
+        {
+            return this.InvokeIfNeeded(() =>
+            {
+                using (var f = new PasswordForm_(CultureInfo.CurrentUICulture))
+                {
+                    var res = f.ShowDialog();
+                    if (res == DialogResult.OK)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        if (res == DialogResult.No)
+                        {
+                            MessageBox.Show("Wrong Password. Accesss Denied",
+                                            "Warning");
+                        }
+                        return false;
+                    }
+                }
+            });
         }
 
         public void SetInspectionImage(InspectionLocation location, Image image)
@@ -356,10 +405,10 @@ namespace loadingBox2dGui
         #endregion
 
         #region EventHandlers
-        public event EventHandler<ChangeModeEventArgs> ChangeModeRequested;
+        public event EventHandler<ModeChangedEventArgs> ChangeModeRequested;
         public event EventHandler MainFormLoadRequested;
         public event EventHandler ConnectCameraRequested;
-        public event EventHandler ShowSettingManagerRequested;
+        public event EventHandler<StartWithModifierEventArgs> ShowSettingManagerRequested;
         public event EventHandler CalculateRequested;
         public event EventHandler UpdateRequested;
         public event EventHandler GetReferenceDataPathRequested;
@@ -375,6 +424,7 @@ namespace loadingBox2dGui
         public event EventHandler<double[]> WriteShiftPoseRequested;
         public event EventHandler CheckWrittenShiftPoseRequested;
         public event EventHandler ScanPointUsingArucoRequested;
+        #endregion
 
         private void btnCameraConnect__Click(object sender, EventArgs e)
         {
@@ -383,7 +433,7 @@ namespace loadingBox2dGui
 
         private void btnSettingManager__Click(object sender, System.EventArgs e)
         {
-           ShowSettingManagerRequested?.Invoke(sender, EventArgs.Empty);
+           ShowSettingManagerRequested?.Invoke(sender, new StartWithModifierEventArgs(ModifierKeys == Keys.Shift));
         }
 
         private void btnNgListClear__Click(object sender, System.EventArgs e)
@@ -435,32 +485,11 @@ namespace loadingBox2dGui
         {
 
         }
-/*
-        public Tk1MelsecCommunicator(Dictionary<PlcAttribute, string> config) : base(1)
-        {
-            try
-            {
-                _logicalStationNumber = int.Parse(config[PlcAttribute.LOGICAL_STATION]);
-                _heartbeatDeviceName = config[PlcAttribute.HeartbeatDeviceName];
-                _heartbeatDeviceType = config[PlcAttribute.HeartbeatDeviceType].ToEnum<PlcDataType>();
-                _heartbeatDbInfo = new PlcDbInfo(int.Parse(config[PlcAttribute.HeartbeatPos]),
-                                                 int.Parse(config[PlcAttribute.HeartbeatBit]));
-
-                _melsecPlc.PlcError += (s, e) => Disconnect();
-                LoadPlcSignalDictForSealer();
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Models.Lang.MSGPlc.ConstructingPlcCommunicatorFailedDueToError : {ex.Message}");
-            }
-        }
-*/
 
         private void btnGlassPoint__Click(object sender, System.EventArgs e)
         {
             ScanPointRequsted?.Invoke(sender, EventArgs.Empty);
         }
-        #endregion
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -485,22 +514,20 @@ namespace loadingBox2dGui
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            if (rbAuto_.Checked)
+            {
+                OnModeChanged(OperationMode.Auto, true);
+            }
+            else if (rbManual_.Checked)
+            {
+                OnModeChanged(OperationMode.Manual, true);
+            }
+            else if (rbSet_.Checked)
+            {
+                OnModeChanged(OperationMode.Set, true);
+            }
+
             MainFormLoadRequested?.Invoke(sender, EventArgs.Empty);
-        }
-
-        private void rbSet__Click(object sender, EventArgs e)
-        {
-            ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Set, true));
-        }
-
-        private void rbManual__Click(object sender, EventArgs e)
-        {
-            ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Manual, true));
-        }
-
-        private void rbAuto__Click(object sender, EventArgs e)
-        {
-            ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Auto, true));
         }
 
         private void cmbCarTypeName_SelectedIndexChanged(object sender, EventArgs e)
@@ -532,7 +559,7 @@ namespace loadingBox2dGui
         private void btnWriteShiftPose_Click(object sender, EventArgs e)
         {
             var tXYZ = tbShiftTxyz.Text.Split(',');
-            var rXYZ = tbShiftTxyz.Text.Split(',');
+            var rXYZ = tbShiftRxyz.Text.Split(',');
             if (tXYZ.Length != rXYZ.Length || tXYZ.Length != 3 || rXYZ.Length != 3) return;
             List<double>doubles = new List<double>();
             try
@@ -562,6 +589,51 @@ namespace loadingBox2dGui
         private void btnDetectAruco__Click(object sender, EventArgs e)
         {
             ScanPointUsingArucoRequested?.Invoke(sender, EventArgs.Empty);
+        }
+
+        private void rbMode_CheckedChanged(object sender, EventArgs e)
+        {
+            var rb = sender as RadioButton;
+            Console.WriteLine($"Radio Button Event: {rb.Name}, {rb.Checked}");
+            if (rb.Checked)
+            {
+                if (rb == rbSet_)
+                {
+                    Console.WriteLine($"Set is Set");
+                    OnModeChanged(OperationMode.Set, ModifierKeys == Keys.Shift);
+                }
+                else if (rb == rbAuto_)
+                {
+                    Console.WriteLine($"Auto is Set");
+                    OnModeChanged(OperationMode.Auto, true);
+                }
+                else if (rb == rbManual_)
+                {
+                    Console.WriteLine($"Manual is set");
+                    OnModeChanged(OperationMode.Manual, ModifierKeys == Keys.Shift);
+                }
+            }
+        }
+
+        private void OnModeChanged(OperationMode mode, bool hasFreePassTicket)
+        {
+            ChangeModeRequested?.Invoke(this, new ModeChangedEventArgs(mode, hasFreePassTicket));
+        }
+
+        private void btnCapture__KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Shift)
+            {
+                btnCapture_.Text = "Save Master";
+            }
+        }
+
+        private void btnCapture__KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Shift)
+            {
+                btnCapture_.Text = "Capture";
+            }
         }
     }
 }

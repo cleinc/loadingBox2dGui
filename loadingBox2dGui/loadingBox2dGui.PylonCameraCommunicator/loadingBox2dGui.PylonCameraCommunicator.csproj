@@ -52,13 +52,15 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PylonCameraCommunicator.cs" />
-    <Compile Include="PylonContinousCameraCommunicator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\loadingBox2dGui.models\loadingBox2dGui.models.csproj">
       <Project>{13155dd2-5088-4331-b838-f330947bd506}</Project>
       <Name>loadingBox2dGui.models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

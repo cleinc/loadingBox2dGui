@@ -12,7 +12,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using loadingBox2dGui.models;
 using System.Linq;
@@ -244,7 +244,6 @@ namespace loadingBox2dGui
             });
             _factorySettingTimer = null;
         }
-
         public void SetUiForSetMode()
         {
             this.InvokeIfNeeded(() => 
@@ -310,82 +309,44 @@ namespace loadingBox2dGui
             return this.InvokeIfNeeded(() => MessageBox.Show(message, title, buttons, icon));
         }
 
-        private async void Logging__Enter(object sender, EventArgs e)
+        public void UpdateLogManagerScheduleToUi(int logPeriod, int imgPeriod, int csvPeriod, DateTime startDateTime)
         {
-            //throw new NotImplementedException();
-            //try
-            //{
-            //    ScheduleValues = await TaskSchedulerManager.CheckAlreadyRegisteredAsync();
-            //    SetScheduleValues();
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
-        }
-
-        private void SetScheduleValues()
-        {
-            Invoke(new MethodInvoker(() =>
+            this.BeginInvokeIfNeeded(() =>
             {
-                if (!string.IsNullOrEmpty(ScheduleValues))
-                {
-                    btnDeleteSchedule_.Enabled = true;
-                    string[] values = new Regex(@"[ ](?=(?:[^""]*""[^""]*"")*[^""]*$)").Split(ScheduleValues);
-                    numericLogPeriodCount.Text = values[3];
-                    numericImgPeriodCount.Text = values[5];
-                    numericCsvPeriodCount.Text = values[7];
-                    dtpScheduleStartTime.Value = DateTime.ParseExact(values[8], "HH:mm", Thread.CurrentThread.CurrentCulture);
-                }
-                else
-                {
-                    btnDeleteSchedule_.Enabled = false;
-                    numericLogPeriodCount.Text = "0";
-                    numericImgPeriodCount.Text = "0";
-                    numericCsvPeriodCount.Text = "0";
-                    dtpScheduleStartTime.Value = DateTime.Today;
-                }
-            }));
+                numericLogPeriodCount.Value = logPeriod;
+                numericImgPeriodCount.Value = imgPeriod;
+                numericCsvPeriodCount.Value = csvPeriod;
+                dtpScheduleStartTime.Value = startDateTime;
+            });
         }
 
         private async void btnRegisterSchedule__Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-            //try
-            //{
-            //    btnDeleteSchedule_.Enabled = false;
-            //    btnRegisterSchedule_.Enabled = false;
+            try
+            {
+                btnDeleteSchedule_.Enabled = false;
+                btnRegisterSchedule_.Enabled = false;
 
-            //    string editedLogPath = tbLogPath.Text.Contains(" ") ? $"\"{tbLogPath.Text}\"" : tbLogPath.Text;
-            //    ScheduleValues = $"no_zip {Path.GetFullPath(editedLogPath)} " +
-            //        $"0 {numericLogPeriodCount.Value} " +
-            //        $"0 {numericImgPeriodCount.Value} " +
-            //        $"0 {numericCsvPeriodCount.Value} " +
-            //        $"{dtpScheduleStartTime.Value:HH:mm}";
-            //    await TaskSchedulerManager.AddDailyTaskScheduleAsync("no_zip", Path.GetFullPath(Path.Combine(Application.StartupPath, "LogManager.exe")), Path.GetFullPath(editedLogPath),
-            //        0, Convert.ToInt32(numericLogPeriodCount.Value),
-            //        0, Convert.ToInt32(numericImgPeriodCount.Value),
-            //        0, Convert.ToInt32(numericCsvPeriodCount.Value),
-            //        dtpScheduleStartTime.Value);
-            //}
-            //catch (Exception ex)
-            //{
-            //   Logger.Debug(ex.ToString());
-            //}
-            //finally
-            //{
-            //    btnDeleteSchedule_.Enabled = true;
-            //    btnRegisterSchedule_.Enabled = true;
-            //}
+                await OnLogManagerArgsRegisterAskedAsync();
+            }
+            catch (Exception ex)
+            {
+                Logger.Debug(ex.ToString());
+            }
+            finally
+            {
+                btnDeleteSchedule_.Enabled = true;
+                btnRegisterSchedule_.Enabled = true;
+            }
+        }
+        private Task OnLogManagerArgsRegisterAskedAsync()
+        {
+            return Task.Run(() => LogManagerArgsRegisterAsked?.Invoke(this, EventArgs.Empty));
         }
 
         private void btnDeleteSchedule__Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-            //ScheduleValues = "";
-            //TaskSchedulerManager.DeleteTaskSchedule();
-            //SetScheduleValues();
+            LogManagerArgsDeleteAsked?.Invoke(this, EventArgs.Empty);
         }
 
         public int ConfiguringCarType
@@ -477,19 +438,18 @@ namespace loadingBox2dGui
         }
         public string CameraTcpDataRootFolderPath
         {
-            get => tbCameraTcpRootFolderPath.InvokeIfNeeded(() => tbCameraTcpRootFolderPath.Text);
-            set => tbCameraTcpRootFolderPath.InvokeIfNeeded(() => tbCameraTcpRootFolderPath.Text = value);
+            get => tbCameraTcpFilePath.InvokeIfNeeded(() => tbCameraTcpFilePath.Text);
+            set => tbCameraTcpFilePath.InvokeIfNeeded(() => tbCameraTcpFilePath.Text = value);
         }
-        public long CameraMaxScanTime { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool CanLogManagerScheduleBeDeleted { set => throw new NotImplementedException(); }
+        public bool CanLogManagerScheduleBeDeleted { set => btnDeleteSchedule_.InvokeIfNeeded(() => btnDeleteSchedule_.Enabled = value); }
 
-        public DateTime LogManagerScheduleStartTime => throw new NotImplementedException();
+        public DateTime LogManagerScheduleStartTime => dtpScheduleStartTime.InvokeIfNeeded(() => dtpScheduleStartTime.Value);
 
-        public int LogPeriodCount => throw new NotImplementedException();
+        public int LogPeriodCount => numericLogPeriodCount.InvokeIfNeeded(() => Convert.ToInt32(numericLogPeriodCount.Value));
 
-        public int ImgPeriodCount => throw new NotImplementedException();
+        public int ImgPeriodCount => numericImgPeriodCount.InvokeIfNeeded(() => Convert.ToInt32(numericImgPeriodCount.Value));
 
-        public int CsvPeriodCount => throw new NotImplementedException();
+        public int CsvPeriodCount => numericCsvPeriodCount.InvokeIfNeeded(() => Convert.ToInt32(numericCsvPeriodCount.Value));
 
         public void ResetInvalidValue(PropertyDescriptor propertyDescriptor, object component, object value, string msg)
         {
@@ -815,7 +775,6 @@ namespace loadingBox2dGui
         private void SettingManagerTabControl_Enter(object sender, EventArgs e)
         {
             _beforeSettingManagerTabIndex = 0;
-
         }
 
         private void dgvSectionSetting_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -853,7 +812,7 @@ namespace loadingBox2dGui
 
         private void btnRoiPath_Click(object sender, EventArgs e)
         {
-            SearchRoiPathRequested?.Invoke(this, EventArgs.Empty);
+
         }
 
         public void SetCarTypeList(BindingList<CarTypeAndName> carTypeList, int selectedCarType = -1)
@@ -881,11 +840,6 @@ namespace loadingBox2dGui
             {
                 return MessageBox.Show(msg, title, MessageBoxButtons.OKCancel) == DialogResult.OK;
             });
-        }
-
-        public void UpdateLogManagerScheduleToUi(int logPeriod, int imgPeriod, int csvPeriod, DateTime startDateTime)
-        {
-            // TODO: Implement LogManagerScheduler, consider how to manage accumulating log files and other images
         }
 
         private void btnUpdateMasterData__Click(object sender, EventArgs e)
@@ -944,19 +898,19 @@ namespace loadingBox2dGui
             }
         }
 
-        private void btnCameraTcpRootFolderPath_Click(object sender, EventArgs e)
+        private void btnCameraTcpFilePath_Click(object sender, EventArgs e)
         {
             try
             {
-                folderBrowserDialog.SelectedPath = Path.GetFullPath(tbCameraTcpRootFolderPath.Text ?? "C:\\");
+                fileBrowserDialog.FileName = Path.GetFullPath(tbCameraTcpFilePath.Text ?? "C:\\");
             }
             catch(Exception) { }
 
-            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            if (fileBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                if (folderBrowserDialog.SelectedPath != tbCameraTcpRootFolderPath.Text)
+                if (fileBrowserDialog.FileName != tbCameraTcpFilePath.Text)
                 {
-                    ModelSettingPathChangeRequested?.Invoke(sender, new ModelSettingPathChangeEventArgs(ModelPathType.CameraTcpDataRootFolderPath, folderBrowserDialog.SelectedPath.Replace('\\', '/')));
+                    ModelSettingPathChangeRequested?.Invoke(sender, new ModelSettingPathChangeEventArgs(ModelPathType.CameraTcpDataFilePath, fileBrowserDialog.FileName.Replace('\\', '/')));
                 }
             }
         }

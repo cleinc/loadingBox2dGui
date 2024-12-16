@@ -1,6 +1,8 @@
 ﻿using CoPick.Setting;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -12,7 +14,7 @@ namespace loadingBox2dGui.models
     {
         [MinMaxIntervalAdjustmentValidatorInt(0, 360, 1)]
         public int Gain { get; set; } = 1; 
-        [MinMaxIntervalAdjustmentValidatorFloat(24f, 130000, 1)]
+        [MinMaxIntervalAdjustmentValidatorFloat(24f, 10000000, 1)]
         public float ExposureTimeMicroSeconds { get; set; } = 25000f; 
         [MinMaxIntervalAdjustmentValidatorInt(0, 16, 2)]
         public int RoiX { get; set; }
@@ -23,6 +25,7 @@ namespace loadingBox2dGui.models
         [MinMaxIntervalAdjustmentValidatorInt(2, 2052, 2)]
         public int RoiHeight { get; set; }
         public string IpAddress { get; set; }
+        public Rectangle RoiRect => new Rectangle(RoiX, RoiY, RoiWidth, RoiHeight);
 
         public CameraParameter(Dictionary<Camera2DAttribute, string> camParameterDict)
         {

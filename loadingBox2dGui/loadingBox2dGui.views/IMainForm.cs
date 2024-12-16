@@ -17,6 +17,7 @@ namespace loadingBox2dGui.views
         #region Properties
         string PlcInfo { set; }
         int CarType { get; set; }
+        bool IsModeChanging { set; }
         string BodyNum { get; set; }
         string CarSeq { get; set; }
         Image LhImage { set; }
@@ -29,9 +30,9 @@ namespace loadingBox2dGui.views
         #endregion
 
         #region Event Handlers
-        event EventHandler<ChangeModeEventArgs> ChangeModeRequested;
+        event EventHandler<ModeChangedEventArgs> ChangeModeRequested;
         event EventHandler ConnectCameraRequested;
-        event EventHandler ShowSettingManagerRequested;
+        event EventHandler<StartWithModifierEventArgs> ShowSettingManagerRequested;
         event EventHandler CalculateRequested;
         event EventHandler UpdateRequested;
         event EventHandler GetReferenceDataPathRequested;
@@ -58,6 +59,8 @@ namespace loadingBox2dGui.views
         void UpdatePlcSignalLabel(PlcSignalForLoadingBox signal, string value);
         void TogglePlcSignalLabel(PlcSignalForLoadingBox signal, bool isOn);
         void SetUiToMode(OperationMode mode);
+        void ResetToAutoMode();
+        bool ValidatePassword();
         void SetCarTypeList(BindingList<CarTypeAndName> carTypeList, int selectedCarType = -1);
         void SetInspectionImage(InspectionLocation location, Image image);
         void SetReadScanPose(double[] poses); 
@@ -68,18 +71,16 @@ namespace loadingBox2dGui.views
 }
 
 #region EventArgs
-public class ChangeModeEventArgs
+public class ModeChangedEventArgs : StartWithModifierEventArgs
 {
     public OperationMode Mode { get; private set; }
-    public bool HasFreePassTicket { get; set; }
-    public ChangeModeEventArgs(OperationMode programMode, bool hasFreePassTicket = false)
+    public ModeChangedEventArgs(OperationMode programMode, bool hasFreePassTicket): base (hasFreePassTicket)
     {
         Mode = programMode;
-        HasFreePassTicket = hasFreePassTicket;
     }
 }
 
-public class ChangeLightStateEventArgs
+public class ChangeLightStateEventArgs : EventArgs
 {
     public bool State { get; set; }
     public ChangeLightStateEventArgs(bool state)

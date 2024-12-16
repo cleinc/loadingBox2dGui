@@ -123,7 +123,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
                     Camera camera = new Camera(camDevice);
                     camera.ConnectionLost += (sender, e) => OnConnectionLostAsync(camera, location, ipAddress);
-                    bool ret = OpenCamera(camera, location, ipAddress, 2500);
+                    bool ret = OpenCamera(camera, location, ipAddress, 5000);
                     if (ret)
                     {
                         Logger.Info($"Camera on {location}, IP : {ipAddress} Added");
@@ -165,7 +165,14 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             #region Read Current Camera Parameters
             Console.WriteLine("Camera Parameter Limits:");
             Console.WriteLine("========================");
-
+            if (camera.Parameters[PLStream.EnableResend].IsWritable)
+            {
+                camera.Parameters[PLStream.EnableResend].SetValue(true);
+            }
+            else
+            {
+                Console.WriteLine($"Enable Resend is not writable");
+            }
             // Retrieve min, max, and increment for ROI X
             Console.WriteLine("ROI X:");
             Console.WriteLine("  Value       : {0}", camera.Parameters[PLCamera.OffsetX].GetValue());
@@ -207,20 +214,6 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             {
                 Console.WriteLine("  Gain parameter is not available.");
             }
-
-            // Retrieve min, max, and increment for Exposure
-            Console.WriteLine("Exposure:");
-            if (camera.Parameters[PLCamera.ExposureTimeAbs].IsReadable)
-            {
-                Console.WriteLine("  Value       : {0}", camera.Parameters[PLCamera.ExposureTimeAbs].GetValue());
-                Console.WriteLine("  Min       : {0}", camera.Parameters[PLCamera.ExposureTimeAbs].GetMinimum());
-                Console.WriteLine("  Max       : {0}", camera.Parameters[PLCamera.ExposureTimeAbs].GetMaximum());
-                Console.WriteLine("  Increment : {0}", camera.Parameters[PLCamera.ExposureTimeAbs].GetIncrement());
-            }
-            else
-            {
-                Console.WriteLine("  Exposure parameter is not available.");
-            }
             #endregion
             return true;
         }
@@ -238,7 +231,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             return true;
         }
 
-        public ImageStruct[] GetImageStructArray(int carType)
+        public override ImageStruct[] GetImageStructArray(int carType)
         {
             List<ImageStruct> imgStructsList = new List<ImageStruct>();
             foreach (var kvp in _locToCamera)
@@ -377,7 +370,48 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             {
                 Logger.Info("Gain parameter is not writable.");
             }
+            if (camera.Parameters[PLCamera.ExposureAuto].IsWritable)
+            {
+                camera.Parameters[PLCamera.ExposureAuto].SetValue(PLCamera.ExposureAuto.Off);
+            }
+            else
+            {
+                Console.WriteLine("Exposure parameter is not writable.");
+            }
 
+            if (camera.Parameters[PLCamera.ExposureTimeAbs].IsWritable)
+            {
+                camera.Parameters[PLCamera.ExposureTimeAbs].SetValue(camParameter.ExposureTimeMicroSeconds);
+                Logger.Info($"Setting Initial exposure value: {camParameter.ExposureTimeMicroSeconds}");
+            }
+            else
+            {
+                Logger.Info($"ExposureTime not writable");
+            }
+
+            if (camera.Parameters[PLCamera.ExposureAuto].IsWritable)
+            {
+                camera.Parameters[PLCamera.ExposureAuto].SetValue(PLCamera.ExposureAuto.Continuous);
+                Console.WriteLine($"Exposure set to: {camera.Parameters[PLCamera.ExposureTimeAbs].GetValue()}");
+                camera.Parameters[PLCamera.AutoExposureTimeAbsLowerLimit].SetValue(50000);
+                camera.Parameters[PLCamera.AutoExposureTimeAbsUpperLimit].SetValue(250000);
+                Console.WriteLine($"Exposure Auto Lower Limit: {camera.Parameters[PLCamera.AutoExposureTimeAbsLowerLimit].GetValue()}");
+                Console.WriteLine($"Exposure Auto Upper Limit: {camera.Parameters[PLCamera.AutoExposureTimeAbsUpperLimit].GetValue()}");
+            }
+            else
+            {
+                Console.WriteLine("Exposure parameter is not writable.");
+            }
+
+            if (camera.Parameters[PLCamera.GrayValueAdjustmentDampingAbs].IsWritable)
+            {
+                camera.Parameters[PLCamera.GrayValueAdjustmentDampingAbs].SetValue(0.78125);
+                Console.WriteLine($"GrayValueAdjustmentDamping Abs set to 0.78125");
+            }
+            else
+            {
+                Console.WriteLine($"GrayValueAdjustment Damping Abs not writable");
+            }
             // Exposure
             //if (camera.Parameters[PLCamera.ExposureTimeAbs].IsWritable)
             //{
@@ -388,24 +422,39 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             //{
             //    Logger.Info("Exposure parameter is not writable.");
             //}            
-            if (camera.Parameters[PLCamera.ExposureAuto].IsWritable)
-            {
-                camera.Parameters[PLCamera.ExposureAuto].SetValue(PLCamera.ExposureAuto.Once);
-                Logger.Info($"Exposure set to: {camera.Parameters[PLCamera.ExposureTimeAbs].GetValue()}");
-            }
-            else
-            {
-                Logger.Info("Exposure parameter is not writable.");
-            }
+            //if (camera.Parameters[PLCamera.ExposureAuto].IsWritable)
+            //{
+            //    camera.Parameters[PLCamera.ExposureAuto].SetValue(PLCamera.ExposureAuto.Once);
+            //    Logger.Info($"Exposure set to: {camera.Parameters[PLCamera.ExposureTimeAbs].GetValue()}");
+            //}
+            //else
+            //{
+            //    Logger.Info("Exposure parameter is not writable.");
+            //}
 
             return true;
         }
 
-        public override async Task StartCamera(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict)
+        private double GetExposure(Camera camera)
+        {
+            if (camera.Parameters[PLCamera.ExposureTimeAbs].IsReadable)
+            {
+                double exposureValue = camera.Parameters[PLCamera.ExposureTimeAbs].GetValue();
+                Logger.Info($"Current Exposure Value:{exposureValue}");
+                return exposureValue;
+            }
+            else
+            {
+                Logger.Info("Exposure parameter is not Readable.");
+                return -1;
+            }
+        }
+
+        public override async Task StartCamera(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict, int shotAttempt)
         {
             if (_disposed || !_isConnected)
             {
-                Logger.Error($"Communicator Disposed {_disposed}, Communicator Connected : {_isConnected}");
+                Logger.Warning($"Communicator Disposed {_disposed}, Camera Communicator Connected : {_isConnected}");
                 return;
             }
 
@@ -414,11 +463,21 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             {
                 ApplyCameraSettings(camParamDict);
                 List<Task> tasks = new List<Task>();
-                foreach (var loc in _locToCamera.Keys)
+                Stopwatch captureWatch = Stopwatch.StartNew();
+                var capturedTime = $"{DateTime.Now:hhmmss}";
+
+                foreach (var locToCam in _locToCamera)
                 {
-                    tasks.Add(Task.Run(() => GrabImage(loc)));
+                    tasks.Add(Task.Run(() => BurstTakeImages(capturedTime, locToCam.Key, locToCam.Value)));
+                }
+                await Task.WhenAll(tasks); tasks.Clear();
+                Logger.Info($"Burst Takes took {captureWatch.Elapsed}"); captureWatch.Restart();
+                foreach (var locToCam in _locToCamera)
+                {
+                    tasks.Add(Task.Run(() => GrabImage(locToCam.Key)));
                 }
                 await Task.WhenAll(tasks);
+                Logger.Info($"Grab took {captureWatch.Elapsed}");
             }
             catch (Exception ex)
             {
@@ -436,19 +495,21 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             {
                 Logger.Info($"Starting Capturing Image on Camera {location}");
                 var camera = _locToCamera[location];
-                var burstTakeRet = BurstTakeImages(camera, 5);
-                
-                IGrabResult grabResult = camera.StreamGrabber.GrabOne(15000, TimeoutHandling.ThrowException);
-                camera.StreamGrabber.Stop();
-                if (grabResult.GrabSucceeded)
+                for (int i = 0; i < 3; i++)
                 {
-                    Bitmap bmp = ConvertGrabResultToBitmap(grabResult);
-                    Console.WriteLine($"bmp result is Null {bmp is null}");
-                    _locToBmp[location] = bmp;
-                }
-                else
-                {
-                    Logger.Error($"Error indication {grabResult.ErrorCode}, {grabResult.ErrorDescription}");
+                    IGrabResult grabResult = camera.StreamGrabber.GrabOne(15000, TimeoutHandling.ThrowException);
+                    camera.StreamGrabber.Stop();
+                    if (grabResult.GrabSucceeded)
+                    {
+                        Bitmap bmp = ConvertGrabResultToBitmap(grabResult);
+                        Console.WriteLine($"bmp result is Null {bmp is null}");
+                        _locToBmp[location] = bmp;
+                        break;
+                    }
+                    else
+                    {
+                        Logger.Error($"Grab on Location: {location} Trial: {i}, Error indication {grabResult.ErrorCode}, {grabResult.ErrorDescription}");
+                    }
                 }
             }
             catch (Exception ex)
@@ -457,22 +518,31 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             }
         }
 
-        public bool BurstTakeImages(Camera camera, int takes = 5)
+        public bool BurstTakeImages(string capturedTime, InspectionLocation location, Camera camera, int takes = 8)
         {
             if (camera == null)
             {
                 return false;
             }
-
-            for (int i = 0; i < takes; i++) // Adjust the loop count as needed
+            int capturedOnMinMaxCount = 0;
+            for (int i = 1; i <= takes; i++)
             {
-                camera.StreamGrabber.Start(1);
+                double exposureValue = GetExposure(camera);
+                if (exposureValue >= 250000 || exposureValue <= 50000)
+                {
+                    capturedOnMinMaxCount++;
+                }
+
+                if (capturedOnMinMaxCount > 1)
+                    break;
+
                 try
                 {
-                    IGrabResult grabResult = camera.StreamGrabber.RetrieveResult(15000, TimeoutHandling.ThrowException);
+                    IGrabResult grabResult = camera.StreamGrabber.GrabOne(15000, TimeoutHandling.ThrowException);
                     if (grabResult.GrabSucceeded)
                     {
-                        Console.WriteLine($"Exposure adjusted: take {i + 1}, ExposureTimeAbs: {camera.Parameters[PLCamera.ExposureTimeAbs].GetValue()}");
+                        var convertedBmp = ConvertGrabResultToBitmap(grabResult);
+                        SaveExposureImages(location, capturedTime, convertedBmp, i, exposureValue);
                         grabResult.Dispose();
                     }
                     else
@@ -542,6 +612,18 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             return true;
         }
 
+        private bool SaveExposureImages(InspectionLocation location, string capturedTime, Bitmap bmp, int attempt, double exposure)
+        {
+            string filePath = $"D:/log/Captures/{DateTime.Now:yyMMdd}/temp/{capturedTime}/try_{attempt}_exposure_{(int)exposure}/{location}/{location}_{(int)exposure}.png";
+            string parentDirectory = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(parentDirectory))
+            {
+                Directory.CreateDirectory(parentDirectory);
+            }
+            bmp.Save(filePath, ImageFormat.Png);
+            return true;
+        }
+
         public override bool StopCamera()
         {
             if (_disposed)
@@ -563,7 +645,6 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                 _locToBmp = null; 
                 _locToCamera = null; 
                 _ipToLoc = null;
-                return true;
             }
             catch(Exception ex)
             {
@@ -574,6 +655,9 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             {
                 _sem.Release();
             }
+            
+            Logger.Info($"Camera Stopped");
+            return true;
         }
 
         public override bool Disconnect()
@@ -615,7 +699,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             }
         }
 
-        public bool ClearBmpData()
+        public override bool ClearBmpData()
         {
             if (_bmpToBmpData.Count == 0)
             {
@@ -631,21 +715,21 @@ namespace loadingBox2dGui.PylonCameraCommunicator
         }
 
         #endregion
-        private void OnConnectionLostAsync(Camera camera, InspectionLocation inspectionLocation, string ipAddress, int trials = 15)
+        private async void OnConnectionLostAsync(Camera camera, InspectionLocation inspectionLocation, string ipAddress, int trials = 15)
         {
             Logger.Error($"Connection to Camera {inspectionLocation}, IP : {ipAddress} lost.");
-            
+            await _sem.WaitAsync();
             try
             {
-                if (camera.IsOpen)
-                {
-                    camera.Close();
-                }
                 ResetDevice(inspectionLocation);
             }
             catch (Exception ex)
             {
                 Logger.Info($"Closing attempt failed for Camera {inspectionLocation}, IP : {ipAddress}, Error: {ex}");
+            }
+            finally
+            {
+                _sem.Release();
             }
         }
 
@@ -664,12 +748,12 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             _locToCamera[location] = null;
         }
 
-        public Bitmap GetBitmapImage(InspectionLocation camLoc)
+        public override Bitmap GetBitmapImage(InspectionLocation camLoc)
         {
             return GetImage(camLoc);
         }
 
-        public (InspectionLocation, Bitmap)[] GetAllBitmaps()
+        public override (InspectionLocation, Bitmap)[] GetAllBitmaps()
         {
             return _locToBmp.Select(x => (x.Key, x.Value)).ToArray();
         }

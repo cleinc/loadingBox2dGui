@@ -43,10 +43,10 @@ namespace loadingBox2dGui.models
         }
         public string CalibrationDataRootPath { get; set; } = "undefined";
         public string ZRotationPerLocationDataFilePath { get; set; } = "undefined";
-        public string CameraTcpDataRootFolderPath { get; set; } = "undefined";
+        public string CameraTcpFilePath { get; set; } = "undefined";
         public string ArucoDataRootFolderPath { get; set; } = "C:/Data/Aruco";
         public bool OfflineMode { get; set; } = false;
-
+        public OperationMode StartMode { get; set; } = OperationMode.Auto;
         public Config()
         {
             Plc = "Tk1MelsecCommunicator";

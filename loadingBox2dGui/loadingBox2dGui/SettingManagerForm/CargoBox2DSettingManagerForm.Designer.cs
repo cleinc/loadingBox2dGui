@@ -39,8 +39,8 @@ namespace loadingBox2dGui
             this.ConfigDict_ = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.gbRootFolderPaths_ = new MaterialSkin.Controls.MaterialCard();
-            this.btnCameraTcpRootFolderPath = new MaterialSkin.Controls.MaterialButton();
-            this.tbCameraTcpRootFolderPath = new MaterialSkin.Controls.MaterialTextBox2();
+            this.btnCameraTcpFilePath = new MaterialSkin.Controls.MaterialButton();
+            this.tbCameraTcpFilePath = new MaterialSkin.Controls.MaterialTextBox2();
             this.lblCameraTcp = new MaterialSkin.Controls.MaterialLabel();
             this.btnCalibrationRootFolderPath_ = new MaterialSkin.Controls.MaterialButton();
             this.tbCalibrationRootFolderPath = new MaterialSkin.Controls.MaterialTextBox2();
@@ -246,8 +246,8 @@ namespace loadingBox2dGui
             // gbRootFolderPaths_
             // 
             this.gbRootFolderPaths_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.gbRootFolderPaths_.Controls.Add(this.btnCameraTcpRootFolderPath);
-            this.gbRootFolderPaths_.Controls.Add(this.tbCameraTcpRootFolderPath);
+            this.gbRootFolderPaths_.Controls.Add(this.btnCameraTcpFilePath);
+            this.gbRootFolderPaths_.Controls.Add(this.tbCameraTcpFilePath);
             this.gbRootFolderPaths_.Controls.Add(this.lblCameraTcp);
             this.gbRootFolderPaths_.Controls.Add(this.btnCalibrationRootFolderPath_);
             this.gbRootFolderPaths_.Controls.Add(this.tbCalibrationRootFolderPath);
@@ -269,58 +269,58 @@ namespace loadingBox2dGui
             this.gbRootFolderPaths_.Size = new System.Drawing.Size(291, 179);
             this.gbRootFolderPaths_.TabIndex = 42;
             // 
-            // btnCameraTcpRootFolderPath
+            // btnCameraTcpFilePath
             // 
-            this.btnCameraTcpRootFolderPath.AutoSize = false;
-            this.btnCameraTcpRootFolderPath.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnCameraTcpRootFolderPath.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnCameraTcpRootFolderPath.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnCameraTcpRootFolderPath.Depth = 0;
-            this.btnCameraTcpRootFolderPath.HighEmphasis = true;
-            this.btnCameraTcpRootFolderPath.Icon = null;
-            this.btnCameraTcpRootFolderPath.Location = new System.Drawing.Point(245, 142);
-            this.btnCameraTcpRootFolderPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnCameraTcpRootFolderPath.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnCameraTcpRootFolderPath.Name = "btnCameraTcpRootFolderPath";
-            this.btnCameraTcpRootFolderPath.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnCameraTcpRootFolderPath.Size = new System.Drawing.Size(32, 24);
-            this.btnCameraTcpRootFolderPath.TabIndex = 46;
-            this.btnCameraTcpRootFolderPath.Text = "...";
-            this.btnCameraTcpRootFolderPath.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnCameraTcpRootFolderPath.UseAccentColor = false;
-            this.btnCameraTcpRootFolderPath.UseVisualStyleBackColor = true;
-            this.btnCameraTcpRootFolderPath.Click += new System.EventHandler(this.btnCameraTcpRootFolderPath_Click);
+            this.btnCameraTcpFilePath.AutoSize = false;
+            this.btnCameraTcpFilePath.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnCameraTcpFilePath.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnCameraTcpFilePath.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnCameraTcpFilePath.Depth = 0;
+            this.btnCameraTcpFilePath.HighEmphasis = true;
+            this.btnCameraTcpFilePath.Icon = null;
+            this.btnCameraTcpFilePath.Location = new System.Drawing.Point(245, 142);
+            this.btnCameraTcpFilePath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnCameraTcpFilePath.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnCameraTcpFilePath.Name = "btnCameraTcpFilePath";
+            this.btnCameraTcpFilePath.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnCameraTcpFilePath.Size = new System.Drawing.Size(32, 24);
+            this.btnCameraTcpFilePath.TabIndex = 46;
+            this.btnCameraTcpFilePath.Text = "...";
+            this.btnCameraTcpFilePath.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnCameraTcpFilePath.UseAccentColor = false;
+            this.btnCameraTcpFilePath.UseVisualStyleBackColor = true;
+            this.btnCameraTcpFilePath.Click += new System.EventHandler(this.btnCameraTcpFilePath_Click);
             // 
-            // tbCameraTcpRootFolderPath
+            // tbCameraTcpFilePath
             // 
-            this.tbCameraTcpRootFolderPath.AnimateReadOnly = false;
-            this.tbCameraTcpRootFolderPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbCameraTcpRootFolderPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbCameraTcpRootFolderPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbCameraTcpRootFolderPath.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbCameraTcpRootFolderPath.Depth = 0;
-            this.tbCameraTcpRootFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbCameraTcpRootFolderPath.HideSelection = true;
-            this.tbCameraTcpRootFolderPath.LeadingIcon = null;
-            this.tbCameraTcpRootFolderPath.Location = new System.Drawing.Point(114, 141);
-            this.tbCameraTcpRootFolderPath.MaxLength = 32767;
-            this.tbCameraTcpRootFolderPath.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbCameraTcpRootFolderPath.Name = "tbCameraTcpRootFolderPath";
-            this.tbCameraTcpRootFolderPath.PasswordChar = '\0';
-            this.tbCameraTcpRootFolderPath.PrefixSuffixText = null;
-            this.tbCameraTcpRootFolderPath.ReadOnly = false;
-            this.tbCameraTcpRootFolderPath.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbCameraTcpRootFolderPath.SelectedText = "";
-            this.tbCameraTcpRootFolderPath.SelectionLength = 0;
-            this.tbCameraTcpRootFolderPath.SelectionStart = 0;
-            this.tbCameraTcpRootFolderPath.ShortcutsEnabled = true;
-            this.tbCameraTcpRootFolderPath.Size = new System.Drawing.Size(125, 26);
-            this.tbCameraTcpRootFolderPath.TabIndex = 45;
-            this.tbCameraTcpRootFolderPath.TabStop = false;
-            this.tbCameraTcpRootFolderPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbCameraTcpRootFolderPath.TrailingIcon = null;
-            this.tbCameraTcpRootFolderPath.UseSystemPasswordChar = false;
-            this.tbCameraTcpRootFolderPath.UseTallSize = false;
+            this.tbCameraTcpFilePath.AnimateReadOnly = false;
+            this.tbCameraTcpFilePath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbCameraTcpFilePath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbCameraTcpFilePath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbCameraTcpFilePath.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbCameraTcpFilePath.Depth = 0;
+            this.tbCameraTcpFilePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbCameraTcpFilePath.HideSelection = true;
+            this.tbCameraTcpFilePath.LeadingIcon = null;
+            this.tbCameraTcpFilePath.Location = new System.Drawing.Point(114, 141);
+            this.tbCameraTcpFilePath.MaxLength = 32767;
+            this.tbCameraTcpFilePath.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbCameraTcpFilePath.Name = "tbCameraTcpFilePath";
+            this.tbCameraTcpFilePath.PasswordChar = '\0';
+            this.tbCameraTcpFilePath.PrefixSuffixText = null;
+            this.tbCameraTcpFilePath.ReadOnly = false;
+            this.tbCameraTcpFilePath.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbCameraTcpFilePath.SelectedText = "";
+            this.tbCameraTcpFilePath.SelectionLength = 0;
+            this.tbCameraTcpFilePath.SelectionStart = 0;
+            this.tbCameraTcpFilePath.ShortcutsEnabled = true;
+            this.tbCameraTcpFilePath.Size = new System.Drawing.Size(125, 26);
+            this.tbCameraTcpFilePath.TabIndex = 45;
+            this.tbCameraTcpFilePath.TabStop = false;
+            this.tbCameraTcpFilePath.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbCameraTcpFilePath.TrailingIcon = null;
+            this.tbCameraTcpFilePath.UseSystemPasswordChar = false;
+            this.tbCameraTcpFilePath.UseTallSize = false;
             // 
             // lblCameraTcp
             // 
@@ -1067,7 +1067,6 @@ namespace loadingBox2dGui
             this.Logging_.Size = new System.Drawing.Size(1399, 643);
             this.Logging_.TabIndex = 5;
             this.Logging_.Text = "LOGGING";
-            this.Logging_.Enter += new System.EventHandler(this.Logging__Enter);
             // 
             // materialCard6
             // 
@@ -1092,7 +1091,6 @@ namespace loadingBox2dGui
             this.materialCard6.Padding = new System.Windows.Forms.Padding(14);
             this.materialCard6.Size = new System.Drawing.Size(1371, 198);
             this.materialCard6.TabIndex = 15;
-            this.materialCard6.Visible = false;
             // 
             // btnDeleteSchedule_
             // 
@@ -1442,7 +1440,6 @@ namespace loadingBox2dGui
             this.materialCard3.Padding = new System.Windows.Forms.Padding(14);
             this.materialCard3.Size = new System.Drawing.Size(1371, 147);
             this.materialCard3.TabIndex = 14;
-            this.materialCard3.Visible = false;
             // 
             // cmbUiLogLev
             // 
@@ -1809,8 +1806,8 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialLabel lblImageRootFolderPath_;
         private MaterialSkin.Controls.MaterialButton btnMasterImageFilePath;
         private MaterialSkin.Controls.MaterialButton btnCharucoFilePath;
-        private MaterialSkin.Controls.MaterialButton btnCameraTcpRootFolderPath;
-        private MaterialSkin.Controls.MaterialTextBox2 tbCameraTcpRootFolderPath;
+        private MaterialSkin.Controls.MaterialButton btnCameraTcpFilePath;
+        private MaterialSkin.Controls.MaterialTextBox2 tbCameraTcpFilePath;
         private MaterialSkin.Controls.MaterialLabel lblCameraTcp;
         private TabPage RobotConfig_;
         private MaterialSkin.Controls.MaterialButton btnUpdateMasterData_;

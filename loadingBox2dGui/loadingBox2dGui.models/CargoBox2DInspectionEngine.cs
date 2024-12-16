@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace loadingBox2dGui.models
 {
-    public class CargoBox2DInspectionEngine: ICargoBox2DInspectionEngine
+    public class CargoBox2DInspectionEngine: ICargoBox2DInspectionEngine, IDisposable
     { 
         private static readonly LogHelper Logger = LogHelper.Logger;
         private bool disposedValue;
@@ -110,6 +110,7 @@ namespace loadingBox2dGui.models
         
         public bool PoseAdjustment2D(ImageStruct[] images, int imageCount)
         {
+            throw new InvalidOperationException();
             Logger.Debug("[GUI] Called PoseAdjustment2D API");
             return CargoBox2DInspectionEngineApi.poseAdjustment2D(_engineHandler, images, imageCount);
         }
@@ -123,7 +124,7 @@ namespace loadingBox2dGui.models
         public bool PoseAdjustmentCargoBox2D(ImageStruct[] images, int imageCount)
         {
             Logger.Debug("[GUI] Called PoseAdjustmentCargoBox2D API");
-            return CargoBox2DInspectionEngineApi.poseAdjustment2D(_engineHandler, images, imageCount);
+            return CargoBox2DInspectionEngineApi.poseAdjustment2DCargo(_engineHandler, images, imageCount);
         }
 
         public class CargoBox2DInspectionEngineApi
@@ -208,6 +209,23 @@ namespace loadingBox2dGui.models
                 ref TCP installPose,
                 ref TCP leftCamTCP,
                 ref TCP rightCamTCP
+            );
+
+            [DllImport(_dllName)]
+            [return: MarshalAs(UnmanagedType.I1)]
+            public static extern bool checkModelPath(
+                IntPtr enginePointer, 
+                bool showImg, 
+                [MarshalAs(UnmanagedType.LPStr)] string modelPath, 
+                [MarshalAs(UnmanagedType.LPStr)] string imgPath = null
+            );
+
+            [DllImport(_dllName)]
+            [return: MarshalAs(UnmanagedType.I1)]
+            public static extern bool setCameraExposure(
+                IntPtr enginePointer, 
+                ref ExposureImage exposureImage, 
+                int imageCount
             );
         }
 
