@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace loadingBox2dGui.presenters
 {
@@ -86,6 +87,17 @@ namespace loadingBox2dGui.presenters
             _plcSettingManagerPresenter.AvailablePlcRemoved += PlcSettingManagerPresenter_AvailablePlcRemoved;
         }
 
+        public CargoBox2DSettingManagerPresenter(ISettingManagerView view,
+                                       List<string> langList, SettingChangeTracker settingChangeTracker, ICargoBox2DInspectionEngine engine)
+        {
+            _view = view;
+            _typeOfView = view.GetType();
+            _langList = langList;
+            _engine = engine;
+            ChangeTracker = settingChangeTracker;
+        }
+
+
         public void Start(OperationMode mode)
         {
             _mode = mode;
@@ -134,10 +146,43 @@ namespace loadingBox2dGui.presenters
             _view.UpdateMasterDataRequested += View_UpdateMasterDataRequested;
             _view.ShowSettingManager(mode != OperationMode.Auto);
         }
-
-        private void View_UpdateMasterDataRequested(object sender, EventArgs e)
+        public void Start()
         {
-            UpdateMasterDataFromConfigPathRequested?.Invoke(sender, EventArgs.Empty);
+            _isOpen = true;
+            _modifiedDataPaths = false;
+            _config = ConfigFileManager.LoadFromFile<Config>(FileHelper.GetOfflineConfigFilePath());
+            _currentCarType = _config.RecentlyUsedCar;
+            ChangeTracker.Clear();
+
+            if (_view.IsControlDisposed)
+            {
+                _view = (ISettingManagerView)Activator.CreateInstance(_typeOfView);
+            }
+
+            InitUi(false);
+            UpdateUiByConfig(false);
+
+            _view.CarTypeAddRequested += View_CarTypeAddRequested;
+            _view.CarTypeRemoveRequested += View_CarTypeRemoveRequested;
+            _view.CarTypeCopyRequested += View_CarTypeCopyRequested;
+            _view.CameraChanged += View_CameraChanged;
+            _view.PlcChanged += View_PlcChanged;
+            _view.LanguageChanged += View_LanguageChanged;
+            _view.ConfiguringCarTypeChanged += View_ConfiguringCarTypeChanged;
+            _view.SettingChanged += View_SettingChanged;
+            _view.UiLogLevelChanged += View_UiLogLevelChanged;
+            _view.FileLogLevelChanged += View_FileLogLevelChanged;
+            _view.FactorySettingSaveAsked += View_FactorySettingSaveAsked;
+            _view.FactoryResetAsked += View_FactoryResetAsked;
+            _view.LogPathChanged += View_LogPathChanged;
+            _view.EndRequested += View_EndRequested;
+            _view.RobotChanged += View_RobotChanged;
+            _view.ModelSettingPathChangeRequested += View_ModelSettingPathChangeRequested;
+            _view.LogManagerArgsRegisterAsked += View_LogManagerRegisterAsked;
+            _view.LogManagerArgsDeleteAsked += View_LogManagerDeleteAsked;
+            _view.SettingTabChangeRequested += View_SettingTabChangeRequested;
+            _view.UpdateMasterDataRequested += View_UpdateMasterDataRequested;
+            _view.ShowSettingManager(true);
         }
 
         public void Stop()
@@ -168,6 +213,11 @@ namespace loadingBox2dGui.presenters
             _view.LogManagerArgsDeleteAsked -= View_LogManagerDeleteAsked;
             _view.SettingTabChangeRequested -= View_SettingTabChangeRequested;
             _view.UpdateMasterDataRequested -= View_UpdateMasterDataRequested;
+        }
+        
+        private void View_UpdateMasterDataRequested(object sender, EventArgs e)
+        {
+            UpdateMasterDataFromConfigPathRequested?.Invoke(sender, EventArgs.Empty);
         }
 
         private void View_RobotChanged(object sender, EventArgs e)
@@ -242,7 +292,7 @@ namespace loadingBox2dGui.presenters
                 }
                 catch (Exception ex)
                 {
-                    _view.ShowMessage($"Lang.MsgBoxFineLo.InvalidPath ex", "Lang.MsgBoxFineLo.WarningTitle");
+                    _view.ShowMessage($"Lang.MsgBoxFineLo.InvalidPath {ex.Message}", "Lang.MsgBoxFineLo.WarningTitle");
                     _view.LogPath = _config.LogPath;
                     return;
                 }
@@ -390,7 +440,10 @@ namespace loadingBox2dGui.presenters
 
         private void RefreshConfiguringCarTypeConfig()
         {
-            _config.RecentlyUsedCar = _view.ConfiguringCarType;
+            if (_view.ConfiguringCarType > -1)
+            {
+                _config.RecentlyUsedCar = _view.ConfiguringCarType;
+            }
 
             if (_config[-1].Camera == null || !_config.CameraConfigs.ContainsKey(_config[-1].Camera))
             {
@@ -431,6 +484,14 @@ namespace loadingBox2dGui.presenters
             else
             {
                 _view.CheckerBoardImageRootFolderPath = _config[-1].CheckerBoardRootFolderPath;
+            }
+            if (_config[-1].RobotPoseRootFolderPath == null)
+            {
+                ChangeRobotPoseRootFolderPath(_view.RobotPoseRootFolderPath);
+            }
+            else
+            {
+                _view.RobotPoseRootFolderPath = _config[-1].RobotPoseRootFolderPath;
             }
 
             _config[-1].UpdatePropertyDescriptors();
@@ -539,24 +600,27 @@ namespace loadingBox2dGui.presenters
             ChangePlc(_view.Plc);
         }
 
-        private void View_ModelSettingPathChangeRequested(object sender, ModelSettingPathChangeEventArgs e)
+        private void View_ModelSettingPathChangeRequested(object sender, RefDataPathChangeEventArgs e)
         {
-            switch (e.ModelPathType)
+            switch (e.RefDataType)
             {
-                case ModelPathType.CalibrationDataRootFolderPath:
+                case RefDataType.CalibrationDataRootFolderPath:
                     ChangeCalibrationFolderPath(e.NewPath);
                     break;
-                case ModelPathType.MasterImageRootFolderPath:
+                case RefDataType.MasterImageRootFolderPath:
                     ChangeMasterImageFolderPath(e.NewPath);
                     break;
-                case ModelPathType.CheckerBoardRootFolderPath:
+                case RefDataType.CheckerBoardRootFolderPath:
                     ChangeCheckerBoardFolderPath(e.NewPath);
                     break;
-                case ModelPathType.ShiftModelFilePath:
+                case RefDataType.ShiftModelFilePath:
                     ChangeShiftModelPath(e.NewPath);
                     break;
-                case ModelPathType.CameraTcpDataFilePath:
+                case RefDataType.CameraTcpDataFilePath:
                     ChangeCameraTcpRootFolderPath(e.NewPath);
+                    break;
+                case RefDataType.RobotPoseRootFolderPath:
+                    ChangeRobotPoseRootFolderPath(e.NewPath);
                     break;
                 default:
                     break;
@@ -586,23 +650,26 @@ namespace loadingBox2dGui.presenters
             _view.Localize();
         }
 
-        public async void InitUi()
+        public async void InitUi(bool isMainProgram = true)
         {
-            _view.IsFactoryResetPossible = File.Exists(_factorySettingsFilePath) && _mode == OperationMode.Set;
-
-            await _logManagerScheduler.LoadScheduleInfoFromSystemAsync();
-            if (_logManagerScheduler.IsUsing)
+            if (isMainProgram)
             {
-                _view.UpdateLogManagerScheduleToUi(_logManagerScheduler.LogPreservePeriod,
-                                                   _logManagerScheduler.ImgPreservePeriod,
-                                                   _logManagerScheduler.CsvPreservePeriod,
-                                                   _logManagerScheduler.StartDateTime);
-                _view.CanLogManagerScheduleBeDeleted = true;
-            }
-            else
-            {
-                _view.UpdateLogManagerScheduleToUi(0, 0, 0, DateTime.Today);
-                _view.CanLogManagerScheduleBeDeleted = false;
+                _view.IsFactoryResetPossible = File.Exists(_factorySettingsFilePath) && _mode == OperationMode.Set;
+    
+                await _logManagerScheduler.LoadScheduleInfoFromSystemAsync();
+                if (_logManagerScheduler.IsUsing)
+                {
+                    _view.UpdateLogManagerScheduleToUi(_logManagerScheduler.LogPreservePeriod,
+                                                       _logManagerScheduler.ImgPreservePeriod,
+                                                       _logManagerScheduler.CsvPreservePeriod,
+                                                       _logManagerScheduler.StartDateTime);
+                    _view.CanLogManagerScheduleBeDeleted = true;
+                }
+                else
+                {
+                    _view.UpdateLogManagerScheduleToUi(0, 0, 0, DateTime.Today);
+                    _view.CanLogManagerScheduleBeDeleted = false;
+                }
             }
 
             switch (_mode)
@@ -621,19 +688,22 @@ namespace loadingBox2dGui.presenters
             }
         }
 
-        public void UpdateUiByConfig()
+        public void UpdateUiByConfig(bool isMainProgram = true)
         {
             _view.LogPath = _config.LogPath;
             //_view.SetSupportedLanguageList(_langList, LangCodeToNameDict[_config.Language]);
             //Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(_config.Language);
             _view.SetFileLogLevelList(Enum.GetValues(typeof(LogLevel)), _config.MinimumFileLogLevel);
             _view.SetUiLogLevelList(Enum.GetValues(typeof(LogLevel)), _config.MinimumUiLogLevel);
-            _view.SetRobotList(_config.GetRobotList(), _config[-1].Robot);
-            _view.SetPlcList(_plcSettingManagerPresenter.AvailablePlcList, _config.Plc);
-            _view.SetCameraList(_config.GetCamSetList(), _config[-1].Camera);
+            if (isMainProgram)
+            {
+                _view.SetRobotList(_config.GetRobotList(), _config[-1].Robot);
+                _view.SetPlcList(_plcSettingManagerPresenter?.AvailablePlcList, _config.Plc);
+                _view.SetCameraList(_config.GetCamSetList(), _config[-1].Camera);
+            }
             _view.SetCarTypeList(_config.GetCarTypeAndNameList(), _config.RecentlyUsedCar);
-            _view.CalibrationDataRootFolderPath = _config.CalibrationDataRootPath;
-            _view.CameraTcpDataRootFolderPath = _config.CameraTcpFilePath;
+            _view.IntrinsicCalibrationDataRootFolderPath = _config.IntrinsicCalibrationDataRootPath;
+            _view.ExtrinsicCalibrationDataFilePath = _config.ExtrinsicCalibrationDataFilePath;
             RefreshConfiguringCarTypeConfig();
             _view.RefreshTaskGrid();
         }
@@ -695,32 +765,42 @@ namespace loadingBox2dGui.presenters
             if (_config.ConfigDict[_currentCarType].CheckerBoardRootFolderPath != checkerBoardFolderPath)
             {
                 _modifiedDataPaths = true;
-                ChangeTracker.NotifyChange($"Task/CheckerBoardRootFolderPath", _config.ConfigDict[_currentCarType].CheckerBoardRootFolderPath, checkerBoardFolderPath);
+                ChangeTracker.NotifyChange($"Task/{_currentCarType}/CheckerBoardRootFolderPath", _config.ConfigDict[_currentCarType].CheckerBoardRootFolderPath, checkerBoardFolderPath);
                 _config.ConfigDict[_currentCarType].CheckerBoardRootFolderPath = checkerBoardFolderPath;
                 _view.CheckerBoardImageRootFolderPath = checkerBoardFolderPath;
             }
         }
 
-        private void ChangeCalibrationFolderPath(string calibrationDataRootFolderPath)
+        private void ChangeCalibrationFolderPath(string intrinsicCalibrationDataRootFolderPath)
         {
-            if (_config.CalibrationDataRootPath != calibrationDataRootFolderPath)
+            if (_config.IntrinsicCalibrationDataRootPath != intrinsicCalibrationDataRootFolderPath)
             {
-                //Add Validation Step
                 _modifiedDataPaths = true;
-                ChangeTracker.NotifyChange($"Task/CalibrationDataRootFolderPath", _config.CalibrationDataRootPath, calibrationDataRootFolderPath);
-                _config.CalibrationDataRootPath = calibrationDataRootFolderPath;
-                _view.CalibrationDataRootFolderPath = calibrationDataRootFolderPath;
+                ChangeTracker.NotifyChange($"Task/IntrinsicCalibrationDataRootFolderPath", _config.IntrinsicCalibrationDataRootPath, intrinsicCalibrationDataRootFolderPath);
+                _config.IntrinsicCalibrationDataRootPath = intrinsicCalibrationDataRootFolderPath;
+                _view.IntrinsicCalibrationDataRootFolderPath = intrinsicCalibrationDataRootFolderPath;
             }
         }
 
-        private void ChangeCameraTcpRootFolderPath(string cameraTcpDataRootFolderPath)
+        private void ChangeCameraTcpRootFolderPath(string extrinsicCalibrationDataRootFolderPath)
         {
-            if (_config.CameraTcpFilePath != cameraTcpDataRootFolderPath)
+            if (_config.ExtrinsicCalibrationDataFilePath != extrinsicCalibrationDataRootFolderPath)
             {
                 _modifiedDataPaths = true;
-                ChangeTracker.NotifyChange($"Task/CalibrationDataRootFolderPath", _config.CameraTcpFilePath, cameraTcpDataRootFolderPath);
-                _config.CameraTcpFilePath = cameraTcpDataRootFolderPath;
-                _view.CameraTcpDataRootFolderPath = cameraTcpDataRootFolderPath;
+                ChangeTracker.NotifyChange($"Task/ExtrinsicCalibrationDataFilePath", _config.ExtrinsicCalibrationDataFilePath, extrinsicCalibrationDataRootFolderPath);
+                _config.ExtrinsicCalibrationDataFilePath = extrinsicCalibrationDataRootFolderPath;
+                _view.ExtrinsicCalibrationDataFilePath = extrinsicCalibrationDataRootFolderPath;
+            }
+        }
+
+        private void ChangeRobotPoseRootFolderPath(string robotPoseRootFolderPath)
+        {
+            if (_config.ConfigDict[_currentCarType].RobotPoseRootFolderPath != robotPoseRootFolderPath)
+            {
+                _modifiedDataPaths = true;
+                ChangeTracker.NotifyChange($"Task/{_currentCarType}/RobotPoseRootFolderPath", _config.ConfigDict[_currentCarType].RobotPoseRootFolderPath, robotPoseRootFolderPath);
+                _config.ConfigDict[_currentCarType].RobotPoseRootFolderPath = robotPoseRootFolderPath;
+                _view.RobotPoseRootFolderPath = robotPoseRootFolderPath;
             }
         }
 

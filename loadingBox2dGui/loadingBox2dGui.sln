@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loadingBox2dGui.Tk1MelsecCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loadingBox2dGui.PylonCameraCommunicator", "loadingBox2dGui.PylonCameraCommunicator\loadingBox2dGui.PylonCameraCommunicator.csproj", "{23410FBC-5069-4D6F-8500-B8F83B002369}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loadingBox2dGui.OMM", "loadingBox2dGui.OMM\loadingBox2dGui.OMM.csproj", "{B25AC828-F293-4064-9578-A1CD4985237E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{23410FBC-5069-4D6F-8500-B8F83B002369}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23410FBC-5069-4D6F-8500-B8F83B002369}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23410FBC-5069-4D6F-8500-B8F83B002369}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B25AC828-F293-4064-9578-A1CD4985237E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B25AC828-F293-4064-9578-A1CD4985237E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B25AC828-F293-4064-9578-A1CD4985237E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B25AC828-F293-4064-9578-A1CD4985237E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

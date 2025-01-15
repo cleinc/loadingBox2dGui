@@ -26,29 +26,24 @@ namespace loadingBox2dGui.views
         bool SetLightState { set; }
         bool SetStartCameraButton { set; }
         bool SetConnectCameraButton { set; }
-        bool SetCaptureCameraButton { set; }
         #endregion
 
         #region Event Handlers
         event EventHandler<ModeChangedEventArgs> ChangeModeRequested;
         event EventHandler ConnectCameraRequested;
         event EventHandler<StartWithModifierEventArgs> ShowSettingManagerRequested;
-        event EventHandler CalculateRequested;
-        event EventHandler UpdateRequested;
-        event EventHandler GetReferenceDataPathRequested;
-        event EventHandler GetHandEyeCalibrationFilePathRequested;
         event EventHandler ScanPointRequsted;
         event EventHandler<FormClosingEventArgs> ProgramCloseRequested;
         event EventHandler<ChangeLightStateEventArgs> LightStateChangeRequested;
-        event EventHandler DisconnectLhCameraRequested;
+        event EventHandler DisconnectCameraRequested;
         event EventHandler MainFormLoadRequested;
         event EventHandler CarTypeChanged;
-        event EventHandler<StartWithModifierEventArgs> CaptureRequested;
-        event EventHandler ReadInstallPoseRequested; 
-        event EventHandler ReadScanPoseRequested;
-        event EventHandler<double[]> WriteShiftPoseRequested;
+        event EventHandler<SaveMasterDataEventArgs> ReadInstallPoseRequested;
+        event EventHandler<SaveMasterDataEventArgs> ReadScanPoseRequested;
+        event EventHandler<double[]> WriteTxTyRzRequested;
         event EventHandler CheckWrittenShiftPoseRequested;
-        event EventHandler ScanPointUsingArucoRequested;
+        event EventHandler<ImagePathEventArgs> ShowScreenShotRequested;
+        event EventHandler ResetNgListRequested;
         #endregion
 
         #region Methods
@@ -65,12 +60,24 @@ namespace loadingBox2dGui.views
         void SetInspectionImage(InspectionLocation location, Image image);
         void SetReadScanPose(double[] poses); 
         void SetReadInstallPose(double[] poses); 
-        void SetReadWrittenShiftPose(double[] poses); 
+        void SetReadWrittenShiftPose(double[] poses);
+        void SetCalculatedShiftPose(double[] poses);
+        void ShowOnDataGrid(BindingSource bindingSource);
+        void Init();
         #endregion
     }
 }
 
 #region EventArgs
+public class SaveMasterDataEventArgs : EventArgs
+{
+    public bool SaveMaster { get; set; }
+    public SaveMasterDataEventArgs(bool saveMaster)
+    {
+        SaveMaster = saveMaster;
+    }
+}
+
 public class ModeChangedEventArgs : StartWithModifierEventArgs
 {
     public OperationMode Mode { get; private set; }
@@ -96,6 +103,15 @@ public class StartWithModifierEventArgs : EventArgs
     public StartWithModifierEventArgs(bool hasFreePassTicket)
     {
         HasFreePassTicket = hasFreePassTicket; 
+    }
+}
+
+public class ImagePathEventArgs : EventArgs
+{
+    public string ImagePath { get; set; }
+    public ImagePathEventArgs(string imagePath)
+    {
+        ImagePath = imagePath;
     }
 }
 #endregion

@@ -110,6 +110,14 @@ namespace loadingBox2dGui
             Cam2DConfigs_.Controls.Add((Control)camera2DSettingManageView);
             this.ApplyFont();
         }
+
+        public CargoBox2DSettingManagerForm_()
+        {
+            InitializeComponent();
+            MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this, true);
+            this.ApplyFont();
+        }
         
         #region - VerticalTab Design
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
@@ -171,8 +179,6 @@ namespace loadingBox2dGui
         public event EventHandler LogPathChanged;
         public event EventHandler FactorySettingSaveAsked;
         public event EventHandler EndRequested;
-        public event EventHandler SearchModelPathRequested;
-        public event EventHandler SearchRoiPathRequested;
         public event EventHandler SearchImageFolderPathRequested;
         public event EventHandler SelectOtherTabPageRequested;
         public event EventHandler SaveSourceImageRequested;
@@ -180,17 +186,13 @@ namespace loadingBox2dGui
         public event EventHandler SaveResultImageRequested;
         public event EventHandler ConfiguringCarTypeInSectionTabChanged;
 
-        public event EventHandler FlipCameraHorizontalRequested;
-        public event EventHandler FlipCameraVerticalRequested;
-
-        public event EventHandler PassAllSectionRequested;
         public event EventHandler ChangePasswordRequested;
         public event EventHandler SettingTabExitRequested;
         public event EventHandler SettingTabEnterRequested;
         public event EventHandler PassValueChangeRequested;
         public event EventHandler PaintSectionRequested;
         public event EventHandler DailyProdResetTimeChangeRequested;
-        public event EventHandler<ModelSettingPathChangeEventArgs> ModelSettingPathChangeRequested;
+        public event EventHandler<RefDataPathChangeEventArgs> ModelSettingPathChangeRequested;
         public event EventHandler RobotChanged;
         public event EventHandler CameraMaxScanTimeChanged;
         public event EventHandler LogManagerArgsRegisterAsked;
@@ -204,22 +206,6 @@ namespace loadingBox2dGui
             taskGrid.InvokeIfNeeded(() => taskGrid.MoveSplitter(240));
         }
 
-        private bool ValidateDoubleValue(string value)
-        {
-            return Regex.IsMatch(value, "^[+-]?\\d*(?:\\.\\d*)?$");
-        }
-
-        private bool ValidateIntValue(string value)
-        {
-            return Regex.IsMatch(value, "^[+-]?\\d*$");
-        }
-
-        private bool ValidateByteValue(string value)
-        {
-            string pattern = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
-            return Regex.IsMatch(value, pattern);
-        }
-
         public void SetUiForAutoMode()
         {
             this.InvokeIfNeeded(() => 
@@ -228,7 +214,7 @@ namespace loadingBox2dGui
                 cmbLight.Enabled = false;
                 cmbCamera.Enabled = false;
                 cmbRobot_.Enabled = false;
-                taskGrid.Enabled = false;
+                taskGrid.Enabled = true;
             });
             _factorySettingTimer = null;
         }
@@ -420,27 +406,37 @@ namespace loadingBox2dGui
             get => tbModelPath.InvokeIfNeeded(() => tbModelPath.Text);
             set => tbModelPath.InvokeIfNeeded(() => tbModelPath.Text = value);
         }
+
         public string CheckerBoardImageRootFolderPath
         {
             get => tbCheckerBoardRootPath.InvokeIfNeeded(() => tbCheckerBoardRootPath.Text);
             set => tbCheckerBoardRootPath.InvokeIfNeeded(() => tbCheckerBoardRootPath.Text = value);
         }
+
         public string MasterImageRootFolderPath
         {
             get => tbMasterImageRootPath.InvokeIfNeeded(() => tbMasterImageRootPath.Text);
             set => tbMasterImageRootPath.InvokeIfNeeded(() => tbMasterImageRootPath.Text = value);
         }
 
-        public string CalibrationDataRootFolderPath
+        public string IntrinsicCalibrationDataRootFolderPath
         {
             get => tbCalibrationRootFolderPath.InvokeIfNeeded(() => tbCalibrationRootFolderPath.Text);
             set => tbCalibrationRootFolderPath.InvokeIfNeeded(() => tbCalibrationRootFolderPath.Text = value);
         }
-        public string CameraTcpDataRootFolderPath
+
+        public string ExtrinsicCalibrationDataFilePath
         {
             get => tbCameraTcpFilePath.InvokeIfNeeded(() => tbCameraTcpFilePath.Text);
             set => tbCameraTcpFilePath.InvokeIfNeeded(() => tbCameraTcpFilePath.Text = value);
         }
+
+        public string RobotPoseRootFolderPath
+        {
+            get => tbRobotPoseRootFolderPath_.InvokeIfNeeded(() => tbRobotPoseRootFolderPath_.Text);
+            set => tbRobotPoseRootFolderPath_.InvokeIfNeeded(() => tbRobotPoseRootFolderPath_.Text = value);
+        }
+
         public bool CanLogManagerScheduleBeDeleted { set => btnDeleteSchedule_.InvokeIfNeeded(() => btnDeleteSchedule_.Enabled = value); }
 
         public DateTime LogManagerScheduleStartTime => dtpScheduleStartTime.InvokeIfNeeded(() => dtpScheduleStartTime.Value);
@@ -478,18 +474,6 @@ namespace loadingBox2dGui
         {
             //throw new NotImplementedException();
             //this.BeginInvokeIfNeeded(() => this.Translate(Lang.Primer.ResourceManager));
-        }
-
-        public void SetCarTypeList(BindingList<int> carTypeList, int selectedCarType = -1)
-        {
-            cmbCarType.InvokeIfNeeded(() =>
-            {
-                cmbCarType.DataSource = carTypeList;
-                if (selectedCarType != -1 && carTypeList.Contains(selectedCarType))
-                {
-                    cmbCarType.SelectedItem = selectedCarType;
-                }
-            });
         }
 
 
@@ -658,14 +642,9 @@ namespace loadingBox2dGui
             {
                 if (tbModelPath.Text != fileBrowserDialog.FileName)
                 {
-                    ModelSettingPathChangeRequested?.Invoke(sender, new ModelSettingPathChangeEventArgs(ModelPathType.ShiftModelFilePath, fileBrowserDialog.FileName.Replace('\\', '/')));
+                    ModelSettingPathChangeRequested?.Invoke(sender, new RefDataPathChangeEventArgs(RefDataType.ShiftModelFilePath, fileBrowserDialog.FileName.Replace('\\', '/')));
                 }
             }
-        }
-
-        private void btnImageFolderPath__Click(object sender, EventArgs e)
-        {
-            SearchImageFolderPathRequested?.Invoke(this, EventArgs.Empty);
         }
 
         private void cmbCamera_SelectedIndexChanged(object sender, EventArgs e)
@@ -678,49 +657,14 @@ namespace loadingBox2dGui
             LightChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        private void SettingManagerTabControl_Selected(object sender, TabControlEventArgs e)
-        {
-            SelectOtherTabPageRequested?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void cbSaveSourceImage__CheckedChanged(object sender, EventArgs e)
-        {
-            SaveSourceImageRequested?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void cbSaveResultFlag__CheckedChanged(object sender, EventArgs e)
-        {
-            SaveResultImageRequested?.Invoke(this, EventArgs.Empty);
-        }
         public void SetFont()
         {
             this.InvokeIfNeeded(() => this.ApplyFont());
         }
 
-        private void checkboxFlipHorizontal__CheckedChanged(object sender, EventArgs e)
-        {
-            FlipCameraHorizontalRequested?.Invoke(sender, e);
-        }
-
-        private void checkBoxFlipVertical__CheckedChanged(object sender, EventArgs e)
-        {
-            FlipCameraVerticalRequested?.Invoke(sender, e);
-        }
-
         private void btnChangePassword__Click(object sender, EventArgs e)
         {
             ChangePasswordRequested?.Invoke(sender, e);
-        }
-
-        private void checkBoxAllSectionPassed__CheckedChanged(object sender, EventArgs e)
-        {
-            PassAllSectionRequested?.Invoke(sender, e);
-        }
-
-        private void dataGridViewSection_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            _isInvalidValue = true;
-            MessageBox.Show("INVALID INPUT! Please check data type.");
         }
 
         private void PasteDataFromClipboard(DataGridView dgv)
@@ -859,7 +803,7 @@ namespace loadingBox2dGui
             {
                 if (folderBrowserDialog.SelectedPath != tbCheckerBoardRootPath.Text)
                 {
-                    ModelSettingPathChangeRequested?.Invoke(sender, new ModelSettingPathChangeEventArgs(ModelPathType.CheckerBoardRootFolderPath, folderBrowserDialog.SelectedPath.Replace('\\', '/')));
+                    ModelSettingPathChangeRequested?.Invoke(sender, new RefDataPathChangeEventArgs(RefDataType.CheckerBoardRootFolderPath, folderBrowserDialog.SelectedPath.Replace('\\', '/')));
                 }
             }
         }
@@ -876,7 +820,7 @@ namespace loadingBox2dGui
             {
                 if (folderBrowserDialog.SelectedPath != tbMasterImageRootPath.Text)
                 {
-                    ModelSettingPathChangeRequested?.Invoke(sender, new ModelSettingPathChangeEventArgs(ModelPathType.MasterImageRootFolderPath, folderBrowserDialog.SelectedPath.Replace('\\', '/')));
+                    ModelSettingPathChangeRequested?.Invoke(sender, new RefDataPathChangeEventArgs(RefDataType.MasterImageRootFolderPath, folderBrowserDialog.SelectedPath.Replace('\\', '/')));
                 }
             }
         }
@@ -893,7 +837,7 @@ namespace loadingBox2dGui
             {
                 if (folderBrowserDialog.SelectedPath != tbCalibrationRootFolderPath.Text)
                 {
-                    ModelSettingPathChangeRequested?.Invoke(sender, new ModelSettingPathChangeEventArgs(ModelPathType.CalibrationDataRootFolderPath, folderBrowserDialog.SelectedPath.Replace('\\', '/')));
+                    ModelSettingPathChangeRequested?.Invoke(sender, new RefDataPathChangeEventArgs(RefDataType.CalibrationDataRootFolderPath, folderBrowserDialog.SelectedPath.Replace('\\', '/')));
                 }
             }
         }
@@ -910,7 +854,7 @@ namespace loadingBox2dGui
             {
                 if (fileBrowserDialog.FileName != tbCameraTcpFilePath.Text)
                 {
-                    ModelSettingPathChangeRequested?.Invoke(sender, new ModelSettingPathChangeEventArgs(ModelPathType.CameraTcpDataFilePath, fileBrowserDialog.FileName.Replace('\\', '/')));
+                    ModelSettingPathChangeRequested?.Invoke(sender, new RefDataPathChangeEventArgs(RefDataType.CameraTcpDataFilePath, fileBrowserDialog.FileName.Replace('\\', '/')));
                 }
             }
         }
@@ -918,6 +862,23 @@ namespace loadingBox2dGui
         private void cmbRobot__SelectedIndexChanged(object sender, EventArgs e)
         {
             RobotChanged?.Invoke(sender, EventArgs.Empty);
+        }
+
+        private void btnRobotPosePath__Click(object sender, EventArgs e)
+        {
+            try
+            {
+                folderBrowserDialog.SelectedPath = Path.GetFullPath(tbRobotPoseRootFolderPath_.Text ?? "C:\\");
+            }
+            catch(Exception) { }
+
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (folderBrowserDialog.SelectedPath != tbRobotPoseRootFolderPath_.Text)
+                {
+                    ModelSettingPathChangeRequested?.Invoke(sender, new RefDataPathChangeEventArgs(RefDataType.RobotPoseRootFolderPath, folderBrowserDialog.SelectedPath.Replace('\\', '/')));
+                }
+            }
         }
     }
 }

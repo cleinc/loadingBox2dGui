@@ -19,8 +19,9 @@ namespace loadingBox2dGui.views
         string ShiftModelPath { get; set; }
         string CheckerBoardImageRootFolderPath { get; set; }
         string MasterImageRootFolderPath { get; set; }
-        string CalibrationDataRootFolderPath { get; set; }
-        string CameraTcpDataRootFolderPath { get; set; }
+        string IntrinsicCalibrationDataRootFolderPath { get; set; }
+        string ExtrinsicCalibrationDataFilePath { get; set; }
+        string RobotPoseRootFolderPath { get; set; }
         string Robot { get; set; }
         bool IsControlDisposed { get; }
         string SelectedLanguage { get; set; }
@@ -55,7 +56,7 @@ namespace loadingBox2dGui.views
         event EventHandler LogManagerArgsDeleteAsked;
         event EventHandler<SettingTabChangeEventArgs> SettingTabChangeRequested;
         event EventHandler RobotChanged;
-        event EventHandler <ModelSettingPathChangeEventArgs> ModelSettingPathChangeRequested;
+        event EventHandler <RefDataPathChangeEventArgs> ModelSettingPathChangeRequested;
         event EventHandler UpdateMasterDataRequested;
         void SetRobotList(List<string> robotList, string selectedRobot = null);
         void SetCarTypeList(BindingList<CarTypeAndName> carTypeList, int selectedCarType = -1);
@@ -95,22 +96,29 @@ namespace loadingBox2dGui.views
         }
     }
 
-    public enum ModelPathType
+    public enum RefDataType
     {
        CheckerBoardRootFolderPath,
        MasterImageRootFolderPath,
        CalibrationDataRootFolderPath,
        CameraTcpDataFilePath,
        ShiftModelFilePath,
+       RobotPoseRootFolderPath
     }
 
-    public class ModelSettingPathChangeEventArgs : EventArgs
+    public class RefDataPathChangeEventArgs : DataPathChangeEventArgs
     {
-        public ModelPathType ModelPathType { get; private set; }
-        public string NewPath { get; private set; }
-        public ModelSettingPathChangeEventArgs(ModelPathType modelDataType, string newPath)
+        public RefDataType RefDataType { get; private set; }
+        public RefDataPathChangeEventArgs(RefDataType refDataType, string newPath) : base(newPath)
         {
-            ModelPathType = modelDataType;
+            RefDataType = refDataType;
+        }
+    }
+    public class DataPathChangeEventArgs : EventArgs
+    {
+        public string NewPath { get; private set; }
+        public DataPathChangeEventArgs(string newPath)
+        {
             NewPath = newPath;
         }
     }
