@@ -12,7 +12,7 @@ namespace loadingBox2dGui.models
     public abstract class CameraCommunicatorForLoadingBox : ICameraCommunicator, IImageProvider<InspectionLocation>, IDisposable
     {
         protected bool _disposed;
-        public bool IsConnected { get; }
+        public abstract bool IsConnected { get; }
         public abstract bool Connect(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
         public abstract bool Disconnect();
         public abstract Task StartCamera(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict, int shotAttempt);

@@ -248,17 +248,17 @@ namespace loadingBox2dGui.models
     public class VisionUpdateEventArgs : EventArgs
     {
         public int CarType { get; private set; }
-        public string CarSeq { get; private set; }
+        public string SequenceNumber { get; private set; }
         public string BodyNumber { get; private set; }
 
-        public VisionUpdateEventArgs(int carType, string carSeq)
+        public VisionUpdateEventArgs(int carType, string sequenceNumber)
         {
             CarType = carType;
-            CarSeq = carSeq;
+            SequenceNumber = sequenceNumber;
         }
 
-        public VisionUpdateEventArgs(int carType, string carSeq, string bodyNumber)
-            : this(carType, carSeq)
+        public VisionUpdateEventArgs(int carType, string sequenceNumber, string bodyNumber)
+            : this(carType, sequenceNumber)
         {
             BodyNumber = bodyNumber;
         }

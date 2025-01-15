@@ -1,25 +1,24 @@
-﻿using CoPick.Logging;
+﻿using CoPick;
+using CoPick.Logging;
 using CoPick.Plc;
-using CoPick.Setting;
 using CoPick.Robot;
+using CoPick.Setting;
 using loadingBox2dGui.models;
+using loadingBox2dGui.models.ProductionRecord;
 using loadingBox2dGui.views;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CoPick;
-using System.Diagnostics;
-using System.IO;
-using YamlDotNet.Serialization.NamingConventions;
-using YamlDotNet.Serialization;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Security.AccessControl;
 
 namespace loadingBox2dGui.presenters
 {
@@ -31,9 +30,11 @@ namespace loadingBox2dGui.presenters
         private Config _config;
         private OperationMode _mode;
         private PlcCommunicatorForLoadingBox _plcComm;
+        private PlcModel _plcModel;
         private LightCommunicatorForLoadingBox _lightComm;
         private CameraCommunicatorForLoadingBox _cameraComm;
         private readonly ICargoBox2DInspectionEngine _engine;
+        protected readonly IProductionRecordRepository _productionRecordRepository;
         private IRobotCommunicator _robotComm;
         private bool _isPlcEventHandlersRegistered = false;
         private readonly CargoBox2DSettingManagerPresenter _settingManagerPresenter;
@@ -41,77 +42,80 @@ namespace loadingBox2dGui.presenters
         private Dictionary<int, CargoBox2DConfig> _modelParameterDict = new Dictionary<int, CargoBox2DConfig>();
         private readonly SemaphoreSlim _cameraParameterAccessLock = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim _modelParameterAccessLock = new SemaphoreSlim(1, 1);
-        private readonly SemaphoreSlim _masterDataAccessLock = new SemaphoreSlim(1,1);
-        private bool _updateMasterDataFromPath = true;
         private int _currentCar;
         private string _bodyNumber;
         private string _sequenceNumber;
-        private OfflineImageHandler _offlineImageHandler;
-        private Dictionary<int, Dictionary<DataType, List<MasterPathStruct>>> _carTypeToMasterDataset =  new Dictionary<int, Dictionary<DataType, List<MasterPathStruct>>>();
-        private Dictionary<InspectionLocation, TCP> _locToMasterCameraTcp = new Dictionary<InspectionLocation, TCP>();
-        private const string _masterInstallPoseTcpFile = "MasterInstallPoseTcp.yml"; 
-        private const string _masterScanPoseTcpFile = "MasterScanPoseTcp.yml";
-        private const string _scanPoseTcpFile = "scanPoseTcp.yml";
-        public MainPresenter(IMainForm view, CargoBox2DSettingManagerPresenter cargoBox2DSettingManagerPresenter, Config config, ICargoBox2DInspectionEngine engine)
+        private readonly MasterDataManager _masterDataManager;
+        public MainPresenter(IMainForm view, CargoBox2DSettingManagerPresenter cargoBox2DSettingManagerPresenter, 
+            Config config, ICargoBox2DInspectionEngine engine, IProductionRecordRepository repository)
         {
 
             _view = view;
             _config = config;
             _mode = _config.StartMode;
             _engine = engine;
+            _masterDataManager = new MasterDataManager(false, _engine);
+            _productionRecordRepository = repository;
             _settingManagerPresenter = cargoBox2DSettingManagerPresenter;
 
             _engine.SetCallbackWriteLog(Logger.WriteLog);
             CreateLightCommInstance(_config.Light);
             CreateCameraCommInstance(_config.Camera);
             CreatePlcCommInstance(_config.Plc);
-
+            
             _view.ConnectCameraRequested += View_ConnectCameraRequested;
             _view.ScanPointRequsted += View_ScanPointRequested;
-            _view.DisconnectLhCameraRequested += View_DisconnectLhCameraRequested;
+            _view.DisconnectCameraRequested += View_DisconnectCameraRequested;
             _view.ChangeModeRequested += View_ChangeModeRequested;
             _view.ProgramCloseRequested += View_ProgramCloseRequested;
             _view.LightStateChangeRequested += View_LightStateChangedRequested;
             _view.MainFormLoadRequested += View_MainFormLoadRequested;
             _view.ShowSettingManagerRequested += View_ShowSettingManagerRequested;
             _view.CarTypeChanged += View_CarTypeChanged;
-            _view.CaptureRequested += View_CaptureRequested;
             _view.ReadInstallPoseRequested += View_ReadInstallPoseRequested;
             _view.ReadScanPoseRequested += View_ReadScanPoseRequested;
-            _view.WriteShiftPoseRequested += View_WriteShiftPoseRequested;
+            _view.WriteTxTyRzRequested += View_WriteShiftPoseRequested;
             _view.CheckWrittenShiftPoseRequested += View_CheckWrittenShiftPoseRequested;
-            _view.ScanPointUsingArucoRequested += View_ScanPointUsingArucoRequested;
+            _view.ShowScreenShotRequested += View_ShowScreenShotRequested;
+            _view.ResetNgListRequested += View_ResetNgListRequested;
             _settingManagerPresenter.SettingChangeConfirmed += SettingManagerPresenter_SettingChangeConfirmed;
             _settingManagerPresenter.UpdateMasterDataFromConfigPathRequested += SettingManagerPresenter_UpdateMasterDataFromConfigPathRequested;
+
+            if (_productionRecordRepository != null)
+            {
+                UpdateNgList(_config.StartTimeToGetNgList);
+            }
+            else
+            {
+                Logger.Warning($"Production Record Repository Not Connected");
+            }
         }
 
-        private async void View_ScanPointUsingArucoRequested(object sender, EventArgs e)
+        private void View_ResetNgListRequested(object sender, EventArgs e)
         {
-            if (await Task.Run(() => LoadArucoDataset()))
+            _config.StartTimeToGetNgList = DateTime.Now;
+            SaveConfig();
+            UpdateNgList(_config.StartTimeToGetNgList);
+        }
+
+        private void View_ShowScreenShotRequested(object sender, ImagePathEventArgs e)
+        {
+            if (File.Exists(e.ImagePath))
             {
-                _offlineImageHandler.SetCarType(-1);
-                UpdateUiByInspection(_offlineImageHandler);
-                await InitializeScanSettings(true);
-                ImageStruct[] structForShiftValueArray = _offlineImageHandler.GetImageStructsArray
-                    (InspectionLocation.LH, InspectionLocation.RH);
-                Logger.Info($"Struct Count: {structForShiftValueArray.Count()}");
-                bool calculatePoseSuccess = false;
-                await Task.Run(() =>
+                NgListItemImageForm_ openForm = Application.OpenForms["NgListItemImageForm_"] as NgListItemImageForm_;
+                if (openForm != null)
                 {
-                    calculatePoseSuccess = _engine.PoseAdjustmentCargoBox2D(structForShiftValueArray, structForShiftValueArray.Count());
-                }); 
-                Logger.Info($"Passed Calculating Pose, pose Count: {structForShiftValueArray.Count()}, calculatePoseSuccess = {calculatePoseSuccess}");
-                //_cameraComm.ClearBmpData();
-                if (calculatePoseSuccess)
-                {
-                    foreach (ImageStruct imgStruct in structForShiftValueArray)
-                    {
-                        Logger.Info($"Computed Shift Value: Location: {imgStruct.CameraLocation}, Pose: {imgStruct.Shift6D}");
-                    }
-                    RobotPose calculatedPose = structForShiftValueArray[0].GetRobotPose();
-                    Logger.Info($"Aruco Image Pose Computation Value: {calculatedPose}");
-                    //bool writeSucceeded = await WriteRobotPoses(new RobotPose[] {calculatedPose});
+                    openForm.UpdateNgListItemImagePath(e.ImagePath);
                 }
+                else
+                {
+                    NgListItemImageForm_ form = new NgListItemImageForm_(e.ImagePath);
+                    form.Show();
+                }
+            }
+            else
+            {
+                Logger.Debug("file does not exist");
             }
         }
 
@@ -133,10 +137,9 @@ namespace loadingBox2dGui.presenters
             var robotConfig = _config.RobotConfigs[_config[-1].Robot];
             RobotPose poseToWrite = new RobotPose()
             {
-                Tx = e[0], Ty = e[1], Tz = e[2], 
-                Rx = e[3], Ry = e[4], Rz = e[5]
+                Tx = e[0], Ty = e[1], Rz = e[2]
             };
-            var result = await WriteRobotPoses(new RobotPose[] { poseToWrite }); 
+            var result = await WriteRobotPoses(poseToWrite); 
             if (!result)
             {
                 Logger.Error($"Failed to Write RobotPoses {poseToWrite}");
@@ -147,21 +150,25 @@ namespace loadingBox2dGui.presenters
             }
         }
 
-        private async void View_ReadScanPoseRequested(object sender, EventArgs e)
+        private async void View_ReadScanPoseRequested(object sender, SaveMasterDataEventArgs e)
         {
             var robotConfig = _config.RobotConfigs[_config[-1].Robot];
             var readScanVariables = robotConfig[RobotAttribute.GapScanPoseVars]?.Split(',');
             var result = await ReadRobotPoses(readScanVariables); 
             if (result == null)
             {
-                Logger.Error($"Failed to read RobotPoses");
+                Logger.Error($"Failed to read RobotPoseds");
                 return;
             }
             var pose = result.First();
             _view.SetReadScanPose(new double[] { pose.Tx, pose.Ty, pose.Tz, pose.Rx, pose.Ry, pose.Rz });
+            if (e.SaveMaster)
+            {
+                _masterDataManager.SaveMasterRobotScanPose(pose, _currentCar);
+            }
         }
 
-        private async void View_ReadInstallPoseRequested(object sender, EventArgs e)
+        private async void View_ReadInstallPoseRequested(object sender, SaveMasterDataEventArgs e)
         {
             var robotConfig = _config.RobotConfigs[_config[-1].Robot];
             var readScanVariables = robotConfig[RobotAttribute.VehicleInstallVars]?.Split(',');
@@ -173,22 +180,19 @@ namespace loadingBox2dGui.presenters
             }
             var pose = result.First();
             _view.SetReadInstallPose(new double[] { pose.Tx, pose.Ty, pose.Tz, pose.Rx, pose.Ry, pose.Rz });
-        }
-
-        private async void View_CaptureRequested(object sender, StartWithModifierEventArgs e)
-        {
-            _view.SetCaptureCameraButton = false;
-            UpdatePlcInspectionInfo(_currentCar, "MMMM", "MMMMMMMM");
-            await ScanPointAsync(e.HasFreePassTicket);
-            _view.SetCaptureCameraButton = true;
+            if (e.SaveMaster)
+            {
+                _masterDataManager.SaveMasterRobotInstallPose(pose, _currentCar);
+            }
         }
 
         private async void SettingManagerPresenter_UpdateMasterDataFromConfigPathRequested(object sender, EventArgs e)
         {
-            _updateMasterDataFromPath = await Task.Run(() => LoadMasterDataset());
+            var configMasterDataPathsDict = _settingManagerPresenter.ConfigCandidate.GetMasterDataPathsDict();
+            await Task.Run(() => _masterDataManager.LoadMasterDataset(configMasterDataPathsDict));
             if (_mode != OperationMode.Auto)
             {
-                await InitializeMasterDataSettings();
+                await _masterDataManager.InitializeMasterData();
             }
         }
 
@@ -204,11 +208,12 @@ namespace loadingBox2dGui.presenters
         {
             bool isPlcChanged = (_config.Plc != _settingManagerPresenter.ConfigCandidate.Plc) ||
                                 _settingManagerPresenter.ChangeTracker.IsPlcSettingModified;
+
             _settingManagerPresenter.ConfigCandidate.RecentlyUsedCar = _config.RecentlyUsedCar;
             Config configCandidate = _settingManagerPresenter.ConfigCandidate;
             bool _isCameraConfigChanged = _settingManagerPresenter.Cam2DSettingManager.Camera2DBundleModified()
                                     || configCandidate.CameraConfigs.Count != _config.CameraConfigs.Count;
-            bool isPathModified = _settingManagerPresenter.ModifiedDataPaths;
+            bool isMasterDataPathModified = _settingManagerPresenter.ModifiedDataPaths;
             _config = configCandidate;
             SaveConfig();
 
@@ -222,26 +227,28 @@ namespace loadingBox2dGui.presenters
                 var updateCamParamsTask = UpdateCameraParametersFromConfig(camBundleToAdd, camBundleToModify, camBundleToDelete);
             }
             var updateModelParmsTask = UpdateModelParametersFromConfig();
+            
+            if (isMasterDataPathModified)
+            {
+                var masterDataPathsDict = _config.GetMasterDataPathsDict();
+                await Task.Run(() => _masterDataManager.LoadMasterDataset(masterDataPathsDict));
+                if (_mode != OperationMode.Auto)
+                {
+                    await _masterDataManager.InitializeMasterData();
+                }
+            }
 
             if (_mode == OperationMode.Auto)
             {
-                _updateMasterDataFromPath = true;
                 Logger.Info($"Lang.Msgs.SettingChangeAutoMode\n{_settingManagerPresenter.ChangeTracker}");
             }
             else
             {
                 Logger.LogPath = _config.LogPath;
-
                 if (isPlcChanged)
                 {
                     CreatePlcCommInstance(_settingManagerPresenter.ConfigCandidate.Plc);
                     LoadPlcSignalLabelTitle();
-                }
-
-                if (isPathModified)
-                {
-                    _updateMasterDataFromPath = await Task.Run(() => LoadMasterDataset());
-                    await InitializeMasterDataSettings();
                 }
                 Logger.Info($"Lang.Msgs.SettingChange\n{_settingManagerPresenter.ChangeTracker}");
             }
@@ -260,7 +267,7 @@ namespace loadingBox2dGui.presenters
         {
             await UpdateCameraParametersFromConfig(_config.CameraConfigs.Keys.ToArray(), null, null);
             await UpdateModelParametersFromConfig();
-            _updateMasterDataFromPath = await Task.Run(() => LoadMasterDataset());
+            await Task.Run(() => _masterDataManager.LoadMasterDataset(_config.GetMasterDataPathsDict()));
             string cameraName = _config[-1].Camera;
             await ConnectCameraAsync(cameraName);
             UpdateUiByConfig();
@@ -268,6 +275,13 @@ namespace loadingBox2dGui.presenters
 
         private async void View_ChangeModeRequested(object sender, ModeChangedEventArgs e)
         {
+            if (_settingManagerPresenter.IsOpen)
+            {
+                Logger.Info($"Can't Change Mode while SettingManager Is Open");
+                _view.ResetToAutoMode();
+                return;
+            }
+
             Logger.Debug($"Mode Change Request : {_mode} -> {e.Mode}");
             _view.IsModeChanging = true;
             try
@@ -312,7 +326,7 @@ namespace loadingBox2dGui.presenters
         
         private async Task SetupSetMode()
         {
-            _engine.SetEngineVerbosity(5,5);
+            //_engine.SetEngineVerbosity(5,5);
             if (_plcComm != null)
             {
                 _plcComm.PlcDisconnected -= PlcComm_PlcDisconnected;
@@ -327,7 +341,7 @@ namespace loadingBox2dGui.presenters
 
         private async Task SetupManualMode()
         {
-            _engine.SetEngineVerbosity(5,5);
+            //_engine.SetEngineVerbosity(5,5);
             if (_plcComm != null)
             {
                 _plcComm.PlcDisconnected -= PlcComm_PlcDisconnected;
@@ -346,7 +360,7 @@ namespace loadingBox2dGui.presenters
             await InitializePlc();
         }
 
-        private void View_DisconnectLhCameraRequested(object sender, EventArgs e)
+        private void View_DisconnectCameraRequested(object sender, EventArgs e)
         {
             _cameraComm.StopCamera();
             //_pylonComm.DisConnectCamera();
@@ -355,20 +369,36 @@ namespace loadingBox2dGui.presenters
         private async void View_ScanPointRequested(object sender, EventArgs e)
         {
             _view.SetStartCameraButton = false;
-            Logger.Debug("Call [Scan Start]");
-            UpdatePlcInspectionInfo(_currentCar, "MMMM", "MMMMMMMM");
-            await InitializeMasterDataSettings();
-            var readPose = await ScanPointAsync();
-            if (readPose != null)
+            Logger.Debug($"Call [{((_mode == OperationMode.Manual) ? "Scan" : "Capture")} Start]");
+            ResetUi();
+
+            if (_mode == OperationMode.Manual)
             {
-                var calculatedPose = await CalculateShiftPointAsync(readPose);
-                Logger.Info($"Calculated Pose is null : {calculatedPose is null}: {calculatedPose?.ToString()}");
-                // Validate Calculated Shift Point;
-                //await WriteRobotPoses(new RobotPose[] { calculatedPose });
+                UpdatePlcInspectionInfo(_currentCar, "MMMM", "MMMMMMMM");
+                await _masterDataManager.InitializeMasterData();
+                if (await ScanPointAsync())
+                {
+                    var (calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, refHoleCount) = await CalculateShiftPointAsync();
+                    var (calculationValidated, modelValidated) = await ValidateCalculationAndModelPerformance(calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, refHoleCount);
+                    InspectionResult inspectionResult = calculationValidated && modelValidated ? InspectionResult.OK : InspectionResult.NG;
+                    await RegisterInspectionResult(inspectionResult, calculatedPose, false);
+                    if (inspectionResult == InspectionResult.OK && await WriteRobotPoses(calculatedPose))
+                    {
+                        _view.DisplayVisionResult(VisionStatus.OK);
+                    }
+                    else
+                    {
+                        _view.DisplayVisionResult(VisionStatus.NG);
+                    }
+                    _cameraComm?.ClearBmpData();
+                }
             }
-            //UpdateRobotPoses
+            else
+            {
+                await ScanPointAsync(true);
+            }
+            Logger.Debug($"Complete [{((_mode == OperationMode.Manual) ? "Scan" : "Capture")}]");
             _view.SetStartCameraButton = true;
-            Logger.Debug("Complete [Scan Start]");
         }
 
         private async void View_ConnectCameraRequested(object sender, EventArgs e)
@@ -391,7 +421,7 @@ namespace loadingBox2dGui.presenters
             if (MessageBox.Show("Are you sure to Exit Program?", "Warning", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 //_config.DarkMode = _view.DarkModeChecked;
-                //ConfigFileManager.SaveToFile(_config, ConfigFileManager.GetConfigFilePath());
+                ConfigFileManager.SaveToFile(_config, ConfigFileManager.GetConfigFilePath());
 
                 _view.RefreshPlcStatus();
                 _plcComm?.Disconnect();
@@ -447,13 +477,12 @@ namespace loadingBox2dGui.presenters
                     ChangeCarType(e.CarType);
                 }
 
-                Logger.Info($"cartype : {e.CarType} // seqnum : {e.CarSeq} // bodynum : {e.BodyNumber}");
-                UpdatePlcInspectionInfo(e.CarType, e.CarSeq, e.BodyNumber);
-                Logger.Debug("Call [Camera Connect]");
+                Logger.Info($"cartype : {e.CarType} // seqnum : {e.SequenceNumber} // bodynum : {e.BodyNumber}");
+                UpdatePlcInspectionInfo(e.CarType, e.SequenceNumber, e.BodyNumber);
                 _lightComm.WriteLightState(true);
                 var currentCam = _config[-1].Camera;
                 await ConnectCameraAsync(currentCam);
-                await InitializeMasterDataSettings();
+                await _masterDataManager.InitializeMasterData();
             }
             catch (Exception ex)
             {
@@ -464,38 +493,33 @@ namespace loadingBox2dGui.presenters
         private async void PlcComm_VisionStart(object sender, EventArgs e)
         {
             Logger.Info("Plc Start Received");
-            Logger.Debug("Call [Camera Start]");
             try
             {
-                var readPose = await ScanPointAsync();
-                if (readPose == null)
+                if (!await ScanPointAsync())
                 {
-                    Logger.Error($"Read Pose is null");
-                    //Consider Yelling NG
+                    Logger.Error($"Scan Point Failed");
                 }
-                int ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, true, 100, 10);
-                if (ret != 0)
-                {
-                    Logger.Info("SEND P1 COMPLETE FAIL");
-                }
-                else
-                {
-                    Logger.Info("SEND P1 COMPLETE SUCCEED");
-                }
-                
-                var calculatedPose = await CalculateShiftPointAsync(readPose);
-                //Validate Computed Shift Value
+
+                await SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, true, 100, 10);
+
+                var (calculatedPose, minConfidenceScore, maxAbsSizeDiff, refHoleCount) = await CalculateShiftPointAsync();
                 Logger.Info($"Calculated Pose: {calculatedPose}");
-                //bool writeSucceeded = await WriteRobotPoses(new RobotPose[] { calculatedPose });
-                ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, true, 100, 10);
-                if (ret != 0)
+                var (calculationValidated, modelValidated) = await ValidateCalculationAndModelPerformance(calculatedPose, minConfidenceScore, maxAbsSizeDiff, refHoleCount);
+                InspectionResult inspectionResult = InspectionResult.NONE;
+                if (calculationValidated && modelValidated && await WriteRobotPoses(calculatedPose))
                 {
-                    Logger.Info("SEND OK Fail");
+                    await SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, true, 100, 10);
+                    _view.DisplayVisionResult(VisionStatus.OK);
+                    inspectionResult = InspectionResult.OK;
                 }
                 else
                 {
-                    Logger.Info("SEND OK SUCCEED");
+                    await SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_NG, true, 100, 10);
+                    _view.DisplayVisionResult(VisionStatus.NG);
+                    inspectionResult = InspectionResult.NG;
                 }
+
+                await RegisterInspectionResult(inspectionResult, calculatedPose);
             }
             catch (Exception ex)
             {
@@ -508,6 +532,53 @@ namespace loadingBox2dGui.presenters
             Logger.Debug("Complete [Vision Start]");
         }
 
+        private async void PlcComm_VisionEnd(object sender, EventArgs e)
+        {
+            Logger.Info("Plc End Received");
+            await Task.Run(() => _lightComm?.WriteLightState(false));
+        }
+
+        private async void PlcComm_VisionReset(object sender, EventArgs e)
+        {
+            Logger.Info("Plc Reset Received");
+            int ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, false, 100, 10);
+            if (ret != 0)
+            {
+                Logger.Error($"PLC VISION OK OFF FAIL {ret}");
+            }
+            else
+            {
+                Logger.Info("PLC VISION OK OFF SUCCEED");
+            }
+
+            ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_NG, false, 100, 10);
+            if (ret != 0)
+            {
+                Logger.Error($"PLC VISION NG OFF FAIL {ret}");
+            }
+            else
+            {
+                Logger.Info("PLC VISION NG OFF SUCCEED");
+            }
+            await SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, false, 100, 10);
+            //ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, false, 100, 10);
+            //if (ret != 0)
+            //{
+            //    Logger.Error($"PLC VISION NG OFF FAIL {ret}");
+            //}
+            //else
+            //{
+            //    Logger.Info("PLC VISION NG OFF SUCCEED");
+            //}
+            ResetUi();
+        }
+
+        #endregion
+
+        #region Manual Events
+        #endregion
+
+        #region Methods
         private async Task<bool> StartCameraAsync()
         {
             if (_cameraComm == null)
@@ -557,138 +628,15 @@ namespace loadingBox2dGui.presenters
             return true;
         }
 
-        private async void PlcComm_VisionEnd(object sender, EventArgs e)
-        {
-            Logger.Info("Plc End Received");
-            _view.DisplayVisionResult(VisionStatus.OK);
-            await Task.Run(() => _lightComm?.WriteLightState(false));
-        }
-
-        private async void PlcComm_VisionReset(object sender, EventArgs e)
-        {
-            Logger.Info("Plc Reset Received");
-            int ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, false, 100, 10);
-            if (ret != 0)
-            {
-                Logger.Error($"PLC VISION OK OFF FAIL {ret}");
-            }
-            else
-            {
-                Logger.Info("PLC VISION OK OFF SUCCEED");
-            }
-
-            ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_NG, false, 100, 10);
-            if (ret != 0)
-            {
-                Logger.Error($"PLC VISION NG OFF FAIL {ret}");
-            }
-            else
-            {
-                Logger.Info("PLC VISION NG OFF SUCCEED");
-            }
-
-            ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, false, 100, 10);
-            if (ret != 0)
-            {
-                Logger.Error($"PLC VISION P1_COMPLETED OFF FAIL {ret}");
-            }
-            else
-            {
-                Logger.Info("PLC VISION P1_COMPLETED OFF SUCCEED");
-            }
-        }
-
-        #endregion
-
-        #region Manual Events
-        #endregion
-
-        #region Methods
-        private bool LoadConfig()
-        {
-            return true;
-        }
-        private bool InitializeCameraSettings()
-        {
-            return true;
-        }
-        private bool LoadMasterDataSettings()
-        {
-            try
-            {
-                foreach (int carType in _config.ConfigDict.Keys)
-                {
-                    var checkerBoardImageStructs = _carTypeToMasterDataset[carType][DataType.CheckerBoard].ToArray();
-                    _engine.LoadCharucoBoardConfig(checkerBoardImageStructs, checkerBoardImageStructs.Length);
-                    var masterImageStructs = _carTypeToMasterDataset[carType][DataType.MasterImage].ToArray();
-                    _engine.LoadMasterImage(masterImageStructs, masterImageStructs.Length);
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Failed Loading Model Settings, Error: {ex.Message}");
-                return false;
-            }
-        }
-        private async Task<bool> InitializeMasterDataSettings(int timeOutMilliseconds = 250)
-        {
-            if (!_updateMasterDataFromPath)
-            {
-                Logger.Debug($"Update Master Data From Path Set to False. Check to see if Loading Master Data from Config Path Failed");
-                return true;
-            }
-
-            Stopwatch sw = Stopwatch.StartNew();
-            if (!await _masterDataAccessLock.WaitAsync(timeOutMilliseconds))
-            {
-                Logger.Error($"Failed to load MasterPathStructs to InspectionEngine");
-                return false;
-            }
-
-            try
-            {
-                if (!LoadMasterDataSettings())
-                {
-                    Logger.Info($"Load Master Data Failed.");
-                    return false;
-                }
-
-                if (await Task.Run(() => _engine.InitializeMaster()))
-                {
-                    _updateMasterDataFromPath = false;
-                }
-                else
-                {
-                    Logger.Error($"Initializing Master Data Settings Failed");
-                    return false;
-                }
-
-                Logger.Info($"Initializing Model Finished. Succeeded, Took {sw.Elapsed}");
-                return true;
-            }
-            catch (Exception ex) 
-            { 
-                Logger.Error($"Error while Initializing Master Data to Inspection Engine. Error : {ex}");
-                return false;
-            }
-            finally
-            {
-                _masterDataAccessLock.Release();
-            }
-        }
         private async Task<bool> InitializePlc()
         {
             if (_plcComm != null && !_plcComm.IsConnected)
             {
-                Console.WriteLine("Intialize PLC Thread Id : " + Thread.CurrentThread.ManagedThreadId);
                 await _plcComm.ConnectAsync();
                 if (_plcComm.IsConnected)
                 {
                     RegisterPlcEventHandler();
-                    _view.PlcInfo = "MELSEC";
                 }
-                Console.WriteLine($"Is Connected {_plcComm.IsConnected}");
                 _view.IsPlcConnected = _plcComm.IsConnected;
                 _view.RefreshPlcStatus();
                 LoadPlcSignalLabelTitle();
@@ -699,51 +647,11 @@ namespace loadingBox2dGui.presenters
                 return false;
             }
         }
-        private bool ConnectPlc(bool isOn)
-        {
-            return true;
-        }
-        private bool ReadyCamera()
-        {
-            return true;
-        }
-        private bool ReadyModel()
-        {
-            return true;
-        }
-        private bool StartInspection()
-        {
-            return true;
-        }
-        private bool StopCamera()
-        {
-            return true;
-        }
-        private bool StopInspection()
-        {
-            return true;
-        }
-        private bool WriteOnPlc()
-        {
-            return true;
-        }
-        private bool SaveProductionRecord()
-        {
-            return true;
-        }
-        private bool UpdateControls(ProgramState programState)
-        {
-            return true;
-        }
-        private bool ChangeMode()
-        {
-            return true;
-        }
 
         private void UpdatePlcInspectionInfo(int carType, string seqNum, string bodyNum)
         {
-            _bodyNumber = bodyNum ?? "emptyBod";
-            _sequenceNumber = seqNum ?? "emptySeq";
+            _bodyNumber = bodyNum ?? "EMPTYBDYNUM";
+            _sequenceNumber = seqNum ?? "EPTY";
             _view.CarSeq = _sequenceNumber;
             _view.BodyNum = _bodyNumber;
         }
@@ -789,6 +697,7 @@ namespace loadingBox2dGui.presenters
                 return false;
             }
 
+            _plcModel = modelAttr.Model;
             _isPlcEventHandlersRegistered = false;
             return true;
         }
@@ -893,6 +802,7 @@ namespace loadingBox2dGui.presenters
                 }
             }
         }
+
         private async Task UpdateModelParametersFromConfig()
         {
             await _modelParameterAccessLock.WaitAsync();
@@ -945,6 +855,7 @@ namespace loadingBox2dGui.presenters
                 }
             }
         }
+
         private void ModifyCameraParametersFromConfig(string[] cameraBundleNames)
         {
             if (cameraBundleNames == null || cameraBundleNames.Count() == 0)
@@ -968,6 +879,7 @@ namespace loadingBox2dGui.presenters
                 }
             }
         }
+
         private void DeleteCameraParametersFromConfig(string[] cameraBundleNames)
         {
             if (cameraBundleNames == null || cameraBundleNames.Count() == 0)
@@ -987,404 +899,10 @@ namespace loadingBox2dGui.presenters
                 }
             }
         }
-        private bool LoadMasterDataset()
+
+        private async Task<bool> InitializeTransformationMatrices()
         {
-            Stopwatch sw = Stopwatch.StartNew();
-            _masterDataAccessLock.Wait();
-            try
-            {
-                foreach (var carTypeToConfig in _config.ConfigDict)
-                {
-                    string masterImageRootPath = carTypeToConfig.Value.MasterImageRootFolderPath;
-                    bool getMasterImageFilePathsSucceed = GetLocationToFilePathDict(masterImageRootPath, out var locToMasterImagePaths);
-
-                    string checkerBoardRootPath = carTypeToConfig.Value.CheckerBoardRootFolderPath;
-                    bool getCheckerBoardFilePathsSucceed = GetLocationToFilePathDict(checkerBoardRootPath, out var locToCheckerBoardfiles);
-
-                    string calibrationDataPath = _config.CalibrationDataRootPath;
-                    bool getCalibrationFilePathsSucceed = GetLocationToFilePathDict(calibrationDataPath, out var locToCalibrationFiles);
-
-                    string zDegreeDataPath = _config.ZRotationPerLocationDataFilePath;
-                    bool getZDegreeDataSucceed = TryDeserializeYaml<Dictionary<InspectionLocation, float>>(zDegreeDataPath, out var zDegrees);
-                    
-                    string masterCameraTcpRootPath = _config.CameraTcpFilePath;
-                    bool getMasterCameraTcpFilePathsSucceed = TryDeserializeYaml<HandEyeCalibrationData>(masterCameraTcpRootPath, out var handEyeCalibrationData);
-
-                    if (!getMasterImageFilePathsSucceed || !getCheckerBoardFilePathsSucceed || !getCalibrationFilePathsSucceed
-                        || !getMasterCameraTcpFilePathsSucceed || !getZDegreeDataSucceed)
-                    {
-                        Logger.Error($"Failed Refreshing Master Dataset. Master Image : {getMasterImageFilePathsSucceed}. " +
-                            $"CheckerBoard : {getCheckerBoardFilePathsSucceed}. Calibration : {getCalibrationFilePathsSucceed}. " +
-                            $"ZDegree : {getZDegreeDataSucceed}. ");
-
-                        return false;
-                    }
-                    string shiftModelFilePath = carTypeToConfig.Value.ShiftModelPath;
-                    //string detectModelFilePath = carTypeToConfig.Value.DetectModelPath;
-
-                    int carType = carTypeToConfig.Key;
-                    if (!_carTypeToMasterDataset.ContainsKey(carType))
-                    {
-                        _carTypeToMasterDataset[carType] = new Dictionary<DataType, List<MasterPathStruct>>()
-                        { 
-                            [DataType.MasterImage] = new List<MasterPathStruct>(),
-                            [DataType.CheckerBoard] = new List<MasterPathStruct>()
-                        };
-                    }
-
-                    List<MasterPathStruct> masterImageStructs = new List<MasterPathStruct>();
-                    List<MasterPathStruct> checkerBoardStructs = new List<MasterPathStruct>();
-                    string cameraGroupName = carTypeToConfig.Value.Camera;
-                    foreach (InspectionLocation registeredLoc in _cameraParameterDict[cameraGroupName].Keys)
-                    {
-                        if (TryDeserializeYaml<CalibrationData>(locToCalibrationFiles[registeredLoc], out var calibrationData))
-                        {
-                            masterImageStructs.Add(MasterPathStruct.MasterImageStruct(carType, locToMasterImagePaths[registeredLoc], shiftModelFilePath, registeredLoc, 
-                            calibrationData, zDegrees[registeredLoc])); 
-                            checkerBoardStructs.Add(MasterPathStruct.CharucoImageStruct(carType, locToCheckerBoardfiles[registeredLoc], shiftModelFilePath, registeredLoc, 
-                            calibrationData, zDegrees[registeredLoc]));
-                        }
-                        else
-                        {
-                            Logger.Error($"Failed Refreshing Master Dataset. Failed while parsing Calibration Data From Path : {locToCalibrationFiles[registeredLoc]}");
-                            return false;
-
-                        }
-                    }
-
-                    TCP lhTcp = new TCP { TcpMatrix = handEyeCalibrationData.Lh.Data.ToArray() };
-                    TCP rhTcp = new TCP { TcpMatrix = handEyeCalibrationData.Rh.Data.ToArray() };
-                    _locToMasterCameraTcp[InspectionLocation.LH] = lhTcp;
-                    _locToMasterCameraTcp[InspectionLocation.RH] = rhTcp;
-
-                    _carTypeToMasterDataset[carType][DataType.MasterImage] = masterImageStructs;
-                    _carTypeToMasterDataset[carType][DataType.CheckerBoard] = checkerBoardStructs;
-                }
-
-                if (_config.OfflineMode)
-                {
-                    if (!LoadOfflineImages())
-                    {
-                        return false;
-                    }
-                }
-            }
-            finally
-            {
-                _masterDataAccessLock.Release();
-            }
-            Logger.Info($"Loading Master Data From File Path Complete, Took {sw.Elapsed}");
-            return true;
-        }
-        private bool LoadArucoDataset()
-        {
-            string arucoImageRootPath = Path.Combine(_config.ArucoDataRootFolderPath, "Master");
-            bool getArucoImageFilePathsSucceed = GetLocationToFilePathDict(arucoImageRootPath, out var locToMasterImagePaths);
-
-            string arucoCheckerBoardRootPath = Path.Combine(_config.ArucoDataRootFolderPath, "Charuco");
-            bool getCheckerBoardFilePathsSucceed = GetLocationToFilePathDict(arucoCheckerBoardRootPath, out var locToCheckerBoardfiles);
-
-            string calibrationDataPath = _config.CalibrationDataRootPath;
-            bool getCalibrationFilePathsSucceed = GetLocationToFilePathDict(calibrationDataPath, out var locToCalibrationFiles);
-
-            string zDegreeDataPath = _config.ZRotationPerLocationDataFilePath;
-            bool getZDegreeDataSucceed = TryDeserializeYaml<Dictionary<InspectionLocation, float>>(zDegreeDataPath, out var zDegrees);
-            
-            string masterCameraTcpFilePath = _config.CameraTcpFilePath;
-            bool getMasterHandEyeCalibrationDataSucceed = TryDeserializeYaml<HandEyeCalibrationData>(masterCameraTcpFilePath, out var handEyeCalibrationData);
-
-            if (!getArucoImageFilePathsSucceed || !getCheckerBoardFilePathsSucceed || !getCalibrationFilePathsSucceed
-                || !getMasterHandEyeCalibrationDataSucceed || !getZDegreeDataSucceed)
-            {
-                Logger.Error($"Failed Refreshing Master Dataset. Master Image : {getArucoImageFilePathsSucceed}. " +
-                    $"CheckerBoard : {getCheckerBoardFilePathsSucceed}. Calibration : {getCalibrationFilePathsSucceed}. " +
-                    $"ZDegree : {getZDegreeDataSucceed}. ");
-
-                return false;
-            }
-            string dummyModelFileRootPath= Path.Combine(_config.ArucoDataRootFolderPath, "Model");
-            string dummyModelFilePath = Directory.GetFiles(dummyModelFileRootPath).First();
-            //string detectModelFilePath = carTypeToConfig.Value.DetectModelPath;
-
-            int carType = -1;
-            if (!_carTypeToMasterDataset.ContainsKey(carType))
-            {
-                _carTypeToMasterDataset[carType] = new Dictionary<DataType, List<MasterPathStruct>>()
-                { 
-                    [DataType.MasterImage] = new List<MasterPathStruct>(),
-                    [DataType.CheckerBoard] = new List<MasterPathStruct>()
-                };
-            }
-
-            List<MasterPathStruct> masterImageStructs = new List<MasterPathStruct>();
-            List<MasterPathStruct> checkerBoardStructs = new List<MasterPathStruct>();
-            InspectionLocation[] locations = new InspectionLocation[] {InspectionLocation.LH, InspectionLocation.RH};
-            foreach (InspectionLocation registeredLoc in locations)
-            {
-                if (TryDeserializeYaml<CalibrationData>(locToCalibrationFiles[registeredLoc], out var calibrationData))
-                {
-                    masterImageStructs.Add(MasterPathStruct.MasterImageStruct(carType, locToMasterImagePaths[registeredLoc], dummyModelFilePath, registeredLoc, 
-                    calibrationData, zDegrees[registeredLoc])); 
-                    checkerBoardStructs.Add(MasterPathStruct.CharucoImageStruct(carType, locToCheckerBoardfiles[registeredLoc], dummyModelFilePath, registeredLoc, 
-                    calibrationData, zDegrees[registeredLoc]));
-                }
-                else
-                {
-                    Logger.Error($"Failed Refreshing Master Dataset. Failed while parsing Calibration Data From Path : {locToCalibrationFiles[registeredLoc]}");
-                    return false;
-
-                }
-            }
-
-            TCP lhTcp = new TCP { TcpMatrix = handEyeCalibrationData.Lh.Data.ToArray() };
-            TCP rhTcp = new TCP { TcpMatrix = handEyeCalibrationData.Rh.Data.ToArray() };
-            _locToMasterCameraTcp[InspectionLocation.LH] = lhTcp;
-            _locToMasterCameraTcp[InspectionLocation.RH] = rhTcp;
-
-            _carTypeToMasterDataset[carType][DataType.MasterImage] = masterImageStructs;
-            _carTypeToMasterDataset[carType][DataType.CheckerBoard] = checkerBoardStructs;
-
-            var checkerBoardImageStruct = _carTypeToMasterDataset[carType][DataType.CheckerBoard].ToArray();
-            _engine.LoadCharucoBoardConfig(checkerBoardImageStruct, 2);
-            var masterImageStruct = _carTypeToMasterDataset[carType][DataType.MasterImage].ToArray();
-            _engine.LoadMasterImage(masterImageStruct, 2);
-
-            _engine.InitializeMaster();
-
-            LoadOfflineImages(true);
-            return true;
-        }
-        private bool GetLocationToFilePathDict (string folderPath, out Dictionary<InspectionLocation, string> locToFilePaths)
-        {
-            if (!Directory.Exists(folderPath))
-            {
-                Logger.Error($"Failed getting file path from given folder path : {folderPath}");
-                locToFilePaths = null;
-                return false;
-            }
-
-            string[] folderPaths;
-            try
-            {
-                folderPaths = Directory.GetDirectories(folderPath);
-            }
-            catch (Exception e)
-            {
-                Logger.Error($"Getting Folder Paths from {folderPath} Failed. Error : {e.Message}");
-                locToFilePaths = null;
-                return false;
-            }
-
-            Dictionary<InspectionLocation, string> foundLocToFilePaths = new Dictionary<InspectionLocation, string>();
-            foreach (string folder in folderPaths)
-            {
-                string folderName = Path.GetFileName(folder).Trim();
-                if (Enum.TryParse(folderName, true, out InspectionLocation location))
-                {
-                    string[] file = Directory.GetFiles(folder);
-                    if (file.Length == 0)
-                    {
-                        Logger.Error($"Found no files on Path {folder}");
-                        locToFilePaths = null;
-                        return false;
-                    }
-                    else if (file.Length > 1)
-                    {
-                        Logger.Error($"Multiple files found on path {folder}, setting first as file path {file[0]}");
-                        foundLocToFilePaths[location] = file[0].Replace('\\', '/');
-                    }
-                    else
-                    {
-                        foundLocToFilePaths[location] = file[0].Replace('\\', '/');
-                    }
-                    Console.WriteLine($"Path : {file[0]}");
-                }
-                else
-                {
-                    Logger.Error($"Invalid Folder Path found on RootPath: {folderPath}, Invalid Path : {folder}");
-                }
-            }
-
-            locToFilePaths = foundLocToFilePaths;
-            return true;
-        }
-        private bool TryDeserializeYaml<T>(string path, out T deserializedInstance)
-        {
-            string yamlContent;
-            try
-            {
-                yamlContent = File.ReadAllText(path);
-                yamlContent = yamlContent.Replace("\uFEFF", "").Trim();
-
-                // Remove the `%YAML:1.0` directive if present
-                if (yamlContent.StartsWith("%YAML"))
-                {
-                    int firstNewLineIndex = yamlContent.IndexOf('\n');
-                    yamlContent = firstNewLineIndex >= 0
-                        ? yamlContent.Substring(firstNewLineIndex).Trim()
-                        : yamlContent;
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Error reading file from path : {path}, Error: {ex.Message}");
-                deserializedInstance = default;
-                return false;
-            }
-
-            var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance) // Match YAML keys
-                .WithTagMapping("tag:yaml.org,2002:opencv-matrix", typeof(Matrix)) // Handle custom tags
-                .Build();
-
-            T data;
-            try 
-            {
-                data = deserializer.Deserialize<T>(yamlContent);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Error while deserializing calibration data from path : {path}, Error: {ex}");
-                deserializedInstance = default;
-                return false;
-            }
-            deserializedInstance = data;
-            return true;
-        }
-        private bool TrySerializeYaml<T>(string path, string fileName, T data)
-        {
-            try
-            {
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-
-                string fullPath = Path.Combine(path, fileName);
-
-                var serializer = new SerializerBuilder()
-                    .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                    .Build();
-
-                string yaml = serializer.Serialize(data);
-
-                File.WriteAllText(fullPath, yaml);
-
-                return true; // Indicate success
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Failed to serialize to {path}: {ex.Message}");
-                return false; 
-            }
-        }
-        private bool LoadOfflineImages(bool getAruco = false)
-        {
-            _offlineImageHandler = new OfflineImageHandler();
-            if (getAruco)
-            {
-                string offlineDataPath = Path.Combine(_config.ArucoDataRootFolderPath, "InspectionImages");
-                bool getOfflineDataSucceed = GetLocationToFilePathDict(offlineDataPath, out var locToOfflineData);
-                if (!getOfflineDataSucceed)
-                {
-                    Logger.Error($"Failed Retrieving Aruco Images. Try Reconfiguring Aruco Image Path and Try Again");
-                    return false;
-                }
-                Logger.Info($"Images Count: {locToOfflineData.Count()}");
-                foreach (var kvp in locToOfflineData)
-                {
-                    Logger.Info($"Offline File Path: {kvp.Value}");
-                    _offlineImageHandler.LoadBitMapFromPath(-1, kvp.Key, kvp.Value);
-                }
-                Logger.Info($"Aruco Mode: Load Offline Image for Aruco: {-1} Succeeded");
-                return true;
-            }
-            foreach (int carType in _config.ConfigDict.Keys)
-            {
-                string offlineDataPath = _config[carType].OfflineImageRootFolderPath;
-                bool getOfflineDataSucceed = GetLocationToFilePathDict(offlineDataPath, out var locToOfflineData);
-                if (!getOfflineDataSucceed)
-                {
-                    Logger.Error($"Failed Retrieving Offline Images for Cartype {carType}. Try Reconfiguring Offline Image Path and Try Again");
-                    return false;
-                }
-                
-                foreach (var kvp in locToOfflineData)
-                {
-                    _offlineImageHandler.LoadBitMapFromPath(carType, kvp.Key, kvp.Value);
-                }
-                Logger.Info($"OfflineMode: Load Offline Image for Cartype: {carType} Succeeded");
-            }
-            return true;
-        }
-        private async Task<bool> InitializeScanSettings(bool onAruco = false)
-        {
-            if (_locToMasterCameraTcp.Count != 2)
-            {
-                Logger.Info($"Camera TCP Not set, Update Master Data Set");
-                return false;
-            }
-            TCP masterScanPoseTcp = new TCP();
-            TCP masterInstallPoseTcp = new TCP();
-            if (_config.OfflineMode)
-            {
-                if (TryDeserializeYaml<double[]>(Path.Combine(_config[-1].MasterImageRootFolderPath, _masterScanPoseTcpFile), out var scanPoseTcp))
-                {
-                    masterScanPoseTcp.TcpMatrix = scanPoseTcp;
-                }
-                else { return false; }
-                if (TryDeserializeYaml<double[]>(Path.Combine(_config[-1].MasterImageRootFolderPath, _masterInstallPoseTcpFile), out var installPoseTcp))
-                {
-                    masterInstallPoseTcp.TcpMatrix = installPoseTcp;
-                }
-                else { return false; }
-            }
-            else if (onAruco)
-            {
-                if (TryDeserializeYaml<double[]>(Path.Combine(_config.ArucoDataRootFolderPath, _masterScanPoseTcpFile), out var scanPoseTcp))
-                {
-                    masterScanPoseTcp.TcpMatrix = scanPoseTcp;
-                }
-                else { return false; }
-                if (TryDeserializeYaml<double[]>(Path.Combine(_config.ArucoDataRootFolderPath, _masterInstallPoseTcpFile), out var installPoseTcp))
-                {
-                    masterInstallPoseTcp.TcpMatrix = installPoseTcp;
-                }
-                else { return false; }
-            }
-            else
-            {
-                var robotConfig = _config.RobotConfigs[_config[-1].Robot];
-                var masterScanPoseVariables = robotConfig[RobotAttribute.GapScanPoseVars]?.Split(',');
-                var masterInstallPoseVariables = robotConfig[RobotAttribute.VehicleInstallVars]?.Split(',');
-                var masterScanPoses = await ReadRobotPoses(masterScanPoseVariables);
-                var masterInstallPoses = await ReadRobotPoses(masterInstallPoseVariables);
-                if (masterScanPoses == null || masterInstallPoses == null)
-                {
-                    Logger.Error($"Failed to load Scan Settings to Engine: Failed Loading Master Poses from Robot");
-                    return false;
-                }
-                else
-                {
-                    Logger.Info($"Read Scan Pose : {masterScanPoses.First()} \nInstall Pose TCP: {masterInstallPoses.First()}");
-                    masterScanPoseTcp = TCP.GetTCPFromRobotPose(masterScanPoses.First());
-                    masterInstallPoseTcp = TCP.GetTCPFromRobotPose(masterInstallPoses.First());
-                }
-            }
-            Logger.Info($"Scan Pose TCP: {masterScanPoseTcp} \t Install Pose TCP: {masterInstallPoseTcp}");
-            bool ret = _engine.LoadTransformationMatrix(masterScanPoseTcp, masterInstallPoseTcp,
-                                                        _locToMasterCameraTcp[InspectionLocation.LH], _locToMasterCameraTcp[InspectionLocation.RH]);
-            if (!ret)
-            {
-                Logger.Error($"Failed Loading Scan Settings to Engine. loadTransformMat API Failed");
-                return false;
-            }
-
-            return true;
-        }
-        private async Task<bool> SaveRobotMasterPoses(int carType, string rootPath)
-        {
-            var robotConfig = _config.RobotConfigs[_config[carType].Robot];
+            var robotConfig = _config.RobotConfigs[_config[-1].Robot];
             var masterScanPoseVariables = robotConfig[RobotAttribute.GapScanPoseVars]?.Split(',');
             var masterInstallPoseVariables = robotConfig[RobotAttribute.VehicleInstallVars]?.Split(',');
             var masterScanPoses = await ReadRobotPoses(masterScanPoseVariables);
@@ -1394,21 +912,11 @@ namespace loadingBox2dGui.presenters
                 Logger.Error($"Failed to load Scan Settings to Engine: Failed Loading Master Poses from Robot");
                 return false;
             }
-            else
-            {
-                TCP masterScanPoseTcp = TCP.GetTCPFromRobotPose(masterScanPoses.First());
-                if (!TrySerializeYaml(rootPath, _masterScanPoseTcpFile, masterScanPoseTcp.TcpMatrix))
-                {
-                    return false;
-                }
-                TCP masterInstallPoseTcp = TCP.GetTCPFromRobotPose(masterInstallPoses.First());
-                if (!TrySerializeYaml(rootPath, _masterInstallPoseTcpFile, masterInstallPoseTcp.TcpMatrix))
-                {
-                    return false;
-                }
-            }
-            return true;
+            Logger.Info($"Read Scan Pose : {masterScanPoses.First()} \nInstall Pose TCP: {masterInstallPoses.First()}");
+            bool ret = _masterDataManager.InitializeTransformationMatrices(_currentCar, masterScanPoses.First(), masterInstallPoses.First());
+            return ret;
         }
+
         private void SaveConfig()
         {
             try
@@ -1420,20 +928,13 @@ namespace loadingBox2dGui.presenters
                 Logger.Error(ex.Message);
             }
         }
-        private void SaveBitmap(InspectionLocation location, Bitmap bitmap, string saveRootPath)
+
+        private void SaveBitmap(InspectionLocation location, Bitmap bitmap, string saveRootPath, string uniformFilename)
         {
             try
             {
-                string fileName = $"{location}.png";
-                //if (!string.IsNullOrEmpty(_sequenceNumber))
-                //{
-                //    fileName += $"_{_sequenceNumber}";
-                //}
-                //if (!string.IsNullOrEmpty(_bodyNumber))
-                //{
-                //    fileName += $"_{_bodyNumber}";
-                //}
-                string fullPath = Path.Combine(saveRootPath, location.ToString(), fileName);
+                string fileName = $"{location}_{uniformFilename}";
+                string fullPath = Path.Combine(saveRootPath, fileName);
                 if (!Directory.Exists(Path.GetDirectoryName(fullPath)))
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
@@ -1446,36 +947,28 @@ namespace loadingBox2dGui.presenters
                 Logger.Error($"Save Failed. Error: {ex.Message}");
             }
         }
-        private async Task SaveInspectionData(string rootPath, RobotPose scanPose, IImageProvider<InspectionLocation> imageProvider)
+
+        private async Task SaveInspectionData(string rootPath, string uniformFilename, IImageProvider<InspectionLocation> imageProvider)
         {
-            var locimages = imageProvider.GetAllBitmaps();
-            TrySerializeYaml(rootPath, _scanPoseTcpFile, TCP.GetFlattenMatrix4x4FromRobotPose(scanPose));
-            IEnumerable<Task> saveImages = locimages?.Select(locImg => Task.Run(() => SaveBitmap(locImg.Item1, locImg.Item2, rootPath)));
-            await Task.WhenAll(saveImages);
-        }
-        private string ConfigureSaveRootPath(bool isMasterData)
-        {
-            string saveRootPath;
-            if (isMasterData)
+            var locImages = imageProvider.GetAllBitmaps();
+            List<Task> saveImageTasks = new List<Task>();
+            foreach (var locImg in locImages)
             {
-                saveRootPath = _config[-1].MasterImageRootFolderPath;
+                saveImageTasks.Add(Task.Run(() => SaveBitmap(locImg.Item1, locImg.Item2, rootPath, uniformFilename)));
             }
-            else
-            {
-                var currentCarName = _config[-1].CarName;
-                var capturedDate = $"{DateTime.Now:yyMMdd}";
-                var capturedTime = $"{DateTime.Now:HHmmss}";
-                var carInfo = $"{_sequenceNumber}_{_bodyNumber}";
-                saveRootPath = Path.Combine(_config.LogPath, "OK", capturedDate, currentCarName ?? "unknown", 
-                    carInfo, capturedTime);
-                //TODO: Apply body and sequence number
-            }
-            return saveRootPath;
+            await Task.WhenAll(saveImageTasks);
         }
+
         private void UpdateUiByConfig()
         {
             _view.SetCarTypeList(_config.GetCarTypeAndNameList(), _config.RecentlyUsedCar);
+            if (_plcComm != null && _config.Plc != null && 
+                _config.PlcConfigs.TryGetValue(_config.Plc, out var plcConfig))
+            {
+                _view.PlcInfo = plcConfig.ToPlcInfoString();
+            }
         }
+
         private void UpdateUiByInspection(IImageProvider<InspectionLocation> providerByLoc)
         {
             try
@@ -1490,7 +983,7 @@ namespace loadingBox2dGui.presenters
             catch (Exception) { }
         }
 
-        private bool ConfigureRobot(Dictionary<RobotAttribute, string> robotConfig, bool wantRemake = false)
+        private bool ConfigureInstallRobot(Dictionary<RobotAttribute, string> robotConfig, bool wantRemake = false)
         {
             if (wantRemake)
             {
@@ -1511,6 +1004,7 @@ namespace loadingBox2dGui.presenters
             }
             return true;
         }
+
         private Task<bool> ReadyRobotsAysnc()
         {
             return Task.Run(async () =>
@@ -1519,7 +1013,7 @@ namespace loadingBox2dGui.presenters
                 {
                     Stopwatch sw = Stopwatch.StartNew();
                     var installRobotConfig = _config.RobotConfigs[_config[-1].Robot];
-                    bool ret = ConfigureRobot(installRobotConfig, true);
+                    bool ret = ConfigureInstallRobot(installRobotConfig, true);
 
                     if (ret && installRobotConfig[RobotAttribute.Maker].ToEnum<RobotMaker>() == RobotMaker.YASKAWA)
                     {
@@ -1535,141 +1029,148 @@ namespace loadingBox2dGui.presenters
                 }
             });
         }
-        private async Task<RobotPose> ScanPointAsync(bool saveAsMaster = false)
+
+        private async Task<bool> ScanPointAsync(bool saveAsMaster = false)
         {
             Stopwatch sw = Stopwatch.StartNew();
             if (!await StartCameraAsync())
             {
                 Logger.Info($"Scanning Current Value Failed");
-                return null;
+                return false;
             }
 
-            RobotPose currentScanPose = new RobotPose();
-            if (_config.OfflineMode)
-            {
-                UpdateUiByInspection(_offlineImageHandler);
-            }
-            else
-            {
-                UpdateUiByInspection(_cameraComm);
-                //if (!await ReadyRobotsAysnc())
-                //{
-                //    Logger.Error($"Robot Error Failed");
-                //}
-
-                //currentScanPose = await _robotComm.ReadRobotCurrentPoseAsync();
-                //Logger.Info($"Read Current Pose :{currentScanPose}");
-                //if (currentScanPose == null)
-                //{
-                //    Logger.Error($"Failed To read Current Robot Pose");
-                //    return null;
-                //}
-
-                //await SaveInspectionData(ConfigureSaveRootPath(false), currentScanPose, _cameraComm);
-            }
-            
+            UpdateUiByInspection(_cameraComm);
 
             if (saveAsMaster)
             {
                 try
                 {
-                    var masterSaveRootPath = ConfigureSaveRootPath(true);
-                    await SaveInspectionData(masterSaveRootPath, currentScanPose, _cameraComm);
-                    await SaveRobotMasterPoses(_currentCar, masterSaveRootPath);
+                    await _masterDataManager.SaveMasterImage(_cameraComm, _currentCar);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error($"Saving TCP to Path Failed: ScanPose : {currentScanPose}. Error: {ex.Message}");
+                    Logger.Error($"Saving TCP to Path Failed: Error: {ex}");
                 }
             }
             Logger.Info($"Scan Pose Complete: SaveMaster: {saveAsMaster}, Took: {sw.Elapsed}");
-            return currentScanPose;
+            return true;
         }
-        private async Task<RobotPose> CalculateShiftPointAsync(RobotPose readPose)
+
+        private async Task<(RobotPose, float, float, int)> CalculateShiftPointAsync()
         {
-            if (!await InitializeScanSettings())
+            if (!await InitializeTransformationMatrices())
             {
-                return null;
+                return (null, 0, 0, 0);
             }
 
             Stopwatch stopwatch = Stopwatch.StartNew();
-            ImageStruct[] structForShiftValueArray;
-            if (_config.OfflineMode)
+            ImageStruct[] structForShiftValueArray = _cameraComm.GetImageStructArray(_currentCar);
+
+            if (structForShiftValueArray == null || structForShiftValueArray.Length != 2)
             {
-                Logger.Info($"Current Car, {_currentCar}");
-                _offlineImageHandler.SetCarType(_currentCar);
-                structForShiftValueArray = _offlineImageHandler?.GetImageStructsArray(new InspectionLocation[] {InspectionLocation.LH, InspectionLocation.RH });
-            }
-            else
-            {
-                structForShiftValueArray = _cameraComm.GetImageStructArray(_currentCar);
+                Logger.Error($"Failed Getting Both LH and RH Images");
+                return (null, 0, 0, 0);
             }
 
-            if (structForShiftValueArray.Length == 0)
-            {
-                Logger.Error($"Failed Getting Any Image Structs");
-                return null;
-            }
+            bool calculatePoseSuccess = false, modelValidated = false, calculationValidated = false;
+            float minConfidenceScore = 0, maxMasterToSrcSizeRatioDiff = 0;
+            int maxRefHoleCount = 0;
 
-            Logger.Info($"Finished Fetching Images. Image Count : {structForShiftValueArray.Length}. Took : {stopwatch.Elapsed}");
-            bool calculatePoseSuccess = false; 
-            await Task.Run(() =>
+            calculatePoseSuccess = await Task.Run(() =>
             {
-                calculatePoseSuccess = _engine.PoseAdjustmentCargoBox2D(structForShiftValueArray, structForShiftValueArray.Count());
+                return _engine.PoseAdjustmentCargoBox2D
+                (structForShiftValueArray, structForShiftValueArray.Count(), 
+                out minConfidenceScore, out maxMasterToSrcSizeRatioDiff, out maxRefHoleCount);
             });
-
-            if (_config.OfflineMode)
-            {
-                _offlineImageHandler.ClearBmpData();
-            }
-            else
-            {
-                _cameraComm.ClearBmpData();
-            }
+            Logger.Info($"Calculate Shift Value Complete, Took {stopwatch.Elapsed}");
 
             if (calculatePoseSuccess)
             {
-                Logger.Info($"Calculate Shift Value Complete, Took {stopwatch.Elapsed}");
                 foreach (ImageStruct imgStruct in structForShiftValueArray)
                 {
                     Logger.Info($"Computed Shift Value: Location: {imgStruct.CameraLocation}, Pose: {imgStruct.Shift6D}");
                 }
-                return structForShiftValueArray[0].GetRobotPose();
+                var calculatedPose = structForShiftValueArray[0].GetRobotPose();
+                calculatedPose.Tz = 0;
+                calculatedPose.Rx = 0;
+                calculatedPose.Ry = 0;
+                calculatedPose.Rz = 0;
+                return (calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, maxRefHoleCount);
             }
-            else
-            {
-                Logger.Error($"Calculating Pose Failed");
-                return null;
-            }
-        }
 
-        private async Task<bool> ValidateCalculatedResult(RobotPose calculatedPose, int confidenceValue = 100)
+            Logger.Error($"Calculating Pose Success: {calculatePoseSuccess}. Model Validated: {modelValidated}. Calculation Validated: {calculationValidated}");
+            return (null, 0, 0, 0);
+        }
+        
+        private bool ValidateCalculatedResult(CargoBox2DConfig modelConfig, RobotPose calculatedPose)
         {
-            await _modelParameterAccessLock?.WaitAsync();
-            var modelConfig = _modelParameterDict[_currentCar];
-            if (modelConfig.MaxTranslationX > Math.Abs(calculatedPose.Tx)
-                || modelConfig.MaxTranslationY > Math.Abs(calculatedPose.Ty)
-                || modelConfig.MaxRotationZ > Math.Abs(calculatedPose.Rz))
+            if (calculatedPose is null)
             {
-                Logger.Error($"Calculated Value Exceeds current threshold, Tx: {modelConfig.MaxTranslationX} Ty: {modelConfig.MaxTranslationY} Tz: {modelConfig.MaxRotationZ}. Calculate: {calculatedPose}");
                 return false;
             }
-            
-            if (modelConfig.ConfidenceThreshold > confidenceValue)
+
+            if (modelConfig.MaxTranslationX < Math.Abs(calculatedPose.Tx)
+                || modelConfig.MaxTranslationY < Math.Abs(calculatedPose.Ty)
+                || modelConfig.MaxTranslationZ < Math.Abs(calculatedPose.Tz)
+                || modelConfig.MaxRotationZ < Math.Abs(calculatedPose.Rz))
             {
-                Logger.Error($"Computed Confidence {confidenceValue} is lower than threshold. {modelConfig.ConfidenceThreshold}");
-                return false; 
+                Logger.Error($"Calculated Value Exceeds current threshold, " +
+                    $"Tx: {modelConfig.MaxTranslationX} Ty: {modelConfig.MaxTranslationY} Tz: {modelConfig.MaxTranslationZ}. " +
+                    $"Rz: {modelConfig.MaxRotationZ} Calculated Pose: {calculatedPose}");
+                return false;
             }
-            _modelParameterAccessLock.Release();
             return true;
         }
 
-        public async Task<bool> WriteRobotPoses(RobotPose[] posesToWrite)
+        private bool ValidateModelPerformance(CargoBox2DConfig modelConfig, float minConfidenceScore, float maxMasterToSrcSizeRatioDiff, int maxRefHoleCount)
+        {
+            Logger.Info($"Model Performance: Confidence Score : {minConfidenceScore}, Max Size Ratio Diff :{maxMasterToSrcSizeRatioDiff}, Ref Hole Count: {maxRefHoleCount}");
+            if (modelConfig.ConfidenceThreshold > minConfidenceScore)
+            {
+                Logger.Error($"Computed Confidence {minConfidenceScore} is lower than threshold. {modelConfig.ConfidenceThreshold}");
+                return false;
+            }
+            if (modelConfig.SizeRatioDifferenceToSrcThreshold < Math.Abs(1 - maxMasterToSrcSizeRatioDiff))
+            {
+                Logger.Error($"Computed Size Difference {Math.Abs(1 - maxMasterToSrcSizeRatioDiff)} is higher than the threshold. {modelConfig.SizeRatioDifferenceToSrcThreshold}");
+                return false;
+            }
+            if (maxRefHoleCount != 1)
+            {
+                Logger.Error($"Computed Max Ref Hole Count {maxRefHoleCount} is not 1");
+                return false;
+            }
+            return true;
+        }
+
+        private async Task<(bool, bool)> ValidateCalculationAndModelPerformance(RobotPose calculatedPose, float maxMasterToSrcSizeRatioDiff, float maxAbsSizeDiff, int maxRefHoleCount)
+        {
+            if (calculatedPose == null)
+            {
+                return (false, false);
+            }
+
+            await _modelParameterAccessLock.WaitAsync();
+            try
+            {
+                var modelConfig = _modelParameterDict[_currentCar];
+                bool calculationValidated = ValidateCalculatedResult(modelConfig, calculatedPose);
+                bool modelPerformanceValidated = ValidateModelPerformance(modelConfig, maxMasterToSrcSizeRatioDiff, maxAbsSizeDiff, maxRefHoleCount);
+                return (calculationValidated, modelPerformanceValidated);
+            }
+            finally
+            {
+                _modelParameterAccessLock.Release();
+            }
+        }
+
+        private async Task<bool> WriteRobotPoses(params RobotPose[] posesToWrite)
         {
             if (!await ReadyRobotsAysnc())
             {
                 return false;
             }
+
             var installRobotConfig = _config.RobotConfigs[_config[-1].Robot];
             var writeVarNames = installRobotConfig[RobotAttribute.VehicleShiftVars].Split(',');
 
@@ -1700,6 +1201,7 @@ namespace loadingBox2dGui.presenters
                 return false;
             }
         }
+
         public async Task<RobotPose[]> ReadRobotPoses(string[] readVariables)
         {
             if (!await ReadyRobotsAysnc())
@@ -1737,51 +1239,170 @@ namespace loadingBox2dGui.presenters
                 return null;
             }
         }
+
         private async Task<bool> SendPlcStatusAsync(PlcSignalForLoadingBox signal, bool value, int nMaxTrials, int delay)
         {
             try
             {
                 int ret = await _plcComm.SendPlcStatusAsync(signal, value, nMaxTrials, delay);
-                if (value)
+                if (ret == 0)
                 {
-                    if (ret == 0)
-                    {
-                            
-                        Logger.Info($"SEND {signal} SUCCEED");
-                        return true;
-                    }
-                    else
-                    {
-                        Logger.Info($"SEND {signal} FAILED");
-                        return false;
-                    }
+                        
+                    Logger.Info($"{(value ? "SEND" : "ERASE")} {signal} SUCCEED");
+                    return true;
                 }
                 else
                 {
-                    if (ret == 0)
-                    {
-                        Logger.Info($"Erase {signal} SUCCEED");
-                        return true;
-                    }
-                    else
-                    {
-                        Logger.Info($"Erase {signal} FAILED");
-                        return false;
-                    }
+                    Logger.Info($"{(value ? "SEND" : "ERASE")} {signal} FAILED");
+                    return false;
                 }
             }
             catch (Exception ex)
             {
-                Logger.Error($"Sending Plc Signal {signal}, Failed. Error : {ex.Message}");
+                Logger.Error($"{(value ? "Sending" : "Erasing")} Plc Signal {signal} Failed. Error : {ex.Message}");
                 return false;
             }
         }
-        #endregion
-        #region Enums
-        enum ProgramState
-        {
 
+        private void UpdateNgList(DateTime? startDate = null)
+        {
+            var productionRecords = _productionRecordRepository?.GetRecordsByResult(startDate, InspectionResult.NG);
+            if (productionRecords == null)
+            {
+                Logger.Debug($"Retrieving Records Failed");
+                return;
+            }
+            _view.ShowOnDataGrid(new BindingSource { DataSource = productionRecords });
         }
+
+        private async Task RegisterInspectionResult(InspectionResult result, RobotPose computedResult, bool saveRecordOnDb = true)
+        {
+            DateTime inspectionTime = DateTime.Now;
+            FileHelper.GetResultSavePath(_config.LogPath, result, inspectionTime, 
+                _config[-1].CarName, _sequenceNumber, _bodyNumber, ImageFormat.Png, 
+                out var resultSaveDirectoryPath, out var resultSaveFilename);
+            await SaveInspectionData(resultSaveDirectoryPath, resultSaveFilename, _cameraComm);
+
+            string captureFile = CaptureScreen(inspectionTime, result);
+            
+            if (computedResult == null)
+            {
+                computedResult = new RobotPose() 
+                { 
+                    Tx = 0,
+                    Ty = 0,
+                    Rz = 0
+                };
+            }
+
+            _view.SetCalculatedShiftPose(new double[] { computedResult.Tx, computedResult.Ty, computedResult.Rz });
+            try
+            {
+                if (!saveRecordOnDb)
+                {
+                    return;
+                }
+
+                ProductionRecord record = new ProductionRecord()
+                {
+                    CarName = _config[-1].CarName,
+                    SequenceNumber = _sequenceNumber,
+                    BodyNumber = _bodyNumber,
+                    InspectionResult = result,
+                    ScreenShotImagePath = captureFile,
+                    ProductionDateTime = inspectionTime,
+                    Tx = computedResult.Tx,
+                    Ty = computedResult.Ty,
+                    Rz = computedResult.Rz
+                };
+
+                _productionRecordRepository.AddProductionRecord(record);
+                UpdateNgList(_config.StartTimeToGetNgList);
+            }
+            catch (Exception ex)
+            {
+                Logger.Debug(ex.ToString());
+            }
+        }
+
+        private string CaptureScreen(DateTime? dateTime = null, InspectionResult result = InspectionResult.NONE)
+        {
+            FileHelper.GetScreenCaptureFullPath(_config.LogPath, result, _sequenceNumber,
+                _bodyNumber, dateTime, out var saveDirectoryPath, out var saveFilename);
+            
+            try
+            {
+                var capturedFilePaths = Logger.Capture(new List<string> { saveDirectoryPath }, new List<string> { saveFilename });
+                return capturedFilePaths?.First();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+        
+        private void ResetUi()
+        {
+            _view.Init();
+            _view.SetInspectionImage(InspectionLocation.LH, null);
+            _view.SetInspectionImage(InspectionLocation.RH, null);
+            _view.DisplayVisionResult(VisionStatus.NONE);
+        }
+
+        //private void ShowProductionRecord()
+        //{
+        //    if (_productionRecordRepository == null)
+        //    {
+        //        Logger.Warning(Presenter.RetrievingRecordsFromDatabaseFailed);
+        //        return; 
+        //    }
+        //    try
+        //    {
+        //        DateTime nowDateTime = DateTime.Now;
+        //        bool parseSuccess = DateTime.TryParseExact(_config.DailyProductionResetTime, "HH:mm", Thread.CurrentThread.CurrentCulture, DateTimeStyles.None, out DateTime dailyProdResetTime);
+        //        if (!parseSuccess)
+        //        {
+        //            Logger.Warning(Presenter.ParsingDailyProductionResetTimeFailed);
+        //            dailyProdResetTime = new DateTime(nowDateTime.Year, nowDateTime.Month, nowDateTime.Day, 0, 0, 0);
+        //        }
+
+        //        List<ProductionRecord> records; 
+        //        if (nowDateTime >= dailyProdResetTime)
+        //        {
+        //            records = _productionRecordRepository.GetProductionRecordByDateRange(dailyProdResetTime, dailyProdResetTime.AddDays(1));
+        //        }
+        //        else
+        //        {
+        //            records = _productionRecordRepository.GetProductionRecordByDateRange(dailyProdResetTime.AddDays(-1), dailyProdResetTime);
+        //        }
+
+        //        double okCount = 0.0;
+        //        double ngCount = 0.0;
+        //        double totalCount = 0.0;
+
+        //        records?.ForEach(record =>
+        //        {
+        //            if (record.ProductionResult == InspectionResult.OK)
+        //            {
+        //                okCount++;
+        //            }
+        //            else if (record.ProductionResult == InspectionResult.NG)
+        //            {
+        //                ngCount++;
+        //            }
+        //            totalCount++;
+        //        });
+        //        _view.TotalProductionRecord = totalCount.ToString();
+        //        _view.OkProductionRecord = okCount.ToString();
+        //        _view.NgProductionRecord = ngCount.ToString();
+        //        _view.OkPercent = $"OK : {Math.Round(okCount / (totalCount + double.Epsilon) * 100.0, 1)}%";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Logger.Warning(ex.Message);
+        //    }
+        //}
         #endregion
     }
 }

@@ -19,9 +19,9 @@ namespace loadingBox2dGui.models
         public Dictionary<string, Dictionary<RobotAttribute, string>> RobotConfigs { get; set;}
         public Dictionary<string, Dictionary<InspectionLocation, Dictionary<Camera2DAttribute, string>>> CameraConfigs { get; set; }
         public Dictionary<int, CargoBox2DConfig> ConfigDict { get; set; } = new Dictionary<int, CargoBox2DConfig>();
-        public string Plc { get; set; }
-        public string Light { get; set; }
-        public string Camera { get; set; }
+        public string Plc { get; set; } = "undefined";
+        public string Light { get; set; } = "undefined";
+        public string Camera { get; set; } = "undefined";
         public int RecentlyUsedCar { get; set; } = 0;
         public string Language { get; set; } = "ko-KR";
         public TaskType TaskType { get; set; } = TaskType.Cargo;
@@ -41,12 +41,11 @@ namespace loadingBox2dGui.models
                 catch (Exception) { }
             }
         }
-        public string CalibrationDataRootPath { get; set; } = "undefined";
-        public string ZRotationPerLocationDataFilePath { get; set; } = "undefined";
-        public string CameraTcpFilePath { get; set; } = "undefined";
-        public string ArucoDataRootFolderPath { get; set; } = "C:/Data/Aruco";
-        public bool OfflineMode { get; set; } = false;
+        public string IntrinsicCalibrationDataRootPath { get; set; } = "undefined";
+        public string ZRotationPerLocationDataFilePath { get; set; } = "currentUnusedUtilizedByInspectionEngine";
+        public string ExtrinsicCalibrationDataFilePath { get; set; } = "undefined";
         public OperationMode StartMode { get; set; } = OperationMode.Auto;
+        public DateTime StartTimeToGetNgList { get; set; } = DateTime.Now;
         public Config()
         {
             Plc = "Tk1MelsecCommunicator";
@@ -69,28 +68,25 @@ namespace loadingBox2dGui.models
             {
                 ["Install"] = DefaultSettingLoader.Robots[RobotMaker.YASKAWA]()
             };
+
             ConfigDict[0] = new CargoBox2DConfig();
         }
         public bool Delete(int k)
         {
             return ConfigDict.Remove(k);
         }
-
         public List<int> GetCarTypeList()
         {
             return ConfigDict.Keys.ToList();
         }
-
         public List<string> GetCarTypeStringList()
         {
             return ConfigDict.Keys.Select(k => k.ToString()).ToList();
         }
-
         public BindingList<CarTypeAndName> GetCarTypeAndNameList()
         {
             return new BindingList<CarTypeAndName>(ConfigDict.Select(x => new CarTypeAndName(x.Key, x.Value.CarName)).ToList());
         }
-
         public List<string> GetCamSetList()
         {
             return CameraConfigs.Keys.ToList();
@@ -99,7 +95,6 @@ namespace loadingBox2dGui.models
         {
             return RobotConfigs.Keys?.ToList();
         }
-
         public CargoBox2DConfig this[int key]
         {
             get
@@ -126,7 +121,6 @@ namespace loadingBox2dGui.models
                 ConfigDict[key] = value;
             }
         }
-
         public void LockCarType()
         {
             try
@@ -143,7 +137,6 @@ namespace loadingBox2dGui.models
                 Console.WriteLine(e.ToString());
             }
         }
-
         public List<int> GetPermittedCarTypeList()
         {
             List<int> permittedCarTypeList = new List<int>();
@@ -159,9 +152,24 @@ namespace loadingBox2dGui.models
                 return permittedCarTypeList;
             }
         }
+        public Dictionary<int, Dictionary<DataType, string>> GetMasterDataPathsDict()
+        {
+            Dictionary<int, Dictionary<DataType, string>> masterDataPathsDict = new Dictionary<int, Dictionary<DataType, string>>();
+            foreach (var carKvP in ConfigDict)
+            {
+                masterDataPathsDict[carKvP.Key] = new Dictionary<DataType, string>()
+                {
+                    [DataType.MasterImage] = carKvP.Value.MasterImageRootFolderPath,
+                    [DataType.RobotPose] = carKvP.Value.RobotPoseRootFolderPath,
+                    [DataType.CheckerBoard] = carKvP.Value.CheckerBoardRootFolderPath,
+                    [DataType.ShiftModel] = carKvP.Value.ShiftModelPath,
+                    [DataType.IntrinsicCalibration] = IntrinsicCalibrationDataRootPath,
+                    [DataType.ExtrinsicCalibration] = ExtrinsicCalibrationDataFilePath
+                };
+            }
+            return masterDataPathsDict;
+        }
     }
-
-    
 
     public static class DefaultSettingLoader
     {

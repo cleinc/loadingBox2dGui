@@ -21,7 +21,9 @@ namespace loadingBox2dGui.models
         bool InitializeMaster();
         bool ShowCharuco();
         bool PoseAdjustment2D(ImageStruct[] images, int imageCount);
-        bool PoseAdjustmentCargoBox2D(ImageStruct[] images, int imageCount);
+        bool PoseAdjustmentCargoBox2D(ImageStruct[] images, int imageCount, out float modelConfidence, out float absRefHoleSizeDiff, out int minRefHoleCount);
         bool LoadTransformationMatrix(TCP masterScanPose, TCP masterInstallPose, TCP leftCameraTcp, TCP rightCameraTcp);
+        bool CheckModelImage(ref ImageStruct image, string modelPath, out int refHoleCount, out float confidenceScore);
+        bool CheckModelPath(string modelPath);
     }
 }

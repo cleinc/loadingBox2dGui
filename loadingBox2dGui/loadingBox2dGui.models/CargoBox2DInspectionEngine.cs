@@ -19,6 +19,12 @@ namespace loadingBox2dGui.models
             SetEngineType(config.TaskType);
             _engineHandler = GetEnginePointer();
         }
+        
+        public CargoBox2DInspectionEngine()
+        {
+            SetEngineType(TaskType.Cargo);
+            _engineHandler = GetEnginePointer();
+        }
 
         public delegate void WriteLogCallback([MarshalAs(UnmanagedType.LPWStr)]string msg, LogLevel logLvl, string caller);
         private static WriteLogCallback _scb;
@@ -111,8 +117,8 @@ namespace loadingBox2dGui.models
         public bool PoseAdjustment2D(ImageStruct[] images, int imageCount)
         {
             throw new InvalidOperationException();
-            Logger.Debug("[GUI] Called PoseAdjustment2D API");
-            return CargoBox2DInspectionEngineApi.poseAdjustment2D(_engineHandler, images, imageCount);
+            //Logger.Debug("[GUI] Called PoseAdjustment2D API");
+            //return CargoBox2DInspectionEngineApi.poseAdjustment2D(_engineHandler, images, imageCount);
         }
 
         public bool LoadTransformationMatrix(TCP scanPoseTcp, TCP installPoseTcp, TCP leftCamTcp, TCP rightCamTcp)
@@ -121,10 +127,22 @@ namespace loadingBox2dGui.models
             return CargoBox2DInspectionEngineApi.loadTransMat(_engineHandler, ref scanPoseTcp, ref installPoseTcp, ref leftCamTcp, ref rightCamTcp);
         }
 
-        public bool PoseAdjustmentCargoBox2D(ImageStruct[] images, int imageCount)
+        public bool PoseAdjustmentCargoBox2D(ImageStruct[] images, int imageCount, out float modelConfidence, out float maxMasterToSrcSizeRatioDiff, out int minRefHoleCount)
         {
             Logger.Debug("[GUI] Called PoseAdjustmentCargoBox2D API");
-            return CargoBox2DInspectionEngineApi.poseAdjustment2DCargo(_engineHandler, images, imageCount);
+            return CargoBox2DInspectionEngineApi.poseAdjustment2DCargo(_engineHandler, images, imageCount, out modelConfidence, out maxMasterToSrcSizeRatioDiff, out minRefHoleCount);
+        }
+
+        public bool CheckModelPath(string modelPath)
+        {
+            Logger.Debug("[GUI] Called CheckModelPath API");
+            return CargoBox2DInspectionEngineApi.checkModelPath(_engineHandler, false, modelPath);
+        }
+
+        public bool CheckModelImage(ref ImageStruct image, string modelPath, out int refHoleCount, out float confidenceScore)
+        {
+            Logger.Debug($"[GUI] Called CheckModelImage"); 
+            return CargoBox2DInspectionEngineApi.checkModelImage(_engineHandler, ref image, modelPath, out refHoleCount, out confidenceScore);
         }
 
         public class CargoBox2DInspectionEngineApi
@@ -187,10 +205,6 @@ namespace loadingBox2dGui.models
 
             [DllImport(_dllName)]
             [return: MarshalAs(UnmanagedType.I1)]
-            public static extern bool checkModelPath(IntPtr enginePointer, [MarshalAs(UnmanagedType.LPStr)] string modelPath);
-            
-            [DllImport(_dllName)]
-            [return: MarshalAs(UnmanagedType.I1)]
             public static extern bool showCharuco(IntPtr enginePointer);
 
             [DllImport(_dllName)]
@@ -199,7 +213,8 @@ namespace loadingBox2dGui.models
             
             [DllImport(_dllName)]
             [return: MarshalAs(UnmanagedType.I1)]
-            public static extern bool poseAdjustment2DCargo(IntPtr enginePointer, [In, Out, MarshalAs(UnmanagedType.LPArray)] ImageStruct[] images, int imageCount);
+            public static extern bool poseAdjustment2DCargo(IntPtr enginePointer, [In, Out, MarshalAs(UnmanagedType.LPArray)] ImageStruct[] images, int imageCount, 
+                out float modelConfidence, out float maxMasterToSrcSizeRatioDiff, out int minRefHoleCount);
             
             [DllImport(_dllName)]
             [return: MarshalAs(UnmanagedType.I1)]
@@ -226,6 +241,15 @@ namespace loadingBox2dGui.models
                 IntPtr enginePointer, 
                 ref ExposureImage exposureImage, 
                 int imageCount
+            );
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi)]
+            [return: MarshalAs(UnmanagedType.I1)]
+            public static extern bool checkModelImage(
+                IntPtr enginePointer, 
+                ref ImageStruct images, 
+                [MarshalAs(UnmanagedType.LPStr)] string modelPath, 
+                out int refHoleCount, out float confidenceScored
             );
         }
 

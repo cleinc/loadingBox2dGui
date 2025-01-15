@@ -56,16 +56,16 @@ namespace loadingBox2dGui.models
     public struct ImageStruct
     {
         public uint Version;
-        public IntPtr ImageData; // Pointer to the image data (void* in C++)
-        public ulong ImageDataLength; // Corresponds to size_t in C++
+        public IntPtr ImageData;
+        public ulong ImageDataLength;
         
-        public SensorType SensorType; // IDS RO PYLON 
+        public SensorType SensorType;
         public int CarType;
-        public InspectionLocation CameraLocation; // int section
+        public InspectionLocation CameraLocation;
 
-        public int Width; // Image width
-        public int Height; // Image height
-        public int Stride; // Image stride
+        public int Width;
+        public int Height;
+        public int Stride;
         public Pose6D Shift6D;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
         public double[] ScanPose4x4Matrix;
@@ -120,28 +120,28 @@ namespace loadingBox2dGui.models
     {
         public uint Version;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 300)]
-        public string ImagePath; // Image Path
+        public string ImagePath;
     
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 300)]
-        public string SegModelPath; // Segmentation Model Path
+        public string SegModelPath;
     
-        public DataType ImageType; // MasterImage or CheckerBoard
+        public DataType ImageType;
     
-        public int CarType; // CarType ~ CarName
+        public int CarType;
     
-        public SensorType SensorType; // IDS or PYLON
+        public SensorType SensorType;
     
         public InspectionLocation CameraLocation; 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 9)]
-        public double[] CameraMatrix; // 3x3 Camera Matrix
+        public double[] CameraMatrix;
     
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
-        public double[] DistCoeffs; // Distortion Coefficients
+        public double[] DistCoeffs;
 
         public Pose6D Shift6D;
         public uint Checksum;
         public static MasterPathStruct MasterImageStruct(int carType, string masterImagePath, string shiftModelPath, 
-            InspectionLocation location, CalibrationData calibrationData, float zDegree)
+            InspectionLocation location, CalibrationData calibrationData, float zDegree = 0)
         {
             return new MasterPathStruct()
             {
@@ -166,7 +166,7 @@ namespace loadingBox2dGui.models
         }
 
         public static MasterPathStruct CharucoImageStruct(int cartype, string masterImagePath, string shiftModelPath, 
-            InspectionLocation location, CalibrationData calibrationData, float zDegree)
+            InspectionLocation location, CalibrationData calibrationData, float zDegree = 0)
         {
             return new MasterPathStruct()
             {
@@ -204,8 +204,8 @@ namespace loadingBox2dGui.models
         public override string ToString()
         {
             return string.Format(
-            "Position: [Tx: {0:F2}, Ty: {1:F2}, Tz: {2:F2}], " +
-            "Rotation: [Rx: {3:F2}, Ry: {4:F2}, Rz: {5:F2}]",
+            "Position: [Tx: {0:F12}, Ty: {1:F12}, Tz: {2:F12}], " +
+            "Rotation: [Rx: {3:F12}, Ry: {4:F12}, Rz: {5:F12}]",
             Tx, Ty, Tz, Rx, Ry, Rz
             );
         }
@@ -217,16 +217,19 @@ namespace loadingBox2dGui.models
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
         public double[] TcpMatrix;
         public static TCP GetTCPFromRobotPose(RobotPose pose)
-            {
-            // Compute cosines and sines for the rotation matrix
-            double cosX = Math.Cos(pose.Rx);
-            double sinX = Math.Sin(pose.Rx);
-            double cosY = Math.Cos(pose.Ry);
-            double sinY = Math.Sin(pose.Ry);
-            double cosZ = Math.Cos(pose.Rz);
-            double sinZ = Math.Sin(pose.Rz);
+        {
+            // Convert degrees to radians
+            double rx = pose.Rx * Math.PI / 180.0;
+            double ry = pose.Ry * Math.PI / 180.0;
+            double rz = pose.Rz * Math.PI / 180.0;
 
-            // Compute the rotation matrix using ZYX Euler angles
+            double cosX = Math.Cos(rx);
+            double sinX = Math.Sin(rx);
+            double cosY = Math.Cos(ry);
+            double sinY = Math.Sin(ry);
+            double cosZ = Math.Cos(rz);
+            double sinZ = Math.Sin(rz);
+
             double m11 = cosY * cosZ;
             double m12 = cosY * sinZ;
             double m13 = -sinY;
@@ -244,7 +247,6 @@ namespace loadingBox2dGui.models
             double ty = pose.Ty;
             double tz = pose.Tz;
 
-            // Flattened 4x4 matrix
             return new TCP
             {
                 TcpMatrix = new double[]
@@ -334,6 +336,7 @@ namespace loadingBox2dGui.models
             );
         }
     }
+
     [StructLayout(LayoutKind.Sequential)]
     public struct ExposureImage
     {
@@ -347,10 +350,15 @@ namespace loadingBox2dGui.models
         public int setExposure;
         public int score;
     }
+
     public enum DataType
     {
-        MasterImage, 
-        CheckerBoard
+        MasterImage,
+        CheckerBoard,
+        RobotPose,
+        IntrinsicCalibration,
+        ExtrinsicCalibration, 
+        ShiftModel,
     }
 
     public enum SensorType
@@ -377,9 +385,9 @@ namespace loadingBox2dGui.models
     {
         public int Rows { get; set; }
         public int Cols { get; set; }
-        public string Dt { get; set; } // Data type (e.g., "d")
+        public string Dt { get; set; }
         public List<double> Data { get; set; }
-    }   
+    }
 
     public class HandEyeCalibrationData
     {

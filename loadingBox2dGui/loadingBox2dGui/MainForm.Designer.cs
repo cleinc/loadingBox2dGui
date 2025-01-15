@@ -37,8 +37,16 @@ namespace loadingBox2dGui
             this.materialCard14 = new MaterialSkin.Controls.MaterialCard();
             this.lblLH_ = new MaterialSkin.Controls.MaterialLabel();
             this.materialCard6 = new MaterialSkin.Controls.MaterialCard();
-            this.btnDetectAruco_ = new MaterialSkin.Controls.MaterialButton();
-            this.btnCapture_ = new MaterialSkin.Controls.MaterialButton();
+            this.btnUpdateMasterScanPose_ = new MaterialSkin.Controls.MaterialButton();
+            this.btnUpdateMasterInstallPose_ = new MaterialSkin.Controls.MaterialButton();
+            this.gbRobotReadComputed = new MaterialSkin.Controls.MaterialCard();
+            this.btnReadWrittenShiftPose_ = new MaterialSkin.Controls.MaterialButton();
+            this.tbWrittenTxyz_ = new MaterialSkin.Controls.MaterialTextBox2();
+            this.materialLabel22 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel23 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel28 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel29 = new MaterialSkin.Controls.MaterialLabel();
+            this.tbWrittenRxyz_ = new MaterialSkin.Controls.MaterialTextBox2();
             this.gbRobotRead = new MaterialSkin.Controls.MaterialCard();
             this.tbReadInstallPoseTxyz = new MaterialSkin.Controls.MaterialTextBox2();
             this.materialLabel13 = new MaterialSkin.Controls.MaterialLabel();
@@ -57,53 +65,20 @@ namespace loadingBox2dGui
             this.materialLabel18 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel14 = new MaterialSkin.Controls.MaterialLabel();
             this.gbRobotWrite = new MaterialSkin.Controls.MaterialCard();
-            this.btnReadWrittenShiftPose_ = new MaterialSkin.Controls.MaterialButton();
+            this.tbShiftRz = new MaterialSkin.Controls.MaterialTextBox2();
+            this.materialLabel17 = new MaterialSkin.Controls.MaterialLabel();
             this.btnWriteShiftPose_ = new MaterialSkin.Controls.MaterialButton();
-            this.tbWrittenTxyz_ = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbShiftTxyz = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialLabel21 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel26 = new MaterialSkin.Controls.MaterialLabel();
+            this.tbShiftTx = new MaterialSkin.Controls.MaterialTextBox2();
             this.materialLabel11 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel20 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel15 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel25 = new MaterialSkin.Controls.MaterialLabel();
-            this.tbWrittenRxyz_ = new MaterialSkin.Controls.MaterialTextBox2();
             this.lblShiftPoseRxyz_ = new MaterialSkin.Controls.MaterialLabel();
-            this.tbShiftRxyz = new MaterialSkin.Controls.MaterialTextBox2();
+            this.tbShiftTy = new MaterialSkin.Controls.MaterialTextBox2();
             this.btnScanPoint_ = new MaterialSkin.Controls.MaterialButton();
             this.btnCameraConnect_ = new MaterialSkin.Controls.MaterialButton();
             this.btnLightOff_ = new MaterialSkin.Controls.MaterialButton();
             this.pbRh = new System.Windows.Forms.PictureBox();
             this.pbLh = new System.Windows.Forms.PictureBox();
-            this.materialCard4 = new MaterialSkin.Controls.MaterialCard();
-            this.materialTextBox24 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialTextBox25 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialTextBox26 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialCard3 = new MaterialSkin.Controls.MaterialCard();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialTextBox21 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialTextBox22 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
-            this.tlpGlassCamera = new System.Windows.Forms.TableLayoutPanel();
-            this.ckbGlassCameraUse4 = new MaterialSkin.Controls.MaterialCheckbox();
-            this.tbGlassCameraSerial1 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.lblGlassCameraAlias1 = new MaterialSkin.Controls.MaterialLabel();
-            this.ckbGlassCameraUse1 = new MaterialSkin.Controls.MaterialCheckbox();
-            this.lblGlassCameraAlias4 = new MaterialSkin.Controls.MaterialLabel();
-            this.ckbGlassCameraUse2 = new MaterialSkin.Controls.MaterialCheckbox();
-            this.tbGlassCameraSerial3 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.lblGlassCameraAlias3 = new MaterialSkin.Controls.MaterialLabel();
-            this.lblGlassCameraAlias2 = new MaterialSkin.Controls.MaterialLabel();
-            this.tbGlassCameraSerial2 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbGlassCameraSerial4 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.ckbGlassCameraUse3 = new MaterialSkin.Controls.MaterialCheckbox();
-            this.materialTextBox23 = new MaterialSkin.Controls.MaterialTextBox2();
-            this.btnConnectPlc_ = new MaterialSkin.Controls.MaterialButton();
             this.pbOk = new System.Windows.Forms.PictureBox();
             this.materialCard1 = new MaterialSkin.Controls.MaterialCard();
             this.plcSignalStatusOnlyTable1 = new CoPick.Controls.PlcSignalStatusOnlyTable();
@@ -112,7 +87,14 @@ namespace loadingBox2dGui
             this.materialCard2 = new MaterialSkin.Controls.MaterialCard();
             this.plcSignalStatusOnlyTable2 = new CoPick.Controls.PlcSignalStatusOnlyTable();
             this.plcSignalStatusValueTable2 = new CoPick.Controls.PlcSignalStatusValueTable();
-            this.gbGlassUserControl_ = new MaterialSkin.Controls.MaterialCard();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.dgvNgList = new System.Windows.Forms.DataGridView();
+            this.btnNgListClear_ = new MaterialSkin.Controls.MaterialButton();
+            this.rtbLog = new MaterialSkin.Controls.MaterialMultiLineTextBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnGlassBackUp_ = new MaterialSkin.Controls.MaterialButton();
             this.lblGlassRHCamera_ = new MaterialSkin.Controls.MaterialButton();
             this.lblGlassLHCamera_ = new MaterialSkin.Controls.MaterialButton();
@@ -120,48 +102,6 @@ namespace loadingBox2dGui
             this.btnGlassRHCameraUse_ = new MaterialSkin.Controls.MaterialButton();
             this.btnGlassLHCameraUnuse_ = new MaterialSkin.Controls.MaterialButton();
             this.btnGlassLHCameraUse_ = new MaterialSkin.Controls.MaterialButton();
-            this.label85_ = new MaterialSkin.Controls.MaterialLabel();
-            this.tbGlassRefDataPath = new MaterialSkin.Controls.MaterialTextBox2();
-            this.btnGlassRefDataPath = new MaterialSkin.Controls.MaterialButton();
-            this.label86_ = new MaterialSkin.Controls.MaterialLabel();
-            this.tbGlassHandEyeCalibFilePath = new MaterialSkin.Controls.MaterialTextBox2();
-            this.btnGlassHandEyeCalibFilePath = new MaterialSkin.Controls.MaterialButton();
-            this.btnGlassUpdate_ = new MaterialSkin.Controls.MaterialButton();
-            this.btnGlassCalculate_ = new MaterialSkin.Controls.MaterialButton();
-            this.gbGlassShiftValue_ = new MaterialSkin.Controls.MaterialCard();
-            this.label88 = new MaterialSkin.Controls.MaterialLabel();
-            this.tbGlassShiftValueRz = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbGlassShiftValueTx = new MaterialSkin.Controls.MaterialTextBox2();
-            this.label79 = new MaterialSkin.Controls.MaterialLabel();
-            this.label80 = new MaterialSkin.Controls.MaterialLabel();
-            this.tbGlassShiftValueTy = new MaterialSkin.Controls.MaterialTextBox2();
-            this.gbGlassPoint_ = new MaterialSkin.Controls.MaterialCard();
-            this.tbGlassPointTx = new MaterialSkin.Controls.MaterialTextBox2();
-            this.label73 = new MaterialSkin.Controls.MaterialLabel();
-            this.label74 = new MaterialSkin.Controls.MaterialLabel();
-            this.label75 = new MaterialSkin.Controls.MaterialLabel();
-            this.label76 = new MaterialSkin.Controls.MaterialLabel();
-            this.label77 = new MaterialSkin.Controls.MaterialLabel();
-            this.label78 = new MaterialSkin.Controls.MaterialLabel();
-            this.tbGlassPointTy = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbGlassPointTz = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbGlassPointRx = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbGlassPointRz = new MaterialSkin.Controls.MaterialTextBox2();
-            this.tbGlassPointRy = new MaterialSkin.Controls.MaterialTextBox2();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
-            this.btnNgListClear_ = new MaterialSkin.Controls.MaterialButton();
-            this.lblErrorNotice = new MaterialSkin.Controls.MaterialLabel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panelNgListViewHeader = new System.Windows.Forms.Panel();
-            this.lblDashDate = new MaterialSkin.Controls.MaterialLabel();
-            this.lblDashType = new MaterialSkin.Controls.MaterialLabel();
-            this.lblDashCarSeqNum = new MaterialSkin.Controls.MaterialLabel();
-            this.lblDashCarType = new MaterialSkin.Controls.MaterialLabel();
-            this.ltvNG = new System.Windows.Forms.ListView();
-            this.rtbLog = new MaterialSkin.Controls.MaterialMultiLineTextBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tbGlassMaxValueRz = new MaterialSkin.Controls.MaterialTextBox2();
             this.label90 = new MaterialSkin.Controls.MaterialLabel();
             this.tbGlassMaxValueTy = new MaterialSkin.Controls.MaterialTextBox2();
@@ -179,8 +119,8 @@ namespace loadingBox2dGui
             this.tbGlassCameraModel = new MaterialSkin.Controls.MaterialTextBox2();
             this.glassReadSignalStatus = new CoPick.Controls.PlcSignalStatusOnlyTable();
             this.carTypeSignalStatus = new CoPick.Controls.PlcSignalStatusValueTable();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.gbMode = new MaterialSkin.Controls.MaterialCard();
             this.rbManual_ = new MaterialSkin.Controls.MaterialRadioButton();
             this.rbSet_ = new MaterialSkin.Controls.MaterialRadioButton();
@@ -205,20 +145,15 @@ namespace loadingBox2dGui
             this.materialCard15.SuspendLayout();
             this.materialCard14.SuspendLayout();
             this.materialCard6.SuspendLayout();
+            this.gbRobotReadComputed.SuspendLayout();
             this.gbRobotRead.SuspendLayout();
             this.gbRobotWrite.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbRh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLh)).BeginInit();
-            this.materialCard4.SuspendLayout();
-            this.materialCard3.SuspendLayout();
-            this.tlpGlassCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbOk)).BeginInit();
             this.materialCard1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbNg)).BeginInit();
             this.materialCard2.SuspendLayout();
-            this.gbGlassUserControl_.SuspendLayout();
-            this.gbGlassShiftValue_.SuspendLayout();
-            this.gbGlassPoint_.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
@@ -227,8 +162,8 @@ namespace loadingBox2dGui
             this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.Panel2.SuspendLayout();
             this.splitContainer5.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panelNgListViewHeader.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvNgList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.gbMode.SuspendLayout();
@@ -257,24 +192,10 @@ namespace loadingBox2dGui
             this.splitContainer2.Panel1.Controls.Add(this.materialCard6);
             this.splitContainer2.Panel1.Controls.Add(this.pbRh);
             this.splitContainer2.Panel1.Controls.Add(this.pbLh);
-            this.splitContainer2.Panel1.Controls.Add(this.materialCard4);
-            this.splitContainer2.Panel1.Controls.Add(this.materialCard3);
-            this.splitContainer2.Panel1.Controls.Add(this.btnConnectPlc_);
             this.splitContainer2.Panel1.Controls.Add(this.pbOk);
             this.splitContainer2.Panel1.Controls.Add(this.materialCard1);
             this.splitContainer2.Panel1.Controls.Add(this.pbNg);
             this.splitContainer2.Panel1.Controls.Add(this.materialCard2);
-            this.splitContainer2.Panel1.Controls.Add(this.gbGlassUserControl_);
-            this.splitContainer2.Panel1.Controls.Add(this.label85_);
-            this.splitContainer2.Panel1.Controls.Add(this.tbGlassRefDataPath);
-            this.splitContainer2.Panel1.Controls.Add(this.btnGlassRefDataPath);
-            this.splitContainer2.Panel1.Controls.Add(this.label86_);
-            this.splitContainer2.Panel1.Controls.Add(this.tbGlassHandEyeCalibFilePath);
-            this.splitContainer2.Panel1.Controls.Add(this.btnGlassHandEyeCalibFilePath);
-            this.splitContainer2.Panel1.Controls.Add(this.btnGlassUpdate_);
-            this.splitContainer2.Panel1.Controls.Add(this.btnGlassCalculate_);
-            this.splitContainer2.Panel1.Controls.Add(this.gbGlassShiftValue_);
-            this.splitContainer2.Panel1.Controls.Add(this.gbGlassPoint_);
             // 
             // splitContainer2.Panel2
             // 
@@ -348,8 +269,9 @@ namespace loadingBox2dGui
             // materialCard6
             // 
             this.materialCard6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard6.Controls.Add(this.btnDetectAruco_);
-            this.materialCard6.Controls.Add(this.btnCapture_);
+            this.materialCard6.Controls.Add(this.btnUpdateMasterScanPose_);
+            this.materialCard6.Controls.Add(this.btnUpdateMasterInstallPose_);
+            this.materialCard6.Controls.Add(this.gbRobotReadComputed);
             this.materialCard6.Controls.Add(this.gbRobotRead);
             this.materialCard6.Controls.Add(this.gbRobotWrite);
             this.materialCard6.Controls.Add(this.btnScanPoint_);
@@ -365,59 +287,218 @@ namespace loadingBox2dGui
             this.materialCard6.Size = new System.Drawing.Size(1097, 395);
             this.materialCard6.TabIndex = 194;
             // 
-            // btnDetectAruco_
+            // btnUpdateMasterScanPose_
             // 
-            this.btnDetectAruco_.AutoSize = false;
-            this.btnDetectAruco_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnDetectAruco_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
-            this.btnDetectAruco_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnDetectAruco_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnDetectAruco_.Depth = 0;
-            this.btnDetectAruco_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnDetectAruco_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDetectAruco_.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btnDetectAruco_.HighEmphasis = true;
-            this.btnDetectAruco_.Icon = null;
-            this.btnDetectAruco_.Location = new System.Drawing.Point(359, 247);
-            this.btnDetectAruco_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnDetectAruco_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnDetectAruco_.Name = "btnDetectAruco_";
-            this.btnDetectAruco_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnDetectAruco_.Size = new System.Drawing.Size(157, 87);
-            this.btnDetectAruco_.TabIndex = 181;
-            this.btnDetectAruco_.Text = "Test Offline Aruco";
-            this.btnDetectAruco_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnDetectAruco_.UseAccentColor = false;
-            this.btnDetectAruco_.UseVisualStyleBackColor = false;
-            this.btnDetectAruco_.Click += new System.EventHandler(this.btnDetectAruco__Click);
+            this.btnUpdateMasterScanPose_.AutoSize = false;
+            this.btnUpdateMasterScanPose_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnUpdateMasterScanPose_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
+            this.btnUpdateMasterScanPose_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnUpdateMasterScanPose_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnUpdateMasterScanPose_.Depth = 0;
+            this.btnUpdateMasterScanPose_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnUpdateMasterScanPose_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpdateMasterScanPose_.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.btnUpdateMasterScanPose_.HighEmphasis = true;
+            this.btnUpdateMasterScanPose_.Icon = null;
+            this.btnUpdateMasterScanPose_.Location = new System.Drawing.Point(358, 247);
+            this.btnUpdateMasterScanPose_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnUpdateMasterScanPose_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnUpdateMasterScanPose_.Name = "btnUpdateMasterScanPose_";
+            this.btnUpdateMasterScanPose_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnUpdateMasterScanPose_.Size = new System.Drawing.Size(325, 87);
+            this.btnUpdateMasterScanPose_.TabIndex = 184;
+            this.btnUpdateMasterScanPose_.Text = "Update Scan Pose";
+            this.btnUpdateMasterScanPose_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnUpdateMasterScanPose_.UseAccentColor = false;
+            this.btnUpdateMasterScanPose_.UseVisualStyleBackColor = false;
+            this.btnUpdateMasterScanPose_.Click += new System.EventHandler(this.btnUpdateMasterScanPose__Click);
             // 
-            // btnCapture_
+            // btnUpdateMasterInstallPose_
             // 
-            this.btnCapture_.AutoSize = false;
-            this.btnCapture_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnCapture_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
-            this.btnCapture_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnCapture_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnCapture_.Depth = 0;
-            this.btnCapture_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnCapture_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCapture_.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.btnCapture_.HighEmphasis = true;
-            this.btnCapture_.Icon = null;
-            this.btnCapture_.Location = new System.Drawing.Point(521, 247);
-            this.btnCapture_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnCapture_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnCapture_.Name = "btnCapture_";
-            this.btnCapture_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnCapture_.Size = new System.Drawing.Size(157, 87);
-            this.btnCapture_.TabIndex = 180;
-            this.btnCapture_.Text = "Capture";
-            this.btnCapture_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnCapture_.UseAccentColor = false;
-            this.btnCapture_.UseVisualStyleBackColor = false;
-            this.btnCapture_.Click += new System.EventHandler(this.btnCapture_Click);
-            this.btnCapture_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnCapture__KeyDown);
-            this.btnCapture_.KeyUp += new System.Windows.Forms.KeyEventHandler(this.btnCapture__KeyUp);
+            this.btnUpdateMasterInstallPose_.AutoSize = false;
+            this.btnUpdateMasterInstallPose_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnUpdateMasterInstallPose_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(208)))), ((int)(((byte)(65)))));
+            this.btnUpdateMasterInstallPose_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnUpdateMasterInstallPose_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnUpdateMasterInstallPose_.Depth = 0;
+            this.btnUpdateMasterInstallPose_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpdateMasterInstallPose_.Font = new System.Drawing.Font("Consolas", 11.25F);
+            this.btnUpdateMasterInstallPose_.HighEmphasis = true;
+            this.btnUpdateMasterInstallPose_.Icon = null;
+            this.btnUpdateMasterInstallPose_.Location = new System.Drawing.Point(358, 137);
+            this.btnUpdateMasterInstallPose_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnUpdateMasterInstallPose_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnUpdateMasterInstallPose_.Name = "btnUpdateMasterInstallPose_";
+            this.btnUpdateMasterInstallPose_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnUpdateMasterInstallPose_.Size = new System.Drawing.Size(325, 93);
+            this.btnUpdateMasterInstallPose_.TabIndex = 183;
+            this.btnUpdateMasterInstallPose_.Text = "Update Install Pose";
+            this.btnUpdateMasterInstallPose_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnUpdateMasterInstallPose_.UseAccentColor = false;
+            this.btnUpdateMasterInstallPose_.UseVisualStyleBackColor = false;
+            this.btnUpdateMasterInstallPose_.Click += new System.EventHandler(this.btnUpdateMasterInstallPose__Click);
+            // 
+            // gbRobotReadComputed
+            // 
+            this.gbRobotReadComputed.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.gbRobotReadComputed.Controls.Add(this.btnReadWrittenShiftPose_);
+            this.gbRobotReadComputed.Controls.Add(this.tbWrittenTxyz_);
+            this.gbRobotReadComputed.Controls.Add(this.materialLabel22);
+            this.gbRobotReadComputed.Controls.Add(this.materialLabel23);
+            this.gbRobotReadComputed.Controls.Add(this.materialLabel28);
+            this.gbRobotReadComputed.Controls.Add(this.materialLabel29);
+            this.gbRobotReadComputed.Controls.Add(this.tbWrittenRxyz_);
+            this.gbRobotReadComputed.Depth = 0;
+            this.gbRobotReadComputed.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.gbRobotReadComputed.Location = new System.Drawing.Point(688, 247);
+            this.gbRobotReadComputed.Margin = new System.Windows.Forms.Padding(14);
+            this.gbRobotReadComputed.MouseState = MaterialSkin.MouseState.HOVER;
+            this.gbRobotReadComputed.Name = "gbRobotReadComputed";
+            this.gbRobotReadComputed.Padding = new System.Windows.Forms.Padding(14);
+            this.gbRobotReadComputed.Size = new System.Drawing.Size(198, 130);
+            this.gbRobotReadComputed.TabIndex = 182;
+            // 
+            // btnReadWrittenShiftPose_
+            // 
+            this.btnReadWrittenShiftPose_.AutoSize = false;
+            this.btnReadWrittenShiftPose_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnReadWrittenShiftPose_.BackColor = System.Drawing.Color.DimGray;
+            this.btnReadWrittenShiftPose_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnReadWrittenShiftPose_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnReadWrittenShiftPose_.Depth = 0;
+            this.btnReadWrittenShiftPose_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnReadWrittenShiftPose_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReadWrittenShiftPose_.Font = new System.Drawing.Font("Consolas", 12F);
+            this.btnReadWrittenShiftPose_.HighEmphasis = true;
+            this.btnReadWrittenShiftPose_.Icon = null;
+            this.btnReadWrittenShiftPose_.Location = new System.Drawing.Point(128, 31);
+            this.btnReadWrittenShiftPose_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnReadWrittenShiftPose_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnReadWrittenShiftPose_.Name = "btnReadWrittenShiftPose_";
+            this.btnReadWrittenShiftPose_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnReadWrittenShiftPose_.Size = new System.Drawing.Size(57, 26);
+            this.btnReadWrittenShiftPose_.TabIndex = 179;
+            this.btnReadWrittenShiftPose_.Text = "READ";
+            this.btnReadWrittenShiftPose_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnReadWrittenShiftPose_.UseAccentColor = false;
+            this.btnReadWrittenShiftPose_.UseVisualStyleBackColor = false;
+            this.btnReadWrittenShiftPose_.Click += new System.EventHandler(this.btnReadWrittenShiftPose__Click);
+            // 
+            // tbWrittenTxyz_
+            // 
+            this.tbWrittenTxyz_.AnimateReadOnly = false;
+            this.tbWrittenTxyz_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbWrittenTxyz_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbWrittenTxyz_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbWrittenTxyz_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbWrittenTxyz_.Depth = 0;
+            this.tbWrittenTxyz_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbWrittenTxyz_.HideSelection = true;
+            this.tbWrittenTxyz_.LeadingIcon = null;
+            this.tbWrittenTxyz_.Location = new System.Drawing.Point(53, 63);
+            this.tbWrittenTxyz_.MaxLength = 32767;
+            this.tbWrittenTxyz_.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbWrittenTxyz_.Name = "tbWrittenTxyz_";
+            this.tbWrittenTxyz_.PasswordChar = '\0';
+            this.tbWrittenTxyz_.PrefixSuffixText = null;
+            this.tbWrittenTxyz_.ReadOnly = false;
+            this.tbWrittenTxyz_.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbWrittenTxyz_.SelectedText = "";
+            this.tbWrittenTxyz_.SelectionLength = 0;
+            this.tbWrittenTxyz_.SelectionStart = 0;
+            this.tbWrittenTxyz_.ShortcutsEnabled = true;
+            this.tbWrittenTxyz_.Size = new System.Drawing.Size(132, 26);
+            this.tbWrittenTxyz_.TabIndex = 6;
+            this.tbWrittenTxyz_.TabStop = false;
+            this.tbWrittenTxyz_.Text = "1";
+            this.tbWrittenTxyz_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbWrittenTxyz_.TrailingIcon = null;
+            this.tbWrittenTxyz_.UseSystemPasswordChar = false;
+            this.tbWrittenTxyz_.UseTallSize = false;
+            // 
+            // materialLabel22
+            // 
+            this.materialLabel22.AutoSize = true;
+            this.materialLabel22.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel22.Depth = 0;
+            this.materialLabel22.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel22.Location = new System.Drawing.Point(6, 34);
+            this.materialLabel22.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel22.Name = "materialLabel22";
+            this.materialLabel22.Size = new System.Drawing.Size(101, 18);
+            this.materialLabel22.TabIndex = 7;
+            this.materialLabel22.Text = "Read Written";
+            // 
+            // materialLabel23
+            // 
+            this.materialLabel23.AutoSize = true;
+            this.materialLabel23.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel23.Depth = 0;
+            this.materialLabel23.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel23.Location = new System.Drawing.Point(7, 67);
+            this.materialLabel23.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel23.Name = "materialLabel23";
+            this.materialLabel23.Size = new System.Drawing.Size(35, 18);
+            this.materialLabel23.TabIndex = 7;
+            this.materialLabel23.Text = "Txyz";
+            // 
+            // materialLabel28
+            // 
+            this.materialLabel28.AutoSize = true;
+            this.materialLabel28.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel28.Depth = 0;
+            this.materialLabel28.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel28.Location = new System.Drawing.Point(6, 11);
+            this.materialLabel28.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel28.Name = "materialLabel28";
+            this.materialLabel28.Size = new System.Drawing.Size(128, 18);
+            this.materialLabel28.TabIndex = 7;
+            this.materialLabel28.Text = "ROBOT -> VISION";
+            // 
+            // materialLabel29
+            // 
+            this.materialLabel29.AutoSize = true;
+            this.materialLabel29.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel29.Depth = 0;
+            this.materialLabel29.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel29.Location = new System.Drawing.Point(7, 95);
+            this.materialLabel29.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel29.Name = "materialLabel29";
+            this.materialLabel29.Size = new System.Drawing.Size(36, 18);
+            this.materialLabel29.TabIndex = 8;
+            this.materialLabel29.Text = "Rxyz";
+            // 
+            // tbWrittenRxyz_
+            // 
+            this.tbWrittenRxyz_.AnimateReadOnly = false;
+            this.tbWrittenRxyz_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbWrittenRxyz_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbWrittenRxyz_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbWrittenRxyz_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbWrittenRxyz_.Depth = 0;
+            this.tbWrittenRxyz_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbWrittenRxyz_.HideSelection = true;
+            this.tbWrittenRxyz_.LeadingIcon = null;
+            this.tbWrittenRxyz_.Location = new System.Drawing.Point(53, 91);
+            this.tbWrittenRxyz_.MaxLength = 32767;
+            this.tbWrittenRxyz_.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbWrittenRxyz_.Name = "tbWrittenRxyz_";
+            this.tbWrittenRxyz_.PasswordChar = '\0';
+            this.tbWrittenRxyz_.PrefixSuffixText = null;
+            this.tbWrittenRxyz_.ReadOnly = false;
+            this.tbWrittenRxyz_.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbWrittenRxyz_.SelectedText = "";
+            this.tbWrittenRxyz_.SelectionLength = 0;
+            this.tbWrittenRxyz_.SelectionStart = 0;
+            this.tbWrittenRxyz_.ShortcutsEnabled = true;
+            this.tbWrittenRxyz_.Size = new System.Drawing.Size(132, 26);
+            this.tbWrittenRxyz_.TabIndex = 13;
+            this.tbWrittenRxyz_.TabStop = false;
+            this.tbWrittenRxyz_.Text = "2";
+            this.tbWrittenRxyz_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbWrittenRxyz_.TrailingIcon = null;
+            this.tbWrittenRxyz_.UseSystemPasswordChar = false;
+            this.tbWrittenRxyz_.UseTallSize = false;
             // 
             // gbRobotRead
             // 
@@ -445,7 +526,7 @@ namespace loadingBox2dGui
             this.gbRobotRead.MouseState = MaterialSkin.MouseState.HOVER;
             this.gbRobotRead.Name = "gbRobotRead";
             this.gbRobotRead.Padding = new System.Windows.Forms.Padding(14);
-            this.gbRobotRead.Size = new System.Drawing.Size(198, 354);
+            this.gbRobotRead.Size = new System.Drawing.Size(198, 230);
             this.gbRobotRead.TabIndex = 178;
             // 
             // tbReadInstallPoseTxyz
@@ -459,7 +540,7 @@ namespace loadingBox2dGui
             this.tbReadInstallPoseTxyz.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tbReadInstallPoseTxyz.HideSelection = true;
             this.tbReadInstallPoseTxyz.LeadingIcon = null;
-            this.tbReadInstallPoseTxyz.Location = new System.Drawing.Point(55, 255);
+            this.tbReadInstallPoseTxyz.Location = new System.Drawing.Point(55, 170);
             this.tbReadInstallPoseTxyz.MaxLength = 32767;
             this.tbReadInstallPoseTxyz.MouseState = MaterialSkin.MouseState.OUT;
             this.tbReadInstallPoseTxyz.Name = "tbReadInstallPoseTxyz";
@@ -486,7 +567,7 @@ namespace loadingBox2dGui
             this.materialLabel13.BackColor = System.Drawing.Color.Transparent;
             this.materialLabel13.Depth = 0;
             this.materialLabel13.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel13.Location = new System.Drawing.Point(7, 258);
+            this.materialLabel13.Location = new System.Drawing.Point(7, 173);
             this.materialLabel13.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel13.Name = "materialLabel13";
             this.materialLabel13.Size = new System.Drawing.Size(35, 18);
@@ -499,7 +580,7 @@ namespace loadingBox2dGui
             this.materialLabel16.BackColor = System.Drawing.Color.Transparent;
             this.materialLabel16.Depth = 0;
             this.materialLabel16.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel16.Location = new System.Drawing.Point(7, 286);
+            this.materialLabel16.Location = new System.Drawing.Point(7, 201);
             this.materialLabel16.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel16.Name = "materialLabel16";
             this.materialLabel16.Size = new System.Drawing.Size(36, 18);
@@ -517,7 +598,7 @@ namespace loadingBox2dGui
             this.tbReadInstallPoseRxyz.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tbReadInstallPoseRxyz.HideSelection = true;
             this.tbReadInstallPoseRxyz.LeadingIcon = null;
-            this.tbReadInstallPoseRxyz.Location = new System.Drawing.Point(55, 283);
+            this.tbReadInstallPoseRxyz.Location = new System.Drawing.Point(55, 198);
             this.tbReadInstallPoseRxyz.MaxLength = 32767;
             this.tbReadInstallPoseRxyz.MouseState = MaterialSkin.MouseState.OUT;
             this.tbReadInstallPoseRxyz.Name = "tbReadInstallPoseRxyz";
@@ -634,12 +715,12 @@ namespace loadingBox2dGui
             this.materialLabel8.BackColor = System.Drawing.Color.Transparent;
             this.materialLabel8.Depth = 0;
             this.materialLabel8.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel8.Location = new System.Drawing.Point(14, 222);
+            this.materialLabel8.Location = new System.Drawing.Point(6, 142);
             this.materialLabel8.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel8.Name = "materialLabel8";
-            this.materialLabel8.Size = new System.Drawing.Size(87, 18);
+            this.materialLabel8.Size = new System.Drawing.Size(116, 18);
             this.materialLabel8.TabIndex = 181;
-            this.materialLabel8.Text = "Install Pose";
+            this.materialLabel8.Text = "Ref Install Pose";
             // 
             // materialButton1
             // 
@@ -654,12 +735,12 @@ namespace loadingBox2dGui
             this.materialButton1.Font = new System.Drawing.Font("Consolas", 12F);
             this.materialButton1.HighEmphasis = true;
             this.materialButton1.Icon = null;
-            this.materialButton1.Location = new System.Drawing.Point(110, 222);
+            this.materialButton1.Location = new System.Drawing.Point(129, 139);
             this.materialButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialButton1.Name = "materialButton1";
             this.materialButton1.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.materialButton1.Size = new System.Drawing.Size(77, 21);
+            this.materialButton1.Size = new System.Drawing.Size(57, 26);
             this.materialButton1.TabIndex = 180;
             this.materialButton1.Text = "READ";
             this.materialButton1.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -693,12 +774,12 @@ namespace loadingBox2dGui
             this.btnReadScanPose_.Font = new System.Drawing.Font("Consolas", 12F);
             this.btnReadScanPose_.HighEmphasis = true;
             this.btnReadScanPose_.Icon = null;
-            this.btnReadScanPose_.Location = new System.Drawing.Point(110, 33);
+            this.btnReadScanPose_.Location = new System.Drawing.Point(129, 33);
             this.btnReadScanPose_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnReadScanPose_.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnReadScanPose_.Name = "btnReadScanPose_";
             this.btnReadScanPose_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnReadScanPose_.Size = new System.Drawing.Size(77, 21);
+            this.btnReadScanPose_.Size = new System.Drawing.Size(57, 26);
             this.btnReadScanPose_.TabIndex = 178;
             this.btnReadScanPose_.Text = "READ";
             this.btnReadScanPose_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -774,12 +855,12 @@ namespace loadingBox2dGui
             this.materialLabel18.BackColor = System.Drawing.Color.Transparent;
             this.materialLabel18.Depth = 0;
             this.materialLabel18.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel18.Location = new System.Drawing.Point(14, 36);
+            this.materialLabel18.Location = new System.Drawing.Point(6, 36);
             this.materialLabel18.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel18.Name = "materialLabel18";
-            this.materialLabel18.Size = new System.Drawing.Size(79, 18);
+            this.materialLabel18.Size = new System.Drawing.Size(108, 18);
             this.materialLabel18.TabIndex = 7;
-            this.materialLabel18.Text = "Scan Pose";
+            this.materialLabel18.Text = "Ref Scan Pose";
             // 
             // materialLabel14
             // 
@@ -787,7 +868,7 @@ namespace loadingBox2dGui
             this.materialLabel14.BackColor = System.Drawing.Color.Transparent;
             this.materialLabel14.Depth = 0;
             this.materialLabel14.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel14.Location = new System.Drawing.Point(11, 11);
+            this.materialLabel14.Location = new System.Drawing.Point(6, 11);
             this.materialLabel14.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel14.Name = "materialLabel14";
             this.materialLabel14.Size = new System.Drawing.Size(128, 18);
@@ -797,19 +878,15 @@ namespace loadingBox2dGui
             // gbRobotWrite
             // 
             this.gbRobotWrite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.gbRobotWrite.Controls.Add(this.btnReadWrittenShiftPose_);
+            this.gbRobotWrite.Controls.Add(this.tbShiftRz);
+            this.gbRobotWrite.Controls.Add(this.materialLabel17);
             this.gbRobotWrite.Controls.Add(this.btnWriteShiftPose_);
-            this.gbRobotWrite.Controls.Add(this.tbWrittenTxyz_);
-            this.gbRobotWrite.Controls.Add(this.tbShiftTxyz);
-            this.gbRobotWrite.Controls.Add(this.materialLabel21);
-            this.gbRobotWrite.Controls.Add(this.materialLabel26);
+            this.gbRobotWrite.Controls.Add(this.tbShiftTx);
             this.gbRobotWrite.Controls.Add(this.materialLabel11);
             this.gbRobotWrite.Controls.Add(this.materialLabel20);
             this.gbRobotWrite.Controls.Add(this.materialLabel15);
-            this.gbRobotWrite.Controls.Add(this.materialLabel25);
-            this.gbRobotWrite.Controls.Add(this.tbWrittenRxyz_);
             this.gbRobotWrite.Controls.Add(this.lblShiftPoseRxyz_);
-            this.gbRobotWrite.Controls.Add(this.tbShiftRxyz);
+            this.gbRobotWrite.Controls.Add(this.tbShiftTy);
             this.gbRobotWrite.Depth = 0;
             this.gbRobotWrite.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.gbRobotWrite.Location = new System.Drawing.Point(890, 13);
@@ -817,34 +894,53 @@ namespace loadingBox2dGui
             this.gbRobotWrite.MouseState = MaterialSkin.MouseState.HOVER;
             this.gbRobotWrite.Name = "gbRobotWrite";
             this.gbRobotWrite.Padding = new System.Windows.Forms.Padding(14);
-            this.gbRobotWrite.Size = new System.Drawing.Size(198, 354);
+            this.gbRobotWrite.Size = new System.Drawing.Size(198, 160);
             this.gbRobotWrite.TabIndex = 179;
             // 
-            // btnReadWrittenShiftPose_
+            // tbShiftRz
             // 
-            this.btnReadWrittenShiftPose_.AutoSize = false;
-            this.btnReadWrittenShiftPose_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnReadWrittenShiftPose_.BackColor = System.Drawing.Color.DimGray;
-            this.btnReadWrittenShiftPose_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnReadWrittenShiftPose_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnReadWrittenShiftPose_.Depth = 0;
-            this.btnReadWrittenShiftPose_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnReadWrittenShiftPose_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReadWrittenShiftPose_.Font = new System.Drawing.Font("Consolas", 12F);
-            this.btnReadWrittenShiftPose_.HighEmphasis = true;
-            this.btnReadWrittenShiftPose_.Icon = null;
-            this.btnReadWrittenShiftPose_.Location = new System.Drawing.Point(123, 220);
-            this.btnReadWrittenShiftPose_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnReadWrittenShiftPose_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnReadWrittenShiftPose_.Name = "btnReadWrittenShiftPose_";
-            this.btnReadWrittenShiftPose_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnReadWrittenShiftPose_.Size = new System.Drawing.Size(57, 26);
-            this.btnReadWrittenShiftPose_.TabIndex = 179;
-            this.btnReadWrittenShiftPose_.Text = "READ";
-            this.btnReadWrittenShiftPose_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnReadWrittenShiftPose_.UseAccentColor = false;
-            this.btnReadWrittenShiftPose_.UseVisualStyleBackColor = false;
-            this.btnReadWrittenShiftPose_.Click += new System.EventHandler(this.btnReadWrittenShiftPose_Click);
+            this.tbShiftRz.AnimateReadOnly = false;
+            this.tbShiftRz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbShiftRz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbShiftRz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbShiftRz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbShiftRz.Depth = 0;
+            this.tbShiftRz.Font = new System.Drawing.Font("Microsoft Sans Serif", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbShiftRz.HideSelection = true;
+            this.tbShiftRz.LeadingIcon = null;
+            this.tbShiftRz.Location = new System.Drawing.Point(53, 123);
+            this.tbShiftRz.MaxLength = 32767;
+            this.tbShiftRz.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbShiftRz.Name = "tbShiftRz";
+            this.tbShiftRz.PasswordChar = '\0';
+            this.tbShiftRz.PrefixSuffixText = null;
+            this.tbShiftRz.ReadOnly = false;
+            this.tbShiftRz.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbShiftRz.SelectedText = "";
+            this.tbShiftRz.SelectionLength = 0;
+            this.tbShiftRz.SelectionStart = 0;
+            this.tbShiftRz.ShortcutsEnabled = true;
+            this.tbShiftRz.Size = new System.Drawing.Size(132, 26);
+            this.tbShiftRz.TabIndex = 181;
+            this.tbShiftRz.TabStop = false;
+            this.tbShiftRz.Text = "2";
+            this.tbShiftRz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbShiftRz.TrailingIcon = null;
+            this.tbShiftRz.UseSystemPasswordChar = false;
+            this.tbShiftRz.UseTallSize = false;
+            // 
+            // materialLabel17
+            // 
+            this.materialLabel17.AutoSize = true;
+            this.materialLabel17.BackColor = System.Drawing.Color.Transparent;
+            this.materialLabel17.Depth = 0;
+            this.materialLabel17.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.materialLabel17.Location = new System.Drawing.Point(5, 124);
+            this.materialLabel17.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel17.Name = "materialLabel17";
+            this.materialLabel17.Size = new System.Drawing.Size(19, 18);
+            this.materialLabel17.TabIndex = 180;
+            this.materialLabel17.Text = "Rz";
             // 
             // btnWriteShiftPose_
             // 
@@ -859,12 +955,12 @@ namespace loadingBox2dGui
             this.btnWriteShiftPose_.Font = new System.Drawing.Font("Consolas", 12F);
             this.btnWriteShiftPose_.HighEmphasis = true;
             this.btnWriteShiftPose_.Icon = null;
-            this.btnWriteShiftPose_.Location = new System.Drawing.Point(101, 32);
+            this.btnWriteShiftPose_.Location = new System.Drawing.Point(129, 34);
             this.btnWriteShiftPose_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnWriteShiftPose_.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnWriteShiftPose_.Name = "btnWriteShiftPose_";
             this.btnWriteShiftPose_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnWriteShiftPose_.Size = new System.Drawing.Size(82, 20);
+            this.btnWriteShiftPose_.Size = new System.Drawing.Size(57, 26);
             this.btnWriteShiftPose_.TabIndex = 179;
             this.btnWriteShiftPose_.Text = "WRITE";
             this.btnWriteShiftPose_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -872,95 +968,37 @@ namespace loadingBox2dGui
             this.btnWriteShiftPose_.UseVisualStyleBackColor = false;
             this.btnWriteShiftPose_.Click += new System.EventHandler(this.btnWriteShiftPose_Click);
             // 
-            // tbWrittenTxyz_
+            // tbShiftTx
             // 
-            this.tbWrittenTxyz_.AnimateReadOnly = false;
-            this.tbWrittenTxyz_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbWrittenTxyz_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbWrittenTxyz_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbWrittenTxyz_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbWrittenTxyz_.Depth = 0;
-            this.tbWrittenTxyz_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbWrittenTxyz_.HideSelection = true;
-            this.tbWrittenTxyz_.LeadingIcon = null;
-            this.tbWrittenTxyz_.Location = new System.Drawing.Point(51, 255);
-            this.tbWrittenTxyz_.MaxLength = 32767;
-            this.tbWrittenTxyz_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbWrittenTxyz_.Name = "tbWrittenTxyz_";
-            this.tbWrittenTxyz_.PasswordChar = '\0';
-            this.tbWrittenTxyz_.PrefixSuffixText = null;
-            this.tbWrittenTxyz_.ReadOnly = false;
-            this.tbWrittenTxyz_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbWrittenTxyz_.SelectedText = "";
-            this.tbWrittenTxyz_.SelectionLength = 0;
-            this.tbWrittenTxyz_.SelectionStart = 0;
-            this.tbWrittenTxyz_.ShortcutsEnabled = true;
-            this.tbWrittenTxyz_.Size = new System.Drawing.Size(132, 26);
-            this.tbWrittenTxyz_.TabIndex = 6;
-            this.tbWrittenTxyz_.TabStop = false;
-            this.tbWrittenTxyz_.Text = "1";
-            this.tbWrittenTxyz_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbWrittenTxyz_.TrailingIcon = null;
-            this.tbWrittenTxyz_.UseSystemPasswordChar = false;
-            this.tbWrittenTxyz_.UseTallSize = false;
-            // 
-            // tbShiftTxyz
-            // 
-            this.tbShiftTxyz.AnimateReadOnly = false;
-            this.tbShiftTxyz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbShiftTxyz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbShiftTxyz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbShiftTxyz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbShiftTxyz.Depth = 0;
-            this.tbShiftTxyz.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbShiftTxyz.HideSelection = true;
-            this.tbShiftTxyz.LeadingIcon = null;
-            this.tbShiftTxyz.Location = new System.Drawing.Point(53, 68);
-            this.tbShiftTxyz.MaxLength = 32767;
-            this.tbShiftTxyz.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbShiftTxyz.Name = "tbShiftTxyz";
-            this.tbShiftTxyz.PasswordChar = '\0';
-            this.tbShiftTxyz.PrefixSuffixText = null;
-            this.tbShiftTxyz.ReadOnly = false;
-            this.tbShiftTxyz.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbShiftTxyz.SelectedText = "";
-            this.tbShiftTxyz.SelectionLength = 0;
-            this.tbShiftTxyz.SelectionStart = 0;
-            this.tbShiftTxyz.ShortcutsEnabled = true;
-            this.tbShiftTxyz.Size = new System.Drawing.Size(132, 26);
-            this.tbShiftTxyz.TabIndex = 6;
-            this.tbShiftTxyz.TabStop = false;
-            this.tbShiftTxyz.Text = "1";
-            this.tbShiftTxyz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbShiftTxyz.TrailingIcon = null;
-            this.tbShiftTxyz.UseSystemPasswordChar = false;
-            this.tbShiftTxyz.UseTallSize = false;
-            // 
-            // materialLabel21
-            // 
-            this.materialLabel21.AutoSize = true;
-            this.materialLabel21.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel21.Depth = 0;
-            this.materialLabel21.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel21.Location = new System.Drawing.Point(10, 223);
-            this.materialLabel21.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel21.Name = "materialLabel21";
-            this.materialLabel21.Size = new System.Drawing.Size(109, 18);
-            this.materialLabel21.TabIndex = 7;
-            this.materialLabel21.Text = "Check Written";
-            // 
-            // materialLabel26
-            // 
-            this.materialLabel26.AutoSize = true;
-            this.materialLabel26.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel26.Depth = 0;
-            this.materialLabel26.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel26.Location = new System.Drawing.Point(5, 259);
-            this.materialLabel26.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel26.Name = "materialLabel26";
-            this.materialLabel26.Size = new System.Drawing.Size(35, 18);
-            this.materialLabel26.TabIndex = 7;
-            this.materialLabel26.Text = "Txyz";
+            this.tbShiftTx.AnimateReadOnly = false;
+            this.tbShiftTx.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbShiftTx.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbShiftTx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbShiftTx.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbShiftTx.Depth = 0;
+            this.tbShiftTx.Font = new System.Drawing.Font("Microsoft Sans Serif", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbShiftTx.HideSelection = true;
+            this.tbShiftTx.LeadingIcon = null;
+            this.tbShiftTx.Location = new System.Drawing.Point(53, 68);
+            this.tbShiftTx.MaxLength = 32767;
+            this.tbShiftTx.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbShiftTx.Name = "tbShiftTx";
+            this.tbShiftTx.PasswordChar = '\0';
+            this.tbShiftTx.PrefixSuffixText = null;
+            this.tbShiftTx.ReadOnly = false;
+            this.tbShiftTx.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbShiftTx.SelectedText = "";
+            this.tbShiftTx.SelectionLength = 0;
+            this.tbShiftTx.SelectionStart = 0;
+            this.tbShiftTx.ShortcutsEnabled = true;
+            this.tbShiftTx.Size = new System.Drawing.Size(132, 26);
+            this.tbShiftTx.TabIndex = 6;
+            this.tbShiftTx.TabStop = false;
+            this.tbShiftTx.Text = "1";
+            this.tbShiftTx.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbShiftTx.TrailingIcon = null;
+            this.tbShiftTx.UseSystemPasswordChar = false;
+            this.tbShiftTx.UseTallSize = false;
             // 
             // materialLabel11
             // 
@@ -971,9 +1009,9 @@ namespace loadingBox2dGui
             this.materialLabel11.Location = new System.Drawing.Point(5, 71);
             this.materialLabel11.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel11.Name = "materialLabel11";
-            this.materialLabel11.Size = new System.Drawing.Size(35, 18);
+            this.materialLabel11.Size = new System.Drawing.Size(18, 18);
             this.materialLabel11.TabIndex = 7;
-            this.materialLabel11.Text = "Txyz";
+            this.materialLabel11.Text = "Tx";
             // 
             // materialLabel20
             // 
@@ -981,7 +1019,7 @@ namespace loadingBox2dGui
             this.materialLabel20.BackColor = System.Drawing.Color.Transparent;
             this.materialLabel20.Depth = 0;
             this.materialLabel20.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel20.Location = new System.Drawing.Point(13, 36);
+            this.materialLabel20.Location = new System.Drawing.Point(6, 37);
             this.materialLabel20.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel20.Name = "materialLabel20";
             this.materialLabel20.Size = new System.Drawing.Size(78, 18);
@@ -994,57 +1032,12 @@ namespace loadingBox2dGui
             this.materialLabel15.BackColor = System.Drawing.Color.Transparent;
             this.materialLabel15.Depth = 0;
             this.materialLabel15.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel15.Location = new System.Drawing.Point(10, 11);
+            this.materialLabel15.Location = new System.Drawing.Point(6, 11);
             this.materialLabel15.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel15.Name = "materialLabel15";
             this.materialLabel15.Size = new System.Drawing.Size(128, 18);
             this.materialLabel15.TabIndex = 7;
             this.materialLabel15.Text = "VISION -> ROBOT";
-            // 
-            // materialLabel25
-            // 
-            this.materialLabel25.AutoSize = true;
-            this.materialLabel25.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel25.Depth = 0;
-            this.materialLabel25.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel25.Location = new System.Drawing.Point(5, 287);
-            this.materialLabel25.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel25.Name = "materialLabel25";
-            this.materialLabel25.Size = new System.Drawing.Size(36, 18);
-            this.materialLabel25.TabIndex = 8;
-            this.materialLabel25.Text = "Rxyz";
-            // 
-            // tbWrittenRxyz_
-            // 
-            this.tbWrittenRxyz_.AnimateReadOnly = false;
-            this.tbWrittenRxyz_.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbWrittenRxyz_.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbWrittenRxyz_.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbWrittenRxyz_.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbWrittenRxyz_.Depth = 0;
-            this.tbWrittenRxyz_.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbWrittenRxyz_.HideSelection = true;
-            this.tbWrittenRxyz_.LeadingIcon = null;
-            this.tbWrittenRxyz_.Location = new System.Drawing.Point(51, 283);
-            this.tbWrittenRxyz_.MaxLength = 32767;
-            this.tbWrittenRxyz_.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbWrittenRxyz_.Name = "tbWrittenRxyz_";
-            this.tbWrittenRxyz_.PasswordChar = '\0';
-            this.tbWrittenRxyz_.PrefixSuffixText = null;
-            this.tbWrittenRxyz_.ReadOnly = false;
-            this.tbWrittenRxyz_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbWrittenRxyz_.SelectedText = "";
-            this.tbWrittenRxyz_.SelectionLength = 0;
-            this.tbWrittenRxyz_.SelectionStart = 0;
-            this.tbWrittenRxyz_.ShortcutsEnabled = true;
-            this.tbWrittenRxyz_.Size = new System.Drawing.Size(132, 26);
-            this.tbWrittenRxyz_.TabIndex = 13;
-            this.tbWrittenRxyz_.TabStop = false;
-            this.tbWrittenRxyz_.Text = "2";
-            this.tbWrittenRxyz_.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbWrittenRxyz_.TrailingIcon = null;
-            this.tbWrittenRxyz_.UseSystemPasswordChar = false;
-            this.tbWrittenRxyz_.UseTallSize = false;
             // 
             // lblShiftPoseRxyz_
             // 
@@ -1055,41 +1048,41 @@ namespace loadingBox2dGui
             this.lblShiftPoseRxyz_.Location = new System.Drawing.Point(5, 99);
             this.lblShiftPoseRxyz_.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblShiftPoseRxyz_.Name = "lblShiftPoseRxyz_";
-            this.lblShiftPoseRxyz_.Size = new System.Drawing.Size(36, 18);
+            this.lblShiftPoseRxyz_.Size = new System.Drawing.Size(19, 18);
             this.lblShiftPoseRxyz_.TabIndex = 8;
-            this.lblShiftPoseRxyz_.Text = "Rxyz";
+            this.lblShiftPoseRxyz_.Text = "Ty";
             // 
-            // tbShiftRxyz
+            // tbShiftTy
             // 
-            this.tbShiftRxyz.AnimateReadOnly = false;
-            this.tbShiftRxyz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbShiftRxyz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbShiftRxyz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbShiftRxyz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbShiftRxyz.Depth = 0;
-            this.tbShiftRxyz.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbShiftRxyz.HideSelection = true;
-            this.tbShiftRxyz.LeadingIcon = null;
-            this.tbShiftRxyz.Location = new System.Drawing.Point(53, 96);
-            this.tbShiftRxyz.MaxLength = 32767;
-            this.tbShiftRxyz.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbShiftRxyz.Name = "tbShiftRxyz";
-            this.tbShiftRxyz.PasswordChar = '\0';
-            this.tbShiftRxyz.PrefixSuffixText = null;
-            this.tbShiftRxyz.ReadOnly = false;
-            this.tbShiftRxyz.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbShiftRxyz.SelectedText = "";
-            this.tbShiftRxyz.SelectionLength = 0;
-            this.tbShiftRxyz.SelectionStart = 0;
-            this.tbShiftRxyz.ShortcutsEnabled = true;
-            this.tbShiftRxyz.Size = new System.Drawing.Size(132, 26);
-            this.tbShiftRxyz.TabIndex = 13;
-            this.tbShiftRxyz.TabStop = false;
-            this.tbShiftRxyz.Text = "2";
-            this.tbShiftRxyz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbShiftRxyz.TrailingIcon = null;
-            this.tbShiftRxyz.UseSystemPasswordChar = false;
-            this.tbShiftRxyz.UseTallSize = false;
+            this.tbShiftTy.AnimateReadOnly = false;
+            this.tbShiftTy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
+            this.tbShiftTy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
+            this.tbShiftTy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tbShiftTy.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.tbShiftTy.Depth = 0;
+            this.tbShiftTy.Font = new System.Drawing.Font("Microsoft Sans Serif", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbShiftTy.HideSelection = true;
+            this.tbShiftTy.LeadingIcon = null;
+            this.tbShiftTy.Location = new System.Drawing.Point(53, 96);
+            this.tbShiftTy.MaxLength = 32767;
+            this.tbShiftTy.MouseState = MaterialSkin.MouseState.OUT;
+            this.tbShiftTy.Name = "tbShiftTy";
+            this.tbShiftTy.PasswordChar = '\0';
+            this.tbShiftTy.PrefixSuffixText = null;
+            this.tbShiftTy.ReadOnly = false;
+            this.tbShiftTy.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbShiftTy.SelectedText = "";
+            this.tbShiftTy.SelectionLength = 0;
+            this.tbShiftTy.SelectionStart = 0;
+            this.tbShiftTy.ShortcutsEnabled = true;
+            this.tbShiftTy.Size = new System.Drawing.Size(132, 26);
+            this.tbShiftTy.TabIndex = 13;
+            this.tbShiftTy.TabStop = false;
+            this.tbShiftTy.Text = "2";
+            this.tbShiftTy.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.tbShiftTy.TrailingIcon = null;
+            this.tbShiftTy.UseSystemPasswordChar = false;
+            this.tbShiftTy.UseTallSize = false;
             // 
             // btnScanPoint_
             // 
@@ -1115,7 +1108,7 @@ namespace loadingBox2dGui
             this.btnScanPoint_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnScanPoint_.UseAccentColor = false;
             this.btnScanPoint_.UseVisualStyleBackColor = false;
-            this.btnScanPoint_.Click += new System.EventHandler(this.btnGlassPoint__Click);
+            this.btnScanPoint_.Click += new System.EventHandler(this.btnScanPoint__Click);
             // 
             // btnCameraConnect_
             // 
@@ -1191,656 +1184,11 @@ namespace loadingBox2dGui
             this.pbLh.TabIndex = 193;
             this.pbLh.TabStop = false;
             // 
-            // materialCard4
-            // 
-            this.materialCard4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard4.Controls.Add(this.materialTextBox24);
-            this.materialCard4.Controls.Add(this.materialLabel5);
-            this.materialCard4.Controls.Add(this.materialTextBox25);
-            this.materialCard4.Controls.Add(this.materialLabel6);
-            this.materialCard4.Controls.Add(this.materialTextBox26);
-            this.materialCard4.Controls.Add(this.materialLabel7);
-            this.materialCard4.Depth = 0;
-            this.materialCard4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard4.Location = new System.Drawing.Point(615, 685);
-            this.materialCard4.Margin = new System.Windows.Forms.Padding(14);
-            this.materialCard4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCard4.Name = "materialCard4";
-            this.materialCard4.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard4.Size = new System.Drawing.Size(305, 125);
-            this.materialCard4.TabIndex = 192;
-            this.materialCard4.Visible = false;
-            // 
-            // materialTextBox24
-            // 
-            this.materialTextBox24.AnimateReadOnly = false;
-            this.materialTextBox24.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.materialTextBox24.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.materialTextBox24.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.materialTextBox24.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.materialTextBox24.Depth = 0;
-            this.materialTextBox24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialTextBox24.HideSelection = true;
-            this.materialTextBox24.LeadingIcon = null;
-            this.materialTextBox24.Location = new System.Drawing.Point(82, 89);
-            this.materialTextBox24.MaxLength = 32767;
-            this.materialTextBox24.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialTextBox24.Name = "materialTextBox24";
-            this.materialTextBox24.PasswordChar = '\0';
-            this.materialTextBox24.PrefixSuffixText = null;
-            this.materialTextBox24.ReadOnly = false;
-            this.materialTextBox24.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.materialTextBox24.SelectedText = "";
-            this.materialTextBox24.SelectionLength = 0;
-            this.materialTextBox24.SelectionStart = 0;
-            this.materialTextBox24.ShortcutsEnabled = true;
-            this.materialTextBox24.Size = new System.Drawing.Size(172, 26);
-            this.materialTextBox24.TabIndex = 11;
-            this.materialTextBox24.TabStop = false;
-            this.materialTextBox24.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.materialTextBox24.TrailingIcon = null;
-            this.materialTextBox24.UseSystemPasswordChar = false;
-            this.materialTextBox24.UseTallSize = false;
-            // 
-            // materialLabel5
-            // 
-            this.materialLabel5.AutoSize = true;
-            this.materialLabel5.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel5.Depth = 0;
-            this.materialLabel5.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel5.Location = new System.Drawing.Point(56, 92);
-            this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel5.Name = "materialLabel5";
-            this.materialLabel5.Size = new System.Drawing.Size(19, 18);
-            this.materialLabel5.TabIndex = 10;
-            this.materialLabel5.Text = "Rz";
-            // 
-            // materialTextBox25
-            // 
-            this.materialTextBox25.AnimateReadOnly = false;
-            this.materialTextBox25.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.materialTextBox25.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.materialTextBox25.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.materialTextBox25.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.materialTextBox25.Depth = 0;
-            this.materialTextBox25.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialTextBox25.HideSelection = true;
-            this.materialTextBox25.LeadingIcon = null;
-            this.materialTextBox25.Location = new System.Drawing.Point(82, 56);
-            this.materialTextBox25.MaxLength = 32767;
-            this.materialTextBox25.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialTextBox25.Name = "materialTextBox25";
-            this.materialTextBox25.PasswordChar = '\0';
-            this.materialTextBox25.PrefixSuffixText = null;
-            this.materialTextBox25.ReadOnly = false;
-            this.materialTextBox25.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.materialTextBox25.SelectedText = "";
-            this.materialTextBox25.SelectionLength = 0;
-            this.materialTextBox25.SelectionStart = 0;
-            this.materialTextBox25.ShortcutsEnabled = true;
-            this.materialTextBox25.Size = new System.Drawing.Size(172, 26);
-            this.materialTextBox25.TabIndex = 3;
-            this.materialTextBox25.TabStop = false;
-            this.materialTextBox25.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.materialTextBox25.TrailingIcon = null;
-            this.materialTextBox25.UseSystemPasswordChar = false;
-            this.materialTextBox25.UseTallSize = false;
-            // 
-            // materialLabel6
-            // 
-            this.materialLabel6.AutoSize = true;
-            this.materialLabel6.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel6.Depth = 0;
-            this.materialLabel6.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel6.Location = new System.Drawing.Point(56, 60);
-            this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel6.Name = "materialLabel6";
-            this.materialLabel6.Size = new System.Drawing.Size(19, 18);
-            this.materialLabel6.TabIndex = 2;
-            this.materialLabel6.Text = "Ty";
-            // 
-            // materialTextBox26
-            // 
-            this.materialTextBox26.AnimateReadOnly = false;
-            this.materialTextBox26.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.materialTextBox26.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.materialTextBox26.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.materialTextBox26.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.materialTextBox26.Depth = 0;
-            this.materialTextBox26.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialTextBox26.HideSelection = true;
-            this.materialTextBox26.LeadingIcon = null;
-            this.materialTextBox26.Location = new System.Drawing.Point(82, 23);
-            this.materialTextBox26.MaxLength = 32767;
-            this.materialTextBox26.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialTextBox26.Name = "materialTextBox26";
-            this.materialTextBox26.PasswordChar = '\0';
-            this.materialTextBox26.PrefixSuffixText = null;
-            this.materialTextBox26.ReadOnly = false;
-            this.materialTextBox26.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.materialTextBox26.SelectedText = "";
-            this.materialTextBox26.SelectionLength = 0;
-            this.materialTextBox26.SelectionStart = 0;
-            this.materialTextBox26.ShortcutsEnabled = true;
-            this.materialTextBox26.Size = new System.Drawing.Size(172, 26);
-            this.materialTextBox26.TabIndex = 1;
-            this.materialTextBox26.TabStop = false;
-            this.materialTextBox26.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.materialTextBox26.TrailingIcon = null;
-            this.materialTextBox26.UseSystemPasswordChar = false;
-            this.materialTextBox26.UseTallSize = false;
-            // 
-            // materialLabel7
-            // 
-            this.materialLabel7.AutoSize = true;
-            this.materialLabel7.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel7.Depth = 0;
-            this.materialLabel7.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel7.Location = new System.Drawing.Point(56, 27);
-            this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel7.Name = "materialLabel7";
-            this.materialLabel7.Size = new System.Drawing.Size(18, 18);
-            this.materialLabel7.TabIndex = 0;
-            this.materialLabel7.Text = "Tx";
-            // 
-            // materialCard3
-            // 
-            this.materialCard3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialCard3.Controls.Add(this.materialLabel1);
-            this.materialCard3.Controls.Add(this.materialTextBox21);
-            this.materialCard3.Controls.Add(this.materialLabel2);
-            this.materialCard3.Controls.Add(this.materialLabel3);
-            this.materialCard3.Controls.Add(this.materialTextBox22);
-            this.materialCard3.Controls.Add(this.materialLabel4);
-            this.materialCard3.Controls.Add(this.tlpGlassCamera);
-            this.materialCard3.Controls.Add(this.materialTextBox23);
-            this.materialCard3.Depth = 0;
-            this.materialCard3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialCard3.Location = new System.Drawing.Point(936, 652);
-            this.materialCard3.Margin = new System.Windows.Forms.Padding(14);
-            this.materialCard3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialCard3.Name = "materialCard3";
-            this.materialCard3.Padding = new System.Windows.Forms.Padding(14);
-            this.materialCard3.Size = new System.Drawing.Size(167, 289);
-            this.materialCard3.TabIndex = 191;
-            this.materialCard3.Visible = false;
-            // 
-            // materialLabel1
-            // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel1.Location = new System.Drawing.Point(-906, -434);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(24, 18);
-            this.materialLabel1.TabIndex = 151;
-            this.materialLabel1.Text = "lab";
-            // 
-            // materialTextBox21
-            // 
-            this.materialTextBox21.AnimateReadOnly = false;
-            this.materialTextBox21.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.materialTextBox21.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.materialTextBox21.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.materialTextBox21.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.materialTextBox21.Depth = 0;
-            this.materialTextBox21.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialTextBox21.HideSelection = true;
-            this.materialTextBox21.LeadingIcon = null;
-            this.materialTextBox21.Location = new System.Drawing.Point(-875, -439);
-            this.materialTextBox21.MaxLength = 32767;
-            this.materialTextBox21.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialTextBox21.Name = "materialTextBox21";
-            this.materialTextBox21.PasswordChar = '\0';
-            this.materialTextBox21.PrefixSuffixText = null;
-            this.materialTextBox21.ReadOnly = true;
-            this.materialTextBox21.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.materialTextBox21.SelectedText = "";
-            this.materialTextBox21.SelectionLength = 0;
-            this.materialTextBox21.SelectionStart = 0;
-            this.materialTextBox21.ShortcutsEnabled = true;
-            this.materialTextBox21.Size = new System.Drawing.Size(91, 26);
-            this.materialTextBox21.TabIndex = 150;
-            this.materialTextBox21.TabStop = false;
-            this.materialTextBox21.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.materialTextBox21.TrailingIcon = null;
-            this.materialTextBox21.UseSystemPasswordChar = false;
-            this.materialTextBox21.UseTallSize = false;
-            // 
-            // materialLabel2
-            // 
-            this.materialLabel2.AutoSize = true;
-            this.materialLabel2.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel2.Location = new System.Drawing.Point(16, 83);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(48, 18);
-            this.materialLabel2.TabIndex = 28;
-            this.materialLabel2.Text = "Model";
-            // 
-            // materialLabel3
-            // 
-            this.materialLabel3.AutoSize = true;
-            this.materialLabel3.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel3.Location = new System.Drawing.Point(16, 142);
-            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(52, 18);
-            this.materialLabel3.TabIndex = 27;
-            this.materialLabel3.Text = "Serials";
-            // 
-            // materialTextBox22
-            // 
-            this.materialTextBox22.AnimateReadOnly = false;
-            this.materialTextBox22.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.materialTextBox22.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.materialTextBox22.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.materialTextBox22.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.materialTextBox22.Depth = 0;
-            this.materialTextBox22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialTextBox22.HideSelection = true;
-            this.materialTextBox22.LeadingIcon = null;
-            this.materialTextBox22.Location = new System.Drawing.Point(13, 50);
-            this.materialTextBox22.MaxLength = 32767;
-            this.materialTextBox22.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialTextBox22.Name = "materialTextBox22";
-            this.materialTextBox22.PasswordChar = '\0';
-            this.materialTextBox22.PrefixSuffixText = null;
-            this.materialTextBox22.ReadOnly = true;
-            this.materialTextBox22.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.materialTextBox22.SelectedText = "";
-            this.materialTextBox22.SelectionLength = 0;
-            this.materialTextBox22.SelectionStart = 0;
-            this.materialTextBox22.ShortcutsEnabled = true;
-            this.materialTextBox22.Size = new System.Drawing.Size(142, 26);
-            this.materialTextBox22.TabIndex = 20;
-            this.materialTextBox22.TabStop = false;
-            this.materialTextBox22.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.materialTextBox22.TrailingIcon = null;
-            this.materialTextBox22.UseSystemPasswordChar = false;
-            this.materialTextBox22.UseTallSize = false;
-            // 
-            // materialLabel4
-            // 
-            this.materialLabel4.AutoSize = true;
-            this.materialLabel4.BackColor = System.Drawing.Color.Transparent;
-            this.materialLabel4.Depth = 0;
-            this.materialLabel4.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel4.Location = new System.Drawing.Point(16, 28);
-            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel4.Name = "materialLabel4";
-            this.materialLabel4.Size = new System.Drawing.Size(45, 18);
-            this.materialLabel4.TabIndex = 26;
-            this.materialLabel4.Text = "Name";
-            // 
-            // tlpGlassCamera
-            // 
-            this.tlpGlassCamera.BackColor = System.Drawing.Color.White;
-            this.tlpGlassCamera.ColumnCount = 3;
-            this.tlpGlassCamera.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tlpGlassCamera.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
-            this.tlpGlassCamera.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            this.tlpGlassCamera.Controls.Add(this.ckbGlassCameraUse4, 2, 3);
-            this.tlpGlassCamera.Controls.Add(this.tbGlassCameraSerial1, 1, 0);
-            this.tlpGlassCamera.Controls.Add(this.lblGlassCameraAlias1, 0, 0);
-            this.tlpGlassCamera.Controls.Add(this.ckbGlassCameraUse1, 2, 0);
-            this.tlpGlassCamera.Controls.Add(this.lblGlassCameraAlias4, 0, 3);
-            this.tlpGlassCamera.Controls.Add(this.ckbGlassCameraUse2, 2, 1);
-            this.tlpGlassCamera.Controls.Add(this.tbGlassCameraSerial3, 1, 2);
-            this.tlpGlassCamera.Controls.Add(this.lblGlassCameraAlias3, 0, 2);
-            this.tlpGlassCamera.Controls.Add(this.lblGlassCameraAlias2, 0, 1);
-            this.tlpGlassCamera.Controls.Add(this.tbGlassCameraSerial2, 1, 1);
-            this.tlpGlassCamera.Controls.Add(this.tbGlassCameraSerial4, 1, 3);
-            this.tlpGlassCamera.Controls.Add(this.ckbGlassCameraUse3, 2, 2);
-            this.tlpGlassCamera.Location = new System.Drawing.Point(6, 164);
-            this.tlpGlassCamera.Name = "tlpGlassCamera";
-            this.tlpGlassCamera.RowCount = 4;
-            this.tlpGlassCamera.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tlpGlassCamera.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tlpGlassCamera.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tlpGlassCamera.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tlpGlassCamera.Size = new System.Drawing.Size(156, 123);
-            this.tlpGlassCamera.TabIndex = 160;
-            // 
-            // ckbGlassCameraUse4
-            // 
-            this.ckbGlassCameraUse4.AutoCheck = false;
-            this.ckbGlassCameraUse4.AutoSize = true;
-            this.ckbGlassCameraUse4.BackColor = System.Drawing.Color.Transparent;
-            this.ckbGlassCameraUse4.Checked = true;
-            this.ckbGlassCameraUse4.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.ckbGlassCameraUse4.Depth = 0;
-            this.ckbGlassCameraUse4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbGlassCameraUse4.Location = new System.Drawing.Point(137, 93);
-            this.ckbGlassCameraUse4.Margin = new System.Windows.Forms.Padding(0);
-            this.ckbGlassCameraUse4.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.ckbGlassCameraUse4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.ckbGlassCameraUse4.Name = "ckbGlassCameraUse4";
-            this.ckbGlassCameraUse4.ReadOnly = false;
-            this.ckbGlassCameraUse4.Ripple = true;
-            this.ckbGlassCameraUse4.Size = new System.Drawing.Size(46, 31);
-            this.ckbGlassCameraUse4.TabIndex = 158;
-            this.ckbGlassCameraUse4.UseVisualStyleBackColor = false;
-            // 
-            // tbGlassCameraSerial1
-            // 
-            this.tbGlassCameraSerial1.AnimateReadOnly = false;
-            this.tbGlassCameraSerial1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassCameraSerial1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassCameraSerial1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassCameraSerial1.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassCameraSerial1.Depth = 0;
-            this.tbGlassCameraSerial1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbGlassCameraSerial1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassCameraSerial1.HideSelection = true;
-            this.tbGlassCameraSerial1.LeadingIcon = null;
-            this.tbGlassCameraSerial1.Location = new System.Drawing.Point(35, 3);
-            this.tbGlassCameraSerial1.MaxLength = 32767;
-            this.tbGlassCameraSerial1.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassCameraSerial1.Name = "tbGlassCameraSerial1";
-            this.tbGlassCameraSerial1.PasswordChar = '\0';
-            this.tbGlassCameraSerial1.PrefixSuffixText = null;
-            this.tbGlassCameraSerial1.ReadOnly = true;
-            this.tbGlassCameraSerial1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassCameraSerial1.SelectedText = "";
-            this.tbGlassCameraSerial1.SelectionLength = 0;
-            this.tbGlassCameraSerial1.SelectionStart = 0;
-            this.tbGlassCameraSerial1.ShortcutsEnabled = true;
-            this.tbGlassCameraSerial1.Size = new System.Drawing.Size(99, 26);
-            this.tbGlassCameraSerial1.TabIndex = 165;
-            this.tbGlassCameraSerial1.TabStop = false;
-            this.tbGlassCameraSerial1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassCameraSerial1.TrailingIcon = null;
-            this.tbGlassCameraSerial1.UseSystemPasswordChar = false;
-            this.tbGlassCameraSerial1.UseTallSize = false;
-            // 
-            // lblGlassCameraAlias1
-            // 
-            this.lblGlassCameraAlias1.AutoSize = true;
-            this.lblGlassCameraAlias1.BackColor = System.Drawing.Color.Transparent;
-            this.lblGlassCameraAlias1.Depth = 0;
-            this.lblGlassCameraAlias1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblGlassCameraAlias1.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblGlassCameraAlias1.Location = new System.Drawing.Point(0, 0);
-            this.lblGlassCameraAlias1.Margin = new System.Windows.Forms.Padding(0);
-            this.lblGlassCameraAlias1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblGlassCameraAlias1.Name = "lblGlassCameraAlias1";
-            this.lblGlassCameraAlias1.Size = new System.Drawing.Size(32, 31);
-            this.lblGlassCameraAlias1.TabIndex = 162;
-            this.lblGlassCameraAlias1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ckbGlassCameraUse1
-            // 
-            this.ckbGlassCameraUse1.AutoCheck = false;
-            this.ckbGlassCameraUse1.AutoSize = true;
-            this.ckbGlassCameraUse1.BackColor = System.Drawing.Color.Transparent;
-            this.ckbGlassCameraUse1.Checked = true;
-            this.ckbGlassCameraUse1.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.ckbGlassCameraUse1.Depth = 0;
-            this.ckbGlassCameraUse1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbGlassCameraUse1.Location = new System.Drawing.Point(137, 0);
-            this.ckbGlassCameraUse1.Margin = new System.Windows.Forms.Padding(0);
-            this.ckbGlassCameraUse1.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.ckbGlassCameraUse1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.ckbGlassCameraUse1.Name = "ckbGlassCameraUse1";
-            this.ckbGlassCameraUse1.ReadOnly = false;
-            this.ckbGlassCameraUse1.Ripple = true;
-            this.ckbGlassCameraUse1.Size = new System.Drawing.Size(46, 31);
-            this.ckbGlassCameraUse1.TabIndex = 160;
-            this.ckbGlassCameraUse1.UseVisualStyleBackColor = false;
-            // 
-            // lblGlassCameraAlias4
-            // 
-            this.lblGlassCameraAlias4.AutoSize = true;
-            this.lblGlassCameraAlias4.BackColor = System.Drawing.Color.Transparent;
-            this.lblGlassCameraAlias4.Depth = 0;
-            this.lblGlassCameraAlias4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblGlassCameraAlias4.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblGlassCameraAlias4.Location = new System.Drawing.Point(0, 93);
-            this.lblGlassCameraAlias4.Margin = new System.Windows.Forms.Padding(0);
-            this.lblGlassCameraAlias4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblGlassCameraAlias4.Name = "lblGlassCameraAlias4";
-            this.lblGlassCameraAlias4.Size = new System.Drawing.Size(32, 31);
-            this.lblGlassCameraAlias4.TabIndex = 159;
-            this.lblGlassCameraAlias4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ckbGlassCameraUse2
-            // 
-            this.ckbGlassCameraUse2.AutoCheck = false;
-            this.ckbGlassCameraUse2.AutoSize = true;
-            this.ckbGlassCameraUse2.BackColor = System.Drawing.Color.Transparent;
-            this.ckbGlassCameraUse2.Checked = true;
-            this.ckbGlassCameraUse2.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.ckbGlassCameraUse2.Depth = 0;
-            this.ckbGlassCameraUse2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbGlassCameraUse2.Location = new System.Drawing.Point(137, 31);
-            this.ckbGlassCameraUse2.Margin = new System.Windows.Forms.Padding(0);
-            this.ckbGlassCameraUse2.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.ckbGlassCameraUse2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.ckbGlassCameraUse2.Name = "ckbGlassCameraUse2";
-            this.ckbGlassCameraUse2.ReadOnly = false;
-            this.ckbGlassCameraUse2.Ripple = true;
-            this.ckbGlassCameraUse2.Size = new System.Drawing.Size(46, 31);
-            this.ckbGlassCameraUse2.TabIndex = 152;
-            this.ckbGlassCameraUse2.UseVisualStyleBackColor = false;
-            // 
-            // tbGlassCameraSerial3
-            // 
-            this.tbGlassCameraSerial3.AnimateReadOnly = false;
-            this.tbGlassCameraSerial3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassCameraSerial3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassCameraSerial3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassCameraSerial3.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassCameraSerial3.Depth = 0;
-            this.tbGlassCameraSerial3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbGlassCameraSerial3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassCameraSerial3.HideSelection = true;
-            this.tbGlassCameraSerial3.LeadingIcon = null;
-            this.tbGlassCameraSerial3.Location = new System.Drawing.Point(35, 65);
-            this.tbGlassCameraSerial3.MaxLength = 32767;
-            this.tbGlassCameraSerial3.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassCameraSerial3.Name = "tbGlassCameraSerial3";
-            this.tbGlassCameraSerial3.PasswordChar = '\0';
-            this.tbGlassCameraSerial3.PrefixSuffixText = null;
-            this.tbGlassCameraSerial3.ReadOnly = true;
-            this.tbGlassCameraSerial3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassCameraSerial3.SelectedText = "";
-            this.tbGlassCameraSerial3.SelectionLength = 0;
-            this.tbGlassCameraSerial3.SelectionStart = 0;
-            this.tbGlassCameraSerial3.ShortcutsEnabled = true;
-            this.tbGlassCameraSerial3.Size = new System.Drawing.Size(99, 26);
-            this.tbGlassCameraSerial3.TabIndex = 157;
-            this.tbGlassCameraSerial3.TabStop = false;
-            this.tbGlassCameraSerial3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassCameraSerial3.TrailingIcon = null;
-            this.tbGlassCameraSerial3.UseSystemPasswordChar = false;
-            this.tbGlassCameraSerial3.UseTallSize = false;
-            // 
-            // lblGlassCameraAlias3
-            // 
-            this.lblGlassCameraAlias3.AutoSize = true;
-            this.lblGlassCameraAlias3.BackColor = System.Drawing.Color.Transparent;
-            this.lblGlassCameraAlias3.Depth = 0;
-            this.lblGlassCameraAlias3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblGlassCameraAlias3.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblGlassCameraAlias3.Location = new System.Drawing.Point(0, 62);
-            this.lblGlassCameraAlias3.Margin = new System.Windows.Forms.Padding(0);
-            this.lblGlassCameraAlias3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblGlassCameraAlias3.Name = "lblGlassCameraAlias3";
-            this.lblGlassCameraAlias3.Size = new System.Drawing.Size(32, 31);
-            this.lblGlassCameraAlias3.TabIndex = 156;
-            this.lblGlassCameraAlias3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblGlassCameraAlias2
-            // 
-            this.lblGlassCameraAlias2.AutoSize = true;
-            this.lblGlassCameraAlias2.BackColor = System.Drawing.Color.Transparent;
-            this.lblGlassCameraAlias2.Depth = 0;
-            this.lblGlassCameraAlias2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblGlassCameraAlias2.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblGlassCameraAlias2.Location = new System.Drawing.Point(0, 31);
-            this.lblGlassCameraAlias2.Margin = new System.Windows.Forms.Padding(0);
-            this.lblGlassCameraAlias2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblGlassCameraAlias2.Name = "lblGlassCameraAlias2";
-            this.lblGlassCameraAlias2.Size = new System.Drawing.Size(32, 31);
-            this.lblGlassCameraAlias2.TabIndex = 154;
-            this.lblGlassCameraAlias2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tbGlassCameraSerial2
-            // 
-            this.tbGlassCameraSerial2.AnimateReadOnly = false;
-            this.tbGlassCameraSerial2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassCameraSerial2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassCameraSerial2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassCameraSerial2.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassCameraSerial2.Depth = 0;
-            this.tbGlassCameraSerial2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbGlassCameraSerial2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassCameraSerial2.HideSelection = true;
-            this.tbGlassCameraSerial2.LeadingIcon = null;
-            this.tbGlassCameraSerial2.Location = new System.Drawing.Point(35, 34);
-            this.tbGlassCameraSerial2.MaxLength = 32767;
-            this.tbGlassCameraSerial2.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassCameraSerial2.Name = "tbGlassCameraSerial2";
-            this.tbGlassCameraSerial2.PasswordChar = '\0';
-            this.tbGlassCameraSerial2.PrefixSuffixText = null;
-            this.tbGlassCameraSerial2.ReadOnly = true;
-            this.tbGlassCameraSerial2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassCameraSerial2.SelectedText = "";
-            this.tbGlassCameraSerial2.SelectionLength = 0;
-            this.tbGlassCameraSerial2.SelectionStart = 0;
-            this.tbGlassCameraSerial2.ShortcutsEnabled = true;
-            this.tbGlassCameraSerial2.Size = new System.Drawing.Size(99, 26);
-            this.tbGlassCameraSerial2.TabIndex = 153;
-            this.tbGlassCameraSerial2.TabStop = false;
-            this.tbGlassCameraSerial2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassCameraSerial2.TrailingIcon = null;
-            this.tbGlassCameraSerial2.UseSystemPasswordChar = false;
-            this.tbGlassCameraSerial2.UseTallSize = false;
-            // 
-            // tbGlassCameraSerial4
-            // 
-            this.tbGlassCameraSerial4.AnimateReadOnly = false;
-            this.tbGlassCameraSerial4.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassCameraSerial4.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassCameraSerial4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassCameraSerial4.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassCameraSerial4.Depth = 0;
-            this.tbGlassCameraSerial4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbGlassCameraSerial4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassCameraSerial4.HideSelection = true;
-            this.tbGlassCameraSerial4.LeadingIcon = null;
-            this.tbGlassCameraSerial4.Location = new System.Drawing.Point(35, 96);
-            this.tbGlassCameraSerial4.MaxLength = 32767;
-            this.tbGlassCameraSerial4.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassCameraSerial4.Name = "tbGlassCameraSerial4";
-            this.tbGlassCameraSerial4.PasswordChar = '\0';
-            this.tbGlassCameraSerial4.PrefixSuffixText = null;
-            this.tbGlassCameraSerial4.ReadOnly = true;
-            this.tbGlassCameraSerial4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassCameraSerial4.SelectedText = "";
-            this.tbGlassCameraSerial4.SelectionLength = 0;
-            this.tbGlassCameraSerial4.SelectionStart = 0;
-            this.tbGlassCameraSerial4.ShortcutsEnabled = true;
-            this.tbGlassCameraSerial4.Size = new System.Drawing.Size(99, 26);
-            this.tbGlassCameraSerial4.TabIndex = 23;
-            this.tbGlassCameraSerial4.TabStop = false;
-            this.tbGlassCameraSerial4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassCameraSerial4.TrailingIcon = null;
-            this.tbGlassCameraSerial4.UseSystemPasswordChar = false;
-            this.tbGlassCameraSerial4.UseTallSize = false;
-            // 
-            // ckbGlassCameraUse3
-            // 
-            this.ckbGlassCameraUse3.AutoCheck = false;
-            this.ckbGlassCameraUse3.AutoSize = true;
-            this.ckbGlassCameraUse3.BackColor = System.Drawing.Color.Transparent;
-            this.ckbGlassCameraUse3.Checked = true;
-            this.ckbGlassCameraUse3.CheckState = System.Windows.Forms.CheckState.Indeterminate;
-            this.ckbGlassCameraUse3.Depth = 0;
-            this.ckbGlassCameraUse3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ckbGlassCameraUse3.Location = new System.Drawing.Point(137, 62);
-            this.ckbGlassCameraUse3.Margin = new System.Windows.Forms.Padding(0);
-            this.ckbGlassCameraUse3.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.ckbGlassCameraUse3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.ckbGlassCameraUse3.Name = "ckbGlassCameraUse3";
-            this.ckbGlassCameraUse3.ReadOnly = false;
-            this.ckbGlassCameraUse3.Ripple = true;
-            this.ckbGlassCameraUse3.Size = new System.Drawing.Size(46, 31);
-            this.ckbGlassCameraUse3.TabIndex = 155;
-            this.ckbGlassCameraUse3.UseVisualStyleBackColor = false;
-            // 
-            // materialTextBox23
-            // 
-            this.materialTextBox23.AnimateReadOnly = false;
-            this.materialTextBox23.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.materialTextBox23.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.materialTextBox23.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.materialTextBox23.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.materialTextBox23.Depth = 0;
-            this.materialTextBox23.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialTextBox23.HideSelection = true;
-            this.materialTextBox23.LeadingIcon = null;
-            this.materialTextBox23.Location = new System.Drawing.Point(13, 105);
-            this.materialTextBox23.MaxLength = 32767;
-            this.materialTextBox23.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialTextBox23.Name = "materialTextBox23";
-            this.materialTextBox23.PasswordChar = '\0';
-            this.materialTextBox23.PrefixSuffixText = null;
-            this.materialTextBox23.ReadOnly = true;
-            this.materialTextBox23.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.materialTextBox23.SelectedText = "";
-            this.materialTextBox23.SelectionLength = 0;
-            this.materialTextBox23.SelectionStart = 0;
-            this.materialTextBox23.ShortcutsEnabled = true;
-            this.materialTextBox23.Size = new System.Drawing.Size(142, 26);
-            this.materialTextBox23.TabIndex = 25;
-            this.materialTextBox23.TabStop = false;
-            this.materialTextBox23.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.materialTextBox23.TrailingIcon = null;
-            this.materialTextBox23.UseSystemPasswordChar = false;
-            this.materialTextBox23.UseTallSize = false;
-            // 
-            // btnConnectPlc_
-            // 
-            this.btnConnectPlc_.AutoSize = false;
-            this.btnConnectPlc_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnConnectPlc_.BackColor = System.Drawing.Color.DarkGray;
-            this.btnConnectPlc_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnConnectPlc_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnConnectPlc_.Depth = 0;
-            this.btnConnectPlc_.FlatAppearance.BorderSize = 0;
-            this.btnConnectPlc_.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
-            this.btnConnectPlc_.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
-            this.btnConnectPlc_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnConnectPlc_.Font = new System.Drawing.Font("Consolas", 16F);
-            this.btnConnectPlc_.HighEmphasis = true;
-            this.btnConnectPlc_.Icon = null;
-            this.btnConnectPlc_.Location = new System.Drawing.Point(23, 699);
-            this.btnConnectPlc_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnConnectPlc_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnConnectPlc_.Name = "btnConnectPlc_";
-            this.btnConnectPlc_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnConnectPlc_.Size = new System.Drawing.Size(100, 36);
-            this.btnConnectPlc_.TabIndex = 159;
-            this.btnConnectPlc_.Text = "Connect PLC";
-            this.btnConnectPlc_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnConnectPlc_.UseAccentColor = false;
-            this.btnConnectPlc_.UseVisualStyleBackColor = false;
-            this.btnConnectPlc_.Visible = false;
-            this.btnConnectPlc_.Click += new System.EventHandler(this.btnGlassRHCameraUse__Click);
-            // 
             // pbOk
             // 
             this.pbOk.BackColor = System.Drawing.Color.LightGray;
             this.pbOk.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbOk.Image = global::loadingBox2dGui.Properties.Resources.visionOKOff;
+            this.pbOk.Image = ((System.Drawing.Image)(resources.GetObject("pbOk.Image")));
             this.pbOk.Location = new System.Drawing.Point(1102, 5);
             this.pbOk.Name = "pbOk";
             this.pbOk.Size = new System.Drawing.Size(223, 124);
@@ -1889,7 +1237,7 @@ namespace loadingBox2dGui
             // 
             this.pbNg.BackColor = System.Drawing.Color.LightGray;
             this.pbNg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbNg.Image = global::loadingBox2dGui.Properties.Resources.visionNGOff;
+            this.pbNg.Image = ((System.Drawing.Image)(resources.GetObject("pbNg.Image")));
             this.pbNg.Location = new System.Drawing.Point(1101, 132);
             this.pbNg.Name = "pbNg";
             this.pbNg.Size = new System.Drawing.Size(223, 124);
@@ -1934,845 +1282,6 @@ namespace loadingBox2dGui
             this.plcSignalStatusValueTable2.Size = new System.Drawing.Size(203, 193);
             this.plcSignalStatusValueTable2.TabIndex = 107;
             // 
-            // gbGlassUserControl_
-            // 
-            this.gbGlassUserControl_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.gbGlassUserControl_.Controls.Add(this.btnGlassBackUp_);
-            this.gbGlassUserControl_.Controls.Add(this.lblGlassRHCamera_);
-            this.gbGlassUserControl_.Controls.Add(this.lblGlassLHCamera_);
-            this.gbGlassUserControl_.Controls.Add(this.btnGlassRHCameraUnuse_);
-            this.gbGlassUserControl_.Controls.Add(this.btnGlassRHCameraUse_);
-            this.gbGlassUserControl_.Controls.Add(this.btnGlassLHCameraUnuse_);
-            this.gbGlassUserControl_.Controls.Add(this.btnGlassLHCameraUse_);
-            this.gbGlassUserControl_.Depth = 0;
-            this.gbGlassUserControl_.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gbGlassUserControl_.Location = new System.Drawing.Point(8, 554);
-            this.gbGlassUserControl_.Margin = new System.Windows.Forms.Padding(14);
-            this.gbGlassUserControl_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.gbGlassUserControl_.Name = "gbGlassUserControl_";
-            this.gbGlassUserControl_.Padding = new System.Windows.Forms.Padding(14);
-            this.gbGlassUserControl_.Size = new System.Drawing.Size(589, 125);
-            this.gbGlassUserControl_.TabIndex = 186;
-            this.gbGlassUserControl_.Visible = false;
-            // 
-            // btnGlassBackUp_
-            // 
-            this.btnGlassBackUp_.AutoSize = false;
-            this.btnGlassBackUp_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnGlassBackUp_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnGlassBackUp_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnGlassBackUp_.Depth = 0;
-            this.btnGlassBackUp_.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame;
-            this.btnGlassBackUp_.FlatAppearance.BorderSize = 0;
-            this.btnGlassBackUp_.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(208)))), ((int)(((byte)(65)))));
-            this.btnGlassBackUp_.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(208)))), ((int)(((byte)(65)))));
-            this.btnGlassBackUp_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGlassBackUp_.ForeColor = System.Drawing.Color.White;
-            this.btnGlassBackUp_.HighEmphasis = true;
-            this.btnGlassBackUp_.Icon = null;
-            this.btnGlassBackUp_.Location = new System.Drawing.Point(15, 22);
-            this.btnGlassBackUp_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnGlassBackUp_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnGlassBackUp_.Name = "btnGlassBackUp_";
-            this.btnGlassBackUp_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnGlassBackUp_.Size = new System.Drawing.Size(103, 93);
-            this.btnGlassBackUp_.TabIndex = 163;
-            this.btnGlassBackUp_.Text = "BackUp";
-            this.btnGlassBackUp_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnGlassBackUp_.UseAccentColor = false;
-            this.btnGlassBackUp_.UseVisualStyleBackColor = true;
-            this.btnGlassBackUp_.Click += new System.EventHandler(this.btnGlassBackUp__Click);
-            // 
-            // lblGlassRHCamera_
-            // 
-            this.lblGlassRHCamera_.AutoSize = false;
-            this.lblGlassRHCamera_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.lblGlassRHCamera_.CustomBackColor = System.Drawing.Color.Empty;
-            this.lblGlassRHCamera_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.lblGlassRHCamera_.Depth = 0;
-            this.lblGlassRHCamera_.HighEmphasis = true;
-            this.lblGlassRHCamera_.Icon = null;
-            this.lblGlassRHCamera_.Location = new System.Drawing.Point(363, 22);
-            this.lblGlassRHCamera_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.lblGlassRHCamera_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblGlassRHCamera_.Name = "lblGlassRHCamera_";
-            this.lblGlassRHCamera_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.lblGlassRHCamera_.Size = new System.Drawing.Size(210, 36);
-            this.lblGlassRHCamera_.TabIndex = 162;
-            this.lblGlassRHCamera_.Text = "RH Camera";
-            this.lblGlassRHCamera_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.lblGlassRHCamera_.UseAccentColor = false;
-            this.lblGlassRHCamera_.UseVisualStyleBackColor = true;
-            // 
-            // lblGlassLHCamera_
-            // 
-            this.lblGlassLHCamera_.AutoSize = false;
-            this.lblGlassLHCamera_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.lblGlassLHCamera_.CustomBackColor = System.Drawing.Color.Empty;
-            this.lblGlassLHCamera_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.lblGlassLHCamera_.Depth = 0;
-            this.lblGlassLHCamera_.HighEmphasis = true;
-            this.lblGlassLHCamera_.Icon = null;
-            this.lblGlassLHCamera_.Location = new System.Drawing.Point(133, 22);
-            this.lblGlassLHCamera_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.lblGlassLHCamera_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblGlassLHCamera_.Name = "lblGlassLHCamera_";
-            this.lblGlassLHCamera_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.lblGlassLHCamera_.Size = new System.Drawing.Size(210, 36);
-            this.lblGlassLHCamera_.TabIndex = 161;
-            this.lblGlassLHCamera_.Text = "LH Camera";
-            this.lblGlassLHCamera_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.lblGlassLHCamera_.UseAccentColor = false;
-            this.lblGlassLHCamera_.UseVisualStyleBackColor = true;
-            // 
-            // btnGlassRHCameraUnuse_
-            // 
-            this.btnGlassRHCameraUnuse_.AutoSize = false;
-            this.btnGlassRHCameraUnuse_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnGlassRHCameraUnuse_.BackColor = System.Drawing.Color.DarkGray;
-            this.btnGlassRHCameraUnuse_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnGlassRHCameraUnuse_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnGlassRHCameraUnuse_.Depth = 0;
-            this.btnGlassRHCameraUnuse_.FlatAppearance.BorderSize = 0;
-            this.btnGlassRHCameraUnuse_.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Tomato;
-            this.btnGlassRHCameraUnuse_.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Tomato;
-            this.btnGlassRHCameraUnuse_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGlassRHCameraUnuse_.Font = new System.Drawing.Font("Consolas", 16F);
-            this.btnGlassRHCameraUnuse_.HighEmphasis = true;
-            this.btnGlassRHCameraUnuse_.Icon = null;
-            this.btnGlassRHCameraUnuse_.Location = new System.Drawing.Point(473, 79);
-            this.btnGlassRHCameraUnuse_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnGlassRHCameraUnuse_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnGlassRHCameraUnuse_.Name = "btnGlassRHCameraUnuse_";
-            this.btnGlassRHCameraUnuse_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnGlassRHCameraUnuse_.Size = new System.Drawing.Size(100, 36);
-            this.btnGlassRHCameraUnuse_.TabIndex = 160;
-            this.btnGlassRHCameraUnuse_.Text = "Unuse";
-            this.btnGlassRHCameraUnuse_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnGlassRHCameraUnuse_.UseAccentColor = false;
-            this.btnGlassRHCameraUnuse_.UseVisualStyleBackColor = false;
-            this.btnGlassRHCameraUnuse_.Click += new System.EventHandler(this.btnGlassRHCameraUnuse__Click);
-            // 
-            // btnGlassRHCameraUse_
-            // 
-            this.btnGlassRHCameraUse_.AutoSize = false;
-            this.btnGlassRHCameraUse_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnGlassRHCameraUse_.BackColor = System.Drawing.Color.DarkGray;
-            this.btnGlassRHCameraUse_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnGlassRHCameraUse_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnGlassRHCameraUse_.Depth = 0;
-            this.btnGlassRHCameraUse_.FlatAppearance.BorderSize = 0;
-            this.btnGlassRHCameraUse_.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
-            this.btnGlassRHCameraUse_.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
-            this.btnGlassRHCameraUse_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGlassRHCameraUse_.Font = new System.Drawing.Font("Consolas", 16F);
-            this.btnGlassRHCameraUse_.HighEmphasis = true;
-            this.btnGlassRHCameraUse_.Icon = null;
-            this.btnGlassRHCameraUse_.Location = new System.Drawing.Point(363, 79);
-            this.btnGlassRHCameraUse_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnGlassRHCameraUse_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnGlassRHCameraUse_.Name = "btnGlassRHCameraUse_";
-            this.btnGlassRHCameraUse_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnGlassRHCameraUse_.Size = new System.Drawing.Size(100, 36);
-            this.btnGlassRHCameraUse_.TabIndex = 159;
-            this.btnGlassRHCameraUse_.Text = "Use";
-            this.btnGlassRHCameraUse_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnGlassRHCameraUse_.UseAccentColor = false;
-            this.btnGlassRHCameraUse_.UseVisualStyleBackColor = false;
-            this.btnGlassRHCameraUse_.Click += new System.EventHandler(this.btnGlassRHCameraUse__Click);
-            // 
-            // btnGlassLHCameraUnuse_
-            // 
-            this.btnGlassLHCameraUnuse_.AutoSize = false;
-            this.btnGlassLHCameraUnuse_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnGlassLHCameraUnuse_.BackColor = System.Drawing.Color.DarkGray;
-            this.btnGlassLHCameraUnuse_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnGlassLHCameraUnuse_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnGlassLHCameraUnuse_.Depth = 0;
-            this.btnGlassLHCameraUnuse_.FlatAppearance.BorderSize = 0;
-            this.btnGlassLHCameraUnuse_.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Tomato;
-            this.btnGlassLHCameraUnuse_.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Tomato;
-            this.btnGlassLHCameraUnuse_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGlassLHCameraUnuse_.Font = new System.Drawing.Font("Consolas", 16F);
-            this.btnGlassLHCameraUnuse_.HighEmphasis = true;
-            this.btnGlassLHCameraUnuse_.Icon = null;
-            this.btnGlassLHCameraUnuse_.Location = new System.Drawing.Point(243, 79);
-            this.btnGlassLHCameraUnuse_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnGlassLHCameraUnuse_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnGlassLHCameraUnuse_.Name = "btnGlassLHCameraUnuse_";
-            this.btnGlassLHCameraUnuse_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnGlassLHCameraUnuse_.Size = new System.Drawing.Size(100, 36);
-            this.btnGlassLHCameraUnuse_.TabIndex = 158;
-            this.btnGlassLHCameraUnuse_.Text = "Unuse";
-            this.btnGlassLHCameraUnuse_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnGlassLHCameraUnuse_.UseAccentColor = false;
-            this.btnGlassLHCameraUnuse_.UseVisualStyleBackColor = false;
-            this.btnGlassLHCameraUnuse_.Click += new System.EventHandler(this.btnGlassLHCameraUnuse__Click);
-            // 
-            // btnGlassLHCameraUse_
-            // 
-            this.btnGlassLHCameraUse_.AutoSize = false;
-            this.btnGlassLHCameraUse_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnGlassLHCameraUse_.BackColor = System.Drawing.Color.DarkGray;
-            this.btnGlassLHCameraUse_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnGlassLHCameraUse_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnGlassLHCameraUse_.Depth = 0;
-            this.btnGlassLHCameraUse_.FlatAppearance.BorderSize = 0;
-            this.btnGlassLHCameraUse_.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
-            this.btnGlassLHCameraUse_.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(215)))), ((int)(((byte)(73)))));
-            this.btnGlassLHCameraUse_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGlassLHCameraUse_.Font = new System.Drawing.Font("Consolas", 16F);
-            this.btnGlassLHCameraUse_.HighEmphasis = true;
-            this.btnGlassLHCameraUse_.Icon = null;
-            this.btnGlassLHCameraUse_.Location = new System.Drawing.Point(133, 79);
-            this.btnGlassLHCameraUse_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnGlassLHCameraUse_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnGlassLHCameraUse_.Name = "btnGlassLHCameraUse_";
-            this.btnGlassLHCameraUse_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnGlassLHCameraUse_.Size = new System.Drawing.Size(100, 36);
-            this.btnGlassLHCameraUse_.TabIndex = 157;
-            this.btnGlassLHCameraUse_.Text = "Use";
-            this.btnGlassLHCameraUse_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnGlassLHCameraUse_.UseAccentColor = false;
-            this.btnGlassLHCameraUse_.UseVisualStyleBackColor = false;
-            this.btnGlassLHCameraUse_.Click += new System.EventHandler(this.btnGlassLHCameraUse__Click);
-            // 
-            // label85_
-            // 
-            this.label85_.AutoSize = true;
-            this.label85_.BackColor = System.Drawing.Color.Transparent;
-            this.label85_.Depth = 0;
-            this.label85_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label85_.Location = new System.Drawing.Point(6, 811);
-            this.label85_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label85_.Name = "label85_";
-            this.label85_.Size = new System.Drawing.Size(156, 18);
-            this.label85_.TabIndex = 180;
-            this.label85_.Text = "Reference Data Path";
-            this.label85_.Visible = false;
-            // 
-            // tbGlassRefDataPath
-            // 
-            this.tbGlassRefDataPath.AnimateReadOnly = false;
-            this.tbGlassRefDataPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassRefDataPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassRefDataPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassRefDataPath.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassRefDataPath.Depth = 0;
-            this.tbGlassRefDataPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassRefDataPath.HideSelection = true;
-            this.tbGlassRefDataPath.LeadingIcon = null;
-            this.tbGlassRefDataPath.Location = new System.Drawing.Point(6, 829);
-            this.tbGlassRefDataPath.MaxLength = 32767;
-            this.tbGlassRefDataPath.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassRefDataPath.Name = "tbGlassRefDataPath";
-            this.tbGlassRefDataPath.PasswordChar = '\0';
-            this.tbGlassRefDataPath.PrefixSuffixText = null;
-            this.tbGlassRefDataPath.ReadOnly = false;
-            this.tbGlassRefDataPath.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassRefDataPath.SelectedText = "";
-            this.tbGlassRefDataPath.SelectionLength = 0;
-            this.tbGlassRefDataPath.SelectionStart = 0;
-            this.tbGlassRefDataPath.ShortcutsEnabled = true;
-            this.tbGlassRefDataPath.Size = new System.Drawing.Size(555, 26);
-            this.tbGlassRefDataPath.TabIndex = 181;
-            this.tbGlassRefDataPath.TabStop = false;
-            this.tbGlassRefDataPath.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassRefDataPath.TrailingIcon = null;
-            this.tbGlassRefDataPath.UseSystemPasswordChar = false;
-            this.tbGlassRefDataPath.UseTallSize = false;
-            this.tbGlassRefDataPath.Visible = false;
-            // 
-            // btnGlassRefDataPath
-            // 
-            this.btnGlassRefDataPath.AutoSize = false;
-            this.btnGlassRefDataPath.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnGlassRefDataPath.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnGlassRefDataPath.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnGlassRefDataPath.Depth = 0;
-            this.btnGlassRefDataPath.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.btnGlassRefDataPath.HighEmphasis = true;
-            this.btnGlassRefDataPath.Icon = null;
-            this.btnGlassRefDataPath.Location = new System.Drawing.Point(562, 827);
-            this.btnGlassRefDataPath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnGlassRefDataPath.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnGlassRefDataPath.Name = "btnGlassRefDataPath";
-            this.btnGlassRefDataPath.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnGlassRefDataPath.Size = new System.Drawing.Size(37, 26);
-            this.btnGlassRefDataPath.TabIndex = 182;
-            this.btnGlassRefDataPath.Text = "...";
-            this.btnGlassRefDataPath.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnGlassRefDataPath.UseAccentColor = false;
-            this.btnGlassRefDataPath.UseVisualStyleBackColor = true;
-            this.btnGlassRefDataPath.Visible = false;
-            this.btnGlassRefDataPath.Click += new System.EventHandler(this.btnGlassRefDataPath_Click);
-            // 
-            // label86_
-            // 
-            this.label86_.AutoSize = true;
-            this.label86_.BackColor = System.Drawing.Color.Transparent;
-            this.label86_.Depth = 0;
-            this.label86_.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label86_.Location = new System.Drawing.Point(6, 854);
-            this.label86_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label86_.Name = "label86_";
-            this.label86_.Size = new System.Drawing.Size(232, 18);
-            this.label86_.TabIndex = 183;
-            this.label86_.Text = "Hand-Eye Calibration File Path";
-            this.label86_.Visible = false;
-            // 
-            // tbGlassHandEyeCalibFilePath
-            // 
-            this.tbGlassHandEyeCalibFilePath.AnimateReadOnly = false;
-            this.tbGlassHandEyeCalibFilePath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassHandEyeCalibFilePath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassHandEyeCalibFilePath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassHandEyeCalibFilePath.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassHandEyeCalibFilePath.Depth = 0;
-            this.tbGlassHandEyeCalibFilePath.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.tbGlassHandEyeCalibFilePath.HideSelection = true;
-            this.tbGlassHandEyeCalibFilePath.LeadingIcon = null;
-            this.tbGlassHandEyeCalibFilePath.Location = new System.Drawing.Point(6, 872);
-            this.tbGlassHandEyeCalibFilePath.MaxLength = 32767;
-            this.tbGlassHandEyeCalibFilePath.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassHandEyeCalibFilePath.Name = "tbGlassHandEyeCalibFilePath";
-            this.tbGlassHandEyeCalibFilePath.PasswordChar = '\0';
-            this.tbGlassHandEyeCalibFilePath.PrefixSuffixText = null;
-            this.tbGlassHandEyeCalibFilePath.ReadOnly = false;
-            this.tbGlassHandEyeCalibFilePath.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassHandEyeCalibFilePath.SelectedText = "";
-            this.tbGlassHandEyeCalibFilePath.SelectionLength = 0;
-            this.tbGlassHandEyeCalibFilePath.SelectionStart = 0;
-            this.tbGlassHandEyeCalibFilePath.ShortcutsEnabled = true;
-            this.tbGlassHandEyeCalibFilePath.Size = new System.Drawing.Size(555, 26);
-            this.tbGlassHandEyeCalibFilePath.TabIndex = 184;
-            this.tbGlassHandEyeCalibFilePath.TabStop = false;
-            this.tbGlassHandEyeCalibFilePath.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassHandEyeCalibFilePath.TrailingIcon = null;
-            this.tbGlassHandEyeCalibFilePath.UseSystemPasswordChar = false;
-            this.tbGlassHandEyeCalibFilePath.UseTallSize = false;
-            this.tbGlassHandEyeCalibFilePath.Visible = false;
-            // 
-            // btnGlassHandEyeCalibFilePath
-            // 
-            this.btnGlassHandEyeCalibFilePath.AutoSize = false;
-            this.btnGlassHandEyeCalibFilePath.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnGlassHandEyeCalibFilePath.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnGlassHandEyeCalibFilePath.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnGlassHandEyeCalibFilePath.Depth = 0;
-            this.btnGlassHandEyeCalibFilePath.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.btnGlassHandEyeCalibFilePath.HighEmphasis = true;
-            this.btnGlassHandEyeCalibFilePath.Icon = null;
-            this.btnGlassHandEyeCalibFilePath.Location = new System.Drawing.Point(562, 870);
-            this.btnGlassHandEyeCalibFilePath.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnGlassHandEyeCalibFilePath.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnGlassHandEyeCalibFilePath.Name = "btnGlassHandEyeCalibFilePath";
-            this.btnGlassHandEyeCalibFilePath.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnGlassHandEyeCalibFilePath.Size = new System.Drawing.Size(37, 26);
-            this.btnGlassHandEyeCalibFilePath.TabIndex = 185;
-            this.btnGlassHandEyeCalibFilePath.Text = "...";
-            this.btnGlassHandEyeCalibFilePath.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnGlassHandEyeCalibFilePath.UseAccentColor = false;
-            this.btnGlassHandEyeCalibFilePath.UseVisualStyleBackColor = true;
-            this.btnGlassHandEyeCalibFilePath.Visible = false;
-            this.btnGlassHandEyeCalibFilePath.Click += new System.EventHandler(this.btnGlassHandEyeCalibFilePath_Click);
-            // 
-            // btnGlassUpdate_
-            // 
-            this.btnGlassUpdate_.AutoSize = false;
-            this.btnGlassUpdate_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnGlassUpdate_.BackColor = System.Drawing.Color.DimGray;
-            this.btnGlassUpdate_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnGlassUpdate_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnGlassUpdate_.Depth = 0;
-            this.btnGlassUpdate_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnGlassUpdate_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGlassUpdate_.Font = new System.Drawing.Font("Consolas", 12F);
-            this.btnGlassUpdate_.HighEmphasis = true;
-            this.btnGlassUpdate_.Icon = null;
-            this.btnGlassUpdate_.Location = new System.Drawing.Point(936, 598);
-            this.btnGlassUpdate_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnGlassUpdate_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnGlassUpdate_.Name = "btnGlassUpdate_";
-            this.btnGlassUpdate_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnGlassUpdate_.Size = new System.Drawing.Size(167, 32);
-            this.btnGlassUpdate_.TabIndex = 179;
-            this.btnGlassUpdate_.Text = "Update";
-            this.btnGlassUpdate_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnGlassUpdate_.UseAccentColor = false;
-            this.btnGlassUpdate_.UseVisualStyleBackColor = false;
-            this.btnGlassUpdate_.Visible = false;
-            this.btnGlassUpdate_.Click += new System.EventHandler(this.btnGlassUpdate__Click);
-            // 
-            // btnGlassCalculate_
-            // 
-            this.btnGlassCalculate_.AutoSize = false;
-            this.btnGlassCalculate_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnGlassCalculate_.BackColor = System.Drawing.Color.DimGray;
-            this.btnGlassCalculate_.CustomBackColor = System.Drawing.Color.Empty;
-            this.btnGlassCalculate_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnGlassCalculate_.Depth = 0;
-            this.btnGlassCalculate_.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnGlassCalculate_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGlassCalculate_.Font = new System.Drawing.Font("Consolas", 12F);
-            this.btnGlassCalculate_.HighEmphasis = true;
-            this.btnGlassCalculate_.Icon = null;
-            this.btnGlassCalculate_.Location = new System.Drawing.Point(936, 553);
-            this.btnGlassCalculate_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnGlassCalculate_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnGlassCalculate_.Name = "btnGlassCalculate_";
-            this.btnGlassCalculate_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnGlassCalculate_.Size = new System.Drawing.Size(167, 32);
-            this.btnGlassCalculate_.TabIndex = 178;
-            this.btnGlassCalculate_.Text = "Calculate";
-            this.btnGlassCalculate_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnGlassCalculate_.UseAccentColor = false;
-            this.btnGlassCalculate_.UseVisualStyleBackColor = false;
-            this.btnGlassCalculate_.Visible = false;
-            this.btnGlassCalculate_.Click += new System.EventHandler(this.btnGlassCalculate__Click);
-            // 
-            // gbGlassShiftValue_
-            // 
-            this.gbGlassShiftValue_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.gbGlassShiftValue_.Controls.Add(this.label88);
-            this.gbGlassShiftValue_.Controls.Add(this.tbGlassShiftValueRz);
-            this.gbGlassShiftValue_.Controls.Add(this.tbGlassShiftValueTx);
-            this.gbGlassShiftValue_.Controls.Add(this.label79);
-            this.gbGlassShiftValue_.Controls.Add(this.label80);
-            this.gbGlassShiftValue_.Controls.Add(this.tbGlassShiftValueTy);
-            this.gbGlassShiftValue_.Depth = 0;
-            this.gbGlassShiftValue_.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gbGlassShiftValue_.Location = new System.Drawing.Point(615, 554);
-            this.gbGlassShiftValue_.Margin = new System.Windows.Forms.Padding(14);
-            this.gbGlassShiftValue_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.gbGlassShiftValue_.Name = "gbGlassShiftValue_";
-            this.gbGlassShiftValue_.Padding = new System.Windows.Forms.Padding(14);
-            this.gbGlassShiftValue_.Size = new System.Drawing.Size(305, 125);
-            this.gbGlassShiftValue_.TabIndex = 177;
-            this.gbGlassShiftValue_.Visible = false;
-            // 
-            // label88
-            // 
-            this.label88.AutoSize = true;
-            this.label88.BackColor = System.Drawing.Color.Transparent;
-            this.label88.Depth = 0;
-            this.label88.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label88.Location = new System.Drawing.Point(56, 92);
-            this.label88.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label88.Name = "label88";
-            this.label88.Size = new System.Drawing.Size(19, 18);
-            this.label88.TabIndex = 17;
-            this.label88.Text = "Rz";
-            // 
-            // tbGlassShiftValueRz
-            // 
-            this.tbGlassShiftValueRz.AnimateReadOnly = false;
-            this.tbGlassShiftValueRz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassShiftValueRz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassShiftValueRz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassShiftValueRz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassShiftValueRz.Depth = 0;
-            this.tbGlassShiftValueRz.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.tbGlassShiftValueRz.HideSelection = true;
-            this.tbGlassShiftValueRz.LeadingIcon = null;
-            this.tbGlassShiftValueRz.Location = new System.Drawing.Point(82, 89);
-            this.tbGlassShiftValueRz.MaxLength = 32767;
-            this.tbGlassShiftValueRz.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassShiftValueRz.Name = "tbGlassShiftValueRz";
-            this.tbGlassShiftValueRz.PasswordChar = '\0';
-            this.tbGlassShiftValueRz.PrefixSuffixText = null;
-            this.tbGlassShiftValueRz.ReadOnly = true;
-            this.tbGlassShiftValueRz.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassShiftValueRz.SelectedText = "";
-            this.tbGlassShiftValueRz.SelectionLength = 0;
-            this.tbGlassShiftValueRz.SelectionStart = 0;
-            this.tbGlassShiftValueRz.ShortcutsEnabled = true;
-            this.tbGlassShiftValueRz.Size = new System.Drawing.Size(172, 26);
-            this.tbGlassShiftValueRz.TabIndex = 18;
-            this.tbGlassShiftValueRz.TabStop = false;
-            this.tbGlassShiftValueRz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassShiftValueRz.TrailingIcon = null;
-            this.tbGlassShiftValueRz.UseSystemPasswordChar = false;
-            this.tbGlassShiftValueRz.UseTallSize = false;
-            // 
-            // tbGlassShiftValueTx
-            // 
-            this.tbGlassShiftValueTx.AnimateReadOnly = false;
-            this.tbGlassShiftValueTx.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassShiftValueTx.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassShiftValueTx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassShiftValueTx.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassShiftValueTx.Depth = 0;
-            this.tbGlassShiftValueTx.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassShiftValueTx.HideSelection = true;
-            this.tbGlassShiftValueTx.LeadingIcon = null;
-            this.tbGlassShiftValueTx.Location = new System.Drawing.Point(82, 23);
-            this.tbGlassShiftValueTx.MaxLength = 32767;
-            this.tbGlassShiftValueTx.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassShiftValueTx.Name = "tbGlassShiftValueTx";
-            this.tbGlassShiftValueTx.PasswordChar = '\0';
-            this.tbGlassShiftValueTx.PrefixSuffixText = null;
-            this.tbGlassShiftValueTx.ReadOnly = true;
-            this.tbGlassShiftValueTx.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassShiftValueTx.SelectedText = "";
-            this.tbGlassShiftValueTx.SelectionLength = 0;
-            this.tbGlassShiftValueTx.SelectionStart = 0;
-            this.tbGlassShiftValueTx.ShortcutsEnabled = true;
-            this.tbGlassShiftValueTx.Size = new System.Drawing.Size(172, 26);
-            this.tbGlassShiftValueTx.TabIndex = 6;
-            this.tbGlassShiftValueTx.TabStop = false;
-            this.tbGlassShiftValueTx.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassShiftValueTx.TrailingIcon = null;
-            this.tbGlassShiftValueTx.UseSystemPasswordChar = false;
-            this.tbGlassShiftValueTx.UseTallSize = false;
-            // 
-            // label79
-            // 
-            this.label79.AutoSize = true;
-            this.label79.BackColor = System.Drawing.Color.Transparent;
-            this.label79.Depth = 0;
-            this.label79.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label79.Location = new System.Drawing.Point(56, 27);
-            this.label79.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label79.Name = "label79";
-            this.label79.Size = new System.Drawing.Size(18, 18);
-            this.label79.TabIndex = 7;
-            this.label79.Text = "Tx";
-            // 
-            // label80
-            // 
-            this.label80.AutoSize = true;
-            this.label80.BackColor = System.Drawing.Color.Transparent;
-            this.label80.Depth = 0;
-            this.label80.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label80.Location = new System.Drawing.Point(56, 60);
-            this.label80.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label80.Name = "label80";
-            this.label80.Size = new System.Drawing.Size(19, 18);
-            this.label80.TabIndex = 8;
-            this.label80.Text = "Ty";
-            // 
-            // tbGlassShiftValueTy
-            // 
-            this.tbGlassShiftValueTy.AnimateReadOnly = false;
-            this.tbGlassShiftValueTy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassShiftValueTy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassShiftValueTy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassShiftValueTy.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassShiftValueTy.Depth = 0;
-            this.tbGlassShiftValueTy.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassShiftValueTy.HideSelection = true;
-            this.tbGlassShiftValueTy.LeadingIcon = null;
-            this.tbGlassShiftValueTy.Location = new System.Drawing.Point(82, 56);
-            this.tbGlassShiftValueTy.MaxLength = 32767;
-            this.tbGlassShiftValueTy.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassShiftValueTy.Name = "tbGlassShiftValueTy";
-            this.tbGlassShiftValueTy.PasswordChar = '\0';
-            this.tbGlassShiftValueTy.PrefixSuffixText = null;
-            this.tbGlassShiftValueTy.ReadOnly = true;
-            this.tbGlassShiftValueTy.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassShiftValueTy.SelectedText = "";
-            this.tbGlassShiftValueTy.SelectionLength = 0;
-            this.tbGlassShiftValueTy.SelectionStart = 0;
-            this.tbGlassShiftValueTy.ShortcutsEnabled = true;
-            this.tbGlassShiftValueTy.Size = new System.Drawing.Size(172, 26);
-            this.tbGlassShiftValueTy.TabIndex = 13;
-            this.tbGlassShiftValueTy.TabStop = false;
-            this.tbGlassShiftValueTy.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassShiftValueTy.TrailingIcon = null;
-            this.tbGlassShiftValueTy.UseSystemPasswordChar = false;
-            this.tbGlassShiftValueTy.UseTallSize = false;
-            // 
-            // gbGlassPoint_
-            // 
-            this.gbGlassPoint_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.gbGlassPoint_.Controls.Add(this.tbGlassPointTx);
-            this.gbGlassPoint_.Controls.Add(this.label73);
-            this.gbGlassPoint_.Controls.Add(this.label74);
-            this.gbGlassPoint_.Controls.Add(this.label75);
-            this.gbGlassPoint_.Controls.Add(this.label76);
-            this.gbGlassPoint_.Controls.Add(this.label77);
-            this.gbGlassPoint_.Controls.Add(this.label78);
-            this.gbGlassPoint_.Controls.Add(this.tbGlassPointTy);
-            this.gbGlassPoint_.Controls.Add(this.tbGlassPointTz);
-            this.gbGlassPoint_.Controls.Add(this.tbGlassPointRx);
-            this.gbGlassPoint_.Controls.Add(this.tbGlassPointRz);
-            this.gbGlassPoint_.Controls.Add(this.tbGlassPointRy);
-            this.gbGlassPoint_.Depth = 0;
-            this.gbGlassPoint_.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.gbGlassPoint_.Location = new System.Drawing.Point(615, 815);
-            this.gbGlassPoint_.Margin = new System.Windows.Forms.Padding(14);
-            this.gbGlassPoint_.MouseState = MaterialSkin.MouseState.HOVER;
-            this.gbGlassPoint_.Name = "gbGlassPoint_";
-            this.gbGlassPoint_.Padding = new System.Windows.Forms.Padding(14);
-            this.gbGlassPoint_.Size = new System.Drawing.Size(305, 125);
-            this.gbGlassPoint_.TabIndex = 176;
-            this.gbGlassPoint_.Visible = false;
-            // 
-            // tbGlassPointTx
-            // 
-            this.tbGlassPointTx.AnimateReadOnly = false;
-            this.tbGlassPointTx.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassPointTx.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassPointTx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassPointTx.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassPointTx.Depth = 0;
-            this.tbGlassPointTx.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassPointTx.HideSelection = true;
-            this.tbGlassPointTx.LeadingIcon = null;
-            this.tbGlassPointTx.Location = new System.Drawing.Point(105, 21);
-            this.tbGlassPointTx.MaxLength = 32767;
-            this.tbGlassPointTx.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassPointTx.Name = "tbGlassPointTx";
-            this.tbGlassPointTx.PasswordChar = '\0';
-            this.tbGlassPointTx.PrefixSuffixText = null;
-            this.tbGlassPointTx.ReadOnly = true;
-            this.tbGlassPointTx.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassPointTx.SelectedText = "";
-            this.tbGlassPointTx.SelectionLength = 0;
-            this.tbGlassPointTx.SelectionStart = 0;
-            this.tbGlassPointTx.ShortcutsEnabled = true;
-            this.tbGlassPointTx.Size = new System.Drawing.Size(80, 26);
-            this.tbGlassPointTx.TabIndex = 23;
-            this.tbGlassPointTx.TabStop = false;
-            this.tbGlassPointTx.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassPointTx.TrailingIcon = null;
-            this.tbGlassPointTx.UseSystemPasswordChar = false;
-            this.tbGlassPointTx.UseTallSize = false;
-            // 
-            // label73
-            // 
-            this.label73.AutoSize = true;
-            this.label73.BackColor = System.Drawing.Color.Transparent;
-            this.label73.Depth = 0;
-            this.label73.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label73.Location = new System.Drawing.Point(79, 24);
-            this.label73.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label73.Name = "label73";
-            this.label73.Size = new System.Drawing.Size(18, 18);
-            this.label73.TabIndex = 24;
-            this.label73.Text = "Tx";
-            // 
-            // label74
-            // 
-            this.label74.AutoSize = true;
-            this.label74.BackColor = System.Drawing.Color.Transparent;
-            this.label74.Depth = 0;
-            this.label74.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label74.Location = new System.Drawing.Point(79, 58);
-            this.label74.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label74.Name = "label74";
-            this.label74.Size = new System.Drawing.Size(19, 18);
-            this.label74.TabIndex = 25;
-            this.label74.Text = "Ty";
-            // 
-            // label75
-            // 
-            this.label75.AutoSize = true;
-            this.label75.BackColor = System.Drawing.Color.Transparent;
-            this.label75.Depth = 0;
-            this.label75.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label75.Location = new System.Drawing.Point(79, 92);
-            this.label75.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label75.Name = "label75";
-            this.label75.Size = new System.Drawing.Size(18, 18);
-            this.label75.TabIndex = 26;
-            this.label75.Text = "Tz";
-            // 
-            // label76
-            // 
-            this.label76.AutoSize = true;
-            this.label76.BackColor = System.Drawing.Color.Transparent;
-            this.label76.Depth = 0;
-            this.label76.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label76.Location = new System.Drawing.Point(189, 24);
-            this.label76.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label76.Name = "label76";
-            this.label76.Size = new System.Drawing.Size(19, 18);
-            this.label76.TabIndex = 27;
-            this.label76.Text = "Rx";
-            // 
-            // label77
-            // 
-            this.label77.AutoSize = true;
-            this.label77.BackColor = System.Drawing.Color.Transparent;
-            this.label77.Depth = 0;
-            this.label77.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label77.Location = new System.Drawing.Point(189, 58);
-            this.label77.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label77.Name = "label77";
-            this.label77.Size = new System.Drawing.Size(20, 18);
-            this.label77.TabIndex = 28;
-            this.label77.Text = "Ry";
-            // 
-            // label78
-            // 
-            this.label78.AutoSize = true;
-            this.label78.BackColor = System.Drawing.Color.Transparent;
-            this.label78.Depth = 0;
-            this.label78.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label78.Location = new System.Drawing.Point(189, 92);
-            this.label78.MouseState = MaterialSkin.MouseState.HOVER;
-            this.label78.Name = "label78";
-            this.label78.Size = new System.Drawing.Size(19, 18);
-            this.label78.TabIndex = 29;
-            this.label78.Text = "Rz";
-            // 
-            // tbGlassPointTy
-            // 
-            this.tbGlassPointTy.AnimateReadOnly = false;
-            this.tbGlassPointTy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassPointTy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassPointTy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassPointTy.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassPointTy.Depth = 0;
-            this.tbGlassPointTy.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassPointTy.HideSelection = true;
-            this.tbGlassPointTy.LeadingIcon = null;
-            this.tbGlassPointTy.Location = new System.Drawing.Point(105, 55);
-            this.tbGlassPointTy.MaxLength = 32767;
-            this.tbGlassPointTy.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassPointTy.Name = "tbGlassPointTy";
-            this.tbGlassPointTy.PasswordChar = '\0';
-            this.tbGlassPointTy.PrefixSuffixText = null;
-            this.tbGlassPointTy.ReadOnly = true;
-            this.tbGlassPointTy.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassPointTy.SelectedText = "";
-            this.tbGlassPointTy.SelectionLength = 0;
-            this.tbGlassPointTy.SelectionStart = 0;
-            this.tbGlassPointTy.ShortcutsEnabled = true;
-            this.tbGlassPointTy.Size = new System.Drawing.Size(80, 26);
-            this.tbGlassPointTy.TabIndex = 30;
-            this.tbGlassPointTy.TabStop = false;
-            this.tbGlassPointTy.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassPointTy.TrailingIcon = null;
-            this.tbGlassPointTy.UseSystemPasswordChar = false;
-            this.tbGlassPointTy.UseTallSize = false;
-            // 
-            // tbGlassPointTz
-            // 
-            this.tbGlassPointTz.AnimateReadOnly = false;
-            this.tbGlassPointTz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassPointTz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassPointTz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassPointTz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassPointTz.Depth = 0;
-            this.tbGlassPointTz.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassPointTz.HideSelection = true;
-            this.tbGlassPointTz.LeadingIcon = null;
-            this.tbGlassPointTz.Location = new System.Drawing.Point(105, 89);
-            this.tbGlassPointTz.MaxLength = 32767;
-            this.tbGlassPointTz.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassPointTz.Name = "tbGlassPointTz";
-            this.tbGlassPointTz.PasswordChar = '\0';
-            this.tbGlassPointTz.PrefixSuffixText = null;
-            this.tbGlassPointTz.ReadOnly = true;
-            this.tbGlassPointTz.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassPointTz.SelectedText = "";
-            this.tbGlassPointTz.SelectionLength = 0;
-            this.tbGlassPointTz.SelectionStart = 0;
-            this.tbGlassPointTz.ShortcutsEnabled = true;
-            this.tbGlassPointTz.Size = new System.Drawing.Size(80, 26);
-            this.tbGlassPointTz.TabIndex = 31;
-            this.tbGlassPointTz.TabStop = false;
-            this.tbGlassPointTz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassPointTz.TrailingIcon = null;
-            this.tbGlassPointTz.UseSystemPasswordChar = false;
-            this.tbGlassPointTz.UseTallSize = false;
-            // 
-            // tbGlassPointRx
-            // 
-            this.tbGlassPointRx.AnimateReadOnly = false;
-            this.tbGlassPointRx.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassPointRx.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassPointRx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassPointRx.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassPointRx.Depth = 0;
-            this.tbGlassPointRx.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassPointRx.HideSelection = true;
-            this.tbGlassPointRx.LeadingIcon = null;
-            this.tbGlassPointRx.Location = new System.Drawing.Point(216, 21);
-            this.tbGlassPointRx.MaxLength = 32767;
-            this.tbGlassPointRx.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassPointRx.Name = "tbGlassPointRx";
-            this.tbGlassPointRx.PasswordChar = '\0';
-            this.tbGlassPointRx.PrefixSuffixText = null;
-            this.tbGlassPointRx.ReadOnly = true;
-            this.tbGlassPointRx.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassPointRx.SelectedText = "";
-            this.tbGlassPointRx.SelectionLength = 0;
-            this.tbGlassPointRx.SelectionStart = 0;
-            this.tbGlassPointRx.ShortcutsEnabled = true;
-            this.tbGlassPointRx.Size = new System.Drawing.Size(80, 26);
-            this.tbGlassPointRx.TabIndex = 32;
-            this.tbGlassPointRx.TabStop = false;
-            this.tbGlassPointRx.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassPointRx.TrailingIcon = null;
-            this.tbGlassPointRx.UseSystemPasswordChar = false;
-            this.tbGlassPointRx.UseTallSize = false;
-            // 
-            // tbGlassPointRz
-            // 
-            this.tbGlassPointRz.AnimateReadOnly = false;
-            this.tbGlassPointRz.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassPointRz.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassPointRz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassPointRz.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassPointRz.Depth = 0;
-            this.tbGlassPointRz.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassPointRz.HideSelection = true;
-            this.tbGlassPointRz.LeadingIcon = null;
-            this.tbGlassPointRz.Location = new System.Drawing.Point(216, 89);
-            this.tbGlassPointRz.MaxLength = 32767;
-            this.tbGlassPointRz.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassPointRz.Name = "tbGlassPointRz";
-            this.tbGlassPointRz.PasswordChar = '\0';
-            this.tbGlassPointRz.PrefixSuffixText = null;
-            this.tbGlassPointRz.ReadOnly = true;
-            this.tbGlassPointRz.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassPointRz.SelectedText = "";
-            this.tbGlassPointRz.SelectionLength = 0;
-            this.tbGlassPointRz.SelectionStart = 0;
-            this.tbGlassPointRz.ShortcutsEnabled = true;
-            this.tbGlassPointRz.Size = new System.Drawing.Size(80, 26);
-            this.tbGlassPointRz.TabIndex = 33;
-            this.tbGlassPointRz.TabStop = false;
-            this.tbGlassPointRz.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassPointRz.TrailingIcon = null;
-            this.tbGlassPointRz.UseSystemPasswordChar = false;
-            this.tbGlassPointRz.UseTallSize = false;
-            // 
-            // tbGlassPointRy
-            // 
-            this.tbGlassPointRy.AnimateReadOnly = false;
-            this.tbGlassPointRy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.None;
-            this.tbGlassPointRy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.None;
-            this.tbGlassPointRy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tbGlassPointRy.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.tbGlassPointRy.Depth = 0;
-            this.tbGlassPointRy.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.tbGlassPointRy.HideSelection = true;
-            this.tbGlassPointRy.LeadingIcon = null;
-            this.tbGlassPointRy.Location = new System.Drawing.Point(216, 55);
-            this.tbGlassPointRy.MaxLength = 32767;
-            this.tbGlassPointRy.MouseState = MaterialSkin.MouseState.OUT;
-            this.tbGlassPointRy.Name = "tbGlassPointRy";
-            this.tbGlassPointRy.PasswordChar = '\0';
-            this.tbGlassPointRy.PrefixSuffixText = null;
-            this.tbGlassPointRy.ReadOnly = true;
-            this.tbGlassPointRy.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tbGlassPointRy.SelectedText = "";
-            this.tbGlassPointRy.SelectionLength = 0;
-            this.tbGlassPointRy.SelectionStart = 0;
-            this.tbGlassPointRy.ShortcutsEnabled = true;
-            this.tbGlassPointRy.Size = new System.Drawing.Size(80, 26);
-            this.tbGlassPointRy.TabIndex = 34;
-            this.tbGlassPointRy.TabStop = false;
-            this.tbGlassPointRy.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.tbGlassPointRy.TrailingIcon = null;
-            this.tbGlassPointRy.UseSystemPasswordChar = false;
-            this.tbGlassPointRy.UseTallSize = false;
-            // 
             // splitContainer3
             // 
             this.splitContainer3.IsSplitterFixed = true;
@@ -2790,31 +1299,57 @@ namespace loadingBox2dGui
             // 
             this.splitContainer3.Panel2.Controls.Add(this.pictureBox4);
             this.splitContainer3.Panel2.Controls.Add(this.pictureBox2);
-            this.splitContainer3.Size = new System.Drawing.Size(571, 925);
+            this.splitContainer3.Size = new System.Drawing.Size(582, 925);
             this.splitContainer3.SplitterDistance = 798;
             this.splitContainer3.TabIndex = 98;
             // 
             // splitContainer5
             // 
+            this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer5.IsSplitterFixed = true;
             this.splitContainer5.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer5.Margin = new System.Windows.Forms.Padding(0);
             this.splitContainer5.Name = "splitContainer5";
             this.splitContainer5.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer5.Panel1
             // 
+            this.splitContainer5.Panel1.Controls.Add(this.panel1);
             this.splitContainer5.Panel1.Controls.Add(this.btnNgListClear_);
-            this.splitContainer5.Panel1.Controls.Add(this.lblErrorNotice);
             this.splitContainer5.Panel1MinSize = 41;
             // 
             // splitContainer5.Panel2
             // 
-            this.splitContainer5.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainer5.Size = new System.Drawing.Size(570, 809);
-            this.splitContainer5.SplitterDistance = 71;
+            this.splitContainer5.Panel2.Controls.Add(this.rtbLog);
+            this.splitContainer5.Size = new System.Drawing.Size(582, 798);
+            this.splitContainer5.SplitterDistance = 264;
             this.splitContainer5.SplitterWidth = 1;
             this.splitContainer5.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.dgvNgList);
+            this.panel1.Location = new System.Drawing.Point(3, 46);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(576, 216);
+            this.panel1.TabIndex = 100;
+            // 
+            // dgvNgList
+            // 
+            this.dgvNgList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvNgList.BackgroundColor = System.Drawing.Color.White;
+            this.dgvNgList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvNgList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvNgList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvNgList.Location = new System.Drawing.Point(0, 0);
+            this.dgvNgList.Name = "dgvNgList";
+            this.dgvNgList.ReadOnly = true;
+            this.dgvNgList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dgvNgList.RowTemplate.Height = 23;
+            this.dgvNgList.Size = new System.Drawing.Size(576, 216);
+            this.dgvNgList.TabIndex = 1;
+            this.dgvNgList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvNgList_CellDoubleClick);
+            this.dgvNgList.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvNgList_DataBindingComplete);
+            this.dgvNgList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvNgList_KeyDown);
             // 
             // btnNgListClear_
             // 
@@ -2833,151 +1368,32 @@ namespace loadingBox2dGui
             this.btnNgListClear_.ForeColor = System.Drawing.Color.White;
             this.btnNgListClear_.HighEmphasis = true;
             this.btnNgListClear_.Icon = null;
-            this.btnNgListClear_.Location = new System.Drawing.Point(439, 47);
+            this.btnNgListClear_.Location = new System.Drawing.Point(448, 7);
             this.btnNgListClear_.Margin = new System.Windows.Forms.Padding(0);
-            this.btnNgListClear_.MaximumSize = new System.Drawing.Size(128, 23);
-            this.btnNgListClear_.MinimumSize = new System.Drawing.Size(128, 23);
             this.btnNgListClear_.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnNgListClear_.Name = "btnNgListClear_";
             this.btnNgListClear_.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnNgListClear_.Size = new System.Drawing.Size(128, 23);
+            this.btnNgListClear_.Size = new System.Drawing.Size(128, 36);
             this.btnNgListClear_.TabIndex = 99;
             this.btnNgListClear_.Text = "Ng Log Reset";
             this.btnNgListClear_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnNgListClear_.UseAccentColor = false;
             this.btnNgListClear_.UseVisualStyleBackColor = false;
-            this.btnNgListClear_.Visible = false;
             this.btnNgListClear_.Click += new System.EventHandler(this.btnNgListClear__Click);
-            // 
-            // lblErrorNotice
-            // 
-            this.lblErrorNotice.BackColor = System.Drawing.Color.Transparent;
-            this.lblErrorNotice.Depth = 0;
-            this.lblErrorNotice.Font = new System.Drawing.Font("NanumSquareRound Bold", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.lblErrorNotice.FontType = MaterialSkin.MaterialSkinManager.fontType.H3;
-            this.lblErrorNotice.ForeColor = System.Drawing.Color.White;
-            this.lblErrorNotice.Location = new System.Drawing.Point(0, 5);
-            this.lblErrorNotice.Margin = new System.Windows.Forms.Padding(0);
-            this.lblErrorNotice.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblErrorNotice.Name = "lblErrorNotice";
-            this.lblErrorNotice.Size = new System.Drawing.Size(400, 65);
-            this.lblErrorNotice.TabIndex = 100;
-            this.lblErrorNotice.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.panelNgListViewHeader, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.ltvNG, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.rtbLog, 0, 2);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 535F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(567, 726);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // panelNgListViewHeader
-            // 
-            this.panelNgListViewHeader.BackColor = System.Drawing.SystemColors.Control;
-            this.panelNgListViewHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelNgListViewHeader.Controls.Add(this.lblDashDate);
-            this.panelNgListViewHeader.Controls.Add(this.lblDashType);
-            this.panelNgListViewHeader.Controls.Add(this.lblDashCarSeqNum);
-            this.panelNgListViewHeader.Controls.Add(this.lblDashCarType);
-            this.panelNgListViewHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelNgListViewHeader.Margin = new System.Windows.Forms.Padding(0);
-            this.panelNgListViewHeader.Name = "panelNgListViewHeader";
-            this.panelNgListViewHeader.Size = new System.Drawing.Size(567, 30);
-            this.panelNgListViewHeader.TabIndex = 101;
-            // 
-            // lblDashDate
-            // 
-            this.lblDashDate.BackColor = System.Drawing.Color.Transparent;
-            this.lblDashDate.Depth = 0;
-            this.lblDashDate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblDashDate.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblDashDate.Location = new System.Drawing.Point(344, 0);
-            this.lblDashDate.Margin = new System.Windows.Forms.Padding(0);
-            this.lblDashDate.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblDashDate.Name = "lblDashDate";
-            this.lblDashDate.Size = new System.Drawing.Size(221, 28);
-            this.lblDashDate.TabIndex = 3;
-            this.lblDashDate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblDashType
-            // 
-            this.lblDashType.BackColor = System.Drawing.Color.Transparent;
-            this.lblDashType.Depth = 0;
-            this.lblDashType.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblDashType.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblDashType.Location = new System.Drawing.Point(226, 0);
-            this.lblDashType.Margin = new System.Windows.Forms.Padding(0);
-            this.lblDashType.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblDashType.Name = "lblDashType";
-            this.lblDashType.Size = new System.Drawing.Size(120, 28);
-            this.lblDashType.TabIndex = 2;
-            this.lblDashType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblDashCarSeqNum
-            // 
-            this.lblDashCarSeqNum.BackColor = System.Drawing.Color.Transparent;
-            this.lblDashCarSeqNum.Depth = 0;
-            this.lblDashCarSeqNum.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblDashCarSeqNum.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblDashCarSeqNum.Location = new System.Drawing.Point(113, 0);
-            this.lblDashCarSeqNum.Margin = new System.Windows.Forms.Padding(0);
-            this.lblDashCarSeqNum.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblDashCarSeqNum.Name = "lblDashCarSeqNum";
-            this.lblDashCarSeqNum.Size = new System.Drawing.Size(113, 28);
-            this.lblDashCarSeqNum.TabIndex = 1;
-            this.lblDashCarSeqNum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblDashCarType
-            // 
-            this.lblDashCarType.BackColor = System.Drawing.Color.Transparent;
-            this.lblDashCarType.Depth = 0;
-            this.lblDashCarType.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblDashCarType.Font = new System.Drawing.Font("NanumSquareRound Bold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblDashCarType.Location = new System.Drawing.Point(0, 0);
-            this.lblDashCarType.Margin = new System.Windows.Forms.Padding(0);
-            this.lblDashCarType.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblDashCarType.Name = "lblDashCarType";
-            this.lblDashCarType.Size = new System.Drawing.Size(113, 28);
-            this.lblDashCarType.TabIndex = 0;
-            this.lblDashCarType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ltvNG
-            // 
-            this.ltvNG.FullRowSelect = true;
-            this.ltvNG.GridLines = true;
-            this.ltvNG.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.ltvNG.HideSelection = false;
-            this.ltvNG.Location = new System.Drawing.Point(0, 30);
-            this.ltvNG.Margin = new System.Windows.Forms.Padding(0);
-            this.ltvNG.MultiSelect = false;
-            this.ltvNG.Name = "ltvNG";
-            this.ltvNG.Size = new System.Drawing.Size(567, 191);
-            this.ltvNG.TabIndex = 52;
-            this.ltvNG.UseCompatibleStateImageBehavior = false;
-            this.ltvNG.View = System.Windows.Forms.View.Details;
             // 
             // rtbLog
             // 
             this.rtbLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.rtbLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbLog.Depth = 0;
+            this.rtbLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.rtbLog.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.rtbLog.Location = new System.Drawing.Point(0, 221);
+            this.rtbLog.Location = new System.Drawing.Point(0, 0);
             this.rtbLog.Margin = new System.Windows.Forms.Padding(0);
             this.rtbLog.MouseState = MaterialSkin.MouseState.HOVER;
             this.rtbLog.Name = "rtbLog";
-            this.rtbLog.Size = new System.Drawing.Size(567, 501);
+            this.rtbLog.Size = new System.Drawing.Size(582, 533);
             this.rtbLog.TabIndex = 51;
             this.rtbLog.Text = "";
             // 
@@ -2987,8 +1403,8 @@ namespace loadingBox2dGui
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
             this.pictureBox4.Location = new System.Drawing.Point(0, 0);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(571, 123);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.Size = new System.Drawing.Size(582, 123);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox4.TabIndex = 98;
             this.pictureBox4.TabStop = false;
             // 
@@ -2997,10 +1413,143 @@ namespace loadingBox2dGui
             this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox2.Location = new System.Drawing.Point(0, 0);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(571, 123);
+            this.pictureBox2.Size = new System.Drawing.Size(582, 123);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 97;
             this.pictureBox2.TabStop = false;
+            // 
+            // btnGlassBackUp_
+            // 
+            this.btnGlassBackUp_.AutoSize = false;
+            this.btnGlassBackUp_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnGlassBackUp_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnGlassBackUp_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnGlassBackUp_.Depth = 0;
+            this.btnGlassBackUp_.HighEmphasis = true;
+            this.btnGlassBackUp_.Icon = null;
+            this.btnGlassBackUp_.Location = new System.Drawing.Point(0, 0);
+            this.btnGlassBackUp_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnGlassBackUp_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnGlassBackUp_.Name = "btnGlassBackUp_";
+            this.btnGlassBackUp_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnGlassBackUp_.Size = new System.Drawing.Size(75, 36);
+            this.btnGlassBackUp_.TabIndex = 0;
+            this.btnGlassBackUp_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnGlassBackUp_.UseAccentColor = false;
+            // 
+            // lblGlassRHCamera_
+            // 
+            this.lblGlassRHCamera_.AutoSize = false;
+            this.lblGlassRHCamera_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.lblGlassRHCamera_.CustomBackColor = System.Drawing.Color.Empty;
+            this.lblGlassRHCamera_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.lblGlassRHCamera_.Depth = 0;
+            this.lblGlassRHCamera_.HighEmphasis = true;
+            this.lblGlassRHCamera_.Icon = null;
+            this.lblGlassRHCamera_.Location = new System.Drawing.Point(0, 0);
+            this.lblGlassRHCamera_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.lblGlassRHCamera_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblGlassRHCamera_.Name = "lblGlassRHCamera_";
+            this.lblGlassRHCamera_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.lblGlassRHCamera_.Size = new System.Drawing.Size(75, 36);
+            this.lblGlassRHCamera_.TabIndex = 0;
+            this.lblGlassRHCamera_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.lblGlassRHCamera_.UseAccentColor = false;
+            // 
+            // lblGlassLHCamera_
+            // 
+            this.lblGlassLHCamera_.AutoSize = false;
+            this.lblGlassLHCamera_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.lblGlassLHCamera_.CustomBackColor = System.Drawing.Color.Empty;
+            this.lblGlassLHCamera_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.lblGlassLHCamera_.Depth = 0;
+            this.lblGlassLHCamera_.HighEmphasis = true;
+            this.lblGlassLHCamera_.Icon = null;
+            this.lblGlassLHCamera_.Location = new System.Drawing.Point(0, 0);
+            this.lblGlassLHCamera_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.lblGlassLHCamera_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblGlassLHCamera_.Name = "lblGlassLHCamera_";
+            this.lblGlassLHCamera_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.lblGlassLHCamera_.Size = new System.Drawing.Size(75, 36);
+            this.lblGlassLHCamera_.TabIndex = 0;
+            this.lblGlassLHCamera_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.lblGlassLHCamera_.UseAccentColor = false;
+            // 
+            // btnGlassRHCameraUnuse_
+            // 
+            this.btnGlassRHCameraUnuse_.AutoSize = false;
+            this.btnGlassRHCameraUnuse_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnGlassRHCameraUnuse_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnGlassRHCameraUnuse_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnGlassRHCameraUnuse_.Depth = 0;
+            this.btnGlassRHCameraUnuse_.HighEmphasis = true;
+            this.btnGlassRHCameraUnuse_.Icon = null;
+            this.btnGlassRHCameraUnuse_.Location = new System.Drawing.Point(0, 0);
+            this.btnGlassRHCameraUnuse_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnGlassRHCameraUnuse_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnGlassRHCameraUnuse_.Name = "btnGlassRHCameraUnuse_";
+            this.btnGlassRHCameraUnuse_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnGlassRHCameraUnuse_.Size = new System.Drawing.Size(75, 36);
+            this.btnGlassRHCameraUnuse_.TabIndex = 0;
+            this.btnGlassRHCameraUnuse_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnGlassRHCameraUnuse_.UseAccentColor = false;
+            // 
+            // btnGlassRHCameraUse_
+            // 
+            this.btnGlassRHCameraUse_.AutoSize = false;
+            this.btnGlassRHCameraUse_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnGlassRHCameraUse_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnGlassRHCameraUse_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnGlassRHCameraUse_.Depth = 0;
+            this.btnGlassRHCameraUse_.HighEmphasis = true;
+            this.btnGlassRHCameraUse_.Icon = null;
+            this.btnGlassRHCameraUse_.Location = new System.Drawing.Point(0, 0);
+            this.btnGlassRHCameraUse_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnGlassRHCameraUse_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnGlassRHCameraUse_.Name = "btnGlassRHCameraUse_";
+            this.btnGlassRHCameraUse_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnGlassRHCameraUse_.Size = new System.Drawing.Size(75, 36);
+            this.btnGlassRHCameraUse_.TabIndex = 0;
+            this.btnGlassRHCameraUse_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnGlassRHCameraUse_.UseAccentColor = false;
+            // 
+            // btnGlassLHCameraUnuse_
+            // 
+            this.btnGlassLHCameraUnuse_.AutoSize = false;
+            this.btnGlassLHCameraUnuse_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnGlassLHCameraUnuse_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnGlassLHCameraUnuse_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnGlassLHCameraUnuse_.Depth = 0;
+            this.btnGlassLHCameraUnuse_.HighEmphasis = true;
+            this.btnGlassLHCameraUnuse_.Icon = null;
+            this.btnGlassLHCameraUnuse_.Location = new System.Drawing.Point(0, 0);
+            this.btnGlassLHCameraUnuse_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnGlassLHCameraUnuse_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnGlassLHCameraUnuse_.Name = "btnGlassLHCameraUnuse_";
+            this.btnGlassLHCameraUnuse_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnGlassLHCameraUnuse_.Size = new System.Drawing.Size(75, 36);
+            this.btnGlassLHCameraUnuse_.TabIndex = 0;
+            this.btnGlassLHCameraUnuse_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnGlassLHCameraUnuse_.UseAccentColor = false;
+            // 
+            // btnGlassLHCameraUse_
+            // 
+            this.btnGlassLHCameraUse_.AutoSize = false;
+            this.btnGlassLHCameraUse_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnGlassLHCameraUse_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnGlassLHCameraUse_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnGlassLHCameraUse_.Depth = 0;
+            this.btnGlassLHCameraUse_.HighEmphasis = true;
+            this.btnGlassLHCameraUse_.Icon = null;
+            this.btnGlassLHCameraUse_.Location = new System.Drawing.Point(0, 0);
+            this.btnGlassLHCameraUse_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnGlassLHCameraUse_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnGlassLHCameraUse_.Name = "btnGlassLHCameraUse_";
+            this.btnGlassLHCameraUse_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnGlassLHCameraUse_.Size = new System.Drawing.Size(75, 36);
+            this.btnGlassLHCameraUse_.TabIndex = 0;
+            this.btnGlassLHCameraUse_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnGlassLHCameraUse_.UseAccentColor = false;
             // 
             // tbGlassMaxValueRz
             // 
@@ -3296,12 +1845,12 @@ namespace loadingBox2dGui
             this.carTypeSignalStatus.Size = new System.Drawing.Size(153, 94);
             this.carTypeSignalStatus.TabIndex = 0;
             // 
-            // openFileDialog1
+            // openFileDialog
             // 
-            this.openFileDialog1.DefaultExt = "yml";
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "YAML(*.yml;*.yaml)|*.yml;*.yaml|All files|*.*";
-            this.openFileDialog1.ShowHelp = true;
+            this.openFileDialog.DefaultExt = "yml";
+            this.openFileDialog.FileName = "openFileDialog1";
+            this.openFileDialog.Filter = "YAML(*.yml;*.yaml)|*.yml;*.yaml|All files|*.*";
+            this.openFileDialog.ShowHelp = true;
             // 
             // gbMode
             // 
@@ -3665,6 +2214,7 @@ namespace loadingBox2dGui
             this.ClientSize = new System.Drawing.Size(1920, 1061);
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("Consolas", 9F);
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
@@ -3673,7 +2223,6 @@ namespace loadingBox2dGui
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
@@ -3682,27 +2231,18 @@ namespace loadingBox2dGui
             this.materialCard14.ResumeLayout(false);
             this.materialCard14.PerformLayout();
             this.materialCard6.ResumeLayout(false);
+            this.gbRobotReadComputed.ResumeLayout(false);
+            this.gbRobotReadComputed.PerformLayout();
             this.gbRobotRead.ResumeLayout(false);
             this.gbRobotRead.PerformLayout();
             this.gbRobotWrite.ResumeLayout(false);
             this.gbRobotWrite.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbRh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLh)).EndInit();
-            this.materialCard4.ResumeLayout(false);
-            this.materialCard4.PerformLayout();
-            this.materialCard3.ResumeLayout(false);
-            this.materialCard3.PerformLayout();
-            this.tlpGlassCamera.ResumeLayout(false);
-            this.tlpGlassCamera.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbOk)).EndInit();
             this.materialCard1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbNg)).EndInit();
             this.materialCard2.ResumeLayout(false);
-            this.gbGlassUserControl_.ResumeLayout(false);
-            this.gbGlassShiftValue_.ResumeLayout(false);
-            this.gbGlassShiftValue_.PerformLayout();
-            this.gbGlassPoint_.ResumeLayout(false);
-            this.gbGlassPoint_.PerformLayout();
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
@@ -3711,8 +2251,8 @@ namespace loadingBox2dGui
             this.splitContainer5.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.panelNgListViewHeader.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvNgList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.gbMode.ResumeLayout(false);
@@ -3732,9 +2272,9 @@ namespace loadingBox2dGui
 
 
         #endregion
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private MaterialSkin.Controls.MaterialMultiLineTextBox rtbLog;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private MaterialSkin.Controls.MaterialCard gbMode;
         private MaterialSkin.Controls.MaterialRadioButton rbSet_;
         private MaterialSkin.Controls.MaterialRadioButton rbAuto_;
@@ -3758,7 +2298,6 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialTextBox2 tbCarSeqNumber;
         private MaterialSkin.Controls.MaterialRadioButton rbManual_;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private System.Windows.Forms.ListView ltvNG;
         private MaterialSkin.Controls.MaterialTextBox2 tbGlassMaxValueRz;
         private MaterialSkin.Controls.MaterialLabel label90;
         private MaterialSkin.Controls.MaterialTextBox2 tbGlassMaxValueTy;
@@ -3769,46 +2308,11 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialTextBox2 textBox1;
         private MaterialSkin.Controls.MaterialButton btnNgListClear_;
         private System.Windows.Forms.SplitContainer splitContainer5;
-        private System.Windows.Forms.Panel panelNgListViewHeader;
-        private MaterialSkin.Controls.MaterialLabel lblDashDate;
-        private MaterialSkin.Controls.MaterialLabel lblDashType;
-        private MaterialSkin.Controls.MaterialLabel lblDashCarSeqNum;
-        private MaterialSkin.Controls.MaterialLabel lblDashCarType;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private CoPick.Controls.PlcSignalStatusValueTable carTypeSignalStatus;
         private CoPick.Controls.PlcSignalStatusValueTable glassWriteSignal2Status;
         private CoPick.Controls.PlcSignalStatusOnlyTable glassWriteSignalStatus;
         private CoPick.Controls.PlcSignalStatusOnlyTable glassReadSignalStatus;
-        private MaterialSkin.Controls.MaterialLabel lblErrorNotice;
         private PictureBox pictureBox4;
-        private MaterialSkin.Controls.MaterialCard materialCard4;
-        private MaterialSkin.Controls.MaterialTextBox2 materialTextBox24;
-        private MaterialSkin.Controls.MaterialLabel materialLabel5;
-        private MaterialSkin.Controls.MaterialTextBox2 materialTextBox25;
-        private MaterialSkin.Controls.MaterialLabel materialLabel6;
-        private MaterialSkin.Controls.MaterialTextBox2 materialTextBox26;
-        private MaterialSkin.Controls.MaterialLabel materialLabel7;
-        private MaterialSkin.Controls.MaterialCard materialCard3;
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
-        private MaterialSkin.Controls.MaterialTextBox2 materialTextBox21;
-        private MaterialSkin.Controls.MaterialLabel materialLabel2;
-        private MaterialSkin.Controls.MaterialLabel materialLabel3;
-        private MaterialSkin.Controls.MaterialTextBox2 materialTextBox22;
-        private MaterialSkin.Controls.MaterialLabel materialLabel4;
-        private TableLayoutPanel tlpGlassCamera;
-        private MaterialSkin.Controls.MaterialCheckbox ckbGlassCameraUse4;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassCameraSerial1;
-        private MaterialSkin.Controls.MaterialLabel lblGlassCameraAlias1;
-        private MaterialSkin.Controls.MaterialCheckbox ckbGlassCameraUse1;
-        private MaterialSkin.Controls.MaterialLabel lblGlassCameraAlias4;
-        private MaterialSkin.Controls.MaterialCheckbox ckbGlassCameraUse2;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassCameraSerial3;
-        private MaterialSkin.Controls.MaterialLabel lblGlassCameraAlias3;
-        private MaterialSkin.Controls.MaterialLabel lblGlassCameraAlias2;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassCameraSerial2;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassCameraSerial4;
-        private MaterialSkin.Controls.MaterialCheckbox ckbGlassCameraUse3;
-        private MaterialSkin.Controls.MaterialTextBox2 materialTextBox23;
         private PictureBox pbOk;
         private MaterialSkin.Controls.MaterialCard materialCard1;
         private CoPick.Controls.PlcSignalStatusOnlyTable plcSignalStatusOnlyTable1;
@@ -3817,7 +2321,6 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialCard materialCard2;
         private CoPick.Controls.PlcSignalStatusOnlyTable plcSignalStatusOnlyTable2;
         private CoPick.Controls.PlcSignalStatusValueTable plcSignalStatusValueTable2;
-        private MaterialSkin.Controls.MaterialCard gbGlassUserControl_;
         private MaterialSkin.Controls.MaterialButton btnGlassBackUp_;
         private MaterialSkin.Controls.MaterialButton lblGlassRHCamera_;
         private MaterialSkin.Controls.MaterialButton lblGlassLHCamera_;
@@ -3825,40 +2328,11 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialButton btnGlassRHCameraUse_;
         private MaterialSkin.Controls.MaterialButton btnGlassLHCameraUnuse_;
         private MaterialSkin.Controls.MaterialButton btnGlassLHCameraUse_;
-        private MaterialSkin.Controls.MaterialLabel label85_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassRefDataPath;
-        private MaterialSkin.Controls.MaterialButton btnGlassRefDataPath;
-        private MaterialSkin.Controls.MaterialLabel label86_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassHandEyeCalibFilePath;
-        private MaterialSkin.Controls.MaterialButton btnGlassHandEyeCalibFilePath;
-        private MaterialSkin.Controls.MaterialButton btnGlassUpdate_;
-        private MaterialSkin.Controls.MaterialButton btnGlassCalculate_;
-        private MaterialSkin.Controls.MaterialCard gbGlassShiftValue_;
-        private MaterialSkin.Controls.MaterialLabel label88;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassShiftValueRz;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassShiftValueTx;
-        private MaterialSkin.Controls.MaterialLabel label79;
-        private MaterialSkin.Controls.MaterialLabel label80;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassShiftValueTy;
-        private MaterialSkin.Controls.MaterialCard gbGlassPoint_;
         private MaterialSkin.Controls.MaterialButton btnScanPoint_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassPointTx;
-        private MaterialSkin.Controls.MaterialLabel label73;
-        private MaterialSkin.Controls.MaterialLabel label74;
-        private MaterialSkin.Controls.MaterialLabel label75;
-        private MaterialSkin.Controls.MaterialLabel label76;
-        private MaterialSkin.Controls.MaterialLabel label77;
-        private MaterialSkin.Controls.MaterialLabel label78;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassPointTy;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassPointTz;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassPointRx;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassPointRz;
-        private MaterialSkin.Controls.MaterialTextBox2 tbGlassPointRy;
         private PictureBox pbRh;
         private PictureBox pbLh;
         private MaterialSkin.Controls.MaterialTextBox2 tbCarBodyNumber;
         private MaterialSkin.Controls.MaterialCard materialCard5;
-        private MaterialSkin.Controls.MaterialButton btnConnectPlc_;
         private MaterialSkin.Controls.MaterialCard materialCard6;
         private MaterialSkin.Controls.MaterialLabel lblPlc;
         private MaterialSkin.Controls.MaterialButton btnSettingManage_;
@@ -3867,20 +2341,13 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialCard materialCard14;
         private MaterialSkin.Controls.MaterialLabel lblLH_;
         private MaterialSkin.Controls.MaterialCard gbRobotWrite;
-        private MaterialSkin.Controls.MaterialButton btnReadWrittenShiftPose_;
         private MaterialSkin.Controls.MaterialButton btnWriteShiftPose_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbWrittenTxyz_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbShiftTxyz;
-        private MaterialSkin.Controls.MaterialLabel materialLabel21;
-        private MaterialSkin.Controls.MaterialLabel materialLabel26;
+        private MaterialSkin.Controls.MaterialTextBox2 tbShiftTx;
         private MaterialSkin.Controls.MaterialLabel materialLabel11;
         private MaterialSkin.Controls.MaterialLabel materialLabel20;
         private MaterialSkin.Controls.MaterialLabel materialLabel15;
-        private MaterialSkin.Controls.MaterialLabel materialLabel25;
-        private MaterialSkin.Controls.MaterialTextBox2 tbWrittenRxyz_;
         private MaterialSkin.Controls.MaterialLabel lblShiftPoseRxyz_;
-        private MaterialSkin.Controls.MaterialTextBox2 tbShiftRxyz;
-        private MaterialSkin.Controls.MaterialButton btnCapture_;
+        private MaterialSkin.Controls.MaterialTextBox2 tbShiftTy;
         private MaterialSkin.Controls.MaterialCard gbRobotRead;
         private MaterialSkin.Controls.MaterialTextBox2 tbReadInstallPoseTxyz;
         private MaterialSkin.Controls.MaterialLabel materialLabel13;
@@ -3898,7 +2365,20 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialTextBox2 tbCurrRobotRx;
         private MaterialSkin.Controls.MaterialLabel materialLabel18;
         private MaterialSkin.Controls.MaterialLabel materialLabel14;
-        private MaterialSkin.Controls.MaterialButton btnDetectAruco_;
+        private Panel panel1;
+        private DataGridView dgvNgList;
+        private MaterialSkin.Controls.MaterialTextBox2 tbShiftRz;
+        private MaterialSkin.Controls.MaterialLabel materialLabel17;
+        private MaterialSkin.Controls.MaterialCard gbRobotReadComputed;
+        private MaterialSkin.Controls.MaterialLabel materialLabel22;
+        private MaterialSkin.Controls.MaterialLabel materialLabel23;
+        private MaterialSkin.Controls.MaterialLabel materialLabel28;
+        private MaterialSkin.Controls.MaterialLabel materialLabel29;
+        private MaterialSkin.Controls.MaterialTextBox2 tbWrittenRxyz_;
+        private MaterialSkin.Controls.MaterialButton btnReadWrittenShiftPose_;
+        private MaterialSkin.Controls.MaterialTextBox2 tbWrittenTxyz_;
+        private MaterialSkin.Controls.MaterialButton btnUpdateMasterScanPose_;
+        private MaterialSkin.Controls.MaterialButton btnUpdateMasterInstallPose_;
     }
 }
 

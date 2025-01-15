@@ -12,7 +12,6 @@ namespace loadingBox2dGui.models
     public interface ICameraCommunicator : IDisposable
     {
         bool IsConnected { get; }
-
         bool Connect(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
         bool Disconnect();
         Task StartCamera(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict, int shotAttempt);
@@ -23,17 +22,5 @@ namespace loadingBox2dGui.models
         bool ApplyCameraSettings(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
         ImageStruct[] GetImageStructArray(int carType);
         bool ClearBmpData();
-    }
-
-    
-
-    public enum CameraState
-    {
-        Undefined,
-        Error,
-        Disconnected,
-        Reconnecting, 
-        Connected, 
-        Grabbing,
     }
 }

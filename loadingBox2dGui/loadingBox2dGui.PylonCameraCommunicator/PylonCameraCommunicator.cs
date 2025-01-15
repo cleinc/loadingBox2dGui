@@ -31,7 +31,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
         private ConcurrentDictionary<InspectionLocation, Camera> _locToCamera;
         private bool _isConnected = false;
         private static readonly int reconnectTimeoutMs = 15000;
-        public bool IsConnected => _isConnected;
+        public override bool IsConnected => _isConnected;
 
         public PylonCameraCommunicator()
         {
@@ -107,7 +107,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                 {
                     return;
                 }
-                var camDevices = CameraFinder.Enumerate();
+                List<ICameraInfo> camDevices = CameraFinder.Enumerate();
                 foreach (var camDevice in camDevices)
                 {
                     string ipAddress = camDevice[CameraInfoKey.DeviceIpAddress];
@@ -233,6 +233,12 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
         public override ImageStruct[] GetImageStructArray(int carType)
         {
+            if (!_isConnected)
+            {
+                Logger.Error($"Communicator Disposed {_disposed}, Camera Communicator Connected : {_isConnected}");
+                return null;
+            }
+
             List<ImageStruct> imgStructsList = new List<ImageStruct>();
             foreach (var kvp in _locToCamera)
             {
@@ -464,11 +470,11 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                 ApplyCameraSettings(camParamDict);
                 List<Task> tasks = new List<Task>();
                 Stopwatch captureWatch = Stopwatch.StartNew();
-                var capturedTime = $"{DateTime.Now:hhmmss}";
+                var capturedTime = $"{DateTime.Now:HHmmss}";
 
                 foreach (var locToCam in _locToCamera)
                 {
-                    tasks.Add(Task.Run(() => BurstTakeImages(capturedTime, locToCam.Key, locToCam.Value)));
+                    tasks.Add(Task.Run(() => BurstTakeImages(capturedTime, locToCam.Key, locToCam.Value, 5)));
                 }
                 await Task.WhenAll(tasks); tasks.Clear();
                 Logger.Info($"Burst Takes took {captureWatch.Elapsed}"); captureWatch.Restart();
@@ -541,8 +547,8 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                     IGrabResult grabResult = camera.StreamGrabber.GrabOne(15000, TimeoutHandling.ThrowException);
                     if (grabResult.GrabSucceeded)
                     {
-                        var convertedBmp = ConvertGrabResultToBitmap(grabResult);
-                        SaveExposureImages(location, capturedTime, convertedBmp, i, exposureValue);
+                        //var convertedBmp = ConvertGrabResultToBitmap(grabResult);
+                        //SaveExposureImages(location, capturedTime, convertedBmp, i, exposureValue);
                         grabResult.Dispose();
                     }
                     else
@@ -686,7 +692,16 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             _locToCamera[location] = null;
             if (_locToBmp.TryGetValue(location, out var bmp))
             {
-                bmp?.Dispose();
+                if (_bmpToBmpData.TryGetValue(bmp, out var bmpData))
+                {
+                    bmp.UnlockBits(bmpData);
+                    bmp.Dispose();
+                    _bmpToBmpData.Remove(bmp);
+                }
+                else
+                {
+                    bmp.Dispose();
+                }
                 _locToBmp[location] = null;
             }
             if(_locToCamera.TryRemove(location, out _))
@@ -701,13 +716,15 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
         public override bool ClearBmpData()
         {
-            if (_bmpToBmpData.Count == 0)
+            if (_bmpToBmpData == null || _bmpToBmpData.Count == 0)
             {
                 return false;
             }
+
             foreach (var kvp in _bmpToBmpData)
             {
                 kvp.Key.UnlockBits(kvp.Value);
+                kvp.Key.Dispose();
             }
             _bmpToBmpData.Clear();
             Logger.Info($"BitmapData Cleared");
