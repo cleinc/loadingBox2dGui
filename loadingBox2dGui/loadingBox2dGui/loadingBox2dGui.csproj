@@ -123,10 +123,6 @@
       <Project>{a9695b1e-224e-4410-82c0-8c7e6acab051}</Project>
       <Name>loadingBox2dGui.presenters</Name>
     </ProjectReference>
-    <ProjectReference Include="..\loadingBox2dGui.PylonCameraCommunicator\loadingBox2dGui.PylonCameraCommunicator.csproj">
-      <Project>{23410fbc-5069-4d6f-8500-b8f83b002369}</Project>
-      <Name>loadingBox2dGui.PylonCameraCommunicator</Name>
-    </ProjectReference>
     <ProjectReference Include="..\loadingBox2dGui.views\loadingBox2dGui.views.csproj">
       <Project>{d219ab6d-0b7d-4eea-8fc1-5221afaef60b}</Project>
       <Name>loadingBox2dGui.views</Name>
