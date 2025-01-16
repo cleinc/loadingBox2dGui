@@ -268,6 +268,7 @@ namespace loadingBox2dGui.presenters
             await UpdateCameraParametersFromConfig(_config.CameraConfigs.Keys.ToArray(), null, null);
             await UpdateModelParametersFromConfig();
             await Task.Run(() => _masterDataManager.LoadMasterDataset(_config.GetMasterDataPathsDict()));
+            await _masterDataManager.InitializeMasterData();
             string cameraName = _config[-1].Camera;
             await ConnectCameraAsync(cameraName);
             UpdateUiByConfig();
