@@ -108,7 +108,7 @@ namespace loadingBox2dGui.models
                     if (!getMasterImageFilePathsSucceed || !getCheckerBoardFilePathsSucceed || !getCalibrationFilePathsSucceed
                         || !getMasterCameraTcpFilePathsSucceed || !getInstallPoseFilePathsSucceed ||!getScanPoseFilePathsSucceed)
                     {
-                        Logger.Error($"Failed Refreshing Master Dataset. Master Image : {getMasterImageFilePathsSucceed}. \n" +
+                        Logger.Error($"Failed Refreshing Master Dataset for Cartype: {cartypeToMasterDataDict.Key}. Master Image : {getMasterImageFilePathsSucceed}. \n" +
                                     $"CheckerBoard : {getCheckerBoardFilePathsSucceed}. Calibration : {getCalibrationFilePathsSucceed}.\n + " +
                                     $"InstallPose :{getInstallPoseFilePathsSucceed}. ScanPose : {getScanPoseFilePathsSucceed}");
                         return false;

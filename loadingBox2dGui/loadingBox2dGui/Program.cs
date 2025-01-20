@@ -50,7 +50,7 @@ namespace loadingBox2dGui
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lang.MsgBox.LoadingConfigError ({ex.Message})", "Lang.MsgBoxFineLo.WarningTitle");
+                MessageBox.Show($"Lang.MsgBox.LoadingConfigError ({ex.Message})", "Lang.MsgBox.WarningTitle");
                 return;
             }
 

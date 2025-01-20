@@ -35,7 +35,7 @@ namespace loadingBox2dGui.OMM
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lang.MsgBox.LoadingConfigError ({ex.Message})", "Lang.MsgBoxFineLo.WarningTitle");
+                MessageBox.Show($"Lang.MsgBox.LoadingConfigError ({ex.Message})", "Lang.MsgBox.WarningTitle");
                 return;
             }
             Logger.Info($"Program Started");

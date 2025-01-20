@@ -71,12 +71,12 @@ namespace loadingBox2dGui.models
         public bool DefaultIfExceeded { get; set; } = false;
 
         [LocalizedCategory("CategoryShiftCalculationParameter")]
-        [LocalizedDescription("DescModelThreshold")]
+        [LocalizedDescription("DescModelConfidenceThreshold")]
         [ValidatorType(ValidatorType.Float, 0f, 1f)]
         public float ConfidenceThreshold { get; set; } = .85f;
 
         [LocalizedCategory("CategoryShiftCalculationParameter")]
-        [LocalizedDescription("DescRefHoleSizeDiffThreshold")]
+        [LocalizedDescription("DescSizeRatioDifferenceToSrcThreshold")]
         [ValidatorType(ValidatorType.Float, 0f, 5f)]
         public float SizeRatioDifferenceToSrcThreshold { get; set; } = .25f;
         public CargoBox2DConfig()

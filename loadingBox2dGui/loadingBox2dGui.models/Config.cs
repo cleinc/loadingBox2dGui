@@ -66,7 +66,7 @@ namespace loadingBox2dGui.models
             };
             RobotConfigs = new Dictionary<string, Dictionary<RobotAttribute, string>>()
             {
-                ["Install"] = DefaultSettingLoader.Robots[RobotMaker.YASKAWA]()
+                ["Unknown"] = DefaultSettingLoader.Robots[RobotMaker.YASKAWA]()
             };
 
             ConfigDict[0] = new CargoBox2DConfig();
@@ -130,6 +130,11 @@ namespace loadingBox2dGui.models
                 foreach (var carType in invalidList)
                 {
                     ConfigDict.Remove(carType);
+                }
+
+                if (ConfigDict.Count == 0)
+                {
+                    throw new InvalidOperationException($"Program Can't be ran without any registered cartype. Please reach out to the Cle inc. development team");
                 }
             }
             catch (Exception e)

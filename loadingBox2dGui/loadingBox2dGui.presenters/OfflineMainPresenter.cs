@@ -29,6 +29,7 @@ namespace loadingBox2dGui.presenters
         private readonly InspectionLocation[] _inspectingLocations = new InspectionLocation[] { InspectionLocation.LH, InspectionLocation.RH };
         private Dictionary<int, CargoBox2DConfig> _modelParameterDict = new Dictionary<int, CargoBox2DConfig>();
         private int _currentCar = -1;
+        private const int ArUcoCartype = int.MaxValue;
         #endregion
 
         #region Model Checker Fields
@@ -62,7 +63,7 @@ namespace loadingBox2dGui.presenters
             _settingManager.UpdateMasterDataFromConfigPathRequested += SettingManager_UpdateMasterDataFromConfigPathRequested;
         }
 
-        
+
 
         #region UI Events
         private void View_ModelSourceImageFromPathRequested(object sender, DataPathChangeEventArgs e)
@@ -177,6 +178,7 @@ namespace loadingBox2dGui.presenters
 
             if (_config != null)
             {
+                ConfigureArUcoCartype();
                 _view.ConfigPath = FileHelper.GetOfflineConfigFilePath();
                 _view.SetCarTypeList(_config.GetCarTypeAndNameList());
                 _masterDataManager.LoadMasterDataset(_config.GetMasterDataPathsDict());
@@ -316,6 +318,10 @@ namespace loadingBox2dGui.presenters
 
         private bool ValidateModelPerformance(CargoBox2DConfig modelConfig, float minConfidenceScore, float maxMasterToSrcSizeRatioDiff, int maxRefHoleCount)
         {
+            if (_currentCar == ArUcoCartype)
+            {
+                return true;
+            }
             if (modelConfig.ConfidenceThreshold > minConfidenceScore)
             {
                 Logger.Error($"Computed Confidence {minConfidenceScore} is lower than threshold. {modelConfig.ConfidenceThreshold}");
@@ -381,6 +387,20 @@ namespace loadingBox2dGui.presenters
             _view.SetCalculatedShiftValue(0, 0, 0);
             _view.SetInspectionImage(InspectionLocation.LH, null);
             _view.SetInspectionImage(InspectionLocation.RH, null);
+        }
+        private void ConfigureArUcoCartype()
+        {
+            if (!_config.ConfigDict.TryGetValue(ArUcoCartype, out var _))
+            {
+                var arUcoCartypeConfig = new CargoBox2DConfig
+                {
+                    CarName = "ArUco",
+                    Robot = _config.RobotConfigs.FirstOrDefault().Key,
+                    Camera = _config.CameraConfigs.FirstOrDefault().Key
+                };
+                _config.ConfigDict[ArUcoCartype] = arUcoCartypeConfig;
+                SaveConfig();
+            }
         }
         #endregion
     }
