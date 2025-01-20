@@ -42,7 +42,7 @@ namespace loadingBox2dGui.presenters
         {
             _offlineImageHandler = new OfflineImageHandler();
             _engine = engine;
-            _masterDataManager = new MasterDataManager(true, _engine);
+            _masterDataManager = new MasterDataManager(_engine);
             _settingManager = cargoBox2DSettingManagerPresenter;
             _view = view;
             _engine.SetCallbackWriteLog(Logger.WriteLog);

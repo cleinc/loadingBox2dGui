@@ -75,7 +75,6 @@
             this.lblRH_ = new MaterialSkin.Controls.MaterialLabel();
             this.materialCard14 = new MaterialSkin.Controls.MaterialCard();
             this.lblLH_ = new MaterialSkin.Controls.MaterialLabel();
-            this.tabOfflineArUcoAligner = new System.Windows.Forms.TabPage();
             this.cardInspectingComponent = new MaterialSkin.Controls.MaterialCard();
             this.lblCamera_ = new MaterialSkin.Controls.MaterialLabel();
             this.cmbCarType_ = new MaterialSkin.Controls.MaterialComboBox();
@@ -118,7 +117,6 @@
             // 
             this.InspectionTabs.Controls.Add(this.tabModelChecker);
             this.InspectionTabs.Controls.Add(this.tabOfflineAligner);
-            this.InspectionTabs.Controls.Add(this.tabOfflineArUcoAligner);
             this.InspectionTabs.Location = new System.Drawing.Point(0, 0);
             this.InspectionTabs.Name = "InspectionTabs";
             this.InspectionTabs.SelectedIndex = 0;
@@ -1044,16 +1042,6 @@
             this.lblLH_.TabIndex = 0;
             this.lblLH_.Text = "LH";
             // 
-            // tabOfflineArUcoAligner
-            // 
-            this.tabOfflineArUcoAligner.Location = new System.Drawing.Point(4, 22);
-            this.tabOfflineArUcoAligner.Name = "tabOfflineArUcoAligner";
-            this.tabOfflineArUcoAligner.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOfflineArUcoAligner.Size = new System.Drawing.Size(1266, 578);
-            this.tabOfflineArUcoAligner.TabIndex = 2;
-            this.tabOfflineArUcoAligner.Text = "ArUco Aligner";
-            this.tabOfflineArUcoAligner.UseVisualStyleBackColor = true;
-            // 
             // cardInspectingComponent
             // 
             this.cardInspectingComponent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -1343,7 +1331,6 @@
         private System.Windows.Forms.TabControl InspectionTabs;
         private System.Windows.Forms.TabPage tabModelChecker;
         private System.Windows.Forms.TabPage tabOfflineAligner;
-        private System.Windows.Forms.TabPage tabOfflineArUcoAligner;
         private MaterialSkin.Controls.MaterialCard materialCard1;
         private MaterialSkin.Controls.MaterialTextBox2 tbConfidenceScore_;
         private MaterialSkin.Controls.MaterialLabel materialLabel4;

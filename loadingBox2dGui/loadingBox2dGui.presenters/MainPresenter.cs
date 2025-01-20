@@ -54,7 +54,7 @@ namespace loadingBox2dGui.presenters
             _config = config;
             _mode = _config.StartMode;
             _engine = engine;
-            _masterDataManager = new MasterDataManager(false, _engine);
+            _masterDataManager = new MasterDataManager(_engine);
             _productionRecordRepository = repository;
             _settingManagerPresenter = cargoBox2DSettingManagerPresenter;
 

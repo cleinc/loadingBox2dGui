@@ -19,7 +19,6 @@ namespace loadingBox2dGui.models
     {
         private static readonly LogHelper Logger = LogHelper.Logger;
         private readonly ICargoBox2DInspectionEngine _engine;
-        private readonly bool _offlineMode = false;
         private bool _updateMasterDataRequested = false;
         private readonly InspectionLocation[] InspectionLocations = new InspectionLocation[] { InspectionLocation.LH, InspectionLocation.RH };
         private readonly SemaphoreSlim _masterDataAccessLock = new SemaphoreSlim(1,1);
@@ -36,9 +35,8 @@ namespace loadingBox2dGui.models
         private const string _defaultMasterDataRootPath = "C:\\Data";
         #endregion
 
-        public MasterDataManager(bool isOffline, ICargoBox2DInspectionEngine engine)
+        public MasterDataManager(ICargoBox2DInspectionEngine engine)
         {
-            _offlineMode = isOffline;
             _engine = engine;
         }
 
