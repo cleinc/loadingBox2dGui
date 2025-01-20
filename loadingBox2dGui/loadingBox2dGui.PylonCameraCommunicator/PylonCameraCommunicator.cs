@@ -508,6 +508,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                     if (grabResult.GrabSucceeded)
                     {
                         Bitmap bmp = ConvertGrabResultToBitmap(grabResult);
+                        grabResult.Dispose();
                         Console.WriteLine($"bmp result is Null {bmp is null}");
                         _locToBmp[location] = bmp;
                         break;

@@ -29,7 +29,6 @@ namespace loadingBox2dGui.models
         private Dictionary<int, TCP> _carTypeToMasterScanPose = new Dictionary<int, TCP>();
         private Dictionary<InspectionLocation, TCP> _locToMasterExtrinsicCalibrationTCP = new Dictionary<InspectionLocation, TCP>();
         
-
         #region Master Data File Info
         public static string MasterInstallPoseTcpFile = "MasterInstallPoseTcp.yml";
         public static string MasterScanPoseTcpFile = "MasterScanPoseTcp.yml";

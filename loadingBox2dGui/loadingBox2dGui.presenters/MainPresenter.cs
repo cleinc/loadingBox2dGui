@@ -382,7 +382,7 @@ namespace loadingBox2dGui.presenters
                     var (calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, refHoleCount) = await CalculateShiftPointAsync();
                     var (calculationValidated, modelValidated) = await ValidateCalculationAndModelPerformance(calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, refHoleCount);
                     InspectionResult inspectionResult = calculationValidated && modelValidated ? InspectionResult.OK : InspectionResult.NG;
-                    await RegisterInspectionResult(inspectionResult, calculatedPose, false);
+                    await RegisterInspectionResult(inspectionResult, calculatedPose, true);
                     if (inspectionResult == InspectionResult.OK && await WriteRobotPoses(calculatedPose))
                     {
                         _view.DisplayVisionResult(VisionStatus.OK);
@@ -582,18 +582,14 @@ namespace loadingBox2dGui.presenters
         #region Methods
         private async Task<bool> StartCameraAsync()
         {
-            if (_cameraComm == null)
+            if (_cameraComm == null || !await _cameraParameterAccessLock.WaitAsync(3000))
             {
+                Logger.Error($"Failed to Start Camera");
                 return false;
             }
 
             try
             {
-                if (!await _cameraParameterAccessLock.WaitAsync(3000))
-                {
-                    Logger.Error($"Failed to Start Camera");
-                    return false;
-                }
                 await Task.Run(() => _cameraComm.StartCamera(_cameraParameterDict[_config[-1].Camera], 3));
             }
             finally

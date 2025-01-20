@@ -228,6 +228,7 @@ namespace loadingBox2dGui.OMM
 
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
+                tbOfflineSourceImageRootPath_.Text = folderBrowserDialog.SelectedPath;
                 InspectionRecordFromPathRequested?.Invoke(this, new DataPathChangeEventArgs(folderBrowserDialog.SelectedPath));
             }
         }
