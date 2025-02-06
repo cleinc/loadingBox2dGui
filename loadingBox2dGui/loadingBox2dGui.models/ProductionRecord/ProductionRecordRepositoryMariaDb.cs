@@ -12,14 +12,13 @@ namespace loadingBox2dGui.models.ProductionRecord
     public class ProductionRecordRepositoryMariaDb : IProductionRecordRepository
     {
         private static readonly LogHelper Logger = LogHelper.Logger;
-        private const string _connectionStringHeader = "Server=127.0.0.1;Uid=root;";
         private const string _databaseName = "resultData";
         private string _connectionString;
         public ProductionRecordRepositoryMariaDb(string connectionString) => _connectionString = connectionString;
         public static string GetConnectionString()
         {
             var encryptedString = ConfigurationManager.ConnectionStrings["MariaDB"]?.ConnectionString;
-            var connectionString = ConnectionStringHelper.GetConnectionString(DatabaseType.Maria, "127.0.0.1", "root", _databaseName, encryptedString);
+             var connectionString = ConnectionStringHelper.GetConnectionString(DatabaseType.Maria, "127.0.0.1", "root", _databaseName, encryptedString);
             if (connectionString != null)
             {
                 return connectionString;
@@ -57,20 +56,24 @@ namespace loadingBox2dGui.models.ProductionRecord
         {
             try
             {
-                int changedRowNum = -2;
                 var temporaryString = "Server=127.0.0.1;Uid=root;pwd=clebrain511;";
                 using (MySqlConnection conn = new MySqlConnection(temporaryString))
                 {
                     string query = $"CREATE DATABASE IF NOT EXISTS {_databaseName}";
                     conn.Open();
-                    changedRowNum = conn.Execute(query);
+                    int changedRowNum = conn.Execute(query);
                     LogHelper.Logger.Debug("Create Database Succeeded");
                     return changedRowNum;
                 }
             }
+            catch (InvalidOperationException invalidOpsException)
+            {
+                Logger.Error($"Database creation failed. The connection does not exist. Error: {invalidOpsException}");
+                return -2;
+            }
             catch (Exception ex)
             {
-                Logger.Error($"Database creation failed: {ex}");
+                Logger.Error($"Database creation failed. The connection is not open. Error: {ex}");
                 return -2;
             }
         }
@@ -79,7 +82,6 @@ namespace loadingBox2dGui.models.ProductionRecord
         {
             try
             {
-                int changedRowNum = -2;
                 using (MySqlConnection conn = new MySqlConnection(_connectionString))
                 {
                     string query = "CREATE TABLE IF NOT EXISTS ProductionRecord(" +
@@ -97,14 +99,19 @@ namespace loadingBox2dGui.models.ProductionRecord
                                    "PRIMARY KEY (id));";
             
                     conn.Open();
-                    changedRowNum = conn.Execute(query);
+                    int changedRowNum = conn.Execute(query);
                     LogHelper.Logger.Debug("Create Table Succeeded");
                     return changedRowNum;
                 }
             }
+            catch (InvalidOperationException invalidOpsException)
+            {
+                Logger.Error($"Database creation failed. The connection does not exist. Error: {invalidOpsException}");
+                return -2;
+            }
             catch (Exception ex)
             {
-                LogHelper.Logger.Error($"Table creation failed: {ex}");
+                Logger.Error($"Database creation failed. The connection is not open. Error: {ex}");
                 return -2;
             }
         }

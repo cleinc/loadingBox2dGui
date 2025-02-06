@@ -62,16 +62,18 @@ namespace loadingBox2dGui
             if (retrievedConnectionString != null)
             {
                 mariaDbRecordRepository = new ProductionRecordRepositoryMariaDb(retrievedConnectionString);
-                mariaDbRecordRepository.CreateDatabaseIfNotExists();
-                if (mariaDbRecordRepository.CreateTableProductionRecordIfNotExistsForProductionRecord() == 0)
+                if (mariaDbRecordRepository.CreateDatabaseIfNotExists() != 0)
                 {
-                    Logger.Debug("Connected to the MariaDB Production Record");
-                }
-                else
-                {
+                    Logger.Warning($"Could not create a table or connect to MariaDB");
                     mariaDbRecordRepository = null;
-                    Logger.Warning("Could not create a table or connect to the MariaDB Production Record"); 
                 }
+                if (mariaDbRecordRepository.CreateTableProductionRecordIfNotExistsForProductionRecord() != 0)
+                {
+                    Logger.Warning("Could not create a table or connect to the MariaDB Production Record"); 
+                    mariaDbRecordRepository = null;
+                }
+                
+                Logger.Debug("Connected to the MariaDB Production Record");
             }
             else
             {
