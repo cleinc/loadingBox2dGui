@@ -40,6 +40,7 @@ namespace loadingBox2dGui.OMM
             }
             Logger.Info($"Program Started");
             Logger.Configure(config.LogPath, config.MinimumUiLogLevel, config.MinimumFileLogLevel);
+            FontManager.SetCustomFont("./Resources/NanumSquareRoundB.ttf");
             var engine = new CargoBox2DInspectionEngine();
             var offlineForm = new OfflineMainForm();
             var offlineSettingManagerView = new CargoBox2DSettingManagerForm_();

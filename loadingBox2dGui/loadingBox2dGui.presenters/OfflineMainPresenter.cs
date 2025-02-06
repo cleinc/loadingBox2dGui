@@ -81,7 +81,7 @@ namespace loadingBox2dGui.presenters
             UpdateModelParametersFromConfig();
             if (isPathModified)
             {
-                _masterDataManager.LoadMasterDataset(_config.GetMasterDataPathsDict());
+                await Task.Run(() => _masterDataManager.LoadMasterDataset(_config.GetMasterDataPathsDict()));
                 await _masterDataManager.InitializeMasterData();
             }
         }
@@ -89,7 +89,7 @@ namespace loadingBox2dGui.presenters
         private async void SettingManager_UpdateMasterDataFromConfigPathRequested(object sender, EventArgs e)
         {
             var masterDataPathDict = _settingManager.ConfigCandidate.GetMasterDataPathsDict();
-            _masterDataManager.LoadMasterDataset(masterDataPathDict);
+            await Task.Run(() =>_masterDataManager.LoadMasterDataset(masterDataPathDict));
             await _masterDataManager.InitializeMasterData();
         }
 
@@ -181,7 +181,7 @@ namespace loadingBox2dGui.presenters
                 ConfigureArUcoCartype();
                 _view.ConfigPath = FileHelper.GetOfflineConfigFilePath();
                 _view.SetCarTypeList(_config.GetCarTypeAndNameList());
-                _masterDataManager.LoadMasterDataset(_config.GetMasterDataPathsDict());
+                await Task.Run(() => _masterDataManager.LoadMasterDataset(_config.GetMasterDataPathsDict()));
                 await _masterDataManager.InitializeMasterData();
                 UpdateModelParametersFromConfig();
             }
@@ -212,7 +212,7 @@ namespace loadingBox2dGui.presenters
 
                 var bitmap = _offlineImageHandler.ConvertLockedBitmapDataToBitmap(e.NewPath);
 
-                _view.SetModelInferredImage(bitmap);
+                _view.SetModelInferredImage(bitmap?.Clone() as Image);
                 _view.SetModelPerformance(modelConfidenceScore, detectedRefHoleCount);
                 _offlineImageHandler.ClearBmpData();
             }

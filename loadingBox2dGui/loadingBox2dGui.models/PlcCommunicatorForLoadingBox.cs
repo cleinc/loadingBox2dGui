@@ -33,9 +33,6 @@ namespace loadingBox2dGui.models
         public string BodyNumber { get; set; }
         public bool VisionPass { get; set; }
         public List<PlcMonitorInfo<PlcSignalForLoadingBox>> PlcMonitorInfos { get; set; }
-        public List<S7MonitorDbInfo<PlcSignalForLoadingBox>> MonitorDbInfoList { get; set; }
-
-        //public List<PlcMonitorInfo<PlcSignalForSealer>> PlcDataInfos { get; set; }
 
         protected Thread _monitorPlcThread;
         protected ManualResetEvent _plcMonitorStartEvent = new ManualResetEvent(false);

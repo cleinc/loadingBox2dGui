@@ -475,11 +475,15 @@ namespace loadingBox2dGui.presenters
             {
                 if (e.CarType != _config.RecentlyUsedCar)
                 {
-                    ChangeCarType(e.CarType);
+                    if (!ChangeCarType(e.CarType))
+                    {
+                        Logger.Warning($"Invalid Cartype {e.CarType} Received. Please revise permitted car types and or register new car type with its relevant master data.");
+                    }
                 }
 
-                Logger.Info($"cartype : {e.CarType} // seqnum : {e.SequenceNumber} // bodynum : {e.BodyNumber}");
-                UpdatePlcInspectionInfo(e.CarType, e.SequenceNumber, e.BodyNumber);
+                ResetUi();
+                Logger.Info($"Given Cartype : {e.CarType} // seqnum : {e.SequenceNumber} // bodynum : {e.BodyNumber}");
+                UpdatePlcInspectionInfo(_currentCar, e.SequenceNumber, e.BodyNumber);
                 _lightComm.WriteLightState(true);
                 var currentCam = _config[-1].Camera;
                 await ConnectCameraAsync(currentCam);
@@ -542,36 +546,10 @@ namespace loadingBox2dGui.presenters
         private async void PlcComm_VisionReset(object sender, EventArgs e)
         {
             Logger.Info("Plc Reset Received");
-            int ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, false, 100, 10);
-            if (ret != 0)
-            {
-                Logger.Error($"PLC VISION OK OFF FAIL {ret}");
-            }
-            else
-            {
-                Logger.Info("PLC VISION OK OFF SUCCEED");
-            }
-
-            ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_NG, false, 100, 10);
-            if (ret != 0)
-            {
-                Logger.Error($"PLC VISION NG OFF FAIL {ret}");
-            }
-            else
-            {
-                Logger.Info("PLC VISION NG OFF SUCCEED");
-            }
+            await SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, false, 100, 10);
+            
+            await SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_NG, false, 100, 10);
             await SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, false, 100, 10);
-            //ret = await _plcComm.SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, false, 100, 10);
-            //if (ret != 0)
-            //{
-            //    Logger.Error($"PLC VISION NG OFF FAIL {ret}");
-            //}
-            //else
-            //{
-            //    Logger.Info("PLC VISION NG OFF SUCCEED");
-            //}
-            ResetUi();
         }
 
         #endregion
@@ -657,16 +635,16 @@ namespace loadingBox2dGui.presenters
         {
             if (_config.GetCarTypeList().Contains(carType))
             {
-                _config.RecentlyUsedCar = carType;
                 _currentCar = carType;
-                _view.CarType = carType;
+                _config.RecentlyUsedCar = _currentCar;
+                _view.CarType = _currentCar;
                 SaveConfig();
                 Logger.Info($"Lang.Msgs.CarTypeChanged: {carType}");
                 return true;
             }
             else
             {
-                Logger.Warning($"Lang.Msgs.InvalidCarType: ({_plcComm.CarType})");
+                Logger.Warning($"Lang.Msgs.InvalidCarType: ({carType})");
                 return false;
             }
         }

@@ -161,7 +161,6 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             {
                 Logger.Info($"Opening Cam Failed with Exception: Location {location}, IP: {ipAddress} Error: {ex}");
             }
-            // Conditional Open?
             #region Read Current Camera Parameters
             Console.WriteLine("Camera Parameter Limits:");
             Console.WriteLine("========================");
@@ -689,7 +688,6 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             {
                 cam.Close();
             }
-            cam?.Dispose();
             _locToCamera[location] = null;
             if (_locToBmp.TryGetValue(location, out var bmp))
             {
@@ -713,6 +711,8 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             {
                 Logger.Info($"Remove Camera Fail at Location: {location}");
             }
+
+            cam?.Dispose();
         }
 
         public override bool ClearBmpData()
@@ -743,7 +743,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             }
             catch (Exception ex)
             {
-                Logger.Info($"Closing attempt failed for Camera {inspectionLocation}, IP : {ipAddress}, Error: {ex}");
+                Logger.Debug($"Closing attempt failed for Camera {inspectionLocation}, IP : {ipAddress}, Error: {ex}");
             }
             finally
             {

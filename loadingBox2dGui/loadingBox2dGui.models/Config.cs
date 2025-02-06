@@ -187,6 +187,7 @@ namespace loadingBox2dGui.models
         {
             return new Dictionary<PlcAttribute, string>()
             {
+                [PlcAttribute.Model] = PlcModel.MELSEC.ToString(),
                 [PlcAttribute.LOGICAL_STATION] = "1"
             };
         }

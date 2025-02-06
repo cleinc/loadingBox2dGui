@@ -1,4 +1,5 @@
-﻿using CoPick.Logging;
+﻿using CoPick;
+using CoPick.Logging;
 using CoPick.Plc.Setting;
 using CoPick.Robot.Setting;
 using CoPick.Setting;
@@ -78,7 +79,7 @@ namespace loadingBox2dGui
                 Logger.Warning("Could not connect to the MariaDB Production Record");
             }
 
-            //FontManager.SetCustomFont("./Resources/NanumSquareRoundB.ttf");
+            FontManager.SetCustomFont("./Resources/NanumSquareRoundB.ttf");
             var robotSettingManagerForm = new RobotSettingManagerView();
             var camera2DSettingManagerForm = new Camera2DSettingManagerView();
             var plcSettingManagerForm = new PlcSettingManagerView();

@@ -73,7 +73,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                 _heartbeatDbInfo = new PlcDbInfo(5500, 0);
 
                 _melsecPlc.PlcError += (s, e) => Disconnect();
-                LoadPlcSignalDictForSealer();
+                LoadPlcSignalDict();
             }
             catch (Exception ex)
             {
@@ -81,7 +81,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             }
         }
 
-        private void LoadPlcSignalDictForSealer()
+        private void LoadPlcSignalDict()
         {
             PlcMonitorInfos = new List<PlcMonitorInfo<PlcSignalForLoadingBox>>
             {
