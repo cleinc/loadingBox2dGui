@@ -295,6 +295,7 @@ namespace loadingBox2dGui
                 btnScanPoint_.Text = (mode == OperationMode.Set) ? "Save MasterImage" : "Scan Point";
                 btnUpdateMasterInstallPose_.Visible = mode == OperationMode.Set;
                 btnUpdateMasterScanPose_.Visible = mode == OperationMode.Set;
+                btnCaptureCheckerBoard_.Visible = mode == OperationMode.Set;
                 gbRobotWrite.Enabled = mode == OperationMode.Set;
                 
                 gbRobotReadComputed.Visible = mode == OperationMode.Set;
@@ -431,7 +432,7 @@ namespace loadingBox2dGui
         public event EventHandler MainFormLoadRequested;
         public event EventHandler ConnectCameraRequested;
         public event EventHandler<StartWithModifierEventArgs> ShowSettingManagerRequested;
-        public event EventHandler ScanPointRequsted;
+        public event EventHandler ScanPointRequested;
         public event EventHandler DisconnectCameraRequested;
         public event EventHandler<FormClosingEventArgs> ProgramCloseRequested;
         public event EventHandler<ChangeLightStateEventArgs> LightStateChangeRequested;
@@ -442,6 +443,7 @@ namespace loadingBox2dGui
         public event EventHandler CheckWrittenShiftPoseRequested;
         public event EventHandler<ImagePathEventArgs> ShowScreenShotRequested;
         public event EventHandler ResetNgListRequested;
+        public event EventHandler CaptureCheckerboardRequested;
         #endregion
 
         private void btnCameraConnect__Click(object sender, EventArgs e)
@@ -461,7 +463,7 @@ namespace loadingBox2dGui
 
         private void btnScanPoint__Click(object sender, EventArgs e)
         {
-            ScanPointRequsted?.Invoke(sender, EventArgs.Empty);
+            ScanPointRequested?.Invoke(sender, EventArgs.Empty);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -619,6 +621,11 @@ namespace loadingBox2dGui
         private void dgvNgList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             RequestShowScreenShot();
+        }
+
+        private void btnCaptureCheckerBoard__Click(object sender, EventArgs e)
+        {
+            CaptureCheckerboardRequested?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -138,6 +138,7 @@ namespace loadingBox2dGui
             this.tbCarSeqNumber = new MaterialSkin.Controls.MaterialTextBox2();
             this.btnSettingManage_ = new MaterialSkin.Controls.MaterialButton();
             this.label22 = new MaterialSkin.Controls.MaterialLabel();
+            this.btnCaptureCheckerBoard_ = new MaterialSkin.Controls.MaterialButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -269,6 +270,7 @@ namespace loadingBox2dGui
             // materialCard6
             // 
             this.materialCard6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.materialCard6.Controls.Add(this.btnCaptureCheckerBoard_);
             this.materialCard6.Controls.Add(this.btnUpdateMasterScanPose_);
             this.materialCard6.Controls.Add(this.btnUpdateMasterInstallPose_);
             this.materialCard6.Controls.Add(this.gbRobotReadComputed);
@@ -2207,6 +2209,32 @@ namespace loadingBox2dGui
             this.label22.TabIndex = 71;
             this.label22.Text = "label22";
             // 
+            // btnCaptureCheckerBoard_
+            // 
+            this.btnCaptureCheckerBoard_.AutoSize = false;
+            this.btnCaptureCheckerBoard_.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnCaptureCheckerBoard_.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(208)))), ((int)(((byte)(65)))));
+            this.btnCaptureCheckerBoard_.CustomBackColor = System.Drawing.Color.Empty;
+            this.btnCaptureCheckerBoard_.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.btnCaptureCheckerBoard_.Depth = 0;
+            this.btnCaptureCheckerBoard_.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCaptureCheckerBoard_.Font = new System.Drawing.Font("Consolas", 11.25F);
+            this.btnCaptureCheckerBoard_.HighEmphasis = true;
+            this.btnCaptureCheckerBoard_.Icon = null;
+            this.btnCaptureCheckerBoard_.Location = new System.Drawing.Point(358, 33);
+            this.btnCaptureCheckerBoard_.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.btnCaptureCheckerBoard_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnCaptureCheckerBoard_.Name = "btnCaptureCheckerBoard_";
+            this.btnCaptureCheckerBoard_.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.btnCaptureCheckerBoard_.Size = new System.Drawing.Size(325, 93);
+            this.btnCaptureCheckerBoard_.TabIndex = 185;
+            this.btnCaptureCheckerBoard_.Text = "Save Master CheckerBoard";
+            this.btnCaptureCheckerBoard_.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnCaptureCheckerBoard_.UseAccentColor = false;
+            this.btnCaptureCheckerBoard_.UseVisualStyleBackColor = false;
+            this.btnCaptureCheckerBoard_.Visible = false;
+            this.btnCaptureCheckerBoard_.Click += new System.EventHandler(this.btnCaptureCheckerBoard__Click);
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2379,6 +2407,7 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialTextBox2 tbWrittenTxyz_;
         private MaterialSkin.Controls.MaterialButton btnUpdateMasterScanPose_;
         private MaterialSkin.Controls.MaterialButton btnUpdateMasterInstallPose_;
+        private MaterialSkin.Controls.MaterialButton btnCaptureCheckerBoard_;
     }
 }
 

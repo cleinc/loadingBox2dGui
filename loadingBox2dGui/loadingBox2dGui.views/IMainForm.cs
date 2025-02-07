@@ -32,7 +32,7 @@ namespace loadingBox2dGui.views
         event EventHandler<ModeChangedEventArgs> ChangeModeRequested;
         event EventHandler ConnectCameraRequested;
         event EventHandler<StartWithModifierEventArgs> ShowSettingManagerRequested;
-        event EventHandler ScanPointRequsted;
+        event EventHandler ScanPointRequested;
         event EventHandler<FormClosingEventArgs> ProgramCloseRequested;
         event EventHandler<ChangeLightStateEventArgs> LightStateChangeRequested;
         event EventHandler DisconnectCameraRequested;
@@ -44,6 +44,7 @@ namespace loadingBox2dGui.views
         event EventHandler CheckWrittenShiftPoseRequested;
         event EventHandler<ImagePathEventArgs> ShowScreenShotRequested;
         event EventHandler ResetNgListRequested;
+        event EventHandler CaptureCheckerboardRequested;
         #endregion
 
         #region Methods

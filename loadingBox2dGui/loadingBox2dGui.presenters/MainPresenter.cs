@@ -64,7 +64,7 @@ namespace loadingBox2dGui.presenters
             CreatePlcCommInstance(_config.Plc);
             
             _view.ConnectCameraRequested += View_ConnectCameraRequested;
-            _view.ScanPointRequsted += View_ScanPointRequested;
+            _view.ScanPointRequested += View_ScanPointRequested;
             _view.DisconnectCameraRequested += View_DisconnectCameraRequested;
             _view.ChangeModeRequested += View_ChangeModeRequested;
             _view.ProgramCloseRequested += View_ProgramCloseRequested;
@@ -78,6 +78,7 @@ namespace loadingBox2dGui.presenters
             _view.CheckWrittenShiftPoseRequested += View_CheckWrittenShiftPoseRequested;
             _view.ShowScreenShotRequested += View_ShowScreenShotRequested;
             _view.ResetNgListRequested += View_ResetNgListRequested;
+            _view.CaptureCheckerboardRequested += View_CaptureCheckerboardRequested;
             _settingManagerPresenter.SettingChangeConfirmed += SettingManagerPresenter_SettingChangeConfirmed;
             _settingManagerPresenter.UpdateMasterDataFromConfigPathRequested += SettingManagerPresenter_UpdateMasterDataFromConfigPathRequested;
 
@@ -89,6 +90,15 @@ namespace loadingBox2dGui.presenters
             {
                 Logger.Warning($"Production Record Repository Not Connected");
             }
+        }
+
+        private async void View_CaptureCheckerboardRequested(object sender, EventArgs e)
+        {
+            if (_mode != OperationMode.Set)
+            {
+                Logger.Warning($"Can only Capture Checkerboard data on Set mode. Current Mode: {_mode}");
+            }
+            await ScanPointAsync(true, DataType.CheckerBoard);
         }
 
         private void View_ResetNgListRequested(object sender, EventArgs e)
@@ -370,7 +380,7 @@ namespace loadingBox2dGui.presenters
         private async void View_ScanPointRequested(object sender, EventArgs e)
         {
             _view.SetStartCameraButton = false;
-            Logger.Debug($"Call [{((_mode == OperationMode.Manual) ? "Scan" : "Capture")} Start]");
+            Logger.Debug($"Call [{((_mode == OperationMode.Manual) ? "Scan" : "Capture MasterImage")} Start]");
             ResetUi();
 
             if (_mode == OperationMode.Manual)
@@ -396,9 +406,9 @@ namespace loadingBox2dGui.presenters
             }
             else
             {
-                await ScanPointAsync(true);
+                await ScanPointAsync(true, DataType.MasterImage);
             }
-            Logger.Debug($"Complete [{((_mode == OperationMode.Manual) ? "Scan" : "Capture")}]");
+            Logger.Debug($"Complete [{((_mode == OperationMode.Manual) ? "Scan" : "Capture MasterImage")}]");
             _view.SetStartCameraButton = true;
         }
 
@@ -1005,7 +1015,7 @@ namespace loadingBox2dGui.presenters
             });
         }
 
-        private async Task<bool> ScanPointAsync(bool saveAsMaster = false)
+        private async Task<bool> ScanPointAsync(bool saveAsMaster = false, DataType dataType = DataType.MasterImage)
         {
             Stopwatch sw = Stopwatch.StartNew();
             if (!await StartCameraAsync())
@@ -1020,11 +1030,11 @@ namespace loadingBox2dGui.presenters
             {
                 try
                 {
-                    await _masterDataManager.SaveMasterImage(_cameraComm, _currentCar);
+                    await _masterDataManager.SaveMasterImage(_cameraComm, _currentCar, dataType);
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error($"Saving TCP to Path Failed: Error: {ex}");
+                    Logger.Error($"Saving Master Data Failed: Error: {ex}");
                 }
             }
             Logger.Info($"Scan Pose Complete: SaveMaster: {saveAsMaster}, Took: {sw.Elapsed}");

@@ -62,7 +62,7 @@ namespace loadingBox2dGui.models
             return true;
         }
 
-        public async Task SaveMasterImage(IImageProvider<InspectionLocation> imageProvider, int cartype, string masterDataRootPath = _defaultMasterDataRootPath)
+        public async Task SaveMasterImage(IImageProvider<InspectionLocation> imageProvider, int cartype, DataType dataType, string masterDataRootPath = _defaultMasterDataRootPath)
         {
             var locImages = imageProvider.GetAllBitmaps();
             if (locImages != null)
@@ -72,7 +72,7 @@ namespace loadingBox2dGui.models
                 {
                     saveImageTasks.Add(Task.Run(() =>
                         SaveBitmap(locImg.Item1, locImg.Item2,
-                        GenerateMasterDataPath(DataType.MasterImage, cartype, masterDataRootPath),
+                        GenerateMasterDataPath(dataType, cartype, masterDataRootPath),
                         ImageFormat.Png)));
                 }
                 await Task.WhenAll(saveImageTasks);
@@ -98,16 +98,19 @@ namespace loadingBox2dGui.models
                     bool getScanPoseFilePathsSucceed = TryDeserializeYaml<TCP>(Path.Combine(robotPoseRootPath, MasterScanPoseTcpFile), out var masterScanPose);
 
                     string calibrationDataPath = cartypeToMasterDataDict.Value[DataType.IntrinsicCalibration];
-                    bool getCalibrationFilePathsSucceed = TryGetLocToFilePathsDictFromDirectory(calibrationDataPath, out var locToCalibrationFiles);
+                    bool getIntrinsicCalibrationFilePathsSucceed = TryGetLocToFilePathsDictFromDirectory(calibrationDataPath, out var locToIntrinsicCalibrationFiles);
 
                     string masterCameraTcpPath = cartypeToMasterDataDict.Value[DataType.ExtrinsicCalibration];
-                    bool getMasterCameraTcpFilePathsSucceed = TryDeserializeYaml<HandEyeCalibrationData>(masterCameraTcpPath, out var handEyeCalibrationData);
+                    bool getExtrinsicCalibrationFilePathsSucceed = TryDeserializeYaml<HandEyeCalibrationData>(masterCameraTcpPath, out var handEyeCalibrationData);
 
-                    if (!getMasterImageFilePathsSucceed || !getCheckerBoardFilePathsSucceed || !getCalibrationFilePathsSucceed
-                        || !getMasterCameraTcpFilePathsSucceed || !getInstallPoseFilePathsSucceed ||!getScanPoseFilePathsSucceed)
+                    if (!getMasterImageFilePathsSucceed || !getCheckerBoardFilePathsSucceed || !getIntrinsicCalibrationFilePathsSucceed
+                        || !getExtrinsicCalibrationFilePathsSucceed || !getInstallPoseFilePathsSucceed ||!getScanPoseFilePathsSucceed)
                     {
-                        Logger.Error($"Failed Refreshing Master Dataset for Cartype: {cartypeToMasterDataDict.Key}. Master Image : {getMasterImageFilePathsSucceed}. \n" +
-                                    $"CheckerBoard : {getCheckerBoardFilePathsSucceed}. Calibration : {getCalibrationFilePathsSucceed}.\n + " +
+                        Logger.Error($"Failed Refreshing Master Dataset for Cartype: {cartypeToMasterDataDict.Key}. \n" +
+                                    $"Master Image : {getMasterImageFilePathsSucceed}. \n" +
+                                    $"CheckerBoard : {getCheckerBoardFilePathsSucceed}. \n" +
+                                    $"Intrinsic Calibration : {getIntrinsicCalibrationFilePathsSucceed}.\n " +
+                                    $"Extrinsic Calibration : {getExtrinsicCalibrationFilePathsSucceed}.\n " +
                                     $"InstallPose :{getInstallPoseFilePathsSucceed}. ScanPose : {getScanPoseFilePathsSucceed}");
                         return false;
                     }
@@ -126,7 +129,7 @@ namespace loadingBox2dGui.models
                     List<MasterPathStruct> checkerBoardStructs = new List<MasterPathStruct>();
                     foreach (InspectionLocation registeredLoc in InspectionLocations)
                     {
-                        if (TryDeserializeYaml<CalibrationData>(locToCalibrationFiles[registeredLoc], out var calibrationData))
+                        if (TryDeserializeYaml<CalibrationData>(locToIntrinsicCalibrationFiles[registeredLoc], out var calibrationData))
                         {
                             masterImageStructs.Add(MasterPathStruct.MasterImageStruct(carType, locToMasterImagePaths[registeredLoc], shiftModelFilePath, registeredLoc, 
                             calibrationData)); 
@@ -135,7 +138,7 @@ namespace loadingBox2dGui.models
                         }
                         else
                         {
-                            Logger.Error($"Failed Refreshing Master Dataset. Failed while parsing Calibration Data From Path : {locToCalibrationFiles[registeredLoc]}");
+                            Logger.Error($"Failed Refreshing Master Dataset. Failed while parsing Calibration Data From Path : {locToIntrinsicCalibrationFiles[registeredLoc]}");
                             return false;
                         }
                     }
