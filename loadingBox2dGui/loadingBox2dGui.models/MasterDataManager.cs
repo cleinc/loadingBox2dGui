@@ -324,7 +324,8 @@ namespace loadingBox2dGui.models
             foreach (string folder in folderPaths)
             {
                 string folderName = Path.GetFileName(folder).Trim();
-                if (Enum.TryParse(folderName, true, out InspectionLocation location))
+                if (Enum.TryParse(folderName, true, out InspectionLocation location) 
+                    && !int.TryParse(location.ToString(), out int _))
                 {
                     string[] file = Directory.GetFiles(folder);
                     if (file.Length == 0)

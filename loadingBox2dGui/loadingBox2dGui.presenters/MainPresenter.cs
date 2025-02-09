@@ -557,7 +557,6 @@ namespace loadingBox2dGui.presenters
         {
             Logger.Info("Plc Reset Received");
             await SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, false, 100, 10);
-            
             await SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_NG, false, 100, 10);
             await SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, false, 100, 10);
         }
@@ -1232,7 +1231,6 @@ namespace loadingBox2dGui.presenters
                 int ret = await _plcComm.SendPlcStatusAsync(signal, value, nMaxTrials, delay);
                 if (ret == 0)
                 {
-                        
                     Logger.Info($"{(value ? "SEND" : "ERASE")} {signal} SUCCEED");
                     return true;
                 }
@@ -1262,14 +1260,6 @@ namespace loadingBox2dGui.presenters
 
         private async Task RegisterInspectionResult(InspectionResult result, RobotPose computedResult, bool saveRecordOnDb = true)
         {
-            DateTime inspectionTime = DateTime.Now;
-            FileHelper.GetResultSavePath(_config.LogPath, result, inspectionTime, 
-                _config[-1].CarName, _sequenceNumber, _bodyNumber, ImageFormat.Png, 
-                out var resultSaveDirectoryPath, out var resultSaveFilename);
-            await SaveInspectionData(resultSaveDirectoryPath, resultSaveFilename, _cameraComm);
-
-            string captureFile = CaptureScreen(inspectionTime, result);
-            
             if (computedResult == null)
             {
                 computedResult = new RobotPose() 
@@ -1281,6 +1271,14 @@ namespace loadingBox2dGui.presenters
             }
 
             _view.SetCalculatedShiftPose(new double[] { computedResult.Tx, computedResult.Ty, computedResult.Rz });
+            
+            DateTime inspectionTime = DateTime.Now;
+            FileHelper.GetResultSavePath(_config.LogPath, result, inspectionTime, 
+                _config[-1].CarName, _sequenceNumber, _bodyNumber, ImageFormat.Png, 
+                out var resultSaveDirectoryPath, out var resultSaveFilename);
+            await SaveInspectionData(resultSaveDirectoryPath, resultSaveFilename, _cameraComm);
+            string captureFile = CaptureScreen(inspectionTime, result);
+            
             try
             {
                 if (!saveRecordOnDb)

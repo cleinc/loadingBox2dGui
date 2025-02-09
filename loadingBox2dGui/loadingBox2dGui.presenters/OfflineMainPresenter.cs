@@ -259,7 +259,7 @@ namespace loadingBox2dGui.presenters
                 }
                 _view.SetAlignmentModelPerformance(minConfidenceScore, maxMasterToSrcSizeRatioDiff, maxRefHoleCount);
                 _view.SetCalculatedShiftValue(calculatedPose.Tx, calculatedPose.Ty, calculatedPose.Rz);
-                (modelValidated, calculationValidated) = ValidateCalculationAndModelPerformance(calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, maxRefHoleCount);
+                (calculationValidated, modelValidated) = ValidateCalculationAndModelPerformance(calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, maxRefHoleCount);
                 if (modelValidated && calculationValidated)
                 {
                     return calculatedPose;

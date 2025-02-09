@@ -107,11 +107,11 @@ namespace loadingBox2dGui
                 {
                     if (value)
                     {
-                        btnLightOff_.Text = "Light Off";
+                        btnLightOff_.Text = "Light On";
                     }
                     else
                     {
-                        btnLightOff_.Text = "Light On";
+                        btnLightOff_.Text = "Light Off";
                     }
                 });
 
