@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using CoPick.Robot;
 
 namespace loadingBox2dGui.models
 {
@@ -61,7 +62,7 @@ namespace loadingBox2dGui.models
         public abstract void MonitorPlc();
         public abstract void RaiseEventIfItNeeds();
         public abstract Task<int> SendPlcStatusAsync(PlcSignalForLoadingBox status, bool val, int nMaxTrials, int delay);
-
+        public abstract Task<int> SendShiftValue(RobotPose shiftValue, int nMaxTrials, int delayForCheck;
         public Task<bool> ConnectAsync()
         {
             _cts = new CancellationTokenSource();

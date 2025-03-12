@@ -520,6 +520,7 @@ namespace loadingBox2dGui.presenters
                 var (calculatedPose, minConfidenceScore, maxAbsSizeDiff, refHoleCount) = await CalculateShiftPointAsync();
                 Logger.Info($"Calculated Pose: {calculatedPose}");
                 var (calculationValidated, modelValidated) = await ValidateCalculationAndModelPerformance(calculatedPose, minConfidenceScore, maxAbsSizeDiff, refHoleCount);
+                var sendShiftValueTask = SendPlcShiftValueAsync(calculatedPose, 1, 350);
                 InspectionResult inspectionResult = InspectionResult.NONE;
                 if (calculationValidated && modelValidated && await WriteRobotPoses(calculatedPose))
                 {
@@ -564,6 +565,7 @@ namespace loadingBox2dGui.presenters
         #endregion
 
         #region Manual Events
+
         #endregion
 
         #region Methods
@@ -1019,7 +1021,7 @@ namespace loadingBox2dGui.presenters
             Stopwatch sw = Stopwatch.StartNew();
             if (!await StartCameraAsync())
             {
-                Logger.Info($"Scanning Current Value Failed");
+                Logger.Info($"Scanning Failed: Failed to Start Camera");
                 return false;
             }
 
@@ -1243,6 +1245,34 @@ namespace loadingBox2dGui.presenters
             catch (Exception ex)
             {
                 Logger.Error($"{(value ? "Sending" : "Erasing")} Plc Signal {signal} Failed. Error : {ex.Message}");
+                return false;
+            }
+        }
+
+        private async Task<bool> SendPlcShiftValueAsync(RobotPose calculatedPose, int nMaxTrials, int checkDelay)
+        {
+            try
+            {
+                if (calculatedPose == null)
+                {
+                    calculatedPose = new RobotPose();
+                }
+
+                int ret = await _plcComm.SendShiftValue(calculatedPose, nMaxTrials, checkDelay);
+                if (ret == 0)
+                {
+                    Logger.Info($"Writing ShiftValues {calculatedPose} SUCCEED");
+                    return true;
+                }
+                else
+                {
+                    Logger.Info($"Writing ShiftValues {calculatedPose} FAILED");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Writing ShiftValues {calculatedPose} Failed. Error : {ex}");
                 return false;
             }
         }
