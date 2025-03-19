@@ -17,10 +17,10 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
 
         private bool _heartbeatSignal = false;
 
-        private int _logicalStationNumber;
-        private string _heartbeatDeviceName;
-        private PlcDataType _heartbeatDeviceType;
-        private PlcDbInfo _heartbeatDbInfo;
+        private readonly int _logicalStationNumber;
+        private readonly string _heartbeatDeviceName;
+        private readonly PlcDataType _heartbeatDeviceType;
+        private readonly PlcDbInfo _heartbeatDbInfo;
 
         private bool _disposedValue;
 
@@ -71,7 +71,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                 Logger.Error($"Models.Lang.MSGPlc.ConstructingPlcCommunicatorFailedDueToError : {ex.Message}");
             }
         }
-
+        
         private void LoadPlcSignalDict()
         {
             PlcMonitorInfos = new List<PlcMonitorInfo<PlcSignalForLoadingBox>>
@@ -231,7 +231,6 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
         {
             if (!_melsecPlc.Init())
             {
-                Console.WriteLine("Models.Lang.MSGPlc.MelsecPlcErrorOccured");
                 Logger.Error("Models.Lang.MSGPlc.MelsecPlcErrorOccured");
                 IsConnected = false;
                 return;
@@ -307,35 +306,32 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
 
         public override void MonitorPlc()
         {
-            // MakeDeviceList
             List<string> deviceList = new List<string>();
             int numberOfData = 0;
             foreach (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox> monitorInfo in PlcMonitorInfos)
             {
-                if (monitorInfo.DataParseType == PlcDataType.FLOAT)
+                foreach (var dbInfo in monitorInfo.SignalDict.Values)
                 {
-                    // TODO
-                }
-                else
-                {
-                    foreach (var dbInfo in monitorInfo.SignalDict.Values)
+                    if (monitorInfo.DeviceType == PlcDataType.DWORD)
                     {
-                        if (monitorInfo.DeviceType == PlcDataType.BIT)
-                        {
-                            // TODO
-                        }
-                        else if (monitorInfo.DeviceType == PlcDataType.WORD)
-                        {
-                            ++numberOfData;
-                            string deviceName = $"{monitorInfo.DeviceName}{dbInfo.Pos}";
+                        numberOfData += 2;
+                        string deviceName = $"{monitorInfo.DeviceName}{dbInfo.Pos}";
+                        string deviceName2 = $"{monitorInfo.DeviceName}{dbInfo.Pos + 1}";
 
-                            deviceList.Add(deviceName);
-                        }
+                        deviceList.Add(deviceName);
+                        deviceList.Add(deviceName2);
+                    }
+                    else if (monitorInfo.DeviceType == PlcDataType.WORD)
+                    {
+                        ++numberOfData;
+                        string deviceName = $"{monitorInfo.DeviceName}{dbInfo.Pos}";
+
+                        deviceList.Add(deviceName);
                     }
                 }
             }
 
-            (var ret, var resData) = _melsecPlc.ReadRandom(deviceList);
+            (var ret, var resData) = _melsecPlc.ReadRandom2(deviceList);
             if (ret != 0)
             {
                 return;
@@ -344,36 +340,32 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             int idx = 0;
             foreach (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox> monitorInfo in PlcMonitorInfos)
             {
-                if (monitorInfo.DataParseType == PlcDataType.FLOAT)
-                {
-                    // TODO
-                }
-                else
+                if (monitorInfo.DeviceType == PlcDataType.DWORD)
                 {
                     foreach (var dbInfo in monitorInfo.SignalDict.Values)
                     {
-                        if (monitorInfo.DeviceType == PlcDataType.BIT)
-                        {
-                            // TODO
-                        }
-                        else if (monitorInfo.DeviceType == PlcDataType.WORD)
-                        {
-                        }
-
+                        dbInfo.Byte0 = resData[idx];
+                        dbInfo.Byte1 = resData[idx + 1];
+                        dbInfo.Byte2 = resData[idx + 2];
+                        dbInfo.Byte3 = resData[idx + 3];
+                        idx += 4;
                         if (monitorInfo.DataParseType == PlcDataType.BIT)
                         {
-                            var desired = 1 << dbInfo.Bit;
-                            dbInfo.IsOn = (resData[idx] & desired) == desired;
+                            break;
                         }
-                        else if (monitorInfo.DataParseType == PlcDataType.WORD)
+                    }
+                }
+                else if (monitorInfo.DeviceType == PlcDataType.WORD)
+                {
+                    foreach (var dbInfo in monitorInfo.SignalDict.Values)
+                    {
+                        dbInfo.Byte0 = resData[idx];
+                        dbInfo.Byte1 = resData[idx + 1];
+                        idx += 2;
+                        if (monitorInfo.DataParseType == PlcDataType.BIT)
                         {
-                            dbInfo.Int32Value = resData[idx];
+                            break;
                         }
-                        else if (monitorInfo.DataParseType == PlcDataType.ASCII || monitorInfo.DataParseType == PlcDataType.TWISTED_ASCII)
-                        {
-                            dbInfo.Int32Value = resData[idx];
-                        }
-                        ++idx;
                     }
                 }
             }
