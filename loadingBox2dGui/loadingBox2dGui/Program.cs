@@ -62,11 +62,6 @@ namespace loadingBox2dGui
             if (retrievedConnectionString != null)
             {
                 mariaDbRecordRepository = new ProductionRecordRepositoryMariaDb(retrievedConnectionString);
-                if (mariaDbRecordRepository.CreateDatabaseIfNotExists() != 0)
-                {
-                    Logger.Warning($"Could not create a table or connect to MariaDB");
-                    mariaDbRecordRepository = null;
-                }
                 if (mariaDbRecordRepository.CreateTableProductionRecordIfNotExistsForProductionRecord() != 0)
                 {
                     Logger.Warning("Could not create a table or connect to the MariaDB Production Record"); 

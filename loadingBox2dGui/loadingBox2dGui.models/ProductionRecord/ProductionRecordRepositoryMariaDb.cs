@@ -17,17 +17,33 @@ namespace loadingBox2dGui.models.ProductionRecord
         public ProductionRecordRepositoryMariaDb(string connectionString) => _connectionString = connectionString;
         public static string GetConnectionString()
         {
-            var encryptedString = ConfigurationManager.ConnectionStrings["MariaDB"]?.ConnectionString;
-             var connectionString = ConnectionStringHelper.GetConnectionString(DatabaseType.Maria, "127.0.0.1", "root", _databaseName, encryptedString);
-            if (connectionString != null)
+            string connectionString;
+            try
             {
-                return connectionString;
+                var encryptedString = ConfigurationManager.ConnectionStrings["MariaDB"]?.ConnectionString;
+                string connectionStringWithoutDb = ConnectionStringHelper.GetConnectionString(DatabaseType.Maria, "127.0.0.1", "root", encryptedString);
+                if (connectionStringWithoutDb == null)
+                {
+                    Logger.Error($"Failed to retrieve connection string");
+                    return null;
+                }
+
+                using (MySqlConnection conn = new MySqlConnection(connectionStringWithoutDb))
+                {
+                    string query = $"CREATE DATABASE IF NOT EXISTS {_databaseName};";
+                    conn.Open();
+                    conn.Execute(query);
+                }
+
+                connectionString = ConnectionStringHelper.GetConnectionString(DatabaseType.Maria, "127.0.0.1", "root", _databaseName, encryptedString)
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"Failed Retrieving ConnectionString for Production Record");
+                Logger.Error(ex.ToString());
                 return null;
             }
+
+            return connectionString;
         }
 
         public void AddProductionRecord(ProductionRecord record)
@@ -49,32 +65,6 @@ namespace loadingBox2dGui.models.ProductionRecord
             {
                 Logger.Warning(ex.Message);
                 Logger.Warning("Save Production Record To MariaDB Failed");
-            }
-        }
-
-        public int CreateDatabaseIfNotExists()
-        {
-            try
-            {
-                var temporaryString = "Server=127.0.0.1;Uid=root;pwd=clebrain511;";
-                using (MySqlConnection conn = new MySqlConnection(temporaryString))
-                {
-                    string query = $"CREATE DATABASE IF NOT EXISTS {_databaseName}";
-                    conn.Open();
-                    int changedRowNum = conn.Execute(query);
-                    LogHelper.Logger.Debug("Create Database Succeeded");
-                    return changedRowNum;
-                }
-            }
-            catch (InvalidOperationException invalidOpsException)
-            {
-                Logger.Error($"Database creation failed. The connection does not exist. Error: {invalidOpsException}");
-                return -2;
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Database creation failed. The connection is not open. Error: {ex}");
-                return -2;
             }
         }
 
