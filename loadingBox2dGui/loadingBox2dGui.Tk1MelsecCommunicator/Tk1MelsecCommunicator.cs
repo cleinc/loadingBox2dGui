@@ -21,7 +21,8 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
         private readonly string _heartbeatDeviceName;
         private readonly PlcDataType _heartbeatDeviceType;
         private readonly PlcDbInfo _heartbeatDbInfo;
-
+        private readonly Dictionary<string, int> _uniqueDeviceToByteIndexDict = new Dictionary<string, int>();
+        private readonly List<string> _uniqueDeviceList = new List<string>();
         private bool _disposedValue;
 
         private bool _visionUpdateSignal = false;
@@ -306,66 +307,50 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
 
         public override void MonitorPlc()
         {
-            List<string> deviceList = new List<string>();
-            int numberOfData = 0;
-            foreach (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox> monitorInfo in PlcMonitorInfos)
+            if (_uniqueDeviceToByteIndexDict.Count == 0)
             {
-                foreach (var dbInfo in monitorInfo.SignalDict.Values)
-                {
-                    if (monitorInfo.DeviceType == PlcDataType.DWORD)
-                    {
-                        numberOfData += 2;
-                        string deviceName = $"{monitorInfo.DeviceName}{dbInfo.Pos}";
-                        string deviceName2 = $"{monitorInfo.DeviceName}{dbInfo.Pos + 1}";
-
-                        deviceList.Add(deviceName);
-                        deviceList.Add(deviceName2);
-                    }
-                    else if (monitorInfo.DeviceType == PlcDataType.WORD)
-                    {
-                        ++numberOfData;
-                        string deviceName = $"{monitorInfo.DeviceName}{dbInfo.Pos}";
-
-                        deviceList.Add(deviceName);
-                    }
-                }
+                RegisterUniqueDeviceToByteReadIndexDict();
             }
 
-            (var ret, var resData) = _melsecPlc.ReadRandom2(deviceList);
+            (var ret, var resData) = _melsecPlc.ReadRandom2(_uniqueDeviceList);
             if (ret != 0)
             {
                 return;
             }
 
-            int idx = 0;
             foreach (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox> monitorInfo in PlcMonitorInfos)
             {
+                int readWordPos = -1;
                 if (monitorInfo.DeviceType == PlcDataType.DWORD)
                 {
                     foreach (var dbInfo in monitorInfo.SignalDict.Values)
                     {
-                        dbInfo.Byte0 = resData[idx];
-                        dbInfo.Byte1 = resData[idx + 1];
-                        dbInfo.Byte2 = resData[idx + 2];
-                        dbInfo.Byte3 = resData[idx + 3];
-                        idx += 4;
-                        if (monitorInfo.DataParseType == PlcDataType.BIT)
+                        if (readWordPos == dbInfo.Pos)
                         {
-                            break;
+                            continue;
                         }
+                        string deviceName = $"{monitorInfo.DeviceName}{dbInfo.Pos}";
+                        int byteStartIndex = _uniqueDeviceToByteIndexDict[deviceName];
+
+                        dbInfo.Byte0 = resData[byteStartIndex];
+                        dbInfo.Byte1 = resData[byteStartIndex + 1];
+                        dbInfo.Byte2 = resData[byteStartIndex + 2];
+                        dbInfo.Byte3 = resData[byteStartIndex + 3];
                     }
                 }
                 else if (monitorInfo.DeviceType == PlcDataType.WORD)
                 {
                     foreach (var dbInfo in monitorInfo.SignalDict.Values)
                     {
-                        dbInfo.Byte0 = resData[idx];
-                        dbInfo.Byte1 = resData[idx + 1];
-                        idx += 2;
-                        if (monitorInfo.DataParseType == PlcDataType.BIT)
+                        if (readWordPos == dbInfo.Pos)
                         {
-                            break;
+                            continue;
                         }
+                        string deviceName = $"{monitorInfo.DeviceName}{dbInfo.Pos}";
+                        int byteStartIndex = _uniqueDeviceToByteIndexDict[deviceName];
+
+                        dbInfo.Byte0 = resData[byteStartIndex];
+                        dbInfo.Byte1 = resData[byteStartIndex + 1];
                     }
                 }
             }
@@ -452,6 +437,40 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             //return oldCarSeq != CarSeq || oldCarType != CarType;
         }
 
+        private bool RegisterUniqueDeviceToByteReadIndexDict()
+        {
+            int idx = 0;
+            foreach (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox> monitorInfo in PlcMonitorInfos)
+            {
+                foreach (var dbInfo in monitorInfo.SignalDict.Values)
+                {
+                    if (monitorInfo.DeviceType == PlcDataType.DWORD)
+                    {
+                        string deviceName = $"{monitorInfo.DeviceName}{dbInfo.Pos}";
+                        string deviceName2 = $"{monitorInfo.DeviceName}{dbInfo.Pos + 1}";
+                        _uniqueDeviceList.Add(deviceName);
+                        _uniqueDeviceList.Add(deviceName2);
+
+                        if (!_uniqueDeviceToByteIndexDict.ContainsKey(deviceName))
+                        {
+                            _uniqueDeviceToByteIndexDict[deviceName] = idx;
+                            idx += 4;
+                        }
+                    }
+                    else if (monitorInfo.DeviceType == PlcDataType.WORD)
+                    {
+                        string deviceName = $"{monitorInfo.DeviceName}{dbInfo.Pos}";
+                        _uniqueDeviceList.Add(deviceName);
+                        if (!_uniqueDeviceToByteIndexDict.ContainsKey(deviceName))
+                        {
+                            _uniqueDeviceToByteIndexDict[deviceName] = idx;
+                            idx += 2;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
         protected override void Dispose(bool disposing)
         {
             if (!_disposedValue)
