@@ -15,7 +15,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -30,7 +29,6 @@ namespace loadingBox2dGui.presenters
         private Config _config;
         private OperationMode _mode;
         private PlcCommunicatorForLoadingBox _plcComm;
-        private PlcModel _plcModel;
         private LightCommunicatorForLoadingBox _lightComm;
         private CameraCommunicatorForLoadingBox _cameraComm;
         private readonly ICargoBox2DInspectionEngine _engine;
@@ -45,6 +43,7 @@ namespace loadingBox2dGui.presenters
         private int _currentCar;
         private string _bodyNumber;
         private string _sequenceNumber;
+        private RobotMaker _currentInstallRobotMaker;
         private readonly MasterDataManager _masterDataManager;
         public MainPresenter(IMainForm view, CargoBox2DSettingManagerPresenter cargoBox2DSettingManagerPresenter, 
             Config config, ICargoBox2DInspectionEngine engine, IProductionRecordRepository repository)
@@ -344,7 +343,7 @@ namespace loadingBox2dGui.presenters
                 await _plcComm.DisconnectAsync();
                 _plcComm.PlcDisconnected += PlcComm_PlcDisconnected;
             }
-            if (_cameraComm.IsConnected)
+            if (_cameraComm != null && _cameraComm.IsConnected)
             {
                 await Task.Run(() => _cameraComm.StopCamera());
             }
@@ -352,21 +351,13 @@ namespace loadingBox2dGui.presenters
 
         private async Task SetupManualMode()
         {
-            //_engine.SetEngineVerbosity(5,5);
-            var testPose = new RobotPose()
-            {
-                Tx = 0.03, 
-                Ty = 0.02, 
-                Rz = 0.01
-            };
-            await SendPlcShiftValueAsync(testPose, 1, 350);
             if (_plcComm != null)
             {
                 _plcComm.PlcDisconnected -= PlcComm_PlcDisconnected;
                 await _plcComm.DisconnectAsync();
                 _plcComm.PlcDisconnected += PlcComm_PlcDisconnected;
             }
-            if (_cameraComm.IsConnected)
+            if (_cameraComm != null && _cameraComm.IsConnected)
             {
                 await Task.Run(() => _cameraComm.StopCamera());
             }
@@ -381,7 +372,6 @@ namespace loadingBox2dGui.presenters
         private void View_DisconnectCameraRequested(object sender, EventArgs e)
         {
             _cameraComm.StopCamera();
-            //_pylonComm.DisConnectCamera();
         }
 
         private async void View_ScanPointRequested(object sender, EventArgs e)
@@ -392,13 +382,14 @@ namespace loadingBox2dGui.presenters
 
             if (_mode == OperationMode.Manual)
             {
-                UpdatePlcInspectionInfo(_currentCar, "MMMM", "MMMMMMMM");
+                UpdatePlcInspectionInfo("MMMM", "MMMMMMMM");
                 await _masterDataManager.InitializeMasterData();
                 if (await ScanPointAsync())
                 {
-                    var (calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, refHoleCount) = await CalculateShiftPointAsync();
+                    var (calculateSuccess, calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, refHoleCount) = await CalculateShiftPointAsync();
                     var (calculationValidated, modelValidated) = await ValidateCalculationAndModelPerformance(calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, refHoleCount);
-                    InspectionResult inspectionResult = calculationValidated && modelValidated ? InspectionResult.OK : InspectionResult.NG;
+                    InspectionResult inspectionResult = calculateSuccess && calculationValidated && modelValidated ? InspectionResult.OK : InspectionResult.NG;
+                    calculatedPose = FilterCalculatedPoseForWrite(calculatedPose);
                     await RegisterInspectionResult(inspectionResult, calculatedPose, true);
                     if (inspectionResult == InspectionResult.OK && await WriteRobotPoses(calculatedPose))
                     {
@@ -446,11 +437,7 @@ namespace loadingBox2dGui.presenters
                 _plcComm?.Dispose();
                 _lightComm?.Dispose();
 
-                //Process[] procs = Process.GetProcessesByName("ProductionRecordManager");
-                //if (procs.Length > 0)
-                //{
-                //    procs[0].Kill();
-                //}
+
                 Logger.Debug("Program Exited");
             }
             else
@@ -500,8 +487,8 @@ namespace loadingBox2dGui.presenters
 
                 ResetUi();
                 Logger.Info($"Given Cartype : {e.CarType} // seqnum : {e.SequenceNumber} // bodynum : {e.BodyNumber}");
-                UpdatePlcInspectionInfo(_currentCar, e.SequenceNumber, e.BodyNumber);
-                _lightComm.WriteLightState(true);
+                UpdatePlcInspectionInfo(e.SequenceNumber, e.BodyNumber);
+                _lightComm?.WriteLightState(true);
                 var currentCam = _config[-1].Camera;
                 await ConnectCameraAsync(currentCam);
                 await _masterDataManager.InitializeMasterData();
@@ -517,27 +504,28 @@ namespace loadingBox2dGui.presenters
             Logger.Info("Plc Start Received");
             try
             {
-                if (!await ScanPointAsync())
+                if (!await ScanPointAsync().ConfigureAwait(false))
                 {
                     Logger.Error($"Scan Point Failed");
                 }
 
-                await SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, true, 100, 10);
-
-                var (calculatedPose, minConfidenceScore, maxAbsSizeDiff, refHoleCount) = await CalculateShiftPointAsync();
-                Logger.Info($"Calculated Pose: {calculatedPose}");
+                await SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, true, 100, 10).ConfigureAwait(false);
+                var (calculateSuccess, calculatedPose, minConfidenceScore, maxAbsSizeDiff, refHoleCount) = await CalculateShiftPointAsync();
                 var (calculationValidated, modelValidated) = await ValidateCalculationAndModelPerformance(calculatedPose, minConfidenceScore, maxAbsSizeDiff, refHoleCount);
-                var sendShiftValueTask = SendPlcShiftValueAsync(calculatedPose, 1, 350);
+                calculatedPose = FilterCalculatedPoseForWrite(calculatedPose);
                 InspectionResult inspectionResult = InspectionResult.NONE;
-                if (calculationValidated && modelValidated && await WriteRobotPoses(calculatedPose))
+
+                if (calculateSuccess && calculationValidated && modelValidated && await WriteRobotPoses(calculatedPose))
                 {
                     await SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, true, 100, 10);
+                    await SendPlcShiftValueAsync(calculatedPose, 1, 350);
                     _view.DisplayVisionResult(VisionStatus.OK);
                     inspectionResult = InspectionResult.OK;
                 }
                 else
                 {
                     await SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_NG, true, 100, 10);
+                    await SendPlcShiftValueAsync(calculatedPose, 1, 350);
                     _view.DisplayVisionResult(VisionStatus.NG);
                     inspectionResult = InspectionResult.NG;
                 }
@@ -580,7 +568,7 @@ namespace loadingBox2dGui.presenters
         {
             if (_cameraComm == null || !await _cameraParameterAccessLock.WaitAsync(3000))
             {
-                Logger.Error($"Failed to Start Camera");
+                Logger.Warning($"Failed to start camera due to parameter lock timeout");
                 return false;
             }
 
@@ -608,7 +596,7 @@ namespace loadingBox2dGui.presenters
                 {
                     return false;
                 }
-                if (_cameraComm.IsConnected)
+                if (_cameraComm != null && _cameraComm.IsConnected)
                 {
                     _cameraComm.StopCamera();
                 }
@@ -641,7 +629,7 @@ namespace loadingBox2dGui.presenters
             }
         }
 
-        private void UpdatePlcInspectionInfo(int carType, string seqNum, string bodyNum)
+        private void UpdatePlcInspectionInfo(string seqNum, string bodyNum)
         {
             _bodyNumber = bodyNum ?? "EMPTYBDYNUM";
             _sequenceNumber = seqNum ?? "EPTY";
@@ -690,7 +678,6 @@ namespace loadingBox2dGui.presenters
                 return false;
             }
 
-            _plcModel = modelAttr.Model;
             _isPlcEventHandlersRegistered = false;
             return true;
         }
@@ -886,7 +873,7 @@ namespace loadingBox2dGui.presenters
                 {
                     throw new ArgumentOutOfRangeException(camBundleName);
                 }
-                if (!_cameraParameterDict.TryRemove(camBundleName, out var existingConfig))
+                if (!_cameraParameterDict.TryRemove(camBundleName, out var _))
                 {
                     Logger.Error($"Removing Camera Parameter Setting From Presenter Failed {camBundleName}");
                 }
@@ -943,7 +930,12 @@ namespace loadingBox2dGui.presenters
 
         private async Task SaveInspectionData(string rootPath, string uniformFilename, IImageProvider<InspectionLocation> imageProvider)
         {
-            var locImages = imageProvider.GetAllBitmaps();
+            var locImages = imageProvider?.GetAllBitmaps();
+            if (locImages == null)
+            {
+                Logger.Error($"Save Failed. Failed to Retrieve Image Data");
+                return;
+            }
             List<Task> saveImageTasks = new List<Task>();
             foreach (var locImg in locImages)
             {
@@ -967,7 +959,11 @@ namespace loadingBox2dGui.presenters
             try
             {
                 var locImgs = providerByLoc?.GetAllBitmaps();
-                Console.WriteLine($"Images, Count: {locImgs?.Length}");
+                if (locImgs == null)
+                {
+                    Logger.Error($"Failed to Retrieve Image Data");
+                    return;
+                }
                 foreach (var locImg in locImgs)
                 {
                     _view.SetInspectionImage(locImg.Item1, locImg.Item2?.Clone() as Image);
@@ -994,11 +990,12 @@ namespace loadingBox2dGui.presenters
                     Logger.Error($"Robot Not Supported");
                     return false;
                 }
+                _currentInstallRobotMaker = robotMaker;
             }
             return true;
         }
 
-        private Task<bool> ReadyRobotsAysnc()
+        private Task<bool> ReadyRobotsAsync()
         {
             return Task.Run(async () =>
             {
@@ -1012,12 +1009,12 @@ namespace loadingBox2dGui.presenters
                     {
                         ret = await _robotComm.DisconnectAsync();
                     }
-                    Logger.Info($"Install Robot Ready : {ret}\t Took {sw.Elapsed}");
+                    Logger.Debug($"Install Robot Communication Ready : {ret}\t Took {sw.Elapsed}");
                     return ret;
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error($"Ready Robot Failed. Error: {ex.Message}");
+                    Logger.Error($"Install Robot Communication Ready Failed. Error: {ex.Message}");
                     return false;
                 }
             });
@@ -1028,7 +1025,7 @@ namespace loadingBox2dGui.presenters
             Stopwatch sw = Stopwatch.StartNew();
             if (!await StartCameraAsync())
             {
-                Logger.Info($"Scanning Failed: Failed to Start Camera");
+                Logger.Info($"Scanning Failed: Failed to Start Camera due to camera setting lock timeout");
                 return false;
             }
 
@@ -1049,20 +1046,20 @@ namespace loadingBox2dGui.presenters
             return true;
         }
 
-        private async Task<(RobotPose, float, float, int)> CalculateShiftPointAsync()
+        private async Task<(bool, RobotPose, float, float, int)> CalculateShiftPointAsync()
         {
             if (!await InitializeTransformationMatrices())
             {
-                return (null, 0, 0, 0);
+                return (false, null, 0, 0, 0);
             }
 
             Stopwatch stopwatch = Stopwatch.StartNew();
-            ImageStruct[] structForShiftValueArray = _cameraComm.GetImageStructArray(_currentCar);
+            ImageStruct[] structForShiftValueArray = _cameraComm?.GetImageStructArray(_currentCar);
 
             if (structForShiftValueArray == null || structForShiftValueArray.Length != 2)
             {
                 Logger.Error($"Failed Getting Both LH and RH Images");
-                return (null, 0, 0, 0);
+                return (false, null, 0, 0, 0);
             }
 
             bool calculatePoseSuccess = false, modelValidated = false, calculationValidated = false;
@@ -1083,16 +1080,12 @@ namespace loadingBox2dGui.presenters
                 {
                     Logger.Info($"Computed Shift Value: Location: {imgStruct.CameraLocation}, Pose: {imgStruct.Shift6D}");
                 }
-                var calculatedPose = structForShiftValueArray[0].GetRobotPose();
-                calculatedPose.Tz = 0;
-                calculatedPose.Rx = 0;
-                calculatedPose.Ry = 0;
-                //calculatedPose.Rz = 0;
-                return (calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, maxRefHoleCount);
+                var calculatedPose = structForShiftValueArray[0].GetRobotPose(_currentInstallRobotMaker);
+                return (calculatePoseSuccess, calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, maxRefHoleCount);
             }
 
             Logger.Error($"Calculating Pose Success: {calculatePoseSuccess}. Model Validated: {modelValidated}. Calculation Validated: {calculationValidated}");
-            return (null, 0, 0, 0);
+            return (false, null, 0, 0, 0);
         }
         
         private bool ValidateCalculatedResult(CargoBox2DConfig modelConfig, RobotPose calculatedPose)
@@ -1157,9 +1150,25 @@ namespace loadingBox2dGui.presenters
             }
         }
 
+        private RobotPose FilterCalculatedPoseForWrite(RobotPose calculatedPose)
+        {
+            if (calculatedPose == null)
+            {
+                calculatedPose = new RobotPose();
+            }
+
+            Logger.Info($"Filtering Calculated Result For Robot Write: Calculated: {calculatedPose}");
+            calculatedPose.Rz = 0;
+            calculatedPose.Ry = 0;
+            calculatedPose.Rz = 0;
+            calculatedPose.Tz = 0;
+            Logger.Info($"Filtering Calculated Result For Robot Write: Filtered: {calculatedPose}");
+
+            return calculatedPose;
+        }
         private async Task<bool> WriteRobotPoses(params RobotPose[] posesToWrite)
         {
-            if (!await ReadyRobotsAysnc())
+            if (!await ReadyRobotsAsync())
             {
                 return false;
             }
@@ -1197,7 +1206,7 @@ namespace loadingBox2dGui.presenters
 
         public async Task<RobotPose[]> ReadRobotPoses(string[] readVariables)
         {
-            if (!await ReadyRobotsAysnc())
+            if (!await ReadyRobotsAsync())
             {
                 Logger.Error($"Read Variable Failed: Failed to Ready Robot");
                 return null;
@@ -1213,7 +1222,6 @@ namespace loadingBox2dGui.presenters
                 List<RobotPose> robotPoses = new List<RobotPose>();
                 foreach (string variable in readVariables)
                 {
-                    Console.WriteLine($"variable: {variable}");
                     RobotPose pose = await _robotComm.ReadRobotPoseAsync(variable);
                     if (pose == null)
                     {
@@ -1260,11 +1268,6 @@ namespace loadingBox2dGui.presenters
         {
             try
             {
-                if (calculatedPose == null)
-                {
-                    calculatedPose = new RobotPose();
-                }
-
                 int ret = await _plcComm.SendShiftValue(calculatedPose, nMaxTrials, checkDelay);
                 if (ret == 0)
                 {
@@ -1297,16 +1300,6 @@ namespace loadingBox2dGui.presenters
 
         private async Task RegisterInspectionResult(InspectionResult result, RobotPose computedResult, bool saveRecordOnDb = true)
         {
-            if (computedResult == null)
-            {
-                computedResult = new RobotPose() 
-                { 
-                    Tx = 0,
-                    Ty = 0,
-                    Rz = 0
-                };
-            }
-
             _view.SetCalculatedShiftPose(new double[] { computedResult.Tx, computedResult.Ty, computedResult.Rz });
             
             DateTime inspectionTime = DateTime.Now;

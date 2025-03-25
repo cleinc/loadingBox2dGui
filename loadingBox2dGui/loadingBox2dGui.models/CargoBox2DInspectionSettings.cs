@@ -1,13 +1,7 @@
 ﻿using CoPick.Robot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Numerics;
-using System.Threading.Tasks;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace loadingBox2dGui.models
 {
@@ -101,17 +95,27 @@ namespace loadingBox2dGui.models
             };
         }
 
-        public RobotPose GetRobotPose()
+        public RobotPose GetRobotPose(RobotMaker robotMaker = RobotMaker.YASKAWA)
         {
-            return new YaskawaRobotPose()
+            RobotPose robotPose;
+            switch (robotMaker)
             {
-                Tx = Shift6D.Tx,
-                Ty = Shift6D.Ty,
-                Tz = Shift6D.Tz,
-                Rx = Shift6D.Rx,
-                Ry = Shift6D.Ry,
-                Rz = Shift6D.Rz
-            };
+                case RobotMaker.YASKAWA:
+                    robotPose = new YaskawaRobotPose()
+                    {
+                        Tx = Shift6D.Tx,
+                        Ty = Shift6D.Ty,
+                        Tz = Shift6D.Tz,
+                        Rx = Shift6D.Rx,
+                        Ry = Shift6D.Ry,
+                        Rz = Shift6D.Rz
+                    };
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            return robotPose;
         }
     }
 
