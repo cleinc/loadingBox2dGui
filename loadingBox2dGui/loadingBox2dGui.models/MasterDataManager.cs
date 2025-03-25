@@ -190,7 +190,7 @@ namespace loadingBox2dGui.models
                 if (await Task.Run(() => _engine.InitializeMaster()))
                 {
                     _updateMasterDataRequested = false;
-                    Logger.Info($"Initializing Model Finished. Succeeded, Took {sw.Elapsed}");
+                    Logger.Info($"Initializing Master Settings Finished. Succeeded, Took {sw.Elapsed}");
                     return true;
                 }
                 else
@@ -230,12 +230,12 @@ namespace loadingBox2dGui.models
             {
                 if (!EqualTCP(readScanPoseTCP, masterScanPoseTCP))
                 {
-                    Logger.Warning($"Read Scan Pose is Different to Registered Master Scan Pose on Cartype: {carType}, Applying Read Robot Pose. Read Scan Pose: {masterScanPoseTCP}, Registered Pose: {readScanPoseTCP}");
+                    Logger.Warning($"Read Scan Pose is Different to Registered Master Scan Pose on Cartype: {carType}, Applying Read Robot Pose. Read Scan Pose: {readScanPoseTCP}, Registered Master Pose: {masterScanPoseTCP}");
                     masterScanPoseTCP = readScanPoseTCP;
                 }
                 if (!EqualTCP(readInstallPoseTCP, masterInstallPoseTCP))
                 {
-                    Logger.Warning($"Read Install Pose is Different to Registered Master Install Pose on Cartype: {carType}, Applying Read Robot Pose. Read Install Pose: {masterInstallPoseTCP}, Registered Pose: {readInstallPoseTCP}");
+                    Logger.Warning($"Read Install Pose is Different to Registered Master Install Pose on Cartype: {carType}, Applying Read Robot Pose. Read Install Pose: {readInstallPoseTCP}, Registered Master Pose: {masterInstallPoseTCP}");
                     masterInstallPoseTCP = readInstallPoseTCP;
                 }
             }

@@ -59,7 +59,7 @@ namespace loadingBox2dGui.models
         VISION_ERROR = 0x4000_4001,
     }
     /// <summary>
-    /// LH and RH Must be defined as 9, 10 for CargoBox2D Inspection Engine, 1 - 8 are used for BottomTouchup2D Project
+    /// These Enums are in sync with CargoBottomTouchup2D Engine: 1 - 8 allocated for BottomTouchup2D Project
     /// </summary>
     public enum InspectionLocation
     {
