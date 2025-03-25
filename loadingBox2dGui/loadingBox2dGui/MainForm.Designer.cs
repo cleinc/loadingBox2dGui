@@ -1337,15 +1337,12 @@ namespace loadingBox2dGui
             // 
             // dgvNgList
             // 
-            this.dgvNgList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvNgList.BackgroundColor = System.Drawing.Color.White;
             this.dgvNgList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvNgList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvNgList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvNgList.Location = new System.Drawing.Point(0, 0);
             this.dgvNgList.Name = "dgvNgList";
             this.dgvNgList.ReadOnly = true;
-            this.dgvNgList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvNgList.RowTemplate.Height = 23;
             this.dgvNgList.Size = new System.Drawing.Size(576, 216);
             this.dgvNgList.TabIndex = 1;

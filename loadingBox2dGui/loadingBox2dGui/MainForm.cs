@@ -290,14 +290,14 @@ namespace loadingBox2dGui
 
                 btnCameraConnect_.Enabled = mode != OperationMode.Auto;
                 btnScanPoint_.Enabled = mode != OperationMode.Auto;
-                gbRobotRead.Enabled = mode != OperationMode.Auto;
-
                 btnScanPoint_.Text = (mode == OperationMode.Set) ? "Save MasterImage" : "Scan Point";
+
                 btnUpdateMasterInstallPose_.Visible = mode == OperationMode.Set;
                 btnUpdateMasterScanPose_.Visible = mode == OperationMode.Set;
                 btnCaptureCheckerBoard_.Visible = mode == OperationMode.Set;
                 gbRobotWrite.Enabled = mode == OperationMode.Set;
                 
+                gbRobotRead.Visible = mode != OperationMode.Auto;
                 gbRobotReadComputed.Visible = mode == OperationMode.Set;
                 btnWriteShiftPose_.Visible = mode == OperationMode.Set;
                 tbShiftTx.ReadOnly = mode != OperationMode.Set;
@@ -412,7 +412,15 @@ namespace loadingBox2dGui
         {
             dgvNgList.BeginInvokeIfNeeded(() =>
             {
+                if (dgvNgList.DataSource is BindingSource oldSource)
+                {
+                    oldSource?.Dispose();
+                    dgvNgList.DataSource = null;
+                }
                 dgvNgList.DataSource = bindingSource;
+                dgvNgList.Columns["CarName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgvNgList.Columns["SequenceNumber"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgvNgList.Columns["ProductionDateTime"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             });
         }
         public void Init()
@@ -571,6 +579,9 @@ namespace loadingBox2dGui
             }
 
             dgvNgList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvNgList.Columns["CarName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dgvNgList.Columns["SequenceNumber"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dgvNgList.Columns["ProductionDateTime"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
             dgvNgList.Columns["Id"].Visible = false;
             dgvNgList.Columns["CarType"].Visible = false;
@@ -588,9 +599,6 @@ namespace loadingBox2dGui
             dgvNgList.Columns["SequenceNumber"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvNgList.Columns["ProductionDateTime"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             
-            dgvNgList.Columns["CarName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvNgList.Columns["SequenceNumber"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgvNgList.Columns["ProductionDateTime"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             
             dgvNgList.Columns["CarName"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvNgList.Columns["SequenceNumber"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
