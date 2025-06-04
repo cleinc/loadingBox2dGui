@@ -24,6 +24,5 @@ namespace loadingBox2dGui.models.ProductionRecord
         void AddProductionRecord(ProductionRecord record);
         string GetCarType(int carType);
         int CreateTableProductionRecordIfNotExistsForProductionRecord();
-        int CreateDatabaseIfNotExists();
     }
 }

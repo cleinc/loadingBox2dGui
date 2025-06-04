@@ -352,14 +352,6 @@ namespace loadingBox2dGui.presenters
 
         private async Task SetupManualMode()
         {
-            //_engine.SetEngineVerbosity(5,5);
-            var testPose = new RobotPose()
-            {
-                Tx = 0.03, 
-                Ty = 0.02, 
-                Rz = 0.01
-            };
-            await SendPlcShiftValueAsync(testPose, 1, 350);
             if (_plcComm != null)
             {
                 _plcComm.PlcDisconnected -= PlcComm_PlcDisconnected;
@@ -1087,7 +1079,7 @@ namespace loadingBox2dGui.presenters
                 calculatedPose.Tz = 0;
                 calculatedPose.Rx = 0;
                 calculatedPose.Ry = 0;
-                //calculatedPose.Rz = 0;
+                calculatedPose.Rz = 0;
                 return (calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, maxRefHoleCount);
             }
 
