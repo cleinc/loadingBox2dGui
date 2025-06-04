@@ -26,6 +26,7 @@ namespace loadingBox2dGui.views
         bool SetLightState { set; }
         bool SetStartCameraButton { set; }
         bool SetConnectCameraButton { set; }
+        bool OnManualPass { get; }
         #endregion
 
         #region Event Handlers

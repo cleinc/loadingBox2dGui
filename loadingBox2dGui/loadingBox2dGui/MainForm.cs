@@ -140,6 +140,17 @@ namespace loadingBox2dGui
             }
         }
 
+        public bool OnManualPass
+        {
+            get
+            {
+                return tgSetPass_.InvokeIfNeeded(() =>
+                {
+                    return tgSetPass_.Checked;
+                });
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -412,6 +423,11 @@ namespace loadingBox2dGui
         {
             dgvNgList.BeginInvokeIfNeeded(() =>
             {
+                if(dgvNgList.DataSource is BindingSource oldsSource)
+                {
+                    oldsSource?.Dispose();
+                    dgvNgList.DataSource = null;
+                }
                 dgvNgList.DataSource = bindingSource;
             });
         }
@@ -626,6 +642,11 @@ namespace loadingBox2dGui
         private void btnCaptureCheckerBoard__Click(object sender, EventArgs e)
         {
             CaptureCheckerboardRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void tgSetPass__CheckedChanged(object sender, EventArgs e)
+        {
+            Logger.Info($"Manual Pass Changed: Set to : {tgSetPass_.Checked}");
         }
     }
 }

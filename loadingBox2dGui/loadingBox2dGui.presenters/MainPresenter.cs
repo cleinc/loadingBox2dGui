@@ -390,9 +390,10 @@ namespace loadingBox2dGui.presenters
                 {
                     var (calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, refHoleCount) = await CalculateShiftPointAsync();
                     var (calculationValidated, modelValidated) = await ValidateCalculationAndModelPerformance(calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, refHoleCount);
+                    var filteredResult = FilterCalculatedResult(calculatedPose);
                     InspectionResult inspectionResult = calculationValidated && modelValidated ? InspectionResult.OK : InspectionResult.NG;
-                    await RegisterInspectionResult(inspectionResult, calculatedPose, true);
-                    if (inspectionResult == InspectionResult.OK && await WriteRobotPoses(calculatedPose))
+                    await RegisterInspectionResult(inspectionResult, filteredResult, true);
+                    if (inspectionResult == InspectionResult.OK && await WriteRobotPoses(filteredResult))
                     {
                         _view.DisplayVisionResult(VisionStatus.OK);
                     }
@@ -517,11 +518,19 @@ namespace loadingBox2dGui.presenters
                 await SendPlcStatusAsync(PlcSignalForLoadingBox.P1_COMPLETED, true, 100, 10);
 
                 var (calculatedPose, minConfidenceScore, maxAbsSizeDiff, refHoleCount) = await CalculateShiftPointAsync();
-                Logger.Info($"Calculated Pose: {calculatedPose}");
                 var (calculationValidated, modelValidated) = await ValidateCalculationAndModelPerformance(calculatedPose, minConfidenceScore, maxAbsSizeDiff, refHoleCount);
-                var sendShiftValueTask = SendPlcShiftValueAsync(calculatedPose, 1, 350);
+                var filteredResult = FilterCalculatedResult(calculatedPose);
+                var sendShiftValueTask = SendPlcShiftValueAsync(filteredResult, 1, 350);
                 InspectionResult inspectionResult = InspectionResult.NONE;
-                if (calculationValidated && modelValidated && await WriteRobotPoses(calculatedPose))
+                if (_plcComm.VisionPass || _view.OnManualPass)
+                {
+                    Logger.Info($"Current On Vision Pass: {_plcComm.VisionPass}. Manual Pass: {_view.OnManualPass}");
+                    await WriteRobotPoses(filteredResult);
+                    await SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, true, 100, 10);
+                    _view.DisplayVisionResult(VisionStatus.OK);
+                    inspectionResult = InspectionResult.OK;
+                }
+                else if ((calculationValidated && modelValidated && await WriteRobotPoses(filteredResult)))
                 {
                     await SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, true, 100, 10);
                     _view.DisplayVisionResult(VisionStatus.OK);
@@ -534,7 +543,7 @@ namespace loadingBox2dGui.presenters
                     inspectionResult = InspectionResult.NG;
                 }
 
-                await RegisterInspectionResult(inspectionResult, calculatedPose);
+                await RegisterInspectionResult(inspectionResult, filteredResult);
             }
             catch (Exception ex)
             {
@@ -1076,10 +1085,6 @@ namespace loadingBox2dGui.presenters
                     Logger.Info($"Computed Shift Value: Location: {imgStruct.CameraLocation}, Pose: {imgStruct.Shift6D}");
                 }
                 var calculatedPose = structForShiftValueArray[0].GetRobotPose();
-                calculatedPose.Tz = 0;
-                calculatedPose.Rx = 0;
-                calculatedPose.Ry = 0;
-                calculatedPose.Rz = 0;
                 return (calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, maxRefHoleCount);
             }
 
@@ -1087,6 +1092,34 @@ namespace loadingBox2dGui.presenters
             return (null, 0, 0, 0);
         }
         
+        private RobotPose FilterCalculatedResult(RobotPose calculatedResult)
+        {
+            Logger.Info($"Filtering Calculated Robot Pose. Calculated: {calculatedResult}");
+            if (calculatedResult == null || (_plcComm != null && _plcComm.VisionPass) || _view.OnManualPass)
+            {
+                calculatedResult = new RobotPose();
+            }
+
+            RobotPose filteredResult;
+            var robotMaker = _config.RobotConfigs[_config[-1].Robot][RobotAttribute.Maker].ToEnum<RobotMaker>();
+            switch(robotMaker)
+            {
+                case RobotMaker.YASKAWA: 
+                    filteredResult = new YaskawaRobotPose();
+                    break;
+                default:
+                    Logger.Warning($"Invalid Robot Type. Entered Type: {robotMaker}");
+                    filteredResult = new RobotPose();
+                    break;
+            }
+
+            filteredResult.Tx = calculatedResult.Tx;
+            filteredResult.Ty = calculatedResult.Ty;
+
+            Logger.Info($"Filtering Calculated Robot Pose. Filtered: {filteredResult}");
+            return filteredResult;
+        }
+
         private bool ValidateCalculatedResult(CargoBox2DConfig modelConfig, RobotPose calculatedPose)
         {
             if (calculatedPose is null)

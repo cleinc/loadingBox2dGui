@@ -139,6 +139,7 @@ namespace loadingBox2dGui
             this.btnSettingManage_ = new MaterialSkin.Controls.MaterialButton();
             this.label22 = new MaterialSkin.Controls.MaterialLabel();
             this.btnCaptureCheckerBoard_ = new MaterialSkin.Controls.MaterialButton();
+            this.tgSetPass_ = new MaterialSkin.Controls.MaterialSwitch();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -2064,6 +2065,7 @@ namespace loadingBox2dGui
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.White;
+            this.splitContainer1.Panel1.Controls.Add(this.tgSetPass_);
             this.splitContainer1.Panel1.Controls.Add(this.materialCard5);
             this.splitContainer1.Panel1.Controls.Add(this.gbCarSeqNumber_);
             this.splitContainer1.Panel1.Controls.Add(this.btnSettingManage_);
@@ -2234,6 +2236,23 @@ namespace loadingBox2dGui
             this.btnCaptureCheckerBoard_.UseVisualStyleBackColor = false;
             this.btnCaptureCheckerBoard_.Visible = false;
             this.btnCaptureCheckerBoard_.Click += new System.EventHandler(this.btnCaptureCheckerBoard__Click);
+            // tgSetPass_
+            // 
+            this.tgSetPass_.AutoSize = true;
+            this.tgSetPass_.BackColor = System.Drawing.Color.Transparent;
+            this.tgSetPass_.Depth = 0;
+            this.tgSetPass_.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.tgSetPass_.Location = new System.Drawing.Point(1400, 18);
+            this.tgSetPass_.Margin = new System.Windows.Forms.Padding(0);
+            this.tgSetPass_.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.tgSetPass_.MouseState = MaterialSkin.MouseState.HOVER;
+            this.tgSetPass_.Name = "tgSetPass_";
+            this.tgSetPass_.Ripple = true;
+            this.tgSetPass_.Size = new System.Drawing.Size(99, 37);
+            this.tgSetPass_.TabIndex = 160;
+            this.tgSetPass_.Text = "PASS";
+            this.tgSetPass_.UseVisualStyleBackColor = false;
+            this.tgSetPass_.CheckedChanged += new System.EventHandler(this.tgSetPass__CheckedChanged);
             // 
             // MainForm
             // 
@@ -2289,6 +2308,7 @@ namespace loadingBox2dGui
             this.gbPLC.PerformLayout();
             this.gbCarType.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -2408,6 +2428,7 @@ namespace loadingBox2dGui
         private MaterialSkin.Controls.MaterialButton btnUpdateMasterScanPose_;
         private MaterialSkin.Controls.MaterialButton btnUpdateMasterInstallPose_;
         private MaterialSkin.Controls.MaterialButton btnCaptureCheckerBoard_;
+        private MaterialSkin.Controls.MaterialSwitch tgSetPass_;
     }
 }
 
