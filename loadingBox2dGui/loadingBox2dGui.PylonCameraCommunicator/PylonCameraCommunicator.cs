@@ -701,8 +701,11 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                 {
                     bmp.Dispose();
                 }
+
                 _locToBmp[location] = null;
+                _locToBmp.Remove(location);
             }
+
             if(_locToCamera.TryRemove(location, out _))
             {
                 Logger.Info($"Remove Camera Success at Location: {location}");
@@ -717,19 +720,38 @@ namespace loadingBox2dGui.PylonCameraCommunicator
 
         public override bool ClearBmpData()
         {
-            if (_bmpToBmpData == null || _bmpToBmpData.Count == 0)
+            if (_bmpToBmpData == null || _bmpToBmpData.Count == 0 ||
+                _locToBmp == null || _locToBmp.Count == 0)
             {
                 return false;
             }
 
-            foreach (var kvp in _bmpToBmpData)
+            try
             {
-                kvp.Key.UnlockBits(kvp.Value);
-                kvp.Key.Dispose();
+                foreach (var bmp in _locToBmp.Values)
+                {
+                    if (_bmpToBmpData.TryGetValue(bmp, out var bmpData))
+                    {
+                        bmp.UnlockBits(bmpData);
+                        bmp.Dispose();
+                        _bmpToBmpData.Remove(bmp);
+                    }
+                    else
+                    {
+                        bmp.Dispose();
+                    }
+                }
+
+                _locToBmp.Clear();
+                _bmpToBmpData.Clear();
+                Logger.Info($"BitmapData Cleared");
+                return true;
             }
-            _bmpToBmpData.Clear();
-            Logger.Info($"BitmapData Cleared");
-            return true;
+            catch (Exception ex)
+            {
+                Logger.Error($"Bitmap Clear Failed: Error: {ex}");
+                return false;
+            }
         }
 
         #endregion
