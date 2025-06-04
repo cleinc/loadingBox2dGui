@@ -142,7 +142,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                 },
 
                 // [6] ShiftValues
-                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5101", 4, PlcDataType.DWORD, PlcDataType.FLOAT)
+                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5101", 6, PlcDataType.DWORD, PlcDataType.FLOAT)
                 {
                     SignalDict = new ConcurrentDictionary<PlcSignalForLoadingBox, PlcDbInfo>()
                     {
@@ -307,14 +307,22 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
 
         public override void MonitorPlc()
         {
-            // MakeDeviceList
             List<string> deviceList = new List<string>();
             int numberOfData = 0;
             foreach (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox> monitorInfo in PlcMonitorInfos)
             {
                 if (monitorInfo.DataParseType == PlcDataType.FLOAT)
                 {
-                    // TODO
+                    (var retF, var resDataF) = _melsecPlc.ReadDeviceBlockF(monitorInfo.DeviceName,
+                                                                                 monitorInfo.StartPos,
+                                                                                 monitorInfo.NumberOfData);
+                    if (retF != 0) continue;
+
+                    foreach(var dbInfo in monitorInfo.SignalDict.Values)
+                    {
+                        int idxF = (dbInfo.Pos - int.Parse(monitorInfo.StartPos)) / 2;
+                        dbInfo.FloatValue = resDataF[idxF];
+                    }
                 }
                 else
                 {
