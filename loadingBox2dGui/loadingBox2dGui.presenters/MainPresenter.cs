@@ -1027,11 +1027,20 @@ namespace loadingBox2dGui.presenters
         private async Task<bool> ScanPointAsync(bool saveAsMaster = false, DataType dataType = DataType.MasterImage)
         {
             Stopwatch sw = Stopwatch.StartNew();
-            if (!await StartCameraAsync())
+            try
             {
-                Logger.Error($"Scanning Failed: Failed to Start Camera");
+                if (!await StartCameraAsync())
+                {
+                    Logger.Error($"Scanning Failed: Failed to Start Camera");
+                    return false;
+                }
+            }
+            catch(Exception ex)
+            {
+                Logger.Error($"Scan Point Complete. Error: {ex}");
                 return false;
             }
+            
 
             UpdateUiByInspection(_cameraComm);
 
