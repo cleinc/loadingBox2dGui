@@ -934,7 +934,7 @@ namespace loadingBox2dGui.presenters
                     Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
                 }
                 bitmap.Save(fullPath, ImageFormat.Png);
-                Logger.Info($"SaveComplete, ID: {location} on path {fullPath}");
+                Logger.Debug($"SaveComplete, ID: {location} on path {fullPath}");
             }
             catch (Exception ex)
             {
@@ -1013,7 +1013,7 @@ namespace loadingBox2dGui.presenters
                     {
                         ret = await _robotComm.DisconnectAsync();
                     }
-                    Logger.Info($"Install Robot Ready : {ret}\t Took {sw.Elapsed}");
+                    Logger.Debug($"Install Robot Ready : {ret}\t Took {sw.Elapsed}");
                     return ret;
                 }
                 catch (Exception ex)
@@ -1029,7 +1029,7 @@ namespace loadingBox2dGui.presenters
             Stopwatch sw = Stopwatch.StartNew();
             if (!await StartCameraAsync())
             {
-                Logger.Info($"Scanning Failed: Failed to Start Camera");
+                Logger.Error($"Scanning Failed: Failed to Start Camera");
                 return false;
             }
 
@@ -1046,7 +1046,7 @@ namespace loadingBox2dGui.presenters
                     Logger.Error($"Saving Master Data Failed: Error: {ex}");
                 }
             }
-            Logger.Info($"Scan Pose Complete: SaveMaster: {saveAsMaster}, Took: {sw.Elapsed}");
+            Logger.Debug($"Scan Pose Complete: SaveMaster: {saveAsMaster}, Took: {sw.ElapsedMilliseconds} ms");
             return true;
         }
 
@@ -1076,7 +1076,7 @@ namespace loadingBox2dGui.presenters
                 (structForShiftValueArray, structForShiftValueArray.Count(), 
                 out minConfidenceScore, out maxMasterToSrcSizeRatioDiff, out maxRefHoleCount);
             });
-            Logger.Info($"Calculate Shift Value Complete, Took {stopwatch.Elapsed}");
+            Logger.Debug($"Calculate Shift Value Complete, Took : {stopwatch.ElapsedMilliseconds} ms");
 
             if (calculatePoseSuccess)
             {
@@ -1101,7 +1101,7 @@ namespace loadingBox2dGui.presenters
             }
 
             RobotPose filteredResult;
-            var robotMaker = _config.RobotConfigs[_config[-1].Robot][RobotAttribute.Maker].ToEnum<RobotMaker>();
+            var robotMaker = _config.RobotConfigs[_config[_currentCar].Robot][RobotAttribute.Maker].ToEnum<RobotMaker>();
             switch(robotMaker)
             {
                 case RobotMaker.YASKAWA: 
@@ -1248,7 +1248,7 @@ namespace loadingBox2dGui.presenters
                     robotPoses.Add(pose);
                 }
                 
-                Logger.Info($"Read Poses complete. Took : {sw.Elapsed}");
+                Logger.Debug($"Read Poses complete. Took : {sw.ElapsedMilliseconds} ms");
                 return robotPoses.ToArray();
             }
             catch (Exception ex)
