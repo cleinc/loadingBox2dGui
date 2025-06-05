@@ -185,20 +185,24 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                                                   (float)shiftValue.Ry,
                                                   (float)shiftValue.Rz };
 
-            var deviceInfoForShiftValue = (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>) PlcMonitorInfos[6];;
+            var deviceInfoForShiftValue = (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>) PlcMonitorInfos[6];
             int ret = 0;
             for (var i = 0; i < nMaxTrials; ++i)
             {
                 Logger.Debug($"SendShiftValue trial {i + 1} / {nMaxTrials}");
                 ret = SetFloat("D", deviceInfoForShiftValue.StartPos, writeFloatBuf);
 
-                await Task.Delay(delayForCheck);
-                var shiftValPlcDbInfoList = deviceInfoForShiftValue.SignalDict.Values.ToArray();
-                if (Enumerable.Range(0, 6).All(n => shiftValPlcDbInfoList[n].FloatValue - writeFloatBuf[n] < 0.01))
+                if (ret == 0)
                 {
-                    Logger.Info($"MelsecPlcWritingShiftValueDone");
                     return 0;
                 }
+                //await Task.Delay(delayForCheck);
+                //var shiftValPlcDbInfoList = deviceInfoForShiftValue.SignalDict.Values.ToArray();
+                //if (Enumerable.Range(0, 6).All(n => shiftValPlcDbInfoList[n].FloatValue - writeFloatBuf[n] < 0.01))
+                //{
+                //    Logger.Info($"MelsecPlcWritingShiftValueDone");
+                //    return 0;
+                //}
             }
 
             Logger.Warning($"MelsecPlcWritingShiftValueFailed {ret})");
@@ -313,16 +317,16 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             {
                 if (monitorInfo.DataParseType == PlcDataType.FLOAT)
                 {
-                    (var retF, var resDataF) = _melsecPlc.ReadDeviceBlockF(monitorInfo.DeviceName,
-                                                                                 monitorInfo.StartPos,
-                                                                                 monitorInfo.NumberOfData);
-                    if (retF != 0) continue;
+                    //(var retF, var resDataF) = _melsecPlc.ReadDeviceBlockF(monitorInfo.DeviceName,
+                    //                                                             monitorInfo.StartPos,
+                    //                                                             monitorInfo.NumberOfData);
+                    //if (retF != 0) continue;
 
-                    foreach(var dbInfo in monitorInfo.SignalDict.Values)
-                    {
-                        int idxF = (dbInfo.Pos - int.Parse(monitorInfo.StartPos)) / 2;
-                        dbInfo.FloatValue = resDataF[idxF];
-                    }
+                    //foreach(var dbInfo in monitorInfo.SignalDict.Values)
+                    //{
+                    //    int idxF = (dbInfo.Pos - int.Parse(monitorInfo.StartPos)) / 2;
+                    //    dbInfo.FloatValue = resDataF[idxF];
+                    //}
                 }
                 else
                 {
