@@ -31,6 +31,8 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
 
         private bool _isConnected;
         private bool _isConnecting;
+
+        private List<string> _readDeviceList = new List<string>();
         public override bool IsConnecting
         {
             get => _isConnecting;
@@ -65,6 +67,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
 
                 _melsecPlc.PlcError += (s, e) => Disconnect();
                 LoadPlcSignalDict();
+                LoadReadRandom2DeviceSet();
             }
             catch (Exception ex)
             {
@@ -155,6 +158,34 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                     }
                 },
             };
+        }
+
+        private void LoadReadRandom2DeviceSet()
+        {
+            if (PlcMonitorInfos.Count() < 1)
+            {
+                throw new InvalidOperationException("PlcMonitorInfos is empty. Please load PlcMonitorInfos first.");
+            }
+
+            foreach (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox> monitorInfo in PlcMonitorInfos)
+            {
+                foreach (var dbInfo in monitorInfo.SignalDict.Values)
+                {
+                    if (monitorInfo.DeviceType == PlcDataType.DWORD)
+                    {
+                        string readDeviceName = $"{monitorInfo.DeviceName}{dbInfo.Pos}";
+                        _readDeviceList.Add(readDeviceName);
+
+                        string readDeviceName2 = $"{monitorInfo.DeviceName}{dbInfo.Pos + 1}";
+                        _readDeviceList.Add(readDeviceName2);
+                    }
+                    else
+                    {
+                        string readDeviceName = $"{monitorInfo.DeviceName}{dbInfo.Pos}";
+                        _readDeviceList.Add(readDeviceName);
+                    }
+                }
+            }
         }
 
         public override async Task<int> SendPlcStatusAsync(PlcSignalForLoadingBox status, bool val, int nMaxTrials, int delay)
@@ -308,7 +339,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
         {
             return Task.Run(() => SendHeartbeat());
         }
-
+        /* Monitor Plc with ReadRandom and ReadDeviceBlockF
         public override void MonitorPlc()
         {
             List<string> deviceList = new List<string>();
@@ -317,16 +348,16 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             {
                 if (monitorInfo.DataParseType == PlcDataType.FLOAT)
                 {
-                    //(var retF, var resDataF) = _melsecPlc.ReadDeviceBlockF(monitorInfo.DeviceName,
-                    //                                                             monitorInfo.StartPos,
-                    //                                                             monitorInfo.NumberOfData);
-                    //if (retF != 0) continue;
+                    (var retF, var resDataF) = _melsecPlc.ReadDeviceBlockF(monitorInfo.DeviceName,
+                                                                                 monitorInfo.StartPos,
+                                                                                 monitorInfo.NumberOfData);
+                    if (retF != 0) continue;
 
-                    //foreach(var dbInfo in monitorInfo.SignalDict.Values)
-                    //{
-                    //    int idxF = (dbInfo.Pos - int.Parse(monitorInfo.StartPos)) / 2;
-                    //    dbInfo.FloatValue = resDataF[idxF];
-                    //}
+                    foreach (var dbInfo in monitorInfo.SignalDict.Values)
+                    {
+                        int idxF = (dbInfo.Pos - int.Parse(monitorInfo.StartPos)) / 2;
+                        dbInfo.FloatValue = resDataF[idxF];
+                    }
                 }
                 else
                 {
@@ -386,6 +417,46 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                             dbInfo.Int32Value = resData[idx];
                         }
                         ++idx;
+                    }
+                }
+            }
+            Task.Run(() =>
+            {
+                PlcReceived?.Invoke(this, EventArgs.Empty);
+            });
+            return;
+        }
+        */
+
+        public override void MonitorPlc()
+        {
+            (var ret, var resData) = _melsecPlc.ReadRandom2(_readDeviceList);
+            if (ret != 0)
+            {
+                return;
+            }
+
+            int idx = 0;
+            foreach (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox> monitorInfo in PlcMonitorInfos)
+            {
+                if (monitorInfo.DeviceType == PlcDataType.DWORD)
+                {
+                    foreach (var dbInfo in monitorInfo.SignalDict.Values)
+                    {
+                        dbInfo.Byte0 = resData[idx];
+                        dbInfo.Byte1 = resData[idx + 1];
+                        dbInfo.Byte2 = resData[idx + 2];
+                        dbInfo.Byte3 = resData[idx + 3];
+                        idx += 4;
+                    }
+                }
+                else
+                {
+                    foreach (var dbInfo in monitorInfo.SignalDict.Values)
+                    {
+                        dbInfo.Byte0 = resData[idx];
+                        dbInfo.Byte1 = resData[idx + 1];
+                        idx += 2;
                     }
                 }
             }

@@ -183,6 +183,7 @@ namespace loadingBox2dGui.models
                         }
 
                         RaiseEventIfItNeeds();
+                        Logger.Debug($"Lang.MSGPlc.MonitorPlcLoop on ReadRandom2 Total Elapsed: {stopwatch.ElapsedMilliseconds} ms");
                     }
                     catch (Exception ex)
                     {
