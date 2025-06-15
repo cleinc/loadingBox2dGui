@@ -390,7 +390,7 @@ namespace loadingBox2dGui.presenters
                 {
                     var (calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, refHoleCount) = await CalculateShiftPointAsync();
                     var (calculationValidated, modelValidated) = await ValidateCalculationAndModelPerformance(calculatedPose, minConfidenceScore, maxMasterToSrcSizeRatioDiff, refHoleCount);
-                    var filteredResult = FilterCalculatedResult(calculatedPose);
+                    var filteredResult = FilterCalculatedResult(calculatedPose, calculationValidated, modelValidated);
                     InspectionResult inspectionResult = calculationValidated && modelValidated ? InspectionResult.OK : InspectionResult.NG;
                     await RegisterInspectionResult(inspectionResult, filteredResult, true);
                     if (inspectionResult == InspectionResult.OK && await WriteRobotPoses(filteredResult))
@@ -492,7 +492,7 @@ namespace loadingBox2dGui.presenters
                 }
 
                 ResetUi();
-                Logger.Info($"Given Cartype : {e.CarType} // seqnum : {e.SequenceNumber} // bodynum : {e.BodyNumber}");
+                Logger.Info($"dGiven Cartype : {e.CarType} // seqnum : {e.SequenceNumber} // bodynum : {e.BodyNumber}");
                 UpdatePlcInspectionInfo(_currentCar, e.SequenceNumber, e.BodyNumber);
                 _lightComm.WriteLightState(true);
                 var currentCam = _config[-1].Camera;
@@ -519,18 +519,18 @@ namespace loadingBox2dGui.presenters
 
                 var (calculatedPose, minConfidenceScore, maxAbsSizeDiff, refHoleCount) = await CalculateShiftPointAsync();
                 var (calculationValidated, modelValidated) = await ValidateCalculationAndModelPerformance(calculatedPose, minConfidenceScore, maxAbsSizeDiff, refHoleCount);
-                var filteredResult = FilterCalculatedResult(calculatedPose);
-                var sendShiftValueTask = SendPlcShiftValueAsync(filteredResult, 1, 350);
+                var filteredResult = FilterCalculatedResult(calculatedPose, calculationValidated, modelValidated);
+                _ = SendPlcShiftValueAsync(filteredResult, 1, 350);
+                bool writeRobotSuccess = await WriteRobotPoses(filteredResult);
                 InspectionResult inspectionResult = InspectionResult.NONE;
                 if (_plcComm.VisionPass || _view.OnManualPass)
                 {
                     Logger.Info($"Current On Vision Pass: {_plcComm.VisionPass}. Manual Pass: {_view.OnManualPass}");
-                    await WriteRobotPoses(filteredResult);
                     await SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, true, 100, 10);
                     _view.DisplayVisionResult(VisionStatus.OK);
                     inspectionResult = InspectionResult.OK;
                 }
-                else if ((calculationValidated && modelValidated && await WriteRobotPoses(filteredResult)))
+                else if ((calculationValidated && modelValidated && writeRobotSuccess))
                 {
                     await SendPlcStatusAsync(PlcSignalForLoadingBox.VISION_OK, true, 100, 10);
                     _view.DisplayVisionResult(VisionStatus.OK);
@@ -1101,10 +1101,11 @@ namespace loadingBox2dGui.presenters
             return (null, 0, 0, 0);
         }
         
-        private RobotPose FilterCalculatedResult(RobotPose calculatedResult)
+        private RobotPose FilterCalculatedResult(RobotPose calculatedResult, bool calculationValidated, bool modelResultValidated)
         {
             Logger.Info($"Filtering Calculated Robot Pose. Calculated: {calculatedResult}");
-            if (calculatedResult == null || (_plcComm != null && _plcComm.VisionPass) || _view.OnManualPass)
+            if (calculatedResult == null || (_plcComm != null && _plcComm.VisionPass) || _view.OnManualPass
+                ||!calculationValidated || !modelResultValidated)
             {
                 calculatedResult = new RobotPose();
             }
