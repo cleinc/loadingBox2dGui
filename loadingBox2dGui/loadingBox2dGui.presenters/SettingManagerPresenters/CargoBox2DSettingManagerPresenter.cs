@@ -256,8 +256,8 @@ namespace loadingBox2dGui.presenters
         {
             if (ChangeTracker.IsSettingModified)
             {
-                bool isOk = _view.ConfirmUserChoice($"Lang.MsgBoxFineLo.WantSaveSettings",
-                                                    $"Lang.MsgBoxFineLo.SettingManagerTitle");
+                bool isOk = _view.ConfirmUserChoice($"Want to save changed settings?",
+                                                    $"Cargo2D Setting Manager");
                 if (isOk)
                 {
                     if (_logManagerScheduler.IsUsing && GetLogFullPath() != _logManagerScheduler.LogPath)
