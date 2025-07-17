@@ -492,7 +492,7 @@ namespace loadingBox2dGui.presenters
                 }
 
                 ResetUi();
-                Logger.Info($"dGiven Cartype : {e.CarType} // seqnum : {e.SequenceNumber} // bodynum : {e.BodyNumber}");
+                Logger.Info($"Given Cartype : {e.CarType} // seqnum : {e.SequenceNumber} // bodynum : {e.BodyNumber}");
                 UpdatePlcInspectionInfo(_currentCar, e.SequenceNumber, e.BodyNumber);
                 _lightComm.WriteLightState(true);
                 var currentCam = _config[-1].Camera;
