@@ -31,6 +31,11 @@ namespace loadingBox2dGui.PylonCameraCommunicator
         private ConcurrentDictionary<InspectionLocation, Camera> _locToCamera;
         private bool _isConnected = false;
         private static readonly int reconnectTimeoutMs = 15000;
+        private const long PacketSize = 9000;
+        private const long InterPacketDelayNS = 90_000;
+        private const long FrameTransmissionDelay = 150_000;   
+        private const long DeviceThroughputBps = 950_000_000;
+        private int _cameraCount = 0;
         public override bool IsConnected => _isConnected;
 
         public PylonCameraCommunicator()
@@ -56,6 +61,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             Logger.Info($"Connecting PylonCommunicator");
             try
             {
+                _cameraCount = 0;
                 _ipToLoc = new Dictionary<string, InspectionLocation>();
                 _locToBmp = new Dictionary<InspectionLocation, Bitmap>();
                 _bmpToBmpData = new Dictionary<Bitmap, BitmapData>();
@@ -120,10 +126,10 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                     {
                         return;
                     }
-
+                    _cameraCount += 1;
                     Camera camera = new Camera(camDevice);
                     camera.ConnectionLost += (sender, e) => OnConnectionLostAsync(camera, location, ipAddress);
-                    bool ret = OpenCamera(camera, location, ipAddress, 5000);
+                    bool ret = OpenCamera(camera, location, ipAddress, _cameraCount, 5000);
                     if (ret)
                     {
                         Logger.Info($"Camera on {location}, IP : {ipAddress} Added");
@@ -131,6 +137,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                     }
                     else
                     {
+                        _cameraCount -= 1;
                         camera.ConnectionLost -= (sender, e) => OnConnectionLostAsync(camera, location, ipAddress);
                     }
                 }
@@ -145,10 +152,11 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             }
         }
 
-        private static bool OpenCamera(Camera camera, InspectionLocation location, string ipAddress, int timeOut = 750)
+        private static bool OpenCamera(Camera camera, InspectionLocation location, string ipAddress, int camCount, int timeOut = 750)
         {
             try
-            {
+            
+                {
                 bool ret = camera.Open(timeOut, TimeoutHandling.ThrowException);
                 if (!ret)
                 {
@@ -160,7 +168,10 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             catch (Exception ex)
             {
                 Logger.Info($"Opening Cam Failed with Exception: Location {location}, IP: {ipAddress} Error: {ex}");
+                return false;
             }
+
+
             #region Read Current Camera Parameters
             Console.WriteLine("Camera Parameter Limits:");
             Console.WriteLine("========================");
@@ -212,6 +223,27 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             else
             {
                 Console.WriteLine("  Gain parameter is not available.");
+            }
+            #endregion
+
+            #region Network Parameters
+            if (camera.Parameters[PLCamera.GevSCPD].IsWritable && camera.Parameters[PLCamera.GevSCPD].GetMaximum() > InterPacketDelayNS)
+            {
+                camera.Parameters[PLCamera.GevSCPD].SetValue(InterPacketDelayNS);
+            }
+            else
+            {
+                Logger.Warning($"Failed to write GevSCPD, packet delay: {InterPacketDelayNS}");
+            }
+
+            var ftdByCamCount = FrameTransmissionDelay * camCount;
+            if (camera.Parameters[PLCamera.GevSCFTD].IsWritable && camera.Parameters[PLCamera.GevSCFTD].GetMaximum() > ftdByCamCount)
+            {
+                camera.Parameters[PLCamera.GevSCFTD].SetValue(ftdByCamCount);
+            }
+            else
+            {
+                Logger.Warning($"Failed to write GevSCFTD, frame transmission delay: {ftdByCamCount}");
             }
             #endregion
             return true;
@@ -270,7 +302,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                     int height = bitmap.Height;
                     int stride = bmpData.Stride;
                     int totalBytes = checked(stride * height);
-                    _bmpToBmpData[bitmap] = bmpData; // Saved to Free After finishing sending data to unmanaged side
+                    _bmpToBmpData[bitmap] = bmpData;
                     return ImageStruct.GetDefaultImageStruct(bmpData.Scan0, (ulong)totalBytes, 
                         width, height, stride, carType, location);
                 }
@@ -648,6 +680,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             {
                 _updateDeviceTimer.Change(-1, -1);
                 Disconnect();
+                _cameraCount = 0;
                 _locToBmp = null; 
                 _locToCamera = null; 
                 _ipToLoc = null;
@@ -673,6 +706,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                 ResetDevice(kvp.Key);
             });
 
+            _cameraCount = 0;
             _isConnected = false;
             return true;
         }
@@ -715,7 +749,14 @@ namespace loadingBox2dGui.PylonCameraCommunicator
                 Logger.Info($"Remove Camera Fail at Location: {location}");
             }
 
-            cam?.Dispose();
+            try
+            {
+                cam?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Camera Dispose Failed at Location: {location}, Error: {ex}");
+            }
         }
 
         public override bool ClearBmpData()
@@ -769,6 +810,7 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             }
             finally
             {
+                _cameraCount--;
                 _sem.Release();
             }
         }
