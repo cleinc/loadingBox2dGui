@@ -335,7 +335,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
         {
             return Task.Run(() => SendHeartbeat());
         }
-        /* Monitor Plc with ReadRandom and ReadDeviceBlockF
+        /*Monitor Plc with ReadRandom and ReadDeviceBlockF
         public override void MonitorPlc()
         {
             List<string> deviceList = new List<string>();
