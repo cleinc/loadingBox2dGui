@@ -222,14 +222,18 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             {
                 Logger.Debug($"SendShiftValue trial {i + 1} / {nMaxTrials}");
                 ret = SetFloat("D", deviceInfoForShiftValue.StartPos, writeFloatBuf);
-
-                await Task.Delay(delayForCheck);
-                var shiftValPlcDbInfoList = deviceInfoForShiftValue.SignalDict.Values.ToArray();
-                if (Enumerable.Range(0, 6).All(n => shiftValPlcDbInfoList[n].FloatValue - writeFloatBuf[n] < 0.01))
+                if (ret == 0)
                 {
                     Logger.Info($"MelsecPlcWritingShiftValueDone");
                     return 0;
                 }
+                //await Task.Delay(delayForCheck);
+                //var shiftValPlcDbInfoList = deviceInfoForShiftValue.SignalDict.Values.ToArray();
+                //if (Enumerable.Range(0, 6).All(n => shiftValPlcDbInfoList[n].FloatValue - writeFloatBuf[n] < 0.01))
+                //{
+                //    Logger.Info($"MelsecPlcWritingShiftValueDone");
+                //    return 0;
+                //}
             }
 
             Logger.Warning($"MelsecPlcWritingShiftValueFailed {ret})");
