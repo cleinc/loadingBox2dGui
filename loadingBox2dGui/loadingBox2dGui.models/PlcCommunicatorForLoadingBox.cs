@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using CoPick.Robot;
 
 namespace loadingBox2dGui.models
 {
@@ -33,9 +34,6 @@ namespace loadingBox2dGui.models
         public string BodyNumber { get; set; }
         public bool VisionPass { get; set; }
         public List<PlcMonitorInfo<PlcSignalForLoadingBox>> PlcMonitorInfos { get; set; }
-        public List<S7MonitorDbInfo<PlcSignalForLoadingBox>> MonitorDbInfoList { get; set; }
-
-        //public List<PlcMonitorInfo<PlcSignalForSealer>> PlcDataInfos { get; set; }
 
         protected Thread _monitorPlcThread;
         protected ManualResetEvent _plcMonitorStartEvent = new ManualResetEvent(false);
@@ -64,7 +62,7 @@ namespace loadingBox2dGui.models
         public abstract void MonitorPlc();
         public abstract void RaiseEventIfItNeeds();
         public abstract Task<int> SendPlcStatusAsync(PlcSignalForLoadingBox status, bool val, int nMaxTrials, int delay);
-
+        public abstract Task<int> SendShiftValue(RobotPose shiftValue, int nMaxTrials, int delayForCheck);
         public Task<bool> ConnectAsync()
         {
             _cts = new CancellationTokenSource();
@@ -74,6 +72,7 @@ namespace loadingBox2dGui.models
             {
                 if (IsConnecting || IsConnected)
                 {
+                    Logger.Info($"Plc is Connecting");
                     return true;
                 }
                 IsConnecting = true;
@@ -184,6 +183,7 @@ namespace loadingBox2dGui.models
                         }
 
                         RaiseEventIfItNeeds();
+                        Logger.Debug($"Lang.MSGPlc.MonitorPlcLoop on ReadRandom2 Total Elapsed: {stopwatch.ElapsedMilliseconds} ms");
                     }
                     catch (Exception ex)
                     {
@@ -247,17 +247,17 @@ namespace loadingBox2dGui.models
     public class VisionUpdateEventArgs : EventArgs
     {
         public int CarType { get; private set; }
-        public string CarSeq { get; private set; }
+        public string SequenceNumber { get; private set; }
         public string BodyNumber { get; private set; }
 
-        public VisionUpdateEventArgs(int carType, string carSeq)
+        public VisionUpdateEventArgs(int carType, string sequenceNumber)
         {
             CarType = carType;
-            CarSeq = carSeq;
+            SequenceNumber = sequenceNumber;
         }
 
-        public VisionUpdateEventArgs(int carType, string carSeq, string bodyNumber)
-            : this(carType, carSeq)
+        public VisionUpdateEventArgs(int carType, string sequenceNumber, string bodyNumber)
+            : this(carType, sequenceNumber)
         {
             BodyNumber = bodyNumber;
         }

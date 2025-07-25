@@ -7,47 +7,56 @@ using loadingBox2dGui.views;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
+using CoPick.Robot;
 
 namespace loadingBox2dGui
 {
     public partial class MainForm : MaterialForm, IMainForm
     {
         private static readonly LogHelper Logger = LogHelper.Logger;
-
-        private OperationMode _programMode;
+        private readonly MaterialSkinManager _materialSkinManager = MaterialSkinManager.Instance;
         private PlcStatusPainter _plcStatusPainter;
         private Dictionary<PlcSignalForLoadingBox, Label> _plcSignalLabelDict;
-        public MainForm()
+        public MainForm(OperationMode startMode)
         {
             InitializeComponent();
-            MaterialSkinManager.Instance.AddFormToManage(this);
+            _materialSkinManager.AddFormToManage(this);
 
             Logger.RtbLog = rtbLog;
             Logger.MaxLine = 1000;
+            Logger.ProcessName = "적재함 2D 보정 프로그램";
+            this.ApplyFont();
             _plcStatusPainter = new PlcStatusPainter(gbPLC.CreateGraphics(), 20, 14);
             //_plcStatusPainter.PenColor = Color.White;
             gbPLC.Paint += gbPLC_Paint;
             LoadPlcSignalLabelDict();
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
             Console.WriteLine($"Current Culture {Thread.CurrentThread.CurrentUICulture}");
-            //FontManager.SetCustomFont("./Resources/NanumSquareRoundB.ttf");
-            //this.ApplyFont();
+
+            switch (startMode)
+            {
+                case OperationMode.Auto:
+                    rbAuto_.Checked = true;
+                    break;
+
+                case OperationMode.Manual:
+                    rbManual_.Checked = true;
+                    break;
+
+                case OperationMode.Set:
+                    rbSet_.Checked = true;
+                    break;
+            }
         }
 
         #region Properties
-        public OperationMode ProgramMode
-        {
-            get => _programMode;
-        }
         public string PlcInfo
         {
             set => tbPlc.BeginInvokeIfNeeded(() => tbPlc.Text = value);
@@ -57,7 +66,13 @@ namespace loadingBox2dGui
             get => cmbCarTypeName.InvokeIfNeeded(() => (int)cmbCarTypeName.SelectedValue);
             set => cmbCarTypeName.InvokeIfNeeded(() => cmbCarTypeName.SelectedValue = value);
         }
-
+        public bool IsModeChanging
+        {
+            set
+            {
+                gbMode.InvokeIfNeeded(() => gbMode.Enabled = !value);
+            }
+        }
         public Image LhImage
         {
             set => pbLh.BeginInvokeIfNeeded(() => pbLh.Image = value);
@@ -84,6 +99,57 @@ namespace loadingBox2dGui
         }
 
         public bool IsPlcConnected { get; set; }
+        public bool SetLightState
+        {
+            set
+            {
+                this.InvokeIfNeeded(() =>
+                {
+                    if (value)
+                    {
+                        btnLightOff_.Text = "Light On";
+                    }
+                    else
+                    {
+                        btnLightOff_.Text = "Light Off";
+                    }
+                });
+
+            }
+        }
+
+        public bool SetConnectCameraButton
+        {
+            set
+            {
+                btnCameraConnect_.InvokeIfNeeded(() =>
+                {
+                    btnCameraConnect_.Enabled = value;
+                });
+            }
+        }
+
+        public bool SetStartCameraButton
+        {
+            set
+            {
+                btnScanPoint_.InvokeIfNeeded(() =>
+                {
+                    btnScanPoint_.Enabled = value;
+                });
+            }
+        }
+
+        public bool OnManualPass
+        {
+            get
+            {
+                return tgSetPass_.InvokeIfNeeded(() =>
+                {
+                    return tgSetPass_.Checked;
+                });
+            }
+        }
 
         #endregion
 
@@ -96,17 +162,17 @@ namespace loadingBox2dGui
                 {
                     case VisionStatus.OK:
                         pbOk.Image = Properties.Resources.visionOKOn;
-                        pictureBox2.Image = Properties.Resources.visionNGOff;
+                        pbNg.Image = Properties.Resources.visionNGOff;
                         break;
 
                     case VisionStatus.NG:
                         pbOk.Image = Properties.Resources.visionOKOff;
-                        pictureBox2.Image = Properties.Resources.visionNGOn;
+                        pbNg.Image = Properties.Resources.visionNGOn;
                         break;
 
                     case VisionStatus.NONE:
                         pbOk.Image = Properties.Resources.visionOKOff;
-                        pictureBox2.Image = Properties.Resources.visionNGOff;
+                        pbNg.Image = Properties.Resources.visionNGOff;
                         break;
                 }
             });
@@ -152,6 +218,20 @@ namespace loadingBox2dGui
             gbPLC.BeginInvokeIfNeeded(() =>
             {
                 _plcStatusPainter.BlinkWriteStatus(time);
+            });
+        }
+
+        public void SetCarTypeList(BindingList<CarTypeAndName> carTypeList, int selectedCarType = -1)
+        {
+            cmbCarTypeName.InvokeIfNeeded(() =>
+            {
+                cmbCarTypeName.DisplayMember = "CarName";
+                cmbCarTypeName.ValueMember = "CarType";
+                cmbCarTypeName.DataSource = carTypeList;
+                if (selectedCarType != -1 && carTypeList.Any(c => c.CarType == selectedCarType))
+                {
+                    cmbCarTypeName.SelectedValue = selectedCarType;
+                }
             });
         }
 
@@ -209,147 +289,202 @@ namespace loadingBox2dGui
             _plcSignalLabelDict[PlcSignalForLoadingBox.SHIFT_RY | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable1.LblValues[4];
             _plcSignalLabelDict[PlcSignalForLoadingBox.SHIFT_RZ | PlcSignalForLoadingBox.VALUE] = plcSignalStatusValueTable1.LblValues[5];
         }
+
+        public void SetUiToMode(OperationMode mode)
+        {
+            this.InvokeIfNeeded(() =>
+            {
+                btnCameraConnect_.Enabled = mode != OperationMode.Auto;
+                btnScanPoint_.Enabled = mode != OperationMode.Auto;
+                btnLightOff_.Enabled = mode != OperationMode.Auto;
+                cmbCarTypeName.Enabled = mode != OperationMode.Auto;
+
+                btnCameraConnect_.Enabled = mode != OperationMode.Auto;
+                btnScanPoint_.Enabled = mode != OperationMode.Auto;
+                gbRobotRead.Enabled = mode != OperationMode.Auto;
+
+                btnScanPoint_.Text = (mode == OperationMode.Set) ? "Save MasterImage" : "Scan Point";
+                btnUpdateMasterInstallPose_.Visible = mode == OperationMode.Set;
+                btnUpdateMasterScanPose_.Visible = mode == OperationMode.Set;
+                btnCaptureCheckerBoard_.Visible = mode == OperationMode.Set;
+                gbRobotWrite.Enabled = mode == OperationMode.Set;
+                
+                gbRobotReadComputed.Visible = mode == OperationMode.Set;
+                btnWriteShiftPose_.Visible = mode == OperationMode.Set;
+                tbShiftTx.ReadOnly = mode != OperationMode.Set;
+                tbShiftTy.ReadOnly = mode != OperationMode.Set;
+                tbShiftRz.ReadOnly = mode != OperationMode.Set;
+            });
+        }
+
+        public void ResetToAutoMode()
+        {
+            rbAuto_.InvokeIfNeeded(() => rbAuto_.Checked = true );
+        }
+
+        public bool ValidatePassword()
+        {
+            return this.InvokeIfNeeded(() =>
+            {
+                using (var f = new PasswordForm_(CultureInfo.CurrentUICulture))
+                {
+                    var res = f.ShowDialog();
+                    if (res == DialogResult.OK)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        if (res == DialogResult.No)
+                        {
+                            MessageBox.Show("Wrong Password. Accesss Denied",
+                                            "Warning");
+                        }
+                        return false;
+                    }
+                }
+            });
+        }
+
+        public void SetInspectionImage(InspectionLocation location, Image image)
+        {
+            if (location == InspectionLocation.LH)
+            {
+                pbLh.InvokeIfNeeded(() =>
+                {
+                    if (pbLh.Image != null)
+                    {
+                        pbLh.Image?.Dispose();
+                        pbLh.Image = null;
+                    }
+                    pbLh.Image = image;
+                });
+            }
+            else if (location == InspectionLocation.RH)
+            {
+                pbRh.InvokeIfNeeded(() =>
+                {
+                    if (pbRh.Image != null)
+                    {
+                        pbRh.Image?.Dispose();
+                        pbRh.Image = null;
+                    }
+                    pbRh.Image = image;
+                });
+            }
+            else { }
+        }
+        public void SetReadScanPose(double[] poses)
+        {
+            if (poses.Length != 6)
+            {
+                return;
+            }
+            this.InvokeIfNeeded(() =>
+            {
+                tbReadScanPoseTxyz.Text = $"{poses[0]},{poses[1]},{poses[2]}";
+                tbReadScanPoseRxyz.Text = $"{poses[3]},{poses[4]},{poses[5]}";
+            });
+        }
+        public void SetReadInstallPose(double[] poses)
+        {
+            if (poses.Length != 6)
+            {
+                return;
+            }
+            this.InvokeIfNeeded(() =>
+            {
+                tbReadInstallPoseTxyz.Text = $"{poses[0]},{poses[1]},{poses[2]}";
+                tbReadInstallPoseRxyz.Text = $"{poses[3]},{poses[4]},{poses[5]}";
+            });
+        }
+        public void SetReadWrittenShiftPose(double[] poses)
+        {
+            if (poses == null || poses.Length != 6)
+            {
+                return;
+            }
+            this.InvokeIfNeeded(() =>
+            {
+                tbWrittenTxyz_.Text = $"{poses[0]},{poses[1]},{poses[2]}";
+                tbWrittenRxyz_.Text = $"{poses[3]},{poses[4]},{poses[5]}";
+            });
+        }
+        public void SetCalculatedShiftPose(double[] poses)
+        {
+            this.InvokeIfNeeded(() =>
+            {
+                tbShiftTx.Text = $"{poses[0]}";
+                tbShiftTy.Text = $"{poses[1]}";
+                tbShiftRz.Text = $"{poses[2]}";
+            });
+        }
+        public void ShowOnDataGrid(BindingSource bindingSource)
+        {
+            dgvNgList.BeginInvokeIfNeeded(() =>
+            {
+                if(dgvNgList.DataSource is BindingSource oldsSource)
+                {
+                    oldsSource?.Dispose();
+                    dgvNgList.DataSource = null;
+                }
+                dgvNgList.DataSource = bindingSource;
+            });
+        }
+        public void Init()
+        {
+            this.InvokeIfNeeded(() =>
+            {
+                tbShiftTx.Text = "";
+                tbShiftTy.Text = "";
+                tbShiftRz.Text = "";
+            });
+        }
+
         #endregion
 
         #region EventHandlers
-        public event EventHandler<ChangeModeEventArgs> ChangeModeRequested;
+        public event EventHandler<ModeChangedEventArgs> ChangeModeRequested;
         public event EventHandler MainFormLoadRequested;
         public event EventHandler ConnectCameraRequested;
-        public event EventHandler ShowSettingManagerRequested;
-        public event EventHandler CalculateRequested;
-        public event EventHandler UpdateRequested;
-        public event EventHandler GetReferenceDataPathRequested;
-        public event EventHandler GetHandEyeCalibrationFilePathRequested;
-        public event EventHandler ScanPointRequsted;
-        public event EventHandler DisconnectLhCameraRequested;
+        public event EventHandler<StartWithModifierEventArgs> ShowSettingManagerRequested;
+        public event EventHandler ScanPointRequested;
+        public event EventHandler DisconnectCameraRequested;
         public event EventHandler<FormClosingEventArgs> ProgramCloseRequested;
         public event EventHandler<ChangeLightStateEventArgs> LightStateChangeRequested;
+        public event EventHandler CarTypeChanged;
+        public event EventHandler<SaveMasterDataEventArgs> ReadInstallPoseRequested;
+        public event EventHandler<SaveMasterDataEventArgs> ReadScanPoseRequested;
+        public event EventHandler<double[]> WriteTxTyRzRequested;
+        public event EventHandler CheckWrittenShiftPoseRequested;
+        public event EventHandler<ImagePathEventArgs> ShowScreenShotRequested;
+        public event EventHandler ResetNgListRequested;
+        public event EventHandler CaptureCheckerboardRequested;
+        #endregion
 
-        private void btnCameraConnect__Click(object sender, System.EventArgs e)
+        private void btnCameraConnect__Click(object sender, EventArgs e)
         {
             ConnectCameraRequested?.Invoke(sender, EventArgs.Empty);
         }
 
-        private void btnSettingManager__Click(object sender, System.EventArgs e)
+        private void btnSettingManager__Click(object sender, EventArgs e)
         {
-           
+           ShowSettingManagerRequested?.Invoke(sender, new StartWithModifierEventArgs(ModifierKeys == Keys.Shift));
         }
 
-        private void btnNgListClear__Click(object sender, System.EventArgs e)
+        private void btnNgListClear__Click(object sender, EventArgs e)
         {
-
+            ResetNgListRequested?.Invoke(sender, EventArgs.Empty);
         }
 
-        private void btnGlassBackUp__Click(object sender, System.EventArgs e)
+        private void btnScanPoint__Click(object sender, EventArgs e)
         {
-
+            ScanPointRequested?.Invoke(sender, EventArgs.Empty);
         }
-
-        private void btnGlassLHCameraUse__Click(object sender, System.EventArgs e)
-        {
-
-        }
-
-        private void btnGlassLHCameraUnuse__Click(object sender, System.EventArgs e)
-        {
-
-        }
-
-        private void btnGlassRHCameraUse__Click(object sender, System.EventArgs e)
-        {
-
-        }
-
-        private void btnGlassRHCameraUnuse__Click(object sender, System.EventArgs e)
-        {
-
-        }
-
-        private void btnGlassCalculate__Click(object sender, System.EventArgs e)
-        {
-
-        }
-
-        private void btnGlassUpdate__Click(object sender, System.EventArgs e)
-        {
-
-        }
-
-        private void btnGlassRefDataPath_Click(object sender, System.EventArgs e)
-        {
-
-        }
-
-        private void btnGlassHandEyeCalibFilePath_Click(object sender, System.EventArgs e)
-        {
-
-        }
-/*
-        public Tk1MelsecCommunicator(Dictionary<PlcAttribute, string> config) : base(1)
-        {
-            try
-            {
-                _logicalStationNumber = int.Parse(config[PlcAttribute.LOGICAL_STATION]);
-                _heartbeatDeviceName = config[PlcAttribute.HeartbeatDeviceName];
-                _heartbeatDeviceType = config[PlcAttribute.HeartbeatDeviceType].ToEnum<PlcDataType>();
-                _heartbeatDbInfo = new PlcDbInfo(int.Parse(config[PlcAttribute.HeartbeatPos]),
-                                                 int.Parse(config[PlcAttribute.HeartbeatBit]));
-
-                _melsecPlc.PlcError += (s, e) => Disconnect();
-                LoadPlcSignalDictForSealer();
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Models.Lang.MSGPlc.ConstructingPlcCommunicatorFailedDueToError : {ex.Message}");
-            }
-        }
-*/
-
-        private void btnGlassPoint__Click(object sender, System.EventArgs e)
-        {
-            ScanPointRequsted?.Invoke(sender, EventArgs.Empty);
-        }
-        #endregion
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             ProgramCloseRequested?.Invoke(this, e);
-        }
-
-        private void rbAuto__CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton rb = sender as RadioButton;
-            if (rb.Checked && rb.Name == "rbAuto_")
-            {
-                ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Auto, ModifierKeys == Keys.Shift));
-                btnStartCamera_.Enabled = false;
-                btnCameraConnect_.Enabled = false;
-                btnLightOff_.Enabled = false;
-            }
-        }
-
-        private void rbManual__CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton rb = sender as RadioButton;
-            if (rb.Checked && rb.Name == "rbManual_")
-            {
-                ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Manual, ModifierKeys == Keys.Shift));
-                btnStartCamera_.Enabled = true;
-                btnCameraConnect_.Enabled = true;
-                btnLightOff_.Enabled = true;
-            }
-        }
-
-        private void rbSet__CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton rb = sender as RadioButton;
-            if (rb.Checked && rb.Name == "rbSet_")
-            {
-                ChangeModeRequested?.Invoke(sender, new ChangeModeEventArgs(OperationMode.Set, ModifierKeys == Keys.Shift));
-                btnStartCamera_.Enabled = true;
-                btnCameraConnect_.Enabled = true;
-                btnLightOff_.Enabled = true;
-            }
         }
 
         private void btnLightOff__Click(object sender, EventArgs e)
@@ -370,7 +505,148 @@ namespace loadingBox2dGui
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            if (rbAuto_.Checked)
+            {
+                OnModeChanged(OperationMode.Auto, true);
+            }
+            else if (rbManual_.Checked)
+            {
+                OnModeChanged(OperationMode.Manual, true);
+            }
+            else if (rbSet_.Checked)
+            {
+                OnModeChanged(OperationMode.Set, true);
+            }
+
             MainFormLoadRequested?.Invoke(sender, EventArgs.Empty);
+        }
+
+        private void cmbCarTypeName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tbCarType.Text = cmbCarTypeName.SelectedValue?.ToString();
+            CarTypeChanged?.Invoke(sender, EventArgs.Empty);
+        }
+
+        private void btnReadScanPose_Click(object sender, EventArgs e)
+        {
+            ReadScanPoseRequested?.Invoke(sender, new SaveMasterDataEventArgs(false));
+        }
+
+        private void btnWriteShiftPose_Click(object sender, EventArgs e)
+        {
+            double tX = tbShiftTx.Text.Length > 0 ? double.Parse(tbShiftTx.Text) : 0;
+            double tY = tbShiftTy.Text.Length > 0 ? double.Parse(tbShiftTy.Text) : 0;
+            double rZ = tbShiftRz.Text.Length > 0 ? double.Parse(tbShiftRz.Text) : 0;
+            
+            WriteTxTyRzRequested?.Invoke(sender, new double[] { tX, tY, rZ});
+        }
+
+        private void btnReadInstallPose_Click(object sender, EventArgs e)
+        {
+            ReadInstallPoseRequested?.Invoke(sender, new SaveMasterDataEventArgs(false));
+        }
+
+        private void rbMode_CheckedChanged(object sender, EventArgs e)
+        {
+            var rb = sender as RadioButton;
+            if (rb.Checked)
+            {
+                if (rb == rbSet_)
+                {
+                    OnModeChanged(OperationMode.Set, ModifierKeys == Keys.Shift);
+                }
+                else if (rb == rbAuto_)
+                {
+                    OnModeChanged(OperationMode.Auto, true);
+                }
+                else if (rb == rbManual_)
+                {
+                    OnModeChanged(OperationMode.Manual, ModifierKeys == Keys.Shift);
+                }
+            }
+        }
+
+        private void OnModeChanged(OperationMode mode, bool hasFreePassTicket)
+        {
+            ChangeModeRequested?.Invoke(this, new ModeChangedEventArgs(mode, hasFreePassTicket));
+        }
+
+        private void dgvNgList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                RequestShowScreenShot();
+            }
+        }
+
+        private void dgvNgList_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (dgvNgList.ColumnCount == 0)
+            {
+                return;
+            }
+
+            dgvNgList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            dgvNgList.Columns["Id"].Visible = false;
+            dgvNgList.Columns["CarType"].Visible = false;
+            dgvNgList.Columns["BodyNumber"].Visible = false;
+            dgvNgList.Columns["InspectionResult"].Visible = false;
+            dgvNgList.Columns["ScreenShotImagePath"].Visible = false;
+            dgvNgList.Columns["Tx"].Visible = false;
+            dgvNgList.Columns["Ty"].Visible = false;
+            dgvNgList.Columns["Rz"].Visible = false;
+
+            dgvNgList.Columns["CarName"].HeaderText = "CAR";
+            dgvNgList.Columns["SequenceNumber"].HeaderText = "SEQUENCE";
+            dgvNgList.Columns["ProductionDateTime"].HeaderText = "RECORD TIME";
+            dgvNgList.Columns["CarName"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvNgList.Columns["SequenceNumber"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvNgList.Columns["ProductionDateTime"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            
+            dgvNgList.Columns["CarName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvNgList.Columns["SequenceNumber"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvNgList.Columns["ProductionDateTime"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            
+            dgvNgList.Columns["CarName"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvNgList.Columns["SequenceNumber"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvNgList.Columns["ProductionDateTime"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+
+        private void RequestShowScreenShot()
+        {
+            string screenShotPath = dgvNgList.Rows[dgvNgList.CurrentCell.RowIndex].Cells[6].Value?.ToString();
+            ShowScreenShotRequested?.Invoke(null, new ImagePathEventArgs(screenShotPath));
+        }
+
+        private void btnUpdateMasterScanPose__Click(object sender, EventArgs e)
+        {
+            ReadScanPoseRequested?.Invoke(sender, new SaveMasterDataEventArgs(true));
+        }
+
+        private void btnUpdateMasterInstallPose__Click(object sender, EventArgs e)
+        {
+            ReadInstallPoseRequested?.Invoke(sender, new SaveMasterDataEventArgs(true));
+        }
+
+        private void btnReadWrittenShiftPose__Click(object sender, EventArgs e)
+        {
+            CheckWrittenShiftPoseRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void dgvNgList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            RequestShowScreenShot();
+        }
+
+        private void btnCaptureCheckerBoard__Click(object sender, EventArgs e)
+        {
+            CaptureCheckerboardRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void tgSetPass__CheckedChanged(object sender, EventArgs e)
+        {
+            Logger.Info($"Manual Pass Changed: Set to : {tgSetPass_.Checked}");
         }
     }
 }

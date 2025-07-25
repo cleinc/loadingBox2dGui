@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CoPick.Setting;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,23 +9,33 @@ using System.Threading.Tasks;
 
 namespace loadingBox2dGui.models
 {
-    public abstract class CameraCommunicatorForLoadingBox : ICameraCommunicator, IDisposable
+    public abstract class CameraCommunicatorForLoadingBox : ICameraCommunicator, IImageProvider<InspectionLocation>, IDisposable
     {
-        private bool disposedValue;
-        public bool IsConnected { get; }
-        public abstract bool Connect();
-        public abstract bool DisConnect();
-        public abstract Task StartCamera();
+        protected bool _disposed;
+        public abstract bool IsConnected { get; }
+        public abstract bool Connect(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
+        public abstract bool Disconnect();
+        public abstract Task StartCamera(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict, int shotAttempt);
         public abstract bool StopCamera();
-        public abstract bool SaveImage(Bitmap bmp);
+        public abstract bool SaveImage(InspectionLocation loc, Bitmap bmp);
         public abstract Bitmap GetImage(string cameraName);
-
+        public abstract Bitmap GetImage(InspectionLocation inspectionLocation);
+        public abstract bool ApplyCameraSettings(ConcurrentDictionary<InspectionLocation, CameraParameter> camParamDict);
+        public abstract ImageStruct[] GetImageStructArray(int carType);
+        public abstract bool ClearBmpData();
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposed)
             {
                 if (disposing){}
-                disposedValue = true;
+
+                try
+                {
+                    Disconnect();
+                }
+                catch (Exception) { }
+
+                _disposed = true;
             }
         }
         ~CameraCommunicatorForLoadingBox()
@@ -36,5 +48,9 @@ namespace loadingBox2dGui.models
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+        public abstract Bitmap GetBitmapImage(InspectionLocation camLoc);
+
+        public abstract (InspectionLocation, Bitmap)[] GetAllBitmaps();
     }
 }

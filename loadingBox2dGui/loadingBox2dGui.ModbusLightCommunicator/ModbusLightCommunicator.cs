@@ -230,10 +230,10 @@ namespace loadingBox2dGui.ModbusLightCommunicator
             }
         }
 
-        public ModbusLightCommunicator(Dictionary<ModbusAttribute, string> config)
+        public ModbusLightCommunicator(Dictionary<LightAttribute, string> config)
         {
-            _ip = config[ModbusAttribute.IpAddr];
-            _port = int.Parse(config[ModbusAttribute.Port]);
+            _ip = config[LightAttribute.IPAdr];
+            _port = int.Parse(config[LightAttribute.PortNo]);
         }
     }
 }

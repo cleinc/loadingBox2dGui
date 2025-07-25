@@ -22,15 +22,22 @@ using System.Runtime.InteropServices;
 // 이 프로젝트가 COM에 노출되는 경우 다음 GUID는 typelib의 ID를 나타냅니다.
 [assembly: Guid("23410fbc-5069-4d6f-8500-b8f83b002369")]
 
-// 어셈블리의 버전 정보는 다음 네 가지 값으로 구성됩니다.
+// Version information for an assembly consists of the following four values:
 //
-//      주 버전
-//      부 버전 
-//      빌드 번호
-//      수정 버전
+//      Major Version
+//      Minor Version
+//      Build Number
+//      Revision
 //
-// 모든 값을 지정하거나 아래와 같이 '*'를 사용하여 빌드 번호 및 수정 번호를
-// 기본값으로 할 수 있습니다.
+// You can specify all the values or you can default the Build and Revision Numbers
+// by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion(ThisAssembly.Git.BaseVersion.Major + "." + ThisAssembly.Git.BaseVersion.Minor + "." + ThisAssembly.Git.BaseVersion.Patch + "." + ThisAssembly.Git.Commits)]
+[assembly: AssemblyInformationalVersion(
+    ThisAssembly.Git.SemVer.Major + "." +
+    ThisAssembly.Git.SemVer.Minor + "." +
+    ThisAssembly.Git.SemVer.Patch +
+    ThisAssembly.Git.SemVer.DashLabel + "+" +
+    ThisAssembly.Git.Branch + "." +
+    ThisAssembly.Git.Commit +
+    (ThisAssembly.Git.IsDirty ? "-dirty" : ""))]

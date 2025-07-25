@@ -1,16 +1,12 @@
-﻿using System;
+﻿using CoPick.Plc;
+using CoPick.Robot;
+using loadingBox2dGui.models;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.AccessControl;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using CoPick;
-using CoPick.Plc;
-using loadingBox2dGui.models;
 
 namespace loadingBox2dGui.Tk1MelsecCommunicator
 {
@@ -32,14 +28,11 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
         private bool _visionStartSignal = false;
         private bool _visionResetSignal = false;
         private bool _visionEndSignal = false;
-        private int _visionGlassSectionSignal = 0;
-        private int _beforeSection = 0;
 
         private bool _isConnected;
         private bool _isConnecting;
 
-        private int[] _writeBuf = new int[1];
-
+        private List<string> _readDeviceList = new List<string>();
         public override bool IsConnecting
         {
             get => _isConnecting;
@@ -73,7 +66,8 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                 _heartbeatDbInfo = new PlcDbInfo(5500, 0);
 
                 _melsecPlc.PlcError += (s, e) => Disconnect();
-                LoadPlcSignalDictForSealer();
+                LoadPlcSignalDict();
+                LoadReadRandom2DeviceSet();
             }
             catch (Exception ex)
             {
@@ -81,7 +75,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             }
         }
 
-        private void LoadPlcSignalDictForSealer()
+        private void LoadPlcSignalDict()
         {
             PlcMonitorInfos = new List<PlcMonitorInfo<PlcSignalForLoadingBox>>
             {
@@ -97,6 +91,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                         [PlcSignalForLoadingBox.VISION_PASS] = new PlcDbInfo(5000,15)
                     }
                 },
+
                 // [1]
                 new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5001", 1, PlcDataType.WORD, PlcDataType.WORD)
                 {
@@ -105,6 +100,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                         [PlcSignalForLoadingBox.CAR_TYPE | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5001, -1),
                     }
                 },
+
                 // [2]
                 new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5002", 2, PlcDataType.WORD, PlcDataType.TWISTED_ASCII)
                 {
@@ -114,6 +110,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                         [PlcSignalForLoadingBox.CAR_SEQ2 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5003, -1),
                     }
                 },
+
                 // [3]
                 new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5100", 1, PlcDataType.WORD, PlcDataType.BIT)
                 {
@@ -124,6 +121,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                         [PlcSignalForLoadingBox.P1_COMPLETED] = new PlcDbInfo(5100, 10),
                     }
                 },
+
                 // [4]
                 new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5500", 1, PlcDataType.WORD, PlcDataType.BIT)
                 {
@@ -133,6 +131,7 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                     }
                 },
 
+                // [5]
                 new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5004", 4, PlcDataType.WORD, PlcDataType.TWISTED_ASCII)
                 {
                     SignalDict = new ConcurrentDictionary<PlcSignalForLoadingBox, PlcDbInfo>()
@@ -144,7 +143,9 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                         [PlcSignalForLoadingBox.BODY_NO5 | PlcSignalForLoadingBox.VALUE] = new PlcDbInfo(5008, -1),
                     }
                 },
-                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5101", 4, PlcDataType.DWORD, PlcDataType.DWORD)
+
+                // [6] ShiftValues
+                new MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>("D", "5101", 6, PlcDataType.DWORD, PlcDataType.FLOAT)
                 {
                     SignalDict = new ConcurrentDictionary<PlcSignalForLoadingBox, PlcDbInfo>()
                     {
@@ -157,6 +158,34 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                     }
                 },
             };
+        }
+
+        private void LoadReadRandom2DeviceSet()
+        {
+            if (PlcMonitorInfos.Count() < 1)
+            {
+                throw new InvalidOperationException("PlcMonitorInfos is empty. Please load PlcMonitorInfos first.");
+            }
+
+            foreach (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox> monitorInfo in PlcMonitorInfos)
+            {
+                foreach (var dbInfo in monitorInfo.SignalDict.Values)
+                {
+                    if (monitorInfo.DeviceType == PlcDataType.DWORD)
+                    {
+                        string readDeviceName = $"{monitorInfo.DeviceName}{dbInfo.Pos}";
+                        _readDeviceList.Add(readDeviceName);
+
+                        string readDeviceName2 = $"{monitorInfo.DeviceName}{dbInfo.Pos + 1}";
+                        _readDeviceList.Add(readDeviceName2);
+                    }
+                    else
+                    {
+                        string readDeviceName = $"{monitorInfo.DeviceName}{dbInfo.Pos}";
+                        _readDeviceList.Add(readDeviceName);
+                    }
+                }
+            }
         }
 
         public override async Task<int> SendPlcStatusAsync(PlcSignalForLoadingBox status, bool val, int nMaxTrials, int delay)
@@ -178,6 +207,39 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             }
         }
 
+        public override async Task<int> SendShiftValue(RobotPose shiftValue, int nMaxTrials = 1, int delayForCheck = 350)
+        {
+            float[] writeFloatBuf = new float[] { (float)shiftValue.Tx,
+                                                  (float)shiftValue.Ty,
+                                                  (float)shiftValue.Tz,
+                                                  (float)shiftValue.Rx,
+                                                  (float)shiftValue.Ry,
+                                                  (float)shiftValue.Rz };
+
+            var deviceInfoForShiftValue = (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox>) PlcMonitorInfos[6];
+            int ret = 0;
+            for (var i = 0; i < nMaxTrials; ++i)
+            {
+                Logger.Debug($"SendShiftValue trial {i + 1} / {nMaxTrials}");
+                ret = SetFloat("D", deviceInfoForShiftValue.StartPos, writeFloatBuf);
+                if (ret == 0)
+                {
+                    Logger.Info($"MelsecPlcWritingShiftValueDone");
+                    return 0;
+                }
+                //await Task.Delay(delayForCheck);
+                //var shiftValPlcDbInfoList = deviceInfoForShiftValue.SignalDict.Values.ToArray();
+                //if (Enumerable.Range(0, 6).All(n => shiftValPlcDbInfoList[n].FloatValue - writeFloatBuf[n] < 0.01))
+                //{
+                //    Logger.Info($"MelsecPlcWritingShiftValueDone");
+                //    return 0;
+                //}
+            }
+
+            Logger.Warning($"MelsecPlcWritingShiftValueFailed {ret})");
+            return ret;
+        }
+
         protected int SetBit(string device, PlcDataType deviceType, PlcDbInfo dbInfo, bool isOn)
         {
             if (deviceType == PlcDataType.BIT)
@@ -188,6 +250,16 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             {
                 return _melsecPlc.SetBitForWordDevice(device, dbInfo.Pos.ToString(), dbInfo.Bit, isOn);
             }
+        }
+
+        private int SetFloat(string writeDevice, string startPos, float[] floatValues)
+        {
+            int ret = _melsecPlc.WriteDeviceBlock(writeDevice, startPos, floatValues);
+            if (ret != 0)
+            {
+                Console.WriteLine($"writing err: {ret:X8}");
+            }
+            return ret;
         }
 
         public override void Connect(CancellationToken? cancelToken = null)
@@ -212,7 +284,6 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             PlcConnected?.Invoke(this, null);
         }
 
-
         public override void Disconnect()
         {
             PauseMonitoringPlc();
@@ -229,7 +300,6 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
             IsConnected = false;
             PlcDisconnected?.Invoke(this, null);
         }
-
 
         public override void StartMonitoringPlc()
         {
@@ -269,17 +339,25 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
         {
             return Task.Run(() => SendHeartbeat());
         }
-
+        /*Monitor Plc with ReadRandom and ReadDeviceBlockF
         public override void MonitorPlc()
         {
-            // MakeDeviceList
             List<string> deviceList = new List<string>();
             int numberOfData = 0;
             foreach (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox> monitorInfo in PlcMonitorInfos)
             {
                 if (monitorInfo.DataParseType == PlcDataType.FLOAT)
                 {
-                    // TODO
+                    (var retF, var resDataF) = _melsecPlc.ReadDeviceBlockF(monitorInfo.DeviceName,
+                                                                                 monitorInfo.StartPos,
+                                                                                 monitorInfo.NumberOfData);
+                    if (retF != 0) continue;
+
+                    foreach (var dbInfo in monitorInfo.SignalDict.Values)
+                    {
+                        int idxF = (dbInfo.Pos - int.Parse(monitorInfo.StartPos)) / 2;
+                        dbInfo.FloatValue = resDataF[idxF];
+                    }
                 }
                 else
                 {
@@ -339,6 +417,46 @@ namespace loadingBox2dGui.Tk1MelsecCommunicator
                             dbInfo.Int32Value = resData[idx];
                         }
                         ++idx;
+                    }
+                }
+            }
+            Task.Run(() =>
+            {
+                PlcReceived?.Invoke(this, EventArgs.Empty);
+            });
+            return;
+        }
+        */
+
+        public override void MonitorPlc()
+        {
+            (var ret, var resData) = _melsecPlc.ReadRandom2(_readDeviceList);
+            if (ret != 0)
+            {
+                return;
+            }
+
+            int idx = 0;
+            foreach (MelsecMonitorDeviceInfo<PlcSignalForLoadingBox> monitorInfo in PlcMonitorInfos)
+            {
+                if (monitorInfo.DeviceType == PlcDataType.DWORD)
+                {
+                    foreach (var dbInfo in monitorInfo.SignalDict.Values)
+                    {
+                        dbInfo.Byte0 = resData[idx];
+                        dbInfo.Byte1 = resData[idx + 1];
+                        dbInfo.Byte2 = resData[idx + 2];
+                        dbInfo.Byte3 = resData[idx + 3];
+                        idx += 4;
+                    }
+                }
+                else
+                {
+                    foreach (var dbInfo in monitorInfo.SignalDict.Values)
+                    {
+                        dbInfo.Byte0 = resData[idx];
+                        dbInfo.Byte1 = resData[idx + 1];
+                        idx += 2;
                     }
                 }
             }
