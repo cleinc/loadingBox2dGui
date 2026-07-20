@@ -33,8 +33,13 @@ namespace loadingBox2dGui.PylonCameraCommunicator
         private static readonly int reconnectTimeoutMs = 15000;
         private const long PacketSize = 9000;
         private const long InterPacketDelayNS = 90_000;
-        private const long FrameTransmissionDelay = 150_000;   
+        private const long FrameTransmissionDelayNS = 150_000;
         private const long DeviceThroughputBps = 950_000_000;
+        // GevSCPD / GevSCFTD are expressed in device timestamp TICKS, not nanoseconds.
+        // Basler GigE cameras run a 125 MHz timestamp clock (1 tick = 8 ns), so an ns target
+        // must be converted to ticks before writing — otherwise the delay is ~8x too large.
+        // (Fully robust: read GevTimestampTickFrequency at runtime instead of this constant.)
+        private const long TimestampTickHz = 125_000_000;
         private int _cameraCount = 0;
         public override bool IsConnected => _isConnected;
 
@@ -152,6 +157,9 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             }
         }
 
+        // GevSCPD / GevSCFTD are in device timestamp ticks (Basler GigE: 125 MHz → 8 ns/tick).
+        private static long NsToTicks(long nanoseconds) => nanoseconds * TimestampTickHz / 1_000_000_000L;
+
         private static bool OpenCamera(Camera camera, InspectionLocation location, string ipAddress, int camCount, int timeOut = 750)
         {
             try
@@ -226,24 +234,31 @@ namespace loadingBox2dGui.PylonCameraCommunicator
             }
             #endregion
 
-            #region Network Parameters
-            if (camera.Parameters[PLCamera.GevSCPD].IsWritable && camera.Parameters[PLCamera.GevSCPD].GetMaximum() > InterPacketDelayNS)
+            #region Network Parameters (GevSCPD / GevSCFTD are in device ticks — convert from ns)
+            long interPacketDelayTicks = NsToTicks(InterPacketDelayNS);
+            if (camera.Parameters[PLCamera.GevSCPD].IsWritable)
             {
-                camera.Parameters[PLCamera.GevSCPD].SetValue(InterPacketDelayNS);
+                long maxPacketDelay = camera.Parameters[PLCamera.GevSCPD].GetMaximum();
+                long packetDelay = Math.Min(interPacketDelayTicks, maxPacketDelay);
+                camera.Parameters[PLCamera.GevSCPD].SetValue(packetDelay);
+                Logger.Info($"GevSCPD set to {packetDelay} ticks (target {InterPacketDelayNS} ns, max {maxPacketDelay})");
             }
             else
             {
-                Logger.Warning($"Failed to write GevSCPD, packet delay: {InterPacketDelayNS}");
+                Logger.Warning($"GevSCPD is not writable, packet delay target: {InterPacketDelayNS} ns");
             }
 
-            var ftdByCamCount = FrameTransmissionDelay * camCount;
-            if (camera.Parameters[PLCamera.GevSCFTD].IsWritable && camera.Parameters[PLCamera.GevSCFTD].GetMaximum() > ftdByCamCount)
+            long frameTransmissionDelayTicks = NsToTicks(FrameTransmissionDelayNS * camCount);
+            if (camera.Parameters[PLCamera.GevSCFTD].IsWritable)
             {
-                camera.Parameters[PLCamera.GevSCFTD].SetValue(ftdByCamCount);
+                long maxFtd = camera.Parameters[PLCamera.GevSCFTD].GetMaximum();
+                long ftd = Math.Min(frameTransmissionDelayTicks, maxFtd);
+                camera.Parameters[PLCamera.GevSCFTD].SetValue(ftd);
+                Logger.Info($"GevSCFTD set to {ftd} ticks for camCount {camCount} (target {FrameTransmissionDelayNS * camCount} ns, max {maxFtd})");
             }
             else
             {
-                Logger.Warning($"Failed to write GevSCFTD, frame transmission delay: {ftdByCamCount}");
+                Logger.Warning($"GevSCFTD is not writable, frame transmission delay target: {FrameTransmissionDelayNS * camCount} ns");
             }
             #endregion
             return true;
